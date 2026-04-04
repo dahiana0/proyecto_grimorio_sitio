@@ -1,0 +1,21 @@
+@font-face {
+    font-family:'haus' ;
+    src: url('../Styles/haus-darah.ttf');
+}
+
+@font-face {
+    font-family:'mono' ;
+    src: url('../Styles/monof55.ttf');
+}
+
+
+.mainmenu a:hover{
+
+text-shadow: 2px 2px 4px gray;
+}
+
+
+.mainmenu a:active{
+
+color: brown;
+}
