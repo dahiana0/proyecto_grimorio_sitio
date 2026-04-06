@@ -22,7 +22,7 @@ export const CardInfoS = ({ titulo, texto, imagen, derecha = false }) => {
           justifyContent: "center",
         }}
       >
-        {/* ICONO */}
+        
         <div
           style={{
             width: "70px",
@@ -39,7 +39,7 @@ export const CardInfoS = ({ titulo, texto, imagen, derecha = false }) => {
           <img src={imagen} alt="icono" style={{ width: "35px" }} />
         </div>
 
-        {/* TEXTO */}
+        
         <div
           style={{
             maxWidth: "420px",

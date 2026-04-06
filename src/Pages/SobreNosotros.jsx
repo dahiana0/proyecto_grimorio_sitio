@@ -10,7 +10,7 @@ import TituloEquipo from "../Components/TituloEquipo";
 export const SobreNosotros = () => {
     return (
         <>
-            <Header />
+            
             <BannerSobreNosotros />
             <CardInfoS
                 titulo="MISIÓN"
@@ -42,7 +42,7 @@ export const SobreNosotros = () => {
                 style={{
                     width: "100%",
                     display: "flex",
-                    justifyContent: "center", // 🔥 CENTRA TODO
+                    justifyContent: "center", 
                     alignItems: "center",
                     gap: "40px",
                     flexWrap: "wrap",
@@ -74,7 +74,7 @@ export const SobreNosotros = () => {
                     iniciales="YA"
                 />
             </div>
-            <Footer />
+            
 
         </>
     );

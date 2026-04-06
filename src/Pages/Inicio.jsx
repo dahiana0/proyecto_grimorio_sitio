@@ -9,11 +9,11 @@ import Footer from "../Components/footer";
 export const Inicio = () => {
   return (
     <>
-         <Header />
+         
          <Banner />
          <InicioHistoriaBasada />
          <VideoIntroductorio />
-         <Footer />
+         
  
     </>
   );

@@ -9,7 +9,7 @@ export const Banner = () => {
         position: "relative",
         width: "100%",
         height: "100vh",
-        backgroundImage: "url('./public/Fondoinicio.png')", 
+        backgroundImage: "url('./Fondoinicio.png')", 
         backgroundSize: "cover",
         backgroundPosition: "center",
         display: "flex",

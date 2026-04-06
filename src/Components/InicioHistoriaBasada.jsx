@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 
 export const InicioHistoriaBasada = () => {
   const imagenes = [
-    "/public/libro1.png",
-    "/public/Libro2.png",
+    "./Libro1.png",
+    "./Libro2.png",
   ];
 
   const [index, setIndex] = useState(0);
@@ -58,7 +58,7 @@ export const InicioHistoriaBasada = () => {
           }}
         />
 
-        {/* TEXTO */}
+       
         <div style={{ color: "#e8e6e3", maxWidth: "500px" }}>
           <p
             style={{

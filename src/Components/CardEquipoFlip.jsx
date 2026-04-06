@@ -84,7 +84,7 @@ export const CardEquipoFlip = ({
           </div>
         </div>
 
-        {/* 🔥 ATRÁS */}
+      
         <div
           style={{
             position: "absolute",

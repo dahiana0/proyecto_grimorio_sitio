@@ -1,54 +1,76 @@
 import React from "react";
 import Header from "../Components/Header";
-import CardGrande  from "../Components/CardGrande";
+import TituloPersonajes from "../Components/TituloPersonajes";
+import CardGrande from "../Components/CardGrande";
 import Footer from "../Components/footer";
 
 
 export const Personajes = () => {
-    return (
-        <>
-            <Header />
-            <div
-                style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(2, 1fr)", // 🔥 2 columnas
-                    gap: "30px",
-                    maxWidth: "1200px",
-                    margin: "0 auto",
-                }}
-            >
-                <CardGrande
-                    nombre="Stephen Jones"
-                    rol="EL ESCÉPTICO"
-                    descripcion="Un hombre racional que no cree en lo paranormal."
-                    imagen="/imagenes/jones.jpg"
-                />
+  return (
+    <>
+      
+      <div style={{ paddingTop: "100px" }}>
+        <TituloPersonajes />
+       
+      </div>
+      <div
+        style={{
+          width: "100%",
+          paddingTop: "120px",
+          paddingBottom: "60px",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            gap: "25px",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            maxWidth: "1200px",
+          }}
+        >
+          <CardGrande
+            nombre="STEPHEN JONES"
+            rol="EL ESCÉPTICO"
+            descripcion="Un hombre racional que no cree en lo sobrenatural..."
+            imagen="./stephen.jpg"
+            tipo="Protagonista"
+            rasgo="Racional"
+          />
 
-                <CardGrande
-                    nombre="George Rogers"
-                    rol="EL CURADOR"
-                    descripcion="Dueño del museo de cera con secretos oscuros."
-                    imagen="/imagenes/rogers.jpg"
-                />
+          <CardGrande
+            nombre="GEORGE ROGERS"
+            rol="EL CURADOR"
+            descripcion="Dueño del museo de cera..."
+            imagen="./rogers.jpg"
+            tipo="Antagonista"
+            rasgo="Obsesivo"
+          />
 
-                <CardGrande
-                    nombre="Orabona"
-                    rol="EL ENIGMA"
-                    descripcion="Un socio silencioso con un pasado misterioso."
-                    imagen="/imagenes/orabona.jpg"
-                />
+          <CardGrande
+            nombre="ORABONA"
+            rol="EL ENIGMA"
+            descripcion="El socio silencioso de Rogers. Misterioso y Raro..."
+            imagen="./orabona.jpg"
+            tipo="Misterioso"
+            rasgo="Aliado"
+          />
 
-                <CardGrande
-                    nombre="Cthulhu"
-                    rol="EL HORROR"
-                    descripcion="Una entidad cósmica más allá de la comprensión."
-                    imagen="/imagenes/cthulhu.jpg"
-                />
-            </div>
+          <CardGrande
+            nombre="CTHULHU"
+            rol="El Horror"
+            descripcion="Un ser informe y tentacular. El verdadero secreto del museo… y la"
+            imagen="./cthulhu.jpg"
+            tipo="Cósmico"
+            rasgo="Entidad"
+          />
+        </div>
+      </div>
+     
 
-            <Footer />
-
-        </>
-    );
+    </>
+  );
 };
 
