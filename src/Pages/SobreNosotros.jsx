@@ -10,7 +10,7 @@ import TituloEquipo from "../Components/TituloEquipo";
 export const SobreNosotros = () => {
     return (
         <>
-            
+            <Header /> 
             <BannerSobreNosotros />
             <CardInfoS
                 titulo="MISIÓN"
@@ -54,7 +54,7 @@ export const SobreNosotros = () => {
                     nombre="Sofía Amaya Reyes"
                     rol="DISEÑADORA PRINCIPAL"
                     descripcion="Experta en arte gótico y diseño UI/UX. Crea la identidad visual y la experiencia inmersiva."
-                    imagen="/persona1.jpg"
+                    imagen="./Sofia.jpeg"
                     iniciales="SA"
                 />
 
@@ -62,7 +62,7 @@ export const SobreNosotros = () => {
                     nombre="Karol Dahiana Usuga"
                     rol="DESARROLLADORA LÍDER"
                     descripcion="Encargada del desarrollo técnico del proyecto."
-                    imagen="/persona2.jpg"
+                    imagen="./Karol.jpeg"
                     iniciales="KU"
                 />
 
@@ -70,9 +70,10 @@ export const SobreNosotros = () => {
                     nombre="Yamile Arias Pérez"
                     rol="ARTISTA CONCEPTUAL"
                     descripcion="Creadora del estilo visual oscuro de Grimorio."
-                    imagen="/persona3.jpg"
+                    imagen="./Yamile.jpeg"
                     iniciales="YA"
                 />
+                 <Footer />
             </div>
             
 

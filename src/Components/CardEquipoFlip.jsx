@@ -75,7 +75,7 @@ export const CardEquipoFlip = ({
             <p
               style={{
                 color: "#bfa76a",
-                fontFamily: "mono",
+                fontFamily: "monospace",
                 fontSize: "12px",
               }}
             >
@@ -134,7 +134,7 @@ export const CardEquipoFlip = ({
           <p
             style={{
               color: "#bfa76a",
-              fontFamily: "mono",
+              fontFamily: "monospace",
               fontSize: "15px",
               marginBottom: "15px",
             }}
@@ -145,7 +145,7 @@ export const CardEquipoFlip = ({
           <p
             style={{
               color: "#cfcfcf",
-              fontFamily: "mono",
+              fontFamily: "monospace",
               fontSize: "14px",
               lineHeight: "1.6",
             }}

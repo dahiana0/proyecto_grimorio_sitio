@@ -82,7 +82,7 @@ export const StepDescripcion = () => {
                 borderRadius: "20px",
                 fontSize: "13px",
                 color: "#bfa76a",
-                 fontFamily:"mono",
+                 fontFamily:"monospace",
               }}
             >
               Protagonista
@@ -95,7 +95,7 @@ export const StepDescripcion = () => {
                 borderRadius: "20px",
                 fontSize: "13px",
                 color: "#bfa76a",
-                 fontFamily:"mono",
+                 fontFamily:"monospace",
               }}
             >
               Racional
@@ -112,7 +112,7 @@ export const StepDescripcion = () => {
               fontSize: "13px",
               letterSpacing: "3px",
               marginBottom: "8px",
-              fontFamily:"mono",
+              fontFamily:"monospace",
             }}
           >
             EL ESCÉPTICO
@@ -139,7 +139,7 @@ export const StepDescripcion = () => {
               color: "#cfcfcf",
               marginBottom: "20px",
               lineHeight: "1.6",
-              fontFamily:"mono",
+              fontFamily:"monospace",
             }}
           >
             "Un hombre racional y culto que no cree en lo sobrenatural… hasta que el museo le demuestra lo contrario."
@@ -161,7 +161,7 @@ export const StepDescripcion = () => {
               lineHeight: "1.8",
               color: "#ddd",
               fontSize: "16px",
-              fontFamily:"mono",
+              fontFamily:"monospace",
             }}
           >
            Stephen Jones es un periodista y escritor reconocido por su pensamiento crítico y su escepticismo absoluto. Criado en una familia académica de Boston, siempre buscó respuestas racionales a los misterios del mundo. Cuando recibe una invitación anónima para visitar un museo de cera en una ciudad costera olvidada, su curiosidad lo lleva a aceptar. Lo que encuentra allí desafía todo lo que creía saber. Las figuras de cera parecen demasiado reales, los pasillos parecen cambiar de forma, y una presencia antigua lo acecha desde las sombras. A medida que descubre la verdad detrás del museo, Stephen debe enfrentarse a la posibilidad de que la razón no puede explicar todo lo que existe en el universo.

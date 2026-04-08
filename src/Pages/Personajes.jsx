@@ -8,7 +8,7 @@ import Footer from "../Components/footer";
 export const Personajes = () => {
   return (
     <>
-      
+       <Header />
       <div style={{ paddingTop: "100px" }}>
         <TituloPersonajes />
        
@@ -68,6 +68,7 @@ export const Personajes = () => {
           />
         </div>
       </div>
+       <Footer/>
      
 
     </>

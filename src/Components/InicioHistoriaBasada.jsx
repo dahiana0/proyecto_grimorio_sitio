@@ -66,7 +66,7 @@ export const InicioHistoriaBasada = () => {
               fontSize: "13px",
               color: "#bfa76a",
               marginBottom: "15px",
-              fontFamily: "mono",
+              fontFamily: "monospace",
             }}
           >
             HISTORIA BASADA EN
@@ -89,7 +89,7 @@ export const InicioHistoriaBasada = () => {
               fontSize: "18px",
               lineHeight: "1.8",
               color: "#cfcfcf",
-              fontFamily: "mono ",
+              fontFamily: "monospace ",
             }}
           >
             Inspirado en el relato de H. P. Lovecraft y Hazel Heald, esta

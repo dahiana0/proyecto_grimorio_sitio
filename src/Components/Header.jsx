@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "../Styles/css.css";
 
 export const Header = () => {
@@ -18,7 +19,7 @@ export const Header = () => {
         
         <a
           className="navbar-brand"
-          href="/"
+          to="/inicio"
           style={{
             color: "#ffffff",
             letterSpacing: "3px",
@@ -32,40 +33,40 @@ export const Header = () => {
       
         <div className="d-flex align-items-center gap-4">
 
-          <a
+          <Link
             className="nav-link"
-            href="/"
+            to="/"
             style={{ color: "#ffffff", fontSize:"18px" }}
           >
             INICIO
-          </a>
+          </Link>
 
-          <a
+          <Link
             className="nav-link"
-            href="/about"
+            to="/sobrenosotros"
             style={{ color: "#ffffff", fontSize:"18px",}} 
           >
             SOBRE NOSOTROS
-          </a>
+          </Link>
 
-          <a
+          <Link
             className="nav-link"
-            href="/personajes"
+            to="/personajes"
             style={{ color: "#ffffff",fontSize:"18px" }}  
           >
             PERSONAJES
-          </a>
+          </Link>
 
-          <a
+          <Link
             className="nav-link"
-            href="/recomendaciones"
+            to="/Recomendaciones"
             style={{ color: "#ffffff",fontSize:"18px" }}
           >
             RECOMENDACIONES
-          </a>
+          </Link>
 
-          <a
-            href="/explorar"
+          <Link
+            to="/explorarmuseo"
             style={{
               display: "flex",
               alignItems: "center",
@@ -94,7 +95,7 @@ export const Header = () => {
             />
 
             EXPLORAR MUSEO
-          </a>
+          </Link>
 
         </div>
       </div>

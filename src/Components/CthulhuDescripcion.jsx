@@ -82,7 +82,7 @@ export const CthulhuDescripcion = () => {
                 borderRadius: "20px",
                 fontSize: "13px",
                 color: "#bfa76a",
-                 fontFamily:"mono",
+                 fontFamily:"monospace",
               }}
             >
            Cósmico
@@ -95,7 +95,7 @@ export const CthulhuDescripcion = () => {
                 borderRadius: "20px",
                 fontSize: "13px",
                 color: "#bfa76a",
-                 fontFamily:"mono",
+                 fontFamily:"monospace",
               }}
             >
             Entidad
@@ -112,7 +112,7 @@ export const CthulhuDescripcion = () => {
               fontSize: "13px",
               letterSpacing: "3px",
               marginBottom: "8px",
-              fontFamily:"mono",
+              fontFamily:"monospace",
             }}
           >
             EL HORRR
@@ -139,7 +139,7 @@ export const CthulhuDescripcion = () => {
               color: "#cfcfcf",
               marginBottom: "20px",
               lineHeight: "1.6",
-              fontFamily:"mono",
+              fontFamily:"monospace",
             }}
           >
            "Un ser informe y tentacular. El verdadero secreto del museo… y la prueba de que algunos horrores no deberían existir."
@@ -161,7 +161,7 @@ export const CthulhuDescripcion = () => {
               lineHeight: "1.8",
               color: "#ddd",
               fontSize: "16px",
-              fontFamily:"mono",
+              fontFamily:"monospace",
             }}
           >
            Cthulhu no es simplemente una figura del museo: es la razón de su existencia. La entidad cósmica yace en un sueño eterno en las profundidades del océano, pero su influencia se extiende como tentáculos invisibles a través del tiempo y el espacio. El grimorio que Rogers encontró es un fragmento del Necronomicón, y los rituales que contiene sirven como puente entre nuestra realidad y la dimensión donde Cthulhu aguarda.

@@ -27,7 +27,7 @@ export const Footer = () => {
           justifyContent: "space-between",
           alignItems: "center",
           color: "#cfcfcf",
-          fontFamily: "mono",
+          fontFamily: "monospace",
           fontSize: "13px",
         }}
       >
@@ -38,7 +38,7 @@ export const Footer = () => {
         </div>
 
         
-        <div style={{ display: "flex", alignItems: "center", gap: "15px", fontFamily:"mono",fontSize:"15px", }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "15px", fontFamily:"monospace",fontSize:"15px", }}>
           <span style={{ letterSpacing: "2px" }}>
             © 2025 · LECTURA INMERSIVA DIGITAL
           </span>

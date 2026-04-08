@@ -1,41 +1,40 @@
 import React from "react";
 
-export const TituloEquipo = () => {
+export const TituloCapitulos = () => {
   return (
     <div
       style={{
-        width: "100%",
         textAlign: "center",
         marginBottom: "60px",
       }}
     >
-    
+      
       <p
         style={{
           color: "#bfa76a",
-          letterSpacing: "6px",
-          fontSize: "18px",
           fontFamily: "monospace",
-          marginBottom: "15px",
+          fontSize: "15px",
+          letterSpacing: "4px",
+          marginBottom: "10px",
         }}
       >
-        NUESTRO EQUIPO
+        SELECCIONA UN CAPÍTULO
       </p>
 
-      
+     
       <h1
         style={{
           color: "#fff",
           fontFamily: "haus",
-          fontSize: "50px",
-          letterSpacing: "2px",
+          fontSize: "80px",
+          letterSpacing: "3px",
           textShadow:"0 0 6px #fff"
         }}
       >
-        GUARDIANAS DE GRIMORIO
+        EXPLORA EL MUSEO
       </h1>
     </div>
   );
 };
 
-export default TituloEquipo;
+export default TituloCapitulos;

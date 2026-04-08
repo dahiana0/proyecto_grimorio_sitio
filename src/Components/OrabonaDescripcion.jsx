@@ -82,7 +82,7 @@ export const OrabonaDescripcion = () => {
                 borderRadius: "20px",
                 fontSize: "13px",
                 color: "#bfa76a",
-                 fontFamily:"mono",
+                 fontFamily:"monospace",
               }}
             >
            Misterioso
@@ -95,7 +95,7 @@ export const OrabonaDescripcion = () => {
                 borderRadius: "20px",
                 fontSize: "13px",
                 color: "#bfa76a",
-                 fontFamily:"mono",
+                 fontFamily:"monospace",
               }}
             >
              Aliado
@@ -112,7 +112,7 @@ export const OrabonaDescripcion = () => {
               fontSize: "13px",
               letterSpacing: "3px",
               marginBottom: "8px",
-              fontFamily:"mono",
+              fontFamily:"monospace",
             }}
           >
             EL ENIGMA
@@ -139,7 +139,7 @@ export const OrabonaDescripcion = () => {
               color: "#cfcfcf",
               marginBottom: "20px",
               lineHeight: "1.6",
-              fontFamily:"mono",
+              fontFamily:"monospace",
             }}
           >
             "El socio silencioso de Rogers. Misterioso y enigmático, siempre parece saber más de lo que muestra."
@@ -161,7 +161,7 @@ export const OrabonaDescripcion = () => {
               lineHeight: "1.8",
               color: "#ddd",
               fontSize: "16px",
-              fontFamily:"mono",
+              fontFamily:"monospace",
             }}
           >
            Orabona llegó al museo hace décadas, nadie sabe exactamente cuándo. Algunos dicen que fue el primer asistente del padre de Rogers, otros creen que estuvo allí antes que cualquier miembro de la familia. Habla poco, pero cuando lo hace, sus palabras tienen un peso que hiela la sangre. Conoce cada rincón del museo, cada secreto oculto tras sus paredes. Su lealtad a Rogers parece inquebrantable, pero hay momentos en que sus ojos revelan algo más.

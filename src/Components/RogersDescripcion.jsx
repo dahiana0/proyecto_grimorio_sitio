@@ -82,7 +82,7 @@ export const RogersDescripcion = () => {
                 borderRadius: "20px",
                 fontSize: "13px",
                 color: "#bfa76a",
-                 fontFamily:"mono",
+                 fontFamily:"monospace",
               }}
             >
              Antagonista
@@ -95,7 +95,7 @@ export const RogersDescripcion = () => {
                 borderRadius: "20px",
                 fontSize: "13px",
                 color: "#bfa76a",
-                 fontFamily:"mono",
+                 fontFamily:"monospace",
               }}
             >
              Obsesivo
@@ -112,7 +112,7 @@ export const RogersDescripcion = () => {
               fontSize: "13px",
               letterSpacing: "3px",
               marginBottom: "8px",
-              fontFamily:"mono",
+              fontFamily:"monospace",
             }}
           >
             EL CURADOR
@@ -139,7 +139,7 @@ export const RogersDescripcion = () => {
               color: "#cfcfcf",
               marginBottom: "20px",
               lineHeight: "1.6",
-              fontFamily:"mono",
+              fontFamily:"monospace",
             }}
           >
             "Dueño del museo de cera. Fascinado desde niño por embalsamar y preservar, su pasión roza lo macabro."
@@ -161,7 +161,7 @@ export const RogersDescripcion = () => {
               lineHeight: "1.8",
               color: "#ddd",
               fontSize: "16px",
-              fontFamily:"mono",
+              fontFamily:"monospace",
             }}
           >
            George Rogers heredó el museo de su padre, un taxidermista excéntrico que dedicó su vida a preservar la belleza en la muerte. Desde niño, George mostró una fascinación perturbadora por la frontera entre lo vivo y lo inerte. Estudió química y anatomía, perfeccionando técnicas de preservación que superaban cualquier método conocido. Sus figuras de cera son tan realistas que visitantes han jurado verlas respirar. Pero el secreto de su arte no es la cera: Rogers descubrió un antiguo grimorio que contiene rituales para atrapar la esencia vital de los seres vivos.

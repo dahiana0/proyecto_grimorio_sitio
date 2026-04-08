@@ -1,8 +1,13 @@
 import React from "react";
 import "../Styles/css.css";
+import { useNavigate } from "react-router-dom";
+
+
 
 
 export const Banner = () => {
+   const navigate = useNavigate();
+
   return (
     <div
       style={{
@@ -56,7 +61,7 @@ export const Banner = () => {
             letterSpacing: "5px",
             fontSize: "18px",
             marginBottom: "20px",
-            fontFamily:"mono",
+            fontFamily:"monospace",
           }}
         >
           SI TE ATREVES A ENTRAR
@@ -78,7 +83,7 @@ export const Banner = () => {
             fontSize: "18px",
             lineHeight: "1.6",
             marginBottom: "30px",
-            fontFamily:"mono"
+            fontFamily:"monospace"
           }}
         >
            Explora el Museo del Horror de Grimorio…
@@ -87,21 +92,22 @@ export const Banner = () => {
            y cada paso te acerca a algo que nunca debiste encontrar.
         </p>
 
-        <button
-          style={{
-            border: "1px solid #ffffff",
-            padding: "10px 25px",
-            background: "transparent",
-            color: "#ffffff",
-            borderRadius: "6px",
-            letterSpacing: "2px",
-            cursor: "pointer",
-            fontFamily:"haus",
-            textShadow:"0 0 6px #fff",
-          }}
-        >
-          EXPLORAR MUSEO
-        </button>
+       <button
+        onClick={() => navigate("/explorar-museo")}
+        style={{
+          border: "1px solid #ffffff",
+          padding: "10px 25px",
+          background: "transparent",
+          color: "#ffffff",
+          borderRadius: "6px",
+          letterSpacing: "2px",
+          cursor: "pointer",
+          fontFamily: "haus",
+          textShadow: "0 0 6px #fff",
+        }}
+      >
+        EXPLORAR MUSEO
+      </button>
 
       </div>
     </div>

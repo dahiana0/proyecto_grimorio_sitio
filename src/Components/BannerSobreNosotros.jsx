@@ -21,7 +21,7 @@ export const BannerSobreNosotros = () => {
             color: "#bfa76a",
             fontSize: "18px",
             marginBottom: "20px",
-            fontFamily: "mono",
+            fontFamily: "monospace",
           }}
         >
           SOBRE NOSOTROS
@@ -40,10 +40,10 @@ export const BannerSobreNosotros = () => {
 
         <p
           style={{
-            fontSize: "20px",
+            fontSize: "15px",
             lineHeight: "1.8",
             color: "#cfcfcf",
-            fontFamily: "mono",
+            fontFamily: "monospace",
             maxWidth: "600px",
             
           }}
