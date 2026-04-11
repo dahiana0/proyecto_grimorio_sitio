@@ -1,9 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-export const VolverInicio = ({ onClick }) => {
+export const VolverInicio = () => {
+  const navigate = useNavigate();
   return (
     <div
-      onClick={onClick}
       style={{
         display: "flex",
         alignItems: "center",
@@ -12,28 +13,25 @@ export const VolverInicio = ({ onClick }) => {
         marginBottom: "40px",
       }}
     >
-      
-      <span
+    
+     <button
+        onClick={() => navigate("/")}
         style={{
-          color: "#cfcfcf",
-          fontSize: "18px",
-          fontFamily: "monospace",
+          position: "absolute",
+          top: "20px",
+          left: "20px",
+          border: "1px solid #ffffff",
+          padding: "8px 16px",
+          borderRadius: "8px",
+          color: "#ffffff",
+          fontSize: "12px",
+          letterSpacing: "1px",
+          fontFamily:"haus",
+          backgroundColor:"#ffffff1a"
         }}
       >
-        ✕
-      </span>
-
-      
-      <span
-        style={{
-          color: "#cfcfcf",
-          fontSize: "13px",
-          letterSpacing: "2px",
-          fontFamily: "monospace",
-        }}
-      >
-        VOLVER AL INICIO
-      </span>
+        ← VOLVER AL INICIO
+      </button>
     </div>
   );
 };

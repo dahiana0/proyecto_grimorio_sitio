@@ -3,34 +3,20 @@ import Header from "../Components/Header";
 import TituloPersonajes from "../Components/TituloPersonajes";
 import CardGrande from "../Components/CardGrande";
 import Footer from "../Components/footer";
-
+import "../Styles/css.css";
 
 export const Personajes = () => {
   return (
     <>
-       <Header />
-      <div style={{ paddingTop: "100px" }}>
+      <Header />
+
+      <div className="personajes-titulo pt-6">
         <TituloPersonajes />
-       
       </div>
-      <div
-        style={{
-          width: "100%",
-          paddingTop: "120px",
-          paddingBottom: "60px",
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            gap: "25px",
-            flexWrap: "wrap",
-            justifyContent: "center",
-            maxWidth: "1200px",
-          }}
-        >
+
+      <div className="personajes-container d-flex justify-content-center py-5">
+        <div className="personajes-grid d-flex flex-wrap justify-content-center gap-4">
+          
           <CardGrande
             nombre="STEPHEN JONES"
             rol="EL ESCÉPTICO"
@@ -38,6 +24,7 @@ export const Personajes = () => {
             imagen="./stephen.jpg"
             tipo="Protagonista"
             rasgo="Racional"
+            ruta="/step"
           />
 
           <CardGrande
@@ -47,31 +34,32 @@ export const Personajes = () => {
             imagen="./rogers.jpg"
             tipo="Antagonista"
             rasgo="Obsesivo"
+            ruta="/rogers"
           />
 
           <CardGrande
             nombre="ORABONA"
             rol="EL ENIGMA"
-            descripcion="El socio silencioso de Rogers. Misterioso y Raro..."
+            descripcion="El socio silencioso de Rogers. Misterioso y raro..."
             imagen="./orabona.jpg"
             tipo="Misterioso"
             rasgo="Aliado"
+            ruta="/orabona"
           />
 
           <CardGrande
             nombre="CTHULHU"
-            rol="El Horror"
-            descripcion="Un ser informe y tentacular. El verdadero secreto del museo… y la"
+            rol="EL HORROR"
+            descripcion="Un ser informe y tentacular. El verdadero secreto del museo…"
             imagen="./cthulhu.jpg"
             tipo="Cósmico"
             rasgo="Entidad"
+            ruta="/cthulhu"
           />
         </div>
       </div>
-       <Footer/>
-     
 
+      <Footer />
     </>
   );
 };
-

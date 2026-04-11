@@ -1,38 +1,18 @@
 import React from "react";
+import "../Styles/css.css";
 
 export const TituloCapitulos = () => {
   return (
-    <div
-      style={{
-        textAlign: "center",
-        marginBottom: "60px",
-      }}
-    >
-      
-      <p
-        style={{
-          color: "#bfa76a",
-          fontFamily: "monospace",
-          fontSize: "15px",
-          letterSpacing: "4px",
-          marginBottom: "10px",
-        }}
-      >
+    <div className="titulo-capitulos">
+
+      <p className="titulo-sub">
         SELECCIONA UN CAPÍTULO
       </p>
 
-     
-      <h1
-        style={{
-          color: "#fff",
-          fontFamily: "haus",
-          fontSize: "80px",
-          letterSpacing: "3px",
-          textShadow:"0 0 6px #fff"
-        }}
-      >
+      <h1 className="titulo-main">
         EXPLORA EL MUSEO
       </h1>
+
     </div>
   );
 };

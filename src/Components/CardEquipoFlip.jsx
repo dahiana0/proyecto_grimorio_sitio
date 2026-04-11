@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import "../Styles/css.css";
 
 export const CardEquipoFlip = ({
   nombre,
@@ -14,144 +14,48 @@ export const CardEquipoFlip = ({
   const [flip, setFlip] = useState(false);
 
   return (
-    
     <div
-
+      className="card-flip-container"
       onClick={() => setFlip(!flip)}
-      style={{
-        width: "260px",
-        height: "380px",
-        perspective: "1000px",
-        cursor: "pointer",
-      }}
     >
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          position: "relative",
-          transformStyle: "preserve-3d",
-          transition: "transform 0.6s",
-          transform: flip ? "rotateY(180deg)" : "rotateY(0deg)",
-        }}
-      >
-        
-        <div
-          style={{
-            position: "absolute",
-            width: "100%",
-            height: "100%",
-            backfaceVisibility: "hidden",
-            borderRadius: "12px",
-            overflow: "hidden",
-            border: "1px solid #2a3a38",
-          }}
-        >
-          <img
-            src={imagen}
-            alt={nombre}
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-            }}
-          />
+      <div className={`card-flip ${flip ? "flip" : ""}`}>
 
-         
-          <div
-            style={{
-              position: "absolute",
-              bottom: "0",
-              width: "100%",
-              padding: "15px",
-              background:
-                "linear-gradient(to top, rgba(0,0,0,0.9), transparent)",
-            }}
-          >
-            <h3 style={{ color: "#fff", fontFamily: "haus" }}>
-              {nombre}
-            </h3>
+        <div className="card-flip-front">
 
-            <p
-              style={{
-                color: "#bfa76a",
-                fontFamily: "monospace",
-                fontSize: "12px",
-              }}
-            >
-              {rol}
-            </p>
+          <img src={imagen} alt={nombre} className="card-flip-img" />
+
+          <div className="card-flip-overlay">
+            <h3 className="card-flip-title">{nombre}</h3>
+            <p className="card-flip-rol">{rol}</p>
           </div>
+
         </div>
 
-      
-        <div
-          style={{
-            position: "absolute",
-            width: "100%",
-            height: "100%",
-            backfaceVisibility: "hidden",
-            borderRadius: "12px",
-            backgroundColor: "#111817",
-            border: "1px solid #2a3a38",
-            transform: "rotateY(180deg)",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "25px",
-            textAlign: "center",
-          }}
-        >
+        <div className="card-flip-back text-center">
+
           <div
+            className="card-flip-avatar"
             style={{
-              width: "55px",
-              height: "55px",
-              borderRadius: "50%",
               backgroundColor: colorFondo,
               border: `2px solid ${colorBorde}`,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              marginBottom: "15px",
             }}
           >
             <span
-              style={{
-                color: colorIniciales,
-                fontFamily: "haus",
-                fontSize: "18px",
-              }}
+              className="card-flip-iniciales"
+              style={{ color: colorIniciales }}
             >
               {iniciales}
             </span>
           </div>
 
-          <h3 style={{ color: "#fff", fontFamily: "haus" }}>
-            {nombre}
-          </h3>
+          <h3 className="card-flip-title">{nombre}</h3>
 
-          <p
-            style={{
-              color: "#bfa76a",
-              fontFamily: "monospace",
-              fontSize: "15px",
-              marginBottom: "15px",
-            }}
-          >
-            {rol}
-          </p>
+          <p className="card-flip-rol mb-2">{rol}</p>
 
-          <p
-            style={{
-              color: "#cfcfcf",
-              fontFamily: "monospace",
-              fontSize: "14px",
-              lineHeight: "1.6",
-            }}
-          >
+          <p className="card-flip-desc">
             {descripcion}
           </p>
+
         </div>
       </div>
     </div>

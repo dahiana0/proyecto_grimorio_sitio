@@ -9,6 +9,11 @@
 }
 
 
+.pt-6{
+  padding-top: 10rem !important;
+}
+
+
 .mainmenu a:hover{
 
 text-shadow: 2px 2px 4px gray;
@@ -18,4 +23,1189 @@ text-shadow: 2px 2px 4px gray;
 .mainmenu a:active{
 
 color: brown;
+}
+
+
+.banner-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-image: url("/Fondoinicio.png");
+  background-size: cover;
+  background-position: center;
+}
+
+
+.banner-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.7) 0%,
+    rgba(0, 0, 0, 0.6) 40%,
+    rgba(0, 0, 0, 0.85) 70%,
+    #0b0f0e 100%
+  );
+  z-index: 1;
+}
+
+
+.banner-content {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+  padding: 20px;
+}
+
+
+.banner-subtitle {
+  letter-spacing: 5px;
+  font-size: 18px;
+  margin-bottom: 20px;
+  font-family: monospace;
+}
+
+
+.banner-title {
+  font-size: 120px;
+  font-family: "haus";
+  margin-bottom: 20px;
+  text-shadow: 0 0 8px #fff;
+}
+
+
+.banner-text {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  font-family: monospace;
+}
+
+
+.banner-btn {
+  border: 1px solid #ffffff;
+  padding: 10px 25px;
+  background: transparent;
+  color: #ffffff;
+  border-radius: 6px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  font-family: "haus";
+  text-shadow: 0 0 6px #fff;
+  transition: all 0.3s ease;
+}
+
+.banner-btn:hover {
+  background: #ffffff;
+  color: #000;
+  text-shadow: none;
+}
+
+.sobre-container {
+  width: 100%;
+  padding: 100px 20px;
+  min-height: 60vh;
+}
+
+
+.sobre-content {
+  max-width: 900px;
+}
+
+
+.sobre-subtitle {
+  letter-spacing: 6px;
+  color: #bfa76a;
+  font-size: 18px;
+  margin-bottom: 20px;
+  font-family: monospace;
+}
+
+
+.sobre-title {
+  font-size: 50px;
+  margin-bottom: 25px;
+  font-family: "haus";
+  text-shadow: 0 0 6px #fff;
+}
+
+
+.sobre-text {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #cfcfcf;
+  font-family: monospace;
+  max-width: 600px;
+}
+
+
+
+.card-capitulo {
+  width: 280px;
+  height: 420px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid #2a3a38;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+.card-capitulo:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 0 25px rgba(191, 167, 106, 0.3);
+}
+
+
+.card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+}
+
+.card-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.95) 20%,
+    rgba(0, 0, 0, 0.6) 50%,
+    transparent 100%
+  );
+}
+
+
+.card-badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background-color: #5a3d24;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  color: #fff;
+  font-family: monospace;
+  z-index: 2;
+}
+
+
+.card-content {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 20px;
+  z-index: 2;
+}
+
+
+.card-title {
+  font-family: "haus";
+  margin-bottom: 10px;
+}
+
+
+.card-text {
+  color: #cfcfcf;
+  font-size: 13px;
+  font-family: monospace;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+
+.card-btn {
+  padding: 12px;
+  border: 2px solid #3a3727;
+  border-radius: 13px;
+  background-color: #3a3727;
+  color: #fff;
+  font-size: 15px;
+  font-family: "haus";
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.card-btn:hover {
+  background-color: transparent;
+  border: 2px solid #bfa76a;
+  color: #bfa76a;
+}
+
+
+.card-flip-container {
+  width: 260px;
+  height: 380px;
+  perspective: 1000px;
+  cursor: pointer;
+  flex: 0 0 auto; /* evita que se deformen */
+}
+
+.card-flip {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+  transform-origin: center; /* mejora el giro */
+}
+
+.card-flip.flip {
+  transform: rotateY(180deg);
+}
+
+.card-flip-front,
+.card-flip-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #2a3a38;
+  backface-visibility: hidden;
+  box-sizing: border-box; 
+}
+
+
+.card-flip-front {
+  position: absolute;
+}
+
+.card-flip-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-flip-overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9),
+    transparent
+  );
+}
+
+
+.card-flip-back {
+  background-color: #111817;
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
+}
+
+
+.card-flip-avatar {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+
+.card-flip-iniciales {
+  font-family: "haus";
+  font-size: 18px;
+}
+
+.card-flip-title {
+  color: #fff;
+  font-family: "haus";
+  text-align: center;
+}
+
+.card-flip-rol {
+  color: #bfa76a;
+  font-family: monospace;
+  font-size: 14px;
+  text-align: center;
+}
+
+.card-flip-desc {
+  color: #cfcfcf;
+  font-family: monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  text-align: center;
+   max-height: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+.card-grande {
+  width: 260px;
+  height: 350px;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid #2a3a38;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+
+.card-grande:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 0 25px rgba(191, 167, 106, 0.5);
+  border: 1px solid #bfa76a;
+}
+
+
+.card-grande-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+.card-grande-overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.95),
+    transparent
+  );
+}
+
+
+.card-grande-rol {
+  color: #bfa76a;
+  font-size: 11px;
+  letter-spacing: 2px;
+  font-family: monospace;
+  margin-bottom: 5px;
+}
+
+
+.card-grande-nombre {
+  color: #fff;
+  font-size: 16px;
+  font-family: "haus";
+  margin-bottom: 6px;
+}
+
+.card-grande-desc {
+  color: #ccc;
+  font-size: 12px;
+  line-height: 1.4;
+  font-family: monospace;
+  margin-bottom: 15px;
+}
+
+
+.card-grande-tag {
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid #bfa76a;
+  color: #bfa76a;
+  font-size: 12px;
+  font-family: monospace;
+}
+
+
+.card-grande-btn {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #bfa76a;
+  background: rgba(191, 167, 106, 0.1);
+  color: #bfa76a;
+  font-size: 11px;
+  cursor: pointer;
+  font-family: "haus";
+  transition: all 0.3s ease;
+}
+
+.card-grande-btn:hover {
+  background: #bfa76a;
+  color: #000;
+}
+
+
+
+.card-infos-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 80px;
+}
+
+
+.card-infos-content {
+  gap: 25px;
+  max-width: 600px;
+  width: 100%;
+}
+
+
+.card-infos-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 12px;
+  border: 1px solid #d2b87933;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  background-color: rgba(210, 184, 121, 0.1);
+}
+
+
+.card-infos-img {
+  width: 35px;
+}
+
+
+.card-infos-text {
+  max-width: 420px;
+}
+
+
+.card-infos-title {
+  color: #fff;
+  font-family: "haus";
+  margin-bottom: 10px;
+}
+
+
+.card-infos-desc {
+  color: #cfcfcf;
+  font-family: monospace;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+
+
+.card-recomendacion {
+  gap: 15px;
+  padding: 15px;
+  border-radius: 12px;
+  border: 1px solid #2a3a38;
+  background-color: #0f1716;
+  width: 100%;
+  max-width: 360px;
+  transition: all 0.3s ease;
+}
+
+
+.card-recomendacion:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 0 20px rgba(191, 167, 106, 0.4);
+  border: 1px solid #bfa76a;
+}
+
+
+.card-recomendacion-img {
+  width: 80px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+
+.card-recomendacion-title {
+  color: #fff;
+  font-family: "haus";
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+
+.card-recomendacion-meta {
+  color: #bfa76a;
+  font-size: 11px;
+  font-family: monospace;
+  margin-bottom: 8px;
+}
+
+
+.card-recomendacion-desc {
+  color: #ccc;
+  font-size: 12px;
+  font-family: monospace;
+  line-height: 1.4;
+}
+
+
+
+.cthulhu-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 9999;
+  padding: 40px;
+}
+
+
+.cthulhu-back-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  border: 1px solid #ffffff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 12px;
+  letter-spacing: 1px;
+  font-family: "haus";
+  background-color: rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+}
+
+
+.cthulhu-close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.cthulhu-close-img {
+  width: 24px;
+  height: 24px;
+}
+
+
+.cthulhu-content {
+  gap: 60px;
+  max-width: 1200px;
+  width: 100%;
+  color: white;
+}
+
+
+.cthulhu-img {
+  width: 300px;
+  border-radius: 12px;
+  border: 1px solid #2a3a38;
+}
+
+
+.cthulhu-tag {
+  border: 1px solid #bfa76a;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+  color: #bfa76a;
+  font-family: monospace;
+}
+
+
+.cthulhu-text {
+  flex: 1;
+}
+
+
+.cthulhu-subtitle {
+  color: #bfa76a;
+  font-size: 13px;
+  letter-spacing: 3px;
+  margin-bottom: 8px;
+  font-family: monospace;
+}
+
+
+.cthulhu-title {
+  font-size: 45px;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  font-family: "haus";
+  text-shadow: 0 0 6px #ffffff;
+}
+
+
+.cthulhu-quote {
+  font-style: italic;
+  color: #cfcfcf;
+  margin-bottom: 20px;
+  line-height: 1.6;
+  font-family: monospace;
+}
+
+
+.cthulhu-line {
+  width: 40px;
+  height: 1px;
+  background: #555;
+  margin-bottom: 20px;
+}
+
+
+.cthulhu-desc {
+  line-height: 1.8;
+  color: #ddd;
+  font-size: 16px;
+  font-family: monospace;
+}
+
+.historia-container {
+  width: 100%;
+  min-height: 70vh;
+  background-color: #040f08;
+  padding: 60px 40px;
+}
+
+.historia-content {
+  width: 100%;
+  max-width: 1100px;
+  gap: 60px;
+}
+
+.historia-img {
+  width: 300px;
+  height: auto;
+  object-fit: contain;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.fade-in {
+  opacity: 1;
+}
+
+.fade-out {
+  opacity: 0;
+}
+
+.historia-text {
+  color: #e8e6e3;
+  max-width: 500px;
+}
+
+.historia-subtitle {
+  letter-spacing: 6px;
+  font-size: 13px;
+  color: #bfa76a;
+  margin-bottom: 15px;
+  font-family: monospace;
+}
+
+.historia-title {
+  font-size: 40px;
+  margin-bottom: 20px;
+  font-family: "haus";
+  color: #ffffff;
+  text-shadow: 0 0 6px #ffffff;
+}
+
+.historia-desc {
+  font-size: 18px;
+  line-height: 1.8;
+  color: #cfcfcf;
+  font-family: monospace;
+}
+
+.titulo-capitulos {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.titulo-sub {
+  color: #bfa76a;
+  font-family: monospace;
+  font-size: 15px;
+  letter-spacing: 4px;
+  margin-bottom: 10px;
+}
+
+.titulo-main {
+  color: #fff;
+  font-family: "haus";
+  font-size: 80px;
+  letter-spacing: 3px;
+  text-shadow: 0 0 6px #fff;
+}
+
+.titulo-equipo {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.equipo-sub {
+  color: #bfa76a;
+  letter-spacing: 6px;
+  font-size: 18px;
+  font-family: monospace;
+  margin-bottom: 15px;
+}
+
+.equipo-main {
+  color: #fff;
+  font-family: "haus";
+  font-size: 50px;
+  letter-spacing: 2px;
+  text-shadow: 0 0 6px #fff;
+}
+
+.titulo-personajes {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.personajes-sub {
+  color: #bfa76a;
+  letter-spacing: 4px;
+  font-size: 12px;
+  font-family: monospace;
+}
+
+.personajes-main {
+  color: #eaeaea;
+  font-family: "haus";
+  font-size: 48px;
+  margin: 10px 0;
+  text-shadow: 0 0 8px #fff;
+}
+
+.personajes-desc {
+  color: #aaa;
+  font-family: monospace;
+  font-size: 14px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.titulo-recomendaciones {
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.reco-sub {
+  color: #bfa76a;
+  letter-spacing: 4px;
+  font-size: 12px;
+  font-family: monospace;
+}
+
+.reco-main {
+  color: #eaeaea;
+  font-family: "haus";
+  font-size: 42px;
+  margin: 10px 0;
+  text-shadow: 0 0 6px #fff;
+}
+
+.reco-desc {
+  color: #aaa;
+  font-family: monospace;
+  font-size: 14px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.video-container {
+  width: 100%;
+  padding: 80px 20px;
+  background-color: #040f08;
+}
+
+.video-title {
+  color: #fff;
+  font-family: "haus";
+  font-size: 50px;
+  margin-bottom: 40px;
+  text-align: center;
+  text-shadow: 0 0 6px #ffffff;
+}
+
+.video-box {
+  width: 90%;
+  max-width: 900px;
+  height: 450px;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 0 20px rgba(0,0,0,0.6);
+  cursor: pointer;
+}
+
+.video-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.6);
+}
+
+.video-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ 
+}
+
+.video-icon {
+  width: 40px;
+}
+
+.visor-container {
+  width: 100%;
+  background-color: #0b0f0e;
+  padding: 20px;
+}
+
+.visor-top {
+  margin-bottom: 10px;
+}
+
+.visor-btn {
+  color: #e5e5e5;
+  font-size: 13px;
+  letter-spacing: 2px;
+  font-family: monospace;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 2px solid #cfcfcf;
+  border-radius: 13px;
+  padding: 5px 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.visor-line {
+  width: 1px;
+  height: 15px;
+  background-color: #444;
+}
+
+.visor-cap {
+  color: #888;
+  font-family: monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+.visor-title {
+  color: #fff;
+  font-family: "haus";
+  font-size: 15px;
+}
+
+.visor-icon {
+  width: 22px;
+  cursor: pointer;
+}
+
+.visor-icon.off {
+  opacity: 0.5;
+}
+
+.visor-img-container {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.visor-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.visor-sub {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0,0,0,0.7);
+  padding: 15px 25px;
+  border-radius: 10px;
+  color: #fff;
+  font-family: monospace;
+  text-align: center;
+  max-width: 600px;
+}
+
+.visor-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  cursor: pointer;
+}
+
+.visor-arrow.left {
+  left: 15px;
+}
+
+.visor-arrow.right {
+  right: 15px;
+}
+
+.visor-arrow.disabled {
+  opacity: 0.3;
+}
+
+.visor-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #444;
+}
+
+.dot.active {
+  background-color: #bfa76a;
+}
+
+.visor-container {
+  width: 100%;
+  background-color: #0b0f0e;
+  padding: 20px;
+}
+
+.visor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.visor-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.visor-btn {
+  color: #e5e5e5;
+  font-size: 13px;
+  letter-spacing: 2px;
+  font-family: monospace;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 2px solid #cfcfcf;
+  border-radius: 13px;
+  padding: 5px 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.visor-divider {
+  width: 1px;
+  height: 15px;
+  background-color: #444;
+}
+
+.visor-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.visor-capitulo {
+  color: #888;
+  font-family: monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+.visor-titulo {
+  color: #fff;
+  font-family: "haus";
+  font-size: 15px;
+}
+
+.visor-icons {
+  display: flex;
+  gap: 15px;
+}
+
+.visor-icon {
+  width: 22px;
+  cursor: pointer;
+  opacity: 1;
+}
+
+.visor-icon.off {
+  opacity: 0.5;
+}
+
+.visor-imagen-container {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.visor-imagen {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.visor-subtitulo {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0,0,0,0.7);
+  padding: 15px 25px;
+  border-radius: 10px;
+  color: #fff;
+  font-family: monospace;
+  text-align: center;
+  max-width: 600px;
+}
+
+.visor-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  cursor: pointer;
+}
+
+.visor-arrow.left {
+  left: 15px;
+}
+
+.visor-arrow.right {
+  right: 15px;
+}
+
+.visor-arrow.disabled {
+  opacity: 0.3;
+}
+
+.visor-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #444;
+}
+
+.dot.active {
+  background-color: #bfa76a;
+}
+
+.volver-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  margin-bottom: 40px;
+}
+
+.volver-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  border: 1px solid #ffffff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 12px;
+  letter-spacing: 1px;
+  font-family: "haus";
+  background-color: #ffffff1a;
+  cursor: pointer;
+}
+
+.explorar-header {
+  background-color: #040f08;
+}
+
+.explorar-cards {
+  background-color: #040f08;
+}
+.inicio-container {
+  background-color: #040f08;
+}
+
+
+.inicio-banner {
+  width: 100%;
+}
+
+
+.inicio-historia {
+  background-color: #040f08;
+}
+
+.inicio-video {
+  background-color: #040f08;
+}
+
+.personajes-titulo {
+  padding-top: 100px;
+}
+
+.personajes-container {
+  width: 100%;
+  padding-top: 120px;
+  padding-bottom: 60px;
+  background-color: #040f08;
+}
+
+.personajes-grid {
+  max-width: 1200px;
+}
+
+.recomendaciones-section {
+  padding: 120px 40px 60px;
+  background-color: #040f08;
+  min-height: 100vh;
+}
+
+.recomendaciones-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.equipo-container {
+  width: 100%;
+  margin-top: 40px;
+  padding-bottom: 60px;
+  background-color: #040f08;
 }

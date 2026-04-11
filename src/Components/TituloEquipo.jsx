@@ -1,39 +1,18 @@
 import React from "react";
+import "../Styles/css.css";
 
 export const TituloEquipo = () => {
   return (
-    <div
-      style={{
-        width: "100%",
-        textAlign: "center",
-        marginBottom: "60px",
-      }}
-    >
-    
-      <p
-        style={{
-          color: "#bfa76a",
-          letterSpacing: "6px",
-          fontSize: "18px",
-          fontFamily: "monospace",
-          marginBottom: "15px",
-        }}
-      >
+    <div className="titulo-equipo">
+
+      <p className="equipo-sub">
         NUESTRO EQUIPO
       </p>
 
-      
-      <h1
-        style={{
-          color: "#fff",
-          fontFamily: "haus",
-          fontSize: "50px",
-          letterSpacing: "2px",
-          textShadow:"0 0 6px #fff"
-        }}
-      >
+      <h1 className="equipo-main">
         GUARDIANAS DE GRIMORIO
       </h1>
+
     </div>
   );
 };
