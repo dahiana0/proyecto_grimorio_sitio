@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../Styles/css.css";
 
 export const InicioHistoriaBasada = () => {
-  const imagenes = ["./Libro1.png", "./Libro2.png"];
+  const imagenes = ["./Cerrado.png", "./Abierto .png"];
 
   const [index, setIndex] = useState(0);
   const [fade, setFade] = useState(true);

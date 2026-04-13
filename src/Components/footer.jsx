@@ -50,7 +50,7 @@ export const Footer = () => {
               alignItems: "center",
               gap: "15px",
               fontFamily: "monospace",
-              fontSize: "15px",
+              fontSize: "10px",
             }}
           >
             <span style={{ letterSpacing: "2px" }}>
