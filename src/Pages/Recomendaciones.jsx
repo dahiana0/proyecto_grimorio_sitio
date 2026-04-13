@@ -10,7 +10,7 @@ export const Recomendaciones = () => {
     <>
       <Header />
       <br />
-      <div className="recomendaciones-section container-fluid">
+      <div className="recomendaciones-section container">
         <TituloRecomendaciones />
 
         <br />

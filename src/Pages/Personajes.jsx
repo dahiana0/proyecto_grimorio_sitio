@@ -10,11 +10,11 @@ export const Personajes = () => {
     <>
       <Header />
 
-      <div className="personajes-titulo pt-6">
+      <div className="personajes-titulo pt-">
         <TituloPersonajes />
       </div>
 
-      <div className="personajes-container d-flex justify-content-center py-5">
+      <div className="personajes-container d-flex justify-content-center py-2">
         <div className="personajes-grid d-flex flex-wrap justify-content-center gap-4">
           
           <CardGrande

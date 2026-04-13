@@ -15,11 +15,11 @@ export const Inicio = () => {
         <Banner />
       </section>
 
-      <section className="inicio-historia container py-5">
+      <section className="inicio-historia container py-1">
         <InicioHistoriaBasada />
       </section>
 
-      <section className="inicio-video container py-5">
+      <section className="inicio-video container py-1">
         <VideoIntroductorio />
       </section>
 

@@ -9,12 +9,12 @@ import "../Styles/css.css";
 export const ExplorarMuseo = () => {
   return (
     <>
-      <div className="explorar-header container-fluid py-5 px-4">
+      <div className="explorar-header container py-5 px-4">
         <VolverInicio />
         <TituloCapitulos />
       </div>
 
-      <div className="explorar-cards container-fluid d-flex flex-wrap justify-content-center gap-4 py-5">
+      <div className="explorar-cards container d-flex flex-wrap justify-content-center gap-4 py-5">
         <CardCapitulo
           capitulo="CAPÍTULO I"
           titulo="LA ENTRADA"

@@ -17,7 +17,6 @@ export const VolverInicio = () => {
      <button
         onClick={() => navigate("/")}
         style={{
-          position: "absolute",
           top: "20px",
           left: "20px",
           border: "1px solid #ffffff",

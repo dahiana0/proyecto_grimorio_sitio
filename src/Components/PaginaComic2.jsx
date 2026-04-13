@@ -4,7 +4,7 @@ import VisorComic2 from "./VisorComic2";
 const PaginaComic2 = () => {
   const imagenes = [
     {
-      imagen: "./public/scene1-2.jpg",
+      imagen: "./scene1-2.jpg",
       subtitulo: "En la sala de reliquias, los artefactos vibran con una energía desconocida.",
     },
     {
