@@ -1233,16 +1233,7 @@ color: brown;
   }
 }
 
-/* ============================================================
-   GRIMORIO — RESPONSIVE.CSS
-   Importar al final de css.css:  @import './responsive.css';
-   ============================================================ */
 
-/* ============================================================
-   FIXES BASE — aplican en TODOS los tamaños
-   ============================================================ */
-
-/* Visor: ocupa toda la pantalla sin espacio vacío */
 .visor-container {
   min-height: 100vh;
   display: flex;
@@ -1267,7 +1258,7 @@ color: brown;
   display: block;
 }
 
-/* Cthulhu / personajes: scroll libre, sin recorte */
+
 .cthulhu-container {
   min-height: 100vh;
   height: auto !important;
@@ -1282,17 +1273,17 @@ color: brown;
   justify-content: center;
 }
 
-/* El body no debe bloquear el scroll */
+
 body:has(.cthulhu-container) {
   overflow: auto !important;
 }
 
-/* Historia: row por defecto en desktop */
+
 .historia-content {
   flex-direction: row !important;
 }
 
-/* ── FOOTER BASE ── */
+
 .footer-wrapper {
   width: 100%;
   background-color: #040f08;
@@ -1354,12 +1345,10 @@ body:has(.cthulhu-container) {
   opacity: 1;
 }
 
-/* ============================================================
-   ≤ 480px — iPhone SE (375), Pixel 7 (412), Samsung A51 (412)
-   ============================================================ */
+
 @media (max-width: 480px) {
 
-  /* ── NAVBAR ── */
+
   .navbar-collapse {
     background-color: rgba(0, 0, 0, 0.96);
     padding: 20px;
@@ -1372,7 +1361,7 @@ body:has(.cthulhu-container) {
     padding: 10px 0;
   }
 
-  /* ── BANNER ── */
+
   .banner-container {
     height: 100svh;
     background-position: center top;
@@ -1398,7 +1387,7 @@ body:has(.cthulhu-container) {
     letter-spacing: 1px;
   }
 
-  /* ── SOBRE NOSOTROS ── */
+
   .sobre-container {
     padding: 100px 20px 60px;
     min-height: auto;
@@ -1415,7 +1404,7 @@ body:has(.cthulhu-container) {
     line-height: 1.7;
   }
 
-  /* ── HISTORIA BASADA ── */
+
   .historia-container {
     padding: 50px 20px;
   }
@@ -1443,7 +1432,6 @@ body:has(.cthulhu-container) {
     font-size: 13px;
   }
 
-  /* ── TÍTULOS DE SECCIÓN ── */
   .titulo-main {
     font-size: 44px;
   }
@@ -1482,7 +1470,7 @@ body:has(.cthulhu-container) {
     padding: 0 10px;
   }
 
-  /* ── CARDS CAPÍTULO ── */
+ 
   .card-capitulo {
     width: 100%;
     max-width: 320px;
@@ -1499,14 +1487,14 @@ body:has(.cthulhu-container) {
     padding: 10px;
   }
 
-  /* ── CARD FLIP (EQUIPO) ── */
+  
   .card-flip-container {
     width: 100%;
     max-width: 280px;
     height: 360px;
   }
 
-  /* ── CARD GRANDE (PERSONAJES) ── */
+ 
   .card-grande {
     width: 100%;
     max-width: 280px;
@@ -1519,7 +1507,7 @@ body:has(.cthulhu-container) {
     font-size: 11px;
   }
 
-  /* ── CARD RECOMENDACIÓN ── */
+
   .card-recomendacion {
     max-width: 100%;
     flex-direction: row;
@@ -1537,7 +1525,7 @@ body:has(.cthulhu-container) {
     font-size: 11px;
   }
 
-  /* ── CARD INFOS ── */
+ 
   .card-infos-container {
     margin-bottom: 40px;
   }
@@ -1558,7 +1546,7 @@ body:has(.cthulhu-container) {
     font-size: 13px;
   }
 
-  /* ── CTHULHU / PERSONAJES DETALLE ── */
+  
   .cthulhu-container {
     padding: 80px 16px 50px;
     justify-content: flex-start !important;
@@ -1593,7 +1581,7 @@ body:has(.cthulhu-container) {
     padding: 6px 12px;
   }
 
-  /* ── VIDEO ── */
+
   .video-container {
     padding: 50px 16px 40px;
   }
@@ -1614,7 +1602,7 @@ body:has(.cthulhu-container) {
     width: 26px;
   }
 
-  /* ── VISOR ── */
+
   .visor-top {
     flex-wrap: wrap;
     gap: 10px;
@@ -1647,7 +1635,7 @@ body:has(.cthulhu-container) {
     margin-top: 10px;
   }
 
-  /* ── RECOMENDACIONES ── */
+ 
   .recomendaciones-section {
     padding: 100px 16px 40px;
   }
@@ -1656,7 +1644,7 @@ body:has(.cthulhu-container) {
     gap: 16px;
   }
 
-  /* ── PERSONAJES ── */
+
   .personajes-container {
     padding: 100px 16px 40px;
   }
@@ -1668,12 +1656,12 @@ body:has(.cthulhu-container) {
     padding-top: 80px;
   }
 
-  /* ── EQUIPO ── */
+
   .equipo-container {
     padding: 0 16px 40px;
   }
 
-  /* ── FOOTER ── */
+  
   .footer-inner {
     flex-direction: column;
     align-items: center;
@@ -1695,13 +1683,13 @@ body:has(.cthulhu-container) {
     font-size: 24px;
   }
 
-  /* ── VOLVER BTN ── */
+
   .volver-btn {
     font-size: 11px !important;
     padding: 6px 12px !important;
   }
 
-  /* ── EXPLORAR ── */
+
   .explorar-header,
   .explorar-cards {
     padding-left: 16px;
@@ -1709,10 +1697,7 @@ body:has(.cthulhu-container) {
   }
 }
 
-/* ============================================================
-   481px – 600px — iPhone XR (414), 12 Pro (390),
-                   14 Pro Max (430), Samsung S8+ (360)
-   ============================================================ */
+
 @media (min-width: 481px) and (max-width: 600px) {
 
   .banner-title {
@@ -1827,9 +1812,7 @@ body:has(.cthulhu-container) {
   }
 }
 
-/* ============================================================
-   601px – 767px — Samsung S20 Ultra, phablets grandes
-   ============================================================ */
+
 @media (min-width: 601px) and (max-width: 767px) {
 
   .banner-title {
@@ -1931,9 +1914,7 @@ body:has(.cthulhu-container) {
   }
 }
 
-/* ============================================================
-   768px – 899px — iPad Mini (768), Surface Duo (540 dual)
-   ============================================================ */
+
 @media (min-width: 768px) and (max-width: 899px) {
 
   .banner-title {
@@ -2015,10 +1996,7 @@ body:has(.cthulhu-container) {
   }
 }
 
-/* ============================================================
-   900px – 1023px — iPad Air (820), Galaxy Z Fold 5 (882),
-                    Asus Zenbook Fold (853)
-   ============================================================ */
+
 @media (min-width: 900px) and (max-width: 1023px) {
 
   .banner-title {
@@ -2081,9 +2059,7 @@ body:has(.cthulhu-container) {
   }
 }
 
-/* ============================================================
-   1024px – 1199px — iPad Pro, Surface Pro 7
-   ============================================================ */
+
 @media (min-width: 1024px) and (max-width: 1199px) {
 
   .banner-title {
@@ -2114,9 +2090,7 @@ body:has(.cthulhu-container) {
   }
 }
 
-/* ============================================================
-   1200px+ — escritorio estándar
-   ============================================================ */
+
 @media (min-width: 1200px) {
 
   .recomendaciones-grid {
@@ -2134,9 +2108,7 @@ body:has(.cthulhu-container) {
   }
 }
 
-/* ============================================================
-   Nest Hub (1024×600) y Nest Hub Max (1280×800)
-   ============================================================ */
+
 @media (min-width: 1024px) and (max-height: 800px) {
 
   .banner-container {
@@ -2168,9 +2140,7 @@ body:has(.cthulhu-container) {
   }
 }
 
-/* ============================================================
-   Surface Duo (540×720)
-   ============================================================ */
+
 @media (min-width: 480px) and (max-width: 720px) and (max-height: 900px) {
 
   .banner-title {
@@ -2201,9 +2171,7 @@ body:has(.cthulhu-container) {
   }
 }
 
-/* ============================================================
-   LANDSCAPE en móviles
-   ============================================================ */
+
 @media (max-width: 900px) and (orientation: landscape) {
 
   .banner-container {
@@ -2236,9 +2204,7 @@ body:has(.cthulhu-container) {
   }
 }
 
-/* ============================================================
-   UTILIDADES GLOBALES ≤ 1024px
-   ============================================================ */
+
 @media (max-width: 1024px) {
 
   .container {
