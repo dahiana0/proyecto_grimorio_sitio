@@ -7,7 +7,7 @@ export const StatusGame = () => {
   const [gemas, setGemas] = useState();
 
   return (
-    <div className='gemas '>
+    <div className='gemas'>
       <button> Gemas 1</button>
       <button> Gemas 2</button>
       <button> Gemas 3</button>
