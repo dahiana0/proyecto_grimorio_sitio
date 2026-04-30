@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 
-
 //yamile 😒👌❤️😁
 export const StatusGame = () => {
   const [puntos, setPuntos] = useState();
