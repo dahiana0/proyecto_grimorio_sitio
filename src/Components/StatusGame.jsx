@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 
 
 export const StatusGame = () => {
-  const [puntos, setPuntos] = useStates();
-  const [vidas, setVidas] = useStates();
+  const [puntos, setPuntos] = useState();
+  const [vidas, setVidas] = useState();
   const [gemas, setGemas] = useState();
 
   return (
