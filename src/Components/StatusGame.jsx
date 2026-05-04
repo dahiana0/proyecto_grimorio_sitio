@@ -16,7 +16,7 @@ export const StatusGame = () => {
                 <button>Punto 3 </button>
             </div>
             <div className='vidas'>
-                 <h1>🤩 vidas:{vidas}/h1>
+                 <h1>🤩 vidas:{vidas}</h1>
                 <button onClick={() => setVidas(prev => prev + 1)}> Vida Grimorio</button>
                 <button onClick={() => setVidas(prev => prev + 1)}> Vida Stephen</button>
                 <button onClick={() => setVidas(prev => prev + 1)}> Vida Museo</button>
