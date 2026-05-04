@@ -21,6 +21,7 @@ export const StatusGame = () => {
                 <button>vidas 3 </button>
             </div>
             <div className='gemas '>
+               <h1>💎 Gemas:____</h1>
                 <button> Gemas 1</button>
                 <button> Gemas 2</button>
                 <button> Gemas 3</button>
