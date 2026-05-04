@@ -5,6 +5,7 @@ export const StatusGame = () => {
     const [puntos, setPuntos] = useState();
     const [vidas, setVidas] = useState();
     const [gemas, setGemas] = useState();
+    const [character, setCharacter] = useState(0)
 
     return (
         <>
@@ -27,10 +28,10 @@ export const StatusGame = () => {
                 <button> Gemas 3</button>
             </div>
             <div className='characters'>
-                <h1>🚀 Character: ____</h1>
-                <button> Character 1</button>
-                <button> Character 2</button>
-                <button> Character 3</button>
+                <h1>🚀 Character: {character}</h1>
+                <button onClick={() => setCharacter(prev => prev + 1)}> R2D2</button>
+                <button onClick={() => setCharacter(prev => prev + 3)}> Doc Emmet Brown</button>
+                <button onClick={() => setCharacter(prev => prev + 2)}> Pikachu</button>
             </div>
         </>
     )
