@@ -23,7 +23,7 @@ export const StatusGame = () => {
                 <button onClick={() => setVidas(prev => prev + 1)}> Vida Museo</button>
             </div>
             <div className='gemas '>
-               <h1>💎 Gemas:{gemas}</h1>
+               <h1 style={{color: "white"}}>💎 Gemas:{gemas}</h1>
                 <button onClick={() => setGemas (prev => prev + 1)}> Gemas de Rubi</button>
                 <button onClick={() => setGemas (prev => prev + 1)}> Gemas de Esmeralda</button>
                 <button onClick={() => setGemas (prev => prev + 1)}> Gemas de Cuarso</button>
