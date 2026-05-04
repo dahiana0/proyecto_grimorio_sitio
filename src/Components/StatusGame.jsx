@@ -23,6 +23,12 @@ export const StatusGame = () => {
                 <button> Gemas 2</button>
                 <button> Gemas 3</button>
             </div>
+            <div className='characters'>
+                <h1>🚀 Character: ____</h1>
+                <button> Character 1</button>
+                <button> Character 2</button>
+                <button> Character 3</button>
+            </div>
         </>
     )
 
