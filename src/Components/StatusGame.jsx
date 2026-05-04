@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 //yamile 😒👌❤️😁😂
 export const StatusGame = () => {
     const [puntos, setPuntos] = useState();
-    const [vidas, setVidas] = useState();
+    const [vidas, setVidas] = useState(0);
     const [gemas, setGemas] = useState();
 
     return (
@@ -15,10 +15,10 @@ export const StatusGame = () => {
                 <button>Punto 3 </button>
             </div>
             <div className='vidas'>
-                 <h1>🤩 vidas:____</h1>
-                <button>vidas 1 </button>
-                <button>vidas 2 </button>
-                <button>vidas 3 </button>
+                 <h1>🤩 vidas:{vidas}/h1>
+                <button onClick={() => setVidas(prev => prev + 1)}> Vida Grimorio</button>
+                <button onClick={() => setVidas(prev => prev + 1)}> Vida Stephen></button>
+                <button onClick={() => setVidas(prev => prev + 1)}> Vida Museo></button>
             </div>
             <div className='gemas '>
                <h1>💎 Gemas:____</h1>
