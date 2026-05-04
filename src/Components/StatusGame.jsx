@@ -23,13 +23,13 @@ export const StatusGame = () => {
                 <button onClick={() => setVidas(prev => prev + 1)}> Vida Museo</button>
             </div>
             <div className='gemas '>
-               <h1>💎 Gemas:{gemas}</h1>
+               <h1 style={{color: "white"}}>💎 Gemas:{gemas}</h1>
                 <button onClick={() => setGemas (prev => prev + 1)}> Gemas de Rubi</button>
                 <button onClick={() => setGemas (prev => prev + 1)}> Gemas de Esmeralda</button>
                 <button onClick={() => setGemas (prev => prev + 1)}> Gemas de Cuarso</button>
             </div>
             <div className='characters'>
-                <h1>🚀 Character: {character}</h1>
+                <h1 style={{color: "white"}}>🚀 Character: {character}</h1>
                 <button onClick={() => setCharacter(prev => prev + 1)}> R2D2</button>
                 <button onClick={() => setCharacter(prev => prev + 3)}> Doc Emmet Brown</button>
                 <button onClick={() => setCharacter(prev => prev + 2)}> Pikachu</button>
