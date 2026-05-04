@@ -9,6 +9,7 @@ export const StatusGame = () => {
     return (
         <>
             <div className='puntos'>
+                <h1>✅ puntos:____</h1>
                 <button>Punto 1 </button>
                 <button>Punto 2 </button>
                 <button>Punto 3 </button>
