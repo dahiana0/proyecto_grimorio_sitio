@@ -10,14 +10,14 @@ export const StatusGame = () => {
     return (
         <>
             <div className='puntos'>
-                <h1>✅ puntos:{puntos}</h1>
+                <h1 style={{color: "white"}}>✅ puntos:{puntos}</h1>
                 <button onClick={() => setPuntos(prev => prev + 1)}>Puntos Comida</button>
                 <button onClick={() => setPuntos(prev => prev + 1)}>Puntos Energia</button>
                 <button onClick={() => setPuntos(prev => prev + 1)}>Puntos Ropa</button>
                
             </div>
             <div className='vidas'>
-                 <h1 style ={{color: "blue"}}>🤩 vidas:{vidas}</h1>
+                 <h1 style ={{color: "white"}}>🤩 vidas:{vidas}</h1>
                 <button onClick={() => setVidas(prev => prev + 1)}> Vida Grimorio</button>
                 <button onClick={() => setVidas(prev => prev + 1)}> Vida Stephen</button>
                 <button onClick={() => setVidas(prev => prev + 1)}> Vida Museo</button>
