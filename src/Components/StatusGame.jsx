@@ -18,8 +18,8 @@ export const StatusGame = () => {
             <div className='vidas'>
                  <h1>🤩 vidas:{vidas}/h1>
                 <button onClick={() => setVidas(prev => prev + 1)}> Vida Grimorio</button>
-                <button onClick={() => setVidas(prev => prev + 1)}> Vida Stephen></button>
-                <button onClick={() => setVidas(prev => prev + 1)}> Vida Museo></button>
+                <button onClick={() => setVidas(prev => prev + 1)}> Vida Stephen</button>
+                <button onClick={() => setVidas(prev => prev + 1)}> Vida Museo</button>
             </div>
             <div className='gemas '>
                <h1>💎 Gemas:____</h1>
