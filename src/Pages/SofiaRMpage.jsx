@@ -8,7 +8,7 @@ export const SofiaRMpage = () => {
     const getCharacters = async() => {
 
         const res = await fetch( "https://rickandmortyapi.com/api/character")
-        const data = res.json()
+        const data = await res.json()
 
         console.log(data)
 
