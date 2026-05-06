@@ -22,7 +22,7 @@ export const YamileRMpage = () => {
         <>
         <h1>Personajes de Rick and Morty </h1>
         <ul>
-            {characters.map( (char) => (
+            {characters.map( (char , index) => (
                 <li key = {index}>
                     <p>{char.name}</p>
                 </li>
