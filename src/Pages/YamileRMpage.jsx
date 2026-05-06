@@ -8,7 +8,7 @@ export const YamileRMpage = () => {
 
       const res = await fetch ("https://rickandmortyapi.com/api/character")
       const data = await res.json()
-
+      setCharacters(data.results)
       console.log(data)
 
     }
@@ -19,6 +19,13 @@ export const YamileRMpage = () => {
     
 
     return(
-        <div> YamileRMpage </div>
+        <h1>Personajes de Rick and Morty </h1>
+        <ul>
+            {characters.map( (char) => (
+                <li key = {index}>
+                    <p>{char.name}</p>
+                </li>
+            ))}
+        </ul>
     )
 }
