@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-export default function KarolRMP() {
+export function KarolRMP() {
 
  const [character,setCharacter] = useState([])
  const getCharacters = async () => {
