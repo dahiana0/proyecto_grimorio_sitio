@@ -17,7 +17,7 @@ export const SofiaRMpage = () => {
     useEffect(() => {
       getCharacters
 
-    }, [third])
+    }, [])
      
 
   return (
