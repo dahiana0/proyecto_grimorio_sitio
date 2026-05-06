@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react'
-import { StatusGame } from '../Components/Statusgame'
 
 export const SofiaRMpage = () => {
 
@@ -16,15 +15,12 @@ export const SofiaRMpage = () => {
     }
 
     useEffect(() => {
-      getCharacters()
+      getCharacters
 
     }, [third])
      
 
   return (
-    <>
-     <StatusGame/>
-     <SofiaRMpage/>
-    </>
+    <div>SofiaRMpage</div>
   )
 }

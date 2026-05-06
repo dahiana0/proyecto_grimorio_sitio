@@ -9,6 +9,7 @@ export const AppMain = () => {
     <div>AppMain</div>
     <StatusGame/>
     <YamileRMpage/>
+    <SofiaRMpage/>
     
     </>
    
