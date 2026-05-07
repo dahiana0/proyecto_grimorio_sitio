@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 export function SofiaRMpage() {
 
     const [character, setCharacter] = useState([])
+    const [pokemons, setPokemons] = useState([])
+
     const getCharacters = async () => {
         const res = await fetch("https://rickandmortyapi.com/api/character")
         const data = await res.json()
@@ -12,6 +14,17 @@ export function SofiaRMpage() {
 
     useEffect(() => {
         getCharacters()
+    }, [])
+
+    const getPokemons= async () => {
+        const res = await fetch("https://pokeapi.co/api/v2/pokemon/")
+        const data = await res.json()
+        setPokemons(data.results)
+        console.log(data)
+    }
+
+    useEffect(() => {
+        getPokemons()
     }, [])
 
 
@@ -26,7 +39,7 @@ export function SofiaRMpage() {
                     <div className="card-body">
                         <h5 className="card-title">{char.name}</h5>
                         <p className="card-text">Status: {char.status}</p>
-                        <p className="card-text">Especie: {char.species}</p>
+                        <p className="card-text">Especie: {char}</p>
                     </div>
                 </div>
             ))}
