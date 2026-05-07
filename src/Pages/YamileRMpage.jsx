@@ -18,7 +18,7 @@ export const YamileRMpage = () => {
       <h1>Personajes de Rick and Morty </h1>
 
       {characters.map((char, index) => (
-        <div key={index} className="card" style={{"width: 18rem;"}}>
+        <div key={index} className="card" style={{width: "18rem"}}>
           <img src={char.image} className="card-img-top" alt="..." />
           <div className="card-body">
 
