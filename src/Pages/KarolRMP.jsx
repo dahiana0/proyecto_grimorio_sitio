@@ -17,7 +17,7 @@ export function KarolRMP() {
 
   return (
     <>
-      <h1> Personajes De Rick And Morty</h1>
+      <h1> Personajes De Rick And Morty 😶‍🌫️ </h1>
 
       {character.map((char, index) => (
         <div className="card" style={{ width: "18rem" }}>
