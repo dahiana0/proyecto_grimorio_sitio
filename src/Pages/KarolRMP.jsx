@@ -25,7 +25,7 @@ export function KarolRMP() {
           </li>
         ))}
       </ul>
-      )
+      
     </>
 
   )

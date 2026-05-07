@@ -1,37 +1,32 @@
-import React, { useState } from 'react'
-import { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
-export const SofiaRMpage = () => {
+export function SofiaRMpage() {
 
-    const [characters, Setcharacters] = useState([])
+  const [character, setCharacter] = useState([])
+  const getCharacters = async () => {
+    const res = await fetch("https://rickandmortyapi.com/api/character")
+    const data = await res.json()
+    setCharacter(data.results)
+    console.log(data)
+  }
 
-    const getCharacters = async () => {
-
-        const res = await fetch("https://rickandmortyapi.com/api/character")
-        const data = await res.json()
-        Setcharacters(data.results)
-        console.log(data)
-
-    }
-
-    useEffect(() => {
-        getCharacters
-
-    }, [])
+  useEffect(() => {
+    getCharacters()
+  }, [])
 
 
-    return (
-        <>
-            <h1> Personajes de Rick and Morty </h1>
-            <ul>
-                {characters.map((char, index) => (
+  return (
+    <>
+      <h1> Personajes De Rick And Morty</h1>
+      <ul>
+        {character.map((char, index) => (
+          <li key={index}>
+            <p> {char.name}</p>
+          </li>
+        ))}
+      </ul>
+      
+    </>
 
-                    <li key={index}>
-                        <p>{char.name}</p>
-                    </li>
-                ))}
-            </ul>
-
-        </>
-    )
+  )
 }
