@@ -6,16 +6,32 @@ export const YamileRMpage = () => {
   const getCharacters = async () => {
     const res = await fetch("https://rickandmortyapi.com/api/character");
     const data = await res.json();
+
     setCharacters(data.results);
     console.log(data);
   };
+
+  const [pokemons, setPokemons] = useState([]);
+
+  const getPokemons = async () => {
+    const res = await fetch("https://pokeapi.co/api/v2/pokemon/");
+    const data = await res.json();
+
+    setPokemons(data.results);
+    console.log(data);
+  };
+  
+
   useEffect(() => {
+
     getCharacters();
+    getPokemons();
+
   }, []);
 
   return (
     <>
-      <h1>Personajes de Rick and Morty </h1>
+      <h1>Personajes de Rick and Morty ☠️ </h1>
 
       {characters.map((char, index) => (
         <div key={index} className="card" style={{width: "18rem"}}>
