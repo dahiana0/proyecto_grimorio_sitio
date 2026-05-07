@@ -15,7 +15,7 @@ export const YamileRMpage = () => {
 
   return (
     <>
-      <h1>Personajes de Rick and Morty </h1>
+      <h1>Personajes de Rick and Morty ☠️ </h1>
 
       {characters.map((char, index) => (
         <div key={index} className="card" style={{width: "18rem"}}>
