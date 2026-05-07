@@ -11,19 +11,16 @@ export function SofiaRMpage() {
         setCharacter(data.results)
         console.log(data)
     }
-
-    useEffect(() => {
-        getCharacters()
-    }, [])
-
+ 
     const getPokemons= async () => {
         const res = await fetch("https://pokeapi.co/api/v2/pokemon/")
         const data = await res.json()
         setPokemons(data.results)
         console.log(data)
     }
-
+    
     useEffect(() => {
+        getCharacters()
         getPokemons()
     }, [])
 
