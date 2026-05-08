@@ -34,7 +34,7 @@ export function SofiaRMpage() {
             })
         )
 
-        setPokemons(data.results)
+        setPokemons(detallesPokemon)
         console.log(data)
     }
 
@@ -61,18 +61,23 @@ export function SofiaRMpage() {
             ))}
 
             <h1>Tarjetas pokemon (sofia) </h1>
+            <div className='container'>
+                <div className='row'>
 
-            {pokemons.map((poke, index) => (
-                <div key={index} className="card" style={{ width: "18rem" }}>
-                    <p>{poke.image}</p>
-                    <img src={poke.image} className="card-img-top" alt="..." />
-                    <div className="card-body">
-                        <h5 className="card-title">{poke.name}</h5>
-                        <p className="card-text">Status: {poke.type}</p>
-                        <p className="card-text">Especie: {poke.id}</p>
-                    </div>
+                    {pokemons.map((poke, index) => (
+                        <div key={index} className="card" style={{ width: "18rem" }}>
+                            <img src={poke.image} className="card-img-top" alt="..." />
+                            <div className="card-body">
+                                <h5 className="card-title">{poke.name}</h5>
+                                <p className="card-text">Status: {poke.type}</p>
+                                <p className="card-text">Especie: {poke.id}</p>
+                            </div>
+                        </div>
+                    ))}
+
                 </div>
-            ))}
+            </div>
+
 
 
         </>
