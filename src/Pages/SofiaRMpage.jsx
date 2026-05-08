@@ -3,22 +3,41 @@ import React, { useEffect, useState } from 'react'
 export function SofiaRMpage() {
 
     const [character, setCharacter] = useState([])
-    
+
     const getCharacters = async () => {
         const res = await fetch("https://rickandmortyapi.com/api/character")
         const data = await res.json()
         setCharacter(data.results)
         console.log(data)
     }
-    
+
     const [pokemons, setPokemons] = useState([])
-    const getPokemons= async () => {
-        const res = await fetch("https://pokeapi.co/api/v2/pokemon/")
+    const getPokemons = async () => {
+        const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=12')
         const data = await res.json()
+
+        const detallesPokemon = await Promise.all(
+
+            data.results.map(async (pokemon) => {
+                const res = await fetch(pokemon.url)
+                const detalles = await res.json()
+
+                return {
+                    id: detalles.id,
+                    name: detalles.name,
+                    image: detalles.sprites.other["official-artwork"].front_default,
+                    type: detalles.types[0].type.name
+                }
+
+
+
+            })
+        )
+
         setPokemons(data.results)
         console.log(data)
     }
-    
+
     useEffect(() => {
         getCharacters()
         getPokemons()
@@ -31,12 +50,26 @@ export function SofiaRMpage() {
             <h1> Personajes De Rick And Morty👌</h1>
 
             {character.map((char, index) => (
-                <div key={index} className="card" style={{width: "18rem"}}>
+                <div key={index} className="card" style={{ width: "18rem" }}>
                     <img src={char.image} className="card-img-top" alt="..." />
                     <div className="card-body">
                         <h5 className="card-title">{char.name}</h5>
                         <p className="card-text">Status: {char.status}</p>
                         <p className="card-text">Especie: {char.species}</p>
+                    </div>
+                </div>
+            ))}
+
+            <h1>Tarjetas pokemon (sofia) </h1>
+
+            {pokemons.map((poke, index) => (
+                <div key={index} className="card" style={{ width: "18rem" }}>
+                    <p>{poke.image}</p>
+                    <img src={poke.image} className="card-img-top" alt="..." />
+                    <div className="card-body">
+                        <h5 className="card-title">{poke.name}</h5>
+                        <p className="card-text">Status: {poke.type}</p>
+                        <p className="card-text">Especie: {poke.id}</p>
                     </div>
                 </div>
             ))}
