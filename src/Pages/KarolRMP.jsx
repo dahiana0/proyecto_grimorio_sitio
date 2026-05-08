@@ -55,20 +55,25 @@ export function KarolRMP() {
           </div>
         </div>
       ))}
-     gi
+     
+
      <h1> Tarjetas Pokemon 🐹</h1>
+     <div className="container">
+        <div className="row row-cols-1 row-cols-md-3 g-4">
+          {pokemons.map((poke, index) => (
+            <div key={index} className="card" style={{ width: "18rem" }}>
+              <img src={poke.image} className="card-img-top" alt="..." />
 
-      {pokemons.map((poke, index) => (
-        <div key={index} className="card" style={{ width: "18rem" }}>
-          <img src={poke.image} className="card-img-top" alt="..." />
-
-          <div className="card-body">
-            <h5 className="card-title">{poke.name}</h5>
-            <p className="card-text">Status: {poke.type}</p>
-            <p className="card-text">Especie: {poke.id}</p>
-          </div>
+              <div className="card-body">
+                <h5 className="card-title">{poke.name}</h5>
+                <p className="card-text">Status: {poke.type}</p>
+                <p className="card-text">Especie: {poke.id}</p>
+              </div>
+            </div>
+          ))}
         </div>
-      ))}
+      </div>
+      
 
     </>
 
