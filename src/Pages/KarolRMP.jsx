@@ -12,9 +12,24 @@ export function KarolRMP() {
 
   const [pokemons, setPokemons] = useState([])
   const getPokemons = async () => {
-    const res = await fetch("https://pokeapi.co/api/v2/pokemon/")
+    const res = await fetch("https://pokeapi.co/api/v2/pokemon/limit=12")
     const data = await res.json()
-    setPokemons(data.results)
+    
+    const detallePokemon = await Promise.all(
+      data.results.map(async (pokemon) => {
+        const res = await fetch(pokemon.url)
+        const dettales = await res.json()
+
+        return {
+          id: detalles.id,
+          name: detalles.name,
+          image: detalles.sprites.other["official-artwork"].front_defaul,
+          type: detalles.types[0].type.name
+        }
+
+      })
+    )
+    setPokemons(detallespokemon)
     console.log(data)
   }
 
@@ -44,3 +59,23 @@ export function KarolRMP() {
 
   )
 }
+
+return (
+  <>
+    <h1> Tarjetas Pokemon 🐹</h1>
+
+    {pokemons.map((poke, index) => (
+      <div key={index} className="card" style={{ width: "18rem" }}>
+        <img src={poke.image} className="card-img-top" alt="..." />
+        <div className="card-body">
+          <h5 className="card-title">{poke.name}</h5>
+          <p className="card-text">Status: {poke.type}</p>
+          <p className="card-text">Especie: {poke.id}</p>
+        </div>
+      </div>
+    ))}
+
+
+  </>
+
+)
