@@ -33,7 +33,7 @@ const Juego = () => {
       <div className="juego-container">
         <h1 className="juego-titulo">
           {" "}
-          QUE OBJETOS FUERON DIFERENTES <br></br>
+          QUE OBJETOS FUERON DIFERENTE☠️☠️<br></br>
           EN LOS CAPITULOS
         </h1>
         <br />
