@@ -24,6 +24,7 @@ import VisorComic3 from "./Components/VisorComic3";
 import VisorComic4 from "./Components/VisorComic4";
 import VisorComic5 from "./Components/VisorComic5";
 import Footer from "./Components/footer";
+import {MapaCapitulos } from "./Pages/MapaCapitulos";
 
  
 export const App = () => {
@@ -53,11 +54,12 @@ export const App = () => {
         <Route path="/visor-3" element={<VisorComic3 />} />
         <Route path="/visor-4" element={<VisorComic4 />} />
         <Route path="/visor-5" element={<VisorComic5 />} />
-      
+        <Route path="/capitulos" element={<MapaCapitulos />} />
 
       </Routes>
 
     </BrowserRouter>
+    
     
     
     

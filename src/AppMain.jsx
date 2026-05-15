@@ -3,6 +3,7 @@ import { StatusGame } from './Components/StatusGame'
 import { YamileRMpage } from './Pages/YamileRMpage'
 import { SofiaRMpage } from './Pages/SofiaRMpage'
 import { KarolRMP } from './Pages/KarolRMP'
+import  MapaCapitulos  from './Pages/MapaCapitulos'
 
 
 export const AppMain = () => {
@@ -10,11 +11,12 @@ export const AppMain = () => {
     <>
 
     <div>AppMain</div>
-    <StatusGame/>
+    {/*<StatusGame/>
     <KarolRMP/>
     <YamileRMpage/>
-    <SofiaRMpage/>
+    <SofiaRMpage/>*/}
     
+    <MapaCapitulos/>
     </>
    
   )
