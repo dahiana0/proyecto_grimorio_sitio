@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 
-
 import Header from "./Components/Header";
 import { Inicio } from "./Pages/Inicio";
 import { SobreNosotros } from "./Pages/SobreNosotros";
@@ -10,9 +9,9 @@ import { Recomendaciones } from "./Pages/Recomendaciones";
 import { ExplorarMuseo } from "./Pages/ExplorarMuseo";
 import Banner from "./Components/Banner";
 import CthulhuDescripcion from "./Components/CthulhuDescripcion";
-import StepDescripcion from "./Components/StepDescripcion"
-import RogersDescripcion from "./Components/RogersDescripcion"
-import OrabonaDescripcion from "./Components/OrabonaDescripcion"
+import StepDescripcion from "./Components/StepDescripcion";
+import RogersDescripcion from "./Components/RogersDescripcion";
+import OrabonaDescripcion from "./Components/OrabonaDescripcion";
 import PaginaComic1 from "./Components/PaginaComic1";
 import PaginaComic2 from "./Components/PaginaComic2";
 import PaginaComic3 from "./Components/PaginaComic3";
@@ -26,7 +25,8 @@ import VisorComic5 from "./Components/VisorComic5";
 import Footer from "./Components/footer";
 import {MapaCapitulos } from "./Pages/MapaCapitulos";
 
- 
+import YamileJuego from "./Pages/YamileJuego";
+
 export const App = () => {
   return (
     <>
@@ -55,28 +55,12 @@ export const App = () => {
         <Route path="/visor-4" element={<VisorComic4 />} />
         <Route path="/visor-5" element={<VisorComic5 />} />
         <Route path="/capitulos" element={<MapaCapitulos />} />
+        <Route path="/juego" element={<YamileJuego />} />
 
       </Routes>
 
     </BrowserRouter>
-    
-    
-    
-    
-
-
-     
-          
-
-      
-
-      
-
-
-      
-     
-
-      
+  
     </>
-  )
-}
+  );
+};

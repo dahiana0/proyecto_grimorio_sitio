@@ -1,0 +1,323 @@
+body {
+  background-image: url("../public/fondo.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100vh;
+}
+
+#juego {
+  min-height: 100vh;
+  padding: 50px 20px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+#juego::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(
+      circle at 20% 50%,
+      rgba(22, 163, 74, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 80%,
+      rgba(227, 52, 47, 0.05) 0%,
+      transparent 50%
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.juego-container {
+  position: relative;
+  z-index: 1;
+}
+
+.juego-titulo {
+  margin-top: 55px;
+  color: #163e27;
+  font-family: "rxx";
+  font-size: 3.5rem;
+  text-shadow: 0 0 40px #000000;
+  margin-bottom: 1.5rem;
+  justify-content: center;
+  display: flex;
+  font-weight: 900;
+}
+
+.juego-subtitulo {
+  color: #000000;
+  font-family: "glacia";
+  font-size: 1.2rem;
+  text-shadow: 0 0 20px #000000;
+  margin-bottom: 2rem;
+  font-weight: 900;
+  justify-content: center;
+  display: flex;
+
+}
+
+.juego-puertas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin: 3rem 0;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.juego-puerta {
+  padding: 2rem 1.5rem;
+  background: linear-gradient(135deg, #1f1736 0%, #312457 100%);
+  border: 2px solid #312457;
+  border-radius: 8px;
+  color: white;
+  font-family: "rxx";
+  font-size: 1.3rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 15px #1f1736;
+}
+
+.juego-puerta::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+
+  transition: left 0.3s ease;
+}
+
+.juego-puerta:hover {
+  transform: translateY(-5px);
+  box-shadow:
+    0 8px 25px #312457,
+    inset 0 0 10px #312457;
+  background: linear-gradient(135deg, #1f1736 0%, #312457 100%);
+}
+
+.juego-puerta:hover::before {
+  left: 100%;
+}
+
+.juego-puerta:active {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px #312457;
+}
+
+.juego-puerta.seleccionada {
+  background: linear-gradient(135deg, #1f1736 0%, #312457 100%);
+  border-color: #312457;
+  box-shadow:
+    0 0 20px #312457,
+    inset 0 0 10px ;
+}
+
+.juego-resultado {
+  margin-top: 3rem;
+  padding: 2rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(22, 163, 74, 0.3);
+  animation: slideUp 0.5s ease-out;
+}
+
+.juego-resultado.victoria {
+  border: 2px solid #16a34a;
+  background: rgba(22, 163, 74, 0.1);
+  box-shadow: 0 0 20px rgba(22, 163, 74, 0.3);
+}
+
+.juego-resultado.derrota {
+  border: 2px solid #e3342f;
+  background: rgba(227, 52, 47, 0.1);
+  box-shadow: 0 0 20px rgba(227, 52, 47, 0.3);
+}
+
+.juego-resultado-titulo {
+  font-family: "titulo", serif;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 10px currentColor;
+}
+
+.juego-resultado-titulo.victoria {
+  color: #16a34a;
+}
+
+.juego-resultado-titulo.derrota {
+  color: #e3342f;
+}
+
+.juego-resultado-mensaje {
+  color: white;
+  font-family: "parrafos", sans-serif;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  opacity: 0.95;
+}
+
+.juego-intentos {
+  color: #16a34a;
+  font-family: "titulo", serif;
+  font-size: 1.3rem;
+  margin: 1.5rem 0;
+  text-shadow: 0 0 10px rgba(22, 163, 74, 0.5);
+}
+
+.juego-reiniciar {
+  margin-top: 1.5rem;
+  padding: 0.8rem 2.5rem;
+  background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+  border: 2px solid #16a34a;
+  color: white;
+  font-family: "titulo", serif;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 15px rgba(22, 163, 74, 0.3);
+}
+
+.juego-reiniciar:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(22, 163, 74, 0.6);
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+}
+
+.juego-reiniciar:active {
+  transform: translateY(-1px);
+}
+
+@keyframes titleGlow {
+  0%,
+  100% {
+    text-shadow:
+      0 0 20px rgba(22, 163, 74, 0.5),
+      0 0 40px rgba(22, 163, 74, 0.3);
+  }
+  50% {
+    text-shadow:
+      0 0 30px rgba(22, 163, 74, 0.7),
+      0 0 60px rgba(22, 163, 74, 0.5);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@media (max-width: 768px) {
+  #juego {
+    padding: 30px 15px;
+    min-height: auto;
+  }
+
+  .juego-titulo {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .juego-subtitulo {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .juego-puertas {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+
+  .juego-puerta {
+    padding: 1.5rem 1rem;
+    font-size: 1.1rem;
+  }
+
+  .juego-resultado {
+    margin-top: 2rem;
+    padding: 1.5rem;
+  }
+
+  .juego-resultado-titulo {
+    font-size: 1.5rem;
+  }
+
+  .juego-resultado-mensaje {
+    font-size: 1rem;
+  }
+
+  .juego-intentos {
+    font-size: 1.1rem;
+  }
+
+  .juego-reiniciar {
+    padding: 0.7rem 2rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  #juego {
+    padding: 20px 10px;
+  }
+
+  .juego-titulo {
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+  }
+
+  .juego-subtitulo {
+    font-size: 0.95rem;
+  }
+
+  .juego-puerta {
+    padding: 1.2rem 0.8rem;
+    font-size: 1rem;
+  }
+
+  .juego-resultado-titulo {
+    font-size: 1.3rem;
+  }
+
+  .juego-resultado-mensaje {
+    font-size: 0.95rem;
+  }
+}

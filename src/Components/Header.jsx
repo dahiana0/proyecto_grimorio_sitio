@@ -60,6 +60,10 @@ export const Header = () => {
               RECOMENDACIONES
             </Link>
 
+            <Link className="nav-link" to="/juego" style={{ color: "#fff" }}>
+              JUEGO
+            </Link>
+
             <Link
               to="/explorarmuseo"
               style={{

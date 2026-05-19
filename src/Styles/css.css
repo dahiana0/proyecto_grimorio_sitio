@@ -1,11 +1,16 @@
 @font-face {
-    font-family:'haus' ;
-    src: url('../Styles/haus-darah.ttf');
+    font-family:'rxx' ;
+    src: url('../Styles/$RXXVOG2.TTF');
 }
 
 @font-face {
     font-family:'mono' ;
     src: url('../Styles/monof55.ttf');
+}
+
+@font-face {
+  font-family: 'glacia';
+  src: url('../Styles/glacial-indifference.regular.otf');
 }
 
 
@@ -71,7 +76,7 @@ color: brown;
 
 .banner-title {
   font-size: 120px;
-  font-family: "haus";
+  font-family: "rxx";
   margin-bottom: 20px;
   text-shadow: 0 0 8px #1ad96d;
   color: #1ad96d ;
@@ -94,7 +99,7 @@ color: brown;
   border-radius: 6px;
   letter-spacing: 2px;
   cursor: pointer;
-  font-family: "haus";
+  font-family: "rxx";
   text-shadow: 0 0 6px #fff;
   transition: all 0.3s ease;
 }
@@ -129,7 +134,7 @@ color: brown;
 .sobre-title {
   font-size: 50px;
   margin-bottom: 25px;
-  font-family: "haus";
+  font-family: "rxx";
   text-shadow: 0 0 6px #fff;
 }
 
@@ -205,7 +210,7 @@ color: brown;
 
 
 .card-title {
-  font-family: "haus";
+  font-family: "rxx";
   margin-bottom: 10px;
 }
 
@@ -226,7 +231,7 @@ color: brown;
   background-color: #3a3727;
   color: #fff;
   font-size: 15px;
-  font-family: "haus";
+  font-family: "rxx";
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -318,13 +323,13 @@ color: brown;
 
 
 .card-flip-iniciales {
-  font-family: "haus";
+  font-family: "rxx";
   font-size: 18px;
 }
 
 .card-flip-title {
   color: #fff;
-  font-family: "haus";
+  font-family: "rxx";
   text-align: center;
 }
 
@@ -398,7 +403,7 @@ color: brown;
 .card-grande-nombre {
   color: #fff;
   font-size: 16px;
-  font-family: "haus";
+  font-family: "rxx";
   margin-bottom: 6px;
 }
 
@@ -429,7 +434,7 @@ color: brown;
   color: #bfa76a;
   font-size: 11px;
   cursor: pointer;
-  font-family: "haus";
+  font-family: "rxx";
   transition: all 0.3s ease;
 }
 
@@ -480,7 +485,7 @@ color: brown;
 
 .card-infos-title {
   color: #fff;
-  font-family: "haus";
+  font-family: "rxx";
   margin-bottom: 10px;
 }
 
@@ -523,7 +528,7 @@ color: brown;
 
 .card-recomendacion-title {
   color: #fff;
-  font-family: "haus";
+  font-family: "rxx";
   font-size: 16px;
   margin-bottom: 5px;
 }
@@ -568,7 +573,7 @@ color: brown;
   color: #ffffff;
   font-size: 12px;
   letter-spacing: 1px;
-  font-family: "haus";
+  font-family: "rxx";
   background-color: rgba(255, 255, 255, 0.1);
   cursor: pointer;
 }
@@ -632,7 +637,7 @@ color: brown;
   font-size: 45px;
   letter-spacing: 2px;
   margin-bottom: 20px;
-  font-family: "haus";
+  font-family: "rxx";
   text-shadow: 0 0 6px #ffffff;
 }
 
@@ -705,7 +710,7 @@ color: brown;
 .historia-title {
   font-size: 40px;
   margin-bottom: 20px;
-  font-family: "haus";
+  font-family: "rxx";
   color: #ffffff;
   text-shadow: 0 0 6px #ffffff;
 }
@@ -732,7 +737,7 @@ color: brown;
 
 .titulo-main {
   color: #fff;
-  font-family: "haus";
+  font-family: "rxx";
   font-size: 80px;
   letter-spacing: 3px;
   text-shadow: 0 0 6px #fff;
@@ -754,7 +759,7 @@ color: brown;
 
 .equipo-main {
   color: #fff;
-  font-family: "haus";
+  font-family: "rxx";
   font-size: 50px;
   letter-spacing: 2px;
   text-shadow: 0 0 6px #fff;
@@ -774,7 +779,7 @@ color: brown;
 
 .personajes-main {
   color: #eaeaea;
-  font-family: "haus";
+  font-family: "rxx";
   font-size: 48px;
   margin: 10px 0;
   text-shadow: 0 0 8px #fff;
@@ -802,7 +807,7 @@ color: brown;
 
 .reco-main {
   color: #eaeaea;
-  font-family: "haus";
+  font-family: "rxx";
   font-size: 42px;
   margin: 10px 0;
   text-shadow: 0 0 6px #fff;
@@ -824,7 +829,7 @@ color: brown;
 
 .video-title {
   color: #fff;
-  font-family: "haus";
+  font-family: "rxx";
   font-size: 50px;
   margin-bottom: 40px;
   text-align: center;
@@ -908,7 +913,7 @@ color: brown;
 
 .visor-title {
   color: #fff;
-  font-family: "haus";
+  font-family: "rxx";
   font-size: 15px;
 }
 
@@ -1042,7 +1047,7 @@ color: brown;
 
 .visor-titulo {
   color: #fff;
-  font-family: "haus";
+  font-family: "rxx";
   font-size: 15px;
 }
 
@@ -1145,7 +1150,7 @@ color: brown;
   color: #ffffff;
   font-size: 12px;
   letter-spacing: 1px;
-  font-family: "haus";
+  font-family: "rxx";
   background-color: #ffffff1a;
   cursor: pointer;
 }
@@ -1307,7 +1312,7 @@ body:has(.cthulhu-container) {
 }
 
 .footer-logo {
-  font-family: "haus";
+  font-family: "rxx";
   color: #fff;
   font-size: 28px;
   text-shadow: 0 0 6px #ffffff;
