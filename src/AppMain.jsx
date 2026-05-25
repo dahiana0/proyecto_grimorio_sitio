@@ -8,7 +8,8 @@ export const AppMain = () => {
   return (
     <>
       <div>AppMain</div>
-      <YamileJuego />
+      {/*<YamileJuego />*/}
+      
     </>
   );
 };
