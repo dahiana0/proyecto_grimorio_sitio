@@ -34,7 +34,7 @@ export const App = () => {
     <BrowserRouter>
     
       <Routes>
-        <Route path="/" element={<Inicio />} />
+        {/*<Route path="/" element={<Inicio />} />
         <Route path="/sobrenosotros" element={<SobreNosotros />} />
         <Route path="/personajes" element={<Personajes />} />
         <Route path="/Recomendaciones" element={<Recomendaciones />} />
@@ -54,9 +54,8 @@ export const App = () => {
         <Route path="/visor-3" element={<VisorComic3 />} />
         <Route path="/visor-4" element={<VisorComic4 />} />
         <Route path="/visor-5" element={<VisorComic5 />} />
+        <Route path="/juego" element={<YamileJuego />} />*/}
         <Route path="/capitulos" element={<MapaCapitulos />} />
-        <Route path="/juego" element={<YamileJuego />} />
-
       </Routes>
 
     </BrowserRouter>
