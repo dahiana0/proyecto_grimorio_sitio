@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 
 export function KarolRMP() {
 
+
+
   const [character, setCharacter] = useState([])
   const getCharacters = async () => {
     const res = await fetch("https://rickandmortyapi.com/api/character")
@@ -43,6 +45,17 @@ export function KarolRMP() {
 
   return (
     <>
+
+
+      <div
+        style={{
+          width: 100,
+          height: 100,
+          backgroundColor: "red",
+          borderRadius: 5,
+        }}
+      > text</div>
+
       <h1> Personajes De Rick And Morty 😶‍🌫️ </h1>
       <div className="container">
         <div className="row row-cols-1 row-cols-md-3 g-4">
@@ -76,6 +89,9 @@ export function KarolRMP() {
           ))}
         </div>
       </div>
+
+
+
 
 
     </>
