@@ -9,7 +9,9 @@ export const AppMain = () => {
     <>
       <div>AppMain</div>
       {/*<YamileJuego />*/}
-      
+      <KarolRMP />
+      <YamileRMpage />
+      <SofiaRMpage />
     </>
   );
 };
