@@ -24,8 +24,11 @@ import VisorComic4 from "./Components/VisorComic4";
 import VisorComic5 from "./Components/VisorComic5";
 import Footer from "./Components/footer";
 import {MapaCapitulos } from "./Pages/MapaCapitulos";
+import { IntroJuego } from "./Pages/IntroJuego";
+import { Juego } from "./Pages/Juego";
 
-import YamileJuego from "./Pages/YamileJuego";
+
+
 
 export const App = () => {
   return (
@@ -55,7 +58,10 @@ export const App = () => {
         <Route path="/visor-4" element={<VisorComic4 />} />
         <Route path="/visor-5" element={<VisorComic5 />} />
         <Route path="/capitulos" element={<MapaCapitulos />} />
-        <Route path="/juego" element={<YamileJuego />} />
+
+        <Route path="/intro-juego" element={<IntroJuego />} />
+        <Route path="/juego" element={<Juego />} />
+
 
       </Routes>
 
