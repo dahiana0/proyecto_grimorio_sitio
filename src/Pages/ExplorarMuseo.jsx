@@ -4,14 +4,17 @@ import Footer from "../Components/footer";
 import CardCapitulo from "../Components/CardCapitulo";
 import VolverInicio from "../Components/VolverInicio";
 import TituloCapitulos from "../Components/TituloCapitulos";
+import { MapaCapitulos } from "./MapaCapitulos";
 import "../Styles/css.css";
 
 export const ExplorarMuseo = () => {
   return (
     <>
+       
       <div className="explorar-header container py-5 px-4">
         <VolverInicio />
         <TituloCapitulos />
+
       </div>
 
       <div className="explorar-cards container d-flex flex-wrap justify-content-center gap-4 py-5">

@@ -1,0 +1,112 @@
+body{
+  background-image: url("/Mapa-Cap.png");
+  min-height: 100vh;
+  padding: 50px 20px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100vh;
+}
+
+.mapa{
+  position: relative;
+  width: 1000px;
+  margin: auto;
+  margin-top: -10px;
+}
+
+.img-mapa{
+  width: 90%;
+  position: relative;
+  width: 1000px;
+
+ 
+}
+
+.btn-mapa{
+  position: absolute;
+  cursor: pointer;
+}
+
+.btn1{
+  width: 80px;
+  top: 97px;
+  left: 210px;
+}
+
+
+.btn2{
+  width: 100px;
+  top: 90px;
+  left: 450px;
+}
+
+
+.btn3{
+  width: 100px;
+  top: 120px;
+  right:200px;
+}
+
+
+.btn4{
+  width: 100px;
+  top: 357px;
+  left: 210px;
+}
+
+
+.btn5{
+  width: 100px;
+  top: 350px;
+  left: 495px;
+}
+
+.titulo-mapa{
+  margin-left:150px ;
+  margin-top: 10px;
+  top: 100px;
+  color: #f5deb3;
+  font-size: 40px;
+  text-shadow: 3px 3px 10px black;
+  font-family: rxx;
+  margin-right: 50px;
+
+}
+
+.titulo-mapa span{
+  display: block;
+  font-size: 20px;
+  color: #d4b06a;
+
+}
+
+.banner-capitulos{
+  width: 100%;
+  height: 55px;
+  background: rgba(20, 10, 5, 0.8);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 35px;
+
+  margin-top: 10px;
+}
+
+.capitulo-banner{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.capitulo-banner img{
+  width: 28px;
+}
+
+.capitulo-banner p{
+  color: #d6b37a;
+  font-size: 18px;
+  font-family: rxx;
+}
