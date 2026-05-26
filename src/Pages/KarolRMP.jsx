@@ -66,7 +66,7 @@ export function KarolRMP() {
 
 
 
-      <h1> Personajes De Rick And Morty 😶‍🌫️ </h1>
+      {/* <h1> Personajes De Rick And Morty 😶‍🌫️ </h1>
       <div className="container">
         <div className="row row-cols-1 row-cols-md-3 g-4">
           {character.map((char, index) => (
@@ -98,7 +98,7 @@ export function KarolRMP() {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
 
 
 
