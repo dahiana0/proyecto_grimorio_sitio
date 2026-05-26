@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
+import { motion } from "motion/react"
+
 
 export function KarolRMP() {
-
-
 
   const [character, setCharacter] = useState([])
   const getCharacters = async () => {
@@ -47,14 +47,24 @@ export function KarolRMP() {
     <>
 
 
-      <div
+      <motion.div
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+        onHoverStart={() => console.log('hover started!')}
+
+
+
+
         style={{
           width: 100,
           height: 100,
-          backgroundColor: "red",
+          backgroundColor: "pink",
           borderRadius: 5,
         }}
-      > text</div>
+      />
+
+
+
 
       <h1> Personajes De Rick And Morty 😶‍🌫️ </h1>
       <div className="container">
