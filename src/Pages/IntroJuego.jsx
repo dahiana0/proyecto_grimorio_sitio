@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../Styles/juego.css";
+import heroImg from "../../public/puerta1.svg";
 
-const Juego = () => {
+export const IntroJuego = () => {
+  const navigate = useNavigate();
   const [correctDoor, setCorrectDoor] = useState(() =>
     Math.ceil(Math.random() * 5),
   );
@@ -10,15 +13,7 @@ const Juego = () => {
   const [attempts, setAttempts] = useState(0);
 
   const pickDoor = (door) => {
-    if (result) return;
-    setSelectedDoor(door);
-    setAttempts((value) => value + 1);
-
-    if (door === correctDoor) {
-      setResult("victoria");
-    } else {
-      setResult("derrota");
-    }
+    navigate("/juego");
   };
 
   const restart = () => {
@@ -48,23 +43,36 @@ const Juego = () => {
         </p>
 
         <div className="juego-puertas">
-          {[1, 2, 3, 4, 5].map((door) => (
-            <button
-              key={door}
-              type="button"
-              className={`juego-puerta ${selectedDoor === door ? "seleccionada" : ""}`}
-              onClick={() => pickDoor(door)}
-            >
-              PUERTA {door}
-            </button>
-          ))}
+          <div className="puertas-row top">
+            {[1, 2, 3].map((door) => (
+              <img
+                key={door}
+                src={heroImg}
+                alt={`PUERTA ${door}`}
+                className={`puerta-img ${selectedDoor === door ? "seleccionada" : ""}`}
+                onClick={() => pickDoor(door)}
+              />
+            ))}
+          </div>
+
+          <div className="puertas-row bottom">
+            {[4, 5].map((door) => (
+              <img
+                key={door}
+                src={heroImg}
+                alt={`PUERTA ${door}`}
+                className={`puerta-img ${selectedDoor === door ? "seleccionada" : ""}`}
+                onClick={() => pickDoor(door)}
+              />
+            ))}
+          </div>
         </div>
 
         {result && (
           <div className={`juego-resultado ${result}`}>
             <h2 className={`juego-resultado-titulo ${result}`}>
               {result === "victoria"
-                ? "¡Has encontrado el Grimorio!"
+                ? "¡Has encontrado el Objeto!"
                 : "Has caído en una trampa infernal..."}
             </h2>
             <p className="juego-resultado-mensaje">
@@ -73,9 +81,12 @@ const Juego = () => {
                 : `La puerta ${selectedDoor} te llevó a un pasillo maldito. Intenta de nuevo.`}
             </p>
             <p className="juego-intentos">Intentos: {attempts}</p>
-            <button type="button" className="juego-reiniciar" onClick={restart}>
-              Reiniciar juego
-            </button>
+            <img
+              src={heroImg}
+              alt="Reiniciar juego"
+              className="juego-reiniciar-img"
+              onClick={restart}
+            />
           </div>
         )}
       </div>
@@ -83,4 +94,4 @@ const Juego = () => {
   );
 };
 
-export default Juego;
+

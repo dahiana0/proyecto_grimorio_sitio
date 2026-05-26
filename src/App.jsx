@@ -25,6 +25,11 @@ import Footer from "./Components/footer";
 import {MapaCapitulos } from "./Pages/MapaCapitulos";
 import YamileJuego from "./Pages/YamileJuego"; */
 import SofiaGuia from "./Pages/SofiaGuia"
+import { IntroJuego } from "./Pages/IntroJuego";
+import { Juego } from "./Pages/Juego";
+
+
+
 
 export const App = () => {
   return (
@@ -56,6 +61,9 @@ export const App = () => {
         <Route path="/capitulos" element={<MapaCapitulos />} />
         <Route path="/juego" element={<YamileJuego />} /> */}
         <Route path="/guia" element={<SofiaGuia/>} />
+        <Route path="/intro-juego" element={<IntroJuego />} />
+        <Route path="/juego" element={<Juego />} />
+
 
       </Routes>
 

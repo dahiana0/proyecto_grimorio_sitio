@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 export const YamileRMpage = () => {
   const [characters, setCharacters] = useState([]);
@@ -42,7 +43,19 @@ export const YamileRMpage = () => {
 
   return (
     <>
-      <h1>Personajes de Rick and Morty ☠️ </h1>
+      <motion.div
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        style={{
+          width: 100,
+          height: 100,
+          backgroundColor: "blue",
+          borderRadius: 5,
+          marginLeft: 5,
+        }}
+      />
+
+     {/*  <h1>Personajes de Rick and Morty ☠️ </h1>
 
       {characters.map((char, index) => (
         <div key={index} className="card" style={{ width: "18rem" }}>
@@ -70,7 +83,9 @@ export const YamileRMpage = () => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
     </>
   );
 };
+
+

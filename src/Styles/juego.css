@@ -59,12 +59,12 @@
 }
 
 .juego-titulo {
-  margin-top: 55px;
+  margin-top: 40px;
   color: #163e27;
   font-family: "rxx";
-  font-size: 3.5rem;
+  font-size: 2.5rem;
   text-shadow: 0 0 40px #000000;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1px;
   justify-content: center;
   display: flex;
   font-weight: 900;
@@ -73,23 +73,43 @@
 .juego-subtitulo {
   color: #000000;
   font-family: "glacia";
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   text-shadow: 0 0 20px #000000;
-  margin-bottom: 2rem;
   font-weight: 900;
   justify-content: center;
   display: flex;
-
 }
 
 .juego-puertas {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 1.5rem;
-  margin: 3rem 0;
+  margin: 2rem 0;
   max-width: 900px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.puertas-row {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.puertas-row.top {
+  justify-content: space-between;
+}
+
+.puertas-row.bottom {
+  justify-content: center;
+}
+
+.puertas-row.bottom .juego-puerta {
+  width: 30%;
+}
+
+.puertas-row.top .juego-puerta {
+  width: 30%;
 }
 
 .juego-puerta {
@@ -144,6 +164,33 @@
   box-shadow:
     0 0 20px #312457,
     inset 0 0 10px ;
+}
+
+/* Estilos para imágenes clicables */
+.puerta-img {
+  width: 100%;
+  height: auto;
+  max-width: 200px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  user-select: none;
+}
+
+.puerta-img:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(49, 36, 87, 0.6);
+}
+
+.puerta-img.seleccionada {
+  outline: 3px solid #16a34a;
+  box-shadow: 0 0 20px rgba(22, 163, 74, 0.6);
+  transform: scale(1.05);
+}
+
+.puerta-img:active {
+  transform: translateY(-2px);
 }
 
 .juego-resultado {
