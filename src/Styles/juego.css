@@ -4,7 +4,7 @@
   position: relative;
   overflow: hidden;
   text-align: center;
-  /*background-image: url("../public/fondo.png");*/
+  background-image: url("../public/fondo.png");
   background-repeat: no-repeat;
   background-size: 100% 100vh;
 }

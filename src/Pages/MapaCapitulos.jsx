@@ -3,6 +3,7 @@ import "../Styles/MapaCapitulo.css";
 export const MapaCapitulos = () => {
   return (
     <>
+    <div className="container-mapa">
       <h1 className="titulo-mapa">
         Grimorio
         <span>Mapa Del Museo</span>
@@ -53,6 +54,8 @@ export const MapaCapitulos = () => {
           <img src="/Capitulo-5-img.png" alt="" />
           <p>El Final del Grimorio</p>
         </div>
+
+      </div>
 
       </div>
     </>

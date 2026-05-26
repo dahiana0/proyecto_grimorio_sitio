@@ -1,5 +1,5 @@
-body{
-  /*background-image: url("/Mapa-Cap.png");*/
+.container-mapa{
+  background-image: url("/Mapa-Cap.png");
   min-height: 100vh;
   padding: 50px 20px;
   position: relative;

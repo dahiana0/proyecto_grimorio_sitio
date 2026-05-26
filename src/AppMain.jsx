@@ -8,7 +8,6 @@ export const AppMain = () => {
   return (
     <>
       <div>AppMain</div>
-      {/*<YamileJuego />*/}
       <KarolRMP />
       <h1>ddgfr</h1>
       <YamileRMpage />
