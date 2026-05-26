@@ -10,6 +10,7 @@ export const AppMain = () => {
       <div>AppMain</div>
       {/*<YamileJuego />*/}
       <KarolRMP />
+      <h1>ddgfr</h1>
       <YamileRMpage />
       <SofiaRMpage />
     </>
