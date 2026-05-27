@@ -3,7 +3,7 @@ import "../Styles/MapaCapitulo.css";
 export const MapaCapitulos = () => {
   return (
     <>
-    <div className="container-mapa">
+    <div className="Container-mapa">
       <h1 className="titulo-mapa">
         Grimorio
         <span>Mapa Del Museo</span>

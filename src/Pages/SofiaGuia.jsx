@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../Styles/SofiaGuia.css"
 
-export default function SofiaGuia() {
+export function SofiaGuia() {
   return (
     <div className="container">
 
