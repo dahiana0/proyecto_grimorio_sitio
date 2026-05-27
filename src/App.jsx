@@ -27,6 +27,7 @@ import {SofiaGuia} from "./Pages/SofiaGuia"
 import { IntroJuego } from "./Pages/IntroJuego";
 import { Juego } from "./Pages/Juego";
 import { ReproductorYamile } from "./Components/ReproductorYamile";
+import { ReproductorSofia } from "./Components/ReproductorSofia";
 
 
 
@@ -63,6 +64,7 @@ export const App = () => {
         <Route path="/juego" element={<Juego />} />*/}
 
           <Route path="reproductor1" element={<ReproductorYamile />} />
+          <Route path="reproductor2" element={<ReproductorSofia />} />
 
         </Routes>
       </BrowserRouter>
