@@ -14,6 +14,7 @@ export const AppMain = () => {
       <YamileRMpage />
       <SofiaRMpage /> */}
       <ReproductorSofia/>
+      <ReproductorYamile></ReproductorYamile>
     </>
   );
 };
