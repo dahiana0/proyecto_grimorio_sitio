@@ -12,7 +12,7 @@ export const AppMain = () => {
       <h1>ddgfr</h1>
       <YamileRMpage />
       <SofiaRMpage />
-      <ReproductorYamile></ReproductorYamile>
+      <ReproductorYamile/>
     </>
   );
 };
