@@ -51,7 +51,6 @@ export const YamileRMpage = () => {
           height: 100,
           backgroundColor: "blue",
           borderRadius: 5,
-          marginLeft: 5,
         }}
       />
 

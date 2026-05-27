@@ -33,11 +33,9 @@ import { Juego } from "./Pages/Juego";
 export const App = () => {
   return (
     <>
-     
-    <BrowserRouter>
-    
-      <Routes>
-         <Route path="/" element={<Inicio />} />
+      <BrowserRouter>
+        <Routes>
+          {/* <Route path="/" element={<Inicio />} />
         <Route path="/sobrenosotros" element={<SobreNosotros />} />
         <Route path="/personajes" element={<Personajes />} />
         <Route path="/Recomendaciones" element={<Recomendaciones />} />
@@ -60,13 +58,12 @@ export const App = () => {
         <Route path="/capitulos" element={<MapaCapitulos />} />
         <Route path="/guia" element={<SofiaGuia/>} />
         <Route path="/intro-juego" element={<IntroJuego />} />
-        <Route path="/juego" element={<Juego />} />
+        <Route path="/juego" element={<Juego />} />*/}
 
+          <Route path="reproductor1" element={<ReproductorYamile />} />
 
-      </Routes>
-
-    </BrowserRouter>
-  
+        </Routes>
+      </BrowserRouter>
     </>
   );
 };
