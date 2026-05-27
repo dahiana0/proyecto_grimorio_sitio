@@ -26,6 +26,8 @@ import {MapaCapitulos } from "./Pages/MapaCapitulos";
 import {SofiaGuia} from "./Pages/SofiaGuia"
 import { IntroJuego } from "./Pages/IntroJuego";
 import { Juego } from "./Pages/Juego";
+import { ReproductorYamile } from "./Components/ReproductorYamile";
+
 
 
 
