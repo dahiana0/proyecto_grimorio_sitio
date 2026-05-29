@@ -3,7 +3,8 @@ import "../Styles/SofiaGuia.css"
 
 export function SofiaGuia() {
   return (
-    <div className="container">
+    
+    <div className="container-sofia">
 
       {/* Personaje */}
       <div className="character">
