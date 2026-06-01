@@ -84,7 +84,7 @@ color: brown;
 
 
 .banner-text {
-  font-size: 30px;
+  font-size: 18px;
   line-height: 1.6;
   margin-bottom: 30px;
   font-family: glacia;
@@ -127,7 +127,7 @@ color: brown;
   color: #bfa76a;
   font-size: 18px;
   margin-bottom: 20px;
-  font-family: glacia;
+  font-family:glacia;
 }
 
 
@@ -143,7 +143,7 @@ color: brown;
   font-size: 15px;
   line-height: 1.8;
   color: #cfcfcf;
-  font-family: glacia;
+  font-family:glacia;
   max-width: 600px;
 }
 
@@ -195,7 +195,7 @@ color: brown;
   border-radius: 20px;
   font-size: 11px;
   color: #fff;
-  font-family: glacia;
+  font-family:glacia;
   z-index: 2;
 }
 
@@ -218,7 +218,7 @@ color: brown;
 .card-text {
   color: #cfcfcf;
   font-size: 13px;
-  font-family: glacia;
+  font-family:glacia;
   line-height: 1.6;
   margin-bottom: 20px;
 }
@@ -335,14 +335,14 @@ color: brown;
 
 .card-flip-rol {
   color: #bfa76a;
-  font-family: glacia;
+  font-family:glacia;
   font-size: 14px;
   text-align: center;
 }
 
 .card-flip-desc {
   color: #cfcfcf;
-  font-family: glacia;
+  font-family:glacia;
   font-size: 14px;
   line-height: 1.6;
   text-align: center;
@@ -395,7 +395,7 @@ color: brown;
   color: #bfa76a;
   font-size: 11px;
   letter-spacing: 2px;
-  font-family: glacia;
+  font-family:glacia;
   margin-bottom: 5px;
 }
 
@@ -411,7 +411,7 @@ color: brown;
   color: #ccc;
   font-size: 12px;
   line-height: 1.4;
-  font-family: glacia;
+  font-family:glacia;
   margin-bottom: 15px;
 }
 
@@ -422,7 +422,7 @@ color: brown;
   border: 1px solid #bfa76a;
   color: #bfa76a;
   font-size: 12px;
-  font-family: glacia;
+  font-family:glacia;
 }
 
 
@@ -492,7 +492,7 @@ color: brown;
 
 .card-infos-desc {
   color: #cfcfcf;
-  font-family: glacia;
+  font-family:glacia;
   font-size: 14px;
   line-height: 1.7;
 }
@@ -537,7 +537,7 @@ color: brown;
 .card-recomendacion-meta {
   color: #bfa76a;
   font-size: 11px;
-  font-family: glacia;
+  font-family:glacia;
   margin-bottom: 8px;
 }
 
@@ -545,7 +545,7 @@ color: brown;
 .card-recomendacion-desc {
   color: #ccc;
   font-size: 12px;
-  font-family: glacia;
+  font-family:glacia;
   line-height: 1.4;
 }
 
@@ -615,7 +615,7 @@ color: brown;
   border-radius: 20px;
   font-size: 13px;
   color: #bfa76a;
-  font-family: glacia;
+  font-family:glacia;
 }
 
 
@@ -629,7 +629,7 @@ color: brown;
   font-size: 13px;
   letter-spacing: 3px;
   margin-bottom: 8px;
-  font-family: glacia;
+  font-family:glacia;
 }
 
 
@@ -647,7 +647,7 @@ color: brown;
   color: #cfcfcf;
   margin-bottom: 20px;
   line-height: 1.6;
-  font-family: glacia;
+  font-family:glacia;
 }
 
 
@@ -663,7 +663,7 @@ color: brown;
   line-height: 1.8;
   color: #ddd;
   font-size: 16px;
-  font-family: glacia;
+  font-family:glacia;
 }
 
 .historia-container {
@@ -704,7 +704,7 @@ color: brown;
   font-size: 13px;
   color: #bfa76a;
   margin-bottom: 15px;
-  font-family: glacia;
+  font-family:glacia;
 }
 
 .historia-title {
@@ -719,7 +719,7 @@ color: brown;
   font-size: 18px;
   line-height: 1.8;
   color: #cfcfcf;
-  font-family: glacia;
+  font-family:glacia;
 }
 
 .titulo-capitulos {
@@ -729,7 +729,7 @@ color: brown;
 
 .titulo-sub {
   color: #bfa76a;
-  font-family: glacia;
+  font-family:glacia;
   font-size: 15px;
   letter-spacing: 4px;
   margin-bottom: 10px;
@@ -753,7 +753,7 @@ color: brown;
   color: #bfa76a;
   letter-spacing: 6px;
   font-size: 18px;
-  font-family: glacia;
+  font-family:glacia;
   margin-bottom: 15px;
 }
 
@@ -774,7 +774,7 @@ color: brown;
   color: #bfa76a;
   letter-spacing: 4px;
   font-size: 12px;
-  font-family: glacia;
+  font-family:glacia;
 }
 
 .personajes-main {
@@ -787,7 +787,7 @@ color: brown;
 
 .personajes-desc {
   color: #aaa;
-  font-family: glacia;
+  font-family:glacia;
   font-size: 14px;
   max-width: 600px;
   margin: 0 auto;
@@ -802,7 +802,7 @@ color: brown;
   color: #bfa76a;
   letter-spacing: 4px;
   font-size: 12px;
-  font-family: glacia;
+  font-family:glacia;
 }
 
 .reco-main {
@@ -815,7 +815,7 @@ color: brown;
 
 .reco-desc {
   color: #aaa;
-  font-family: glacia;
+  font-family:glacia;
   font-size: 14px;
   max-width: 500px;
   margin: 0 auto;
@@ -887,7 +887,7 @@ color: brown;
   color: #e5e5e5;
   font-size: 13px;
   letter-spacing: 2px;
-  font-family: glacia;
+  font-family:glacia;
   background-color: rgba(255, 255, 255, 0.05);
   border: 2px solid #cfcfcf;
   border-radius: 13px;
@@ -906,7 +906,7 @@ color: brown;
 
 .visor-cap {
   color: #888;
-  font-family: glacia;
+  font-family:glacia;
   font-size: 11px;
   letter-spacing: 2px;
 }
@@ -949,7 +949,7 @@ color: brown;
   padding: 15px 25px;
   border-radius: 10px;
   color: #fff;
-  font-family: glacia;
+  font-family:glacia;
   text-align: center;
   max-width: 600px;
 }
@@ -1015,7 +1015,7 @@ color: brown;
   color: #e5e5e5;
   font-size: 13px;
   letter-spacing: 2px;
-  font-family: glacia;
+  font-family:glacia;
   background-color: rgba(255, 255, 255, 0.05);
   border: 2px solid #cfcfcf;
   border-radius: 13px;
@@ -1040,7 +1040,7 @@ color: brown;
 
 .visor-capitulo {
   color: #888;
-  font-family: glacia;
+  font-family:glacia;
   font-size: 11px;
   letter-spacing: 2px;
 }
@@ -1089,7 +1089,7 @@ color: brown;
   padding: 15px 25px;
   border-radius: 10px;
   color: #fff;
-  font-family: glacia;
+  font-family:glacia;
   text-align: center;
   max-width: 600px;
 }
@@ -1327,7 +1327,7 @@ body:has(.cthulhu-container) {
 }
 
 .footer-copy {
-  font-family: glacia;
+  font-family:glacia;
   font-size: 11px;
   letter-spacing: 2px;
   color: #cfcfcf;
