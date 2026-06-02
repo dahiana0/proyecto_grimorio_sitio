@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import "../Styles/SofiaGuia.css"
+import { div } from "motion/react-m";
 
 export function SofiaGuia() {
   return (
-    <div className="container">
+    
+    <div className="container-sofia">
 
       {/* Personaje */}
       <div className="character">
