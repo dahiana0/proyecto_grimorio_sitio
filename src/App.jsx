@@ -29,14 +29,17 @@ import { Juego } from "./Pages/Juego";
 import { ReproductorYamile } from "./Components/ReproductorYamile";
 import { ReproductorSofia } from "./Components/ReproductorSofia";
 import { ReproductorKarol} from "./Components/ReproductorKarol"
+import {LootieYamile} from "./Components/LootieYamile"
+import {LootieKarol} from "./Components/LootieKarol"
+import {LootieSofia} from "./Components/LootieSofia"
 
 
 
 export const App = () => {
   return (
     <>
-      <Routes>
         <BrowserRouter>
+      <Routes>
 
           <Route path="/" element={<Inicio />} />
           <Route path="/sobrenosotros" element={<SobreNosotros />} />
@@ -62,14 +65,17 @@ export const App = () => {
           <Route path="/guia" element={<SofiaGuia />} />
           <Route path="/intro-juego" element={<IntroJuego />} />
           <Route path="/juego" element={<Juego />} /> 
+          <Route path="/lootsofia" element={<LootieSofia/>} /> 
+          <Route path="/lootyamile" element={<LootieYamile/>} /> 
+          <Route path="/lootkarol" element={<LootieKarol/>} /> 
 
           {/*<Route path="reproductor1" element={<ReproductorYamile />} />
           <Route path="reproductor2" element={<ReproductorSofia />} />
           <Route path="reproductor3" element={<ReproductorKarol />} />*/}
 
 
-        </BrowserRouter >
       </Routes>
+        </BrowserRouter >
     </>
   );
 };

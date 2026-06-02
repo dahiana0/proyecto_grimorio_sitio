@@ -2,7 +2,7 @@ import Lottie from "lottie-react";
 import peloticaKarol from "../assets/data-Karol.json"
 
 
-export const Inicio = () => {
+export const LootieKarol = () => {
   return (
     <div>
         <Lottie
