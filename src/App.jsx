@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-/*import "./App.css";
+import "./App.css";
 import Header from "./Components/Header";
 import { Inicio } from "./Pages/Inicio";
 import { SobreNosotros } from "./Pages/SobreNosotros";
@@ -29,10 +29,8 @@ import { Juego } from "./Pages/Juego";
 import { ReproductorYamile } from "./Components/ReproductorYamile";
 import { ReproductorSofia } from "./Components/ReproductorSofia";
 import { ReproductorKarol} from "./Components/ReproductorKarol"
- */
-import { datasofia } from "./Components/LotieSofia"
 
-import { Route } from "react-router-dom"
+
 
 export const App = () => {
   return (
@@ -40,7 +38,7 @@ export const App = () => {
       <Routes>
         <BrowserRouter>
 
-          {/*<Route path="/" element={<Inicio />} />
+          <Route path="/" element={<Inicio />} />
           <Route path="/sobrenosotros" element={<SobreNosotros />} />
           <Route path="/personajes" element={<Personajes />} />
           <Route path="/Recomendaciones" element={<Recomendaciones />} />
@@ -63,13 +61,12 @@ export const App = () => {
           <Route path="/capitulos" element={<MapaCapitulos />} />
           <Route path="/guia" element={<SofiaGuia />} />
           <Route path="/intro-juego" element={<IntroJuego />} />
-          <Route path="/juego" element={<Juego />} /> */}
+          <Route path="/juego" element={<Juego />} /> 
 
           {/*<Route path="reproductor1" element={<ReproductorYamile />} />
           <Route path="reproductor2" element={<ReproductorSofia />} />
           <Route path="reproductor3" element={<ReproductorKarol />} />*/}
 
-          <Route path="/datasofia" element={<LotieSofia />} />
 
         </BrowserRouter >
       </Routes>
