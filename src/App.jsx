@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import "./App.css";
+/*import "./App.css";
 import Header from "./Components/Header";
 import { Inicio } from "./Pages/Inicio";
 import { SobreNosotros } from "./Pages/SobreNosotros";
@@ -29,47 +29,50 @@ import { Juego } from "./Pages/Juego";
 import { ReproductorYamile } from "./Components/ReproductorYamile";
 import { ReproductorSofia } from "./Components/ReproductorSofia";
 import { ReproductorKarol} from "./Components/ReproductorKarol"
+ */
+import { datasofia } from "./Components/LotieSofia"
 
-
-
-
+import { Route } from "react-router-dom"
 
 export const App = () => {
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-         <Route path="/" element={<Inicio />} />
-        <Route path="/sobrenosotros" element={<SobreNosotros />} />
-        <Route path="/personajes" element={<Personajes />} />
-        <Route path="/Recomendaciones" element={<Recomendaciones />} />
-        <Route path="/explorarmuseo" element={<ExplorarMuseo />} />
-        <Route path="/explorar-museo" element={<ExplorarMuseo />} />
-        <Route path="/step" element={<StepDescripcion />} />
-        <Route path="/rogers" element={<RogersDescripcion />} />
-        <Route path="/orabona" element={<OrabonaDescripcion />} />
-        <Route path="/cthulhu" element={<CthulhuDescripcion />} />
-        <Route path="/cap-uno" element={<PaginaComic1 />} />
-        <Route path="/cap-dos" element={<PaginaComic2 />} />
-        <Route path="/cap-tres" element={<PaginaComic3 />} />
-        <Route path="/cap-cuatro" element={<PaginaComic4 />} />
-        <Route path="/cap-cinco" element={<PaginaComic5 />} />
-        <Route path="/visor-1" element={<VisorComic1 />} />
-        <Route path="/visor-2" element={<VisorComic2 />} />
-        <Route path="/visor-3" element={<VisorComic3 />} />
-        <Route path="/visor-4" element={<VisorComic4 />} />
-        <Route path="/visor-5" element={<VisorComic5 />} />
-        <Route path="/capitulos" element={<MapaCapitulos />} />
-        <Route path="/guia" element={<SofiaGuia/>} />
-        <Route path="/intro-juego" element={<IntroJuego />} />
-        <Route path="/juego" element={<Juego />} />
+      <Routes>
+        <BrowserRouter>
+
+          {/*<Route path="/" element={<Inicio />} />
+          <Route path="/sobrenosotros" element={<SobreNosotros />} />
+          <Route path="/personajes" element={<Personajes />} />
+          <Route path="/Recomendaciones" element={<Recomendaciones />} />
+          <Route path="/explorarmuseo" element={<ExplorarMuseo />} />
+          <Route path="/explorar-museo" element={<ExplorarMuseo />} />
+          <Route path="/step" element={<StepDescripcion />} />
+          <Route path="/rogers" element={<RogersDescripcion />} />
+          <Route path="/orabona" element={<OrabonaDescripcion />} />
+          <Route path="/cthulhu" element={<CthulhuDescripcion />} />
+          <Route path="/cap-uno" element={<PaginaComic1 />} />
+          <Route path="/cap-dos" element={<PaginaComic2 />} />
+          <Route path="/cap-tres" element={<PaginaComic3 />} />
+          <Route path="/cap-cuatro" element={<PaginaComic4 />} />
+          <Route path="/cap-cinco" element={<PaginaComic5 />} />
+          <Route path="/visor-1" element={<VisorComic1 />} />
+          <Route path="/visor-2" element={<VisorComic2 />} />
+          <Route path="/visor-3" element={<VisorComic3 />} />
+          <Route path="/visor-4" element={<VisorComic4 />} />
+          <Route path="/visor-5" element={<VisorComic5 />} />
+          <Route path="/capitulos" element={<MapaCapitulos />} />
+          <Route path="/guia" element={<SofiaGuia />} />
+          <Route path="/intro-juego" element={<IntroJuego />} />
+          <Route path="/juego" element={<Juego />} /> */}
 
           {/*<Route path="reproductor1" element={<ReproductorYamile />} />
           <Route path="reproductor2" element={<ReproductorSofia />} />
           <Route path="reproductor3" element={<ReproductorKarol />} />*/}
 
-        </Routes>
-      </BrowserRouter>
+          <Route path="/datasofia" element={<LotieSofia />} />
+
+        </BrowserRouter >
+      </Routes>
     </>
   );
 };
