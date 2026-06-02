@@ -11,7 +11,7 @@ export const Header = () => {
         position: "absolute",
         width: "100%",
         zIndex: "10",
-        fontFamily: "haus",
+        fontFamily: "rxx",
       }}
     >
       <div className="container">
@@ -45,23 +45,23 @@ export const Header = () => {
           <div className="ms-auto d-flex flex-column flex-lg-row align-items-center gap-3">
 
             <Link className="nav-link" to="/" style={{ color: "#fff" }}>
-              INICIO
+              Inicio
             </Link>
 
             <Link className="nav-link" to="/sobrenosotros" style={{ color: "#fff" }}>
-              SOBRE NOSOTROS
+              Sobre Nosotros
             </Link>
 
             <Link className="nav-link" to="/personajes" style={{ color: "#fff" }}>
-              PERSONAJES
+              Personajes
             </Link>
 
             <Link className="nav-link" to="/recomendaciones" style={{ color: "#fff" }}>
-              RECOMENDACIONES
+              Recomendaciones
             </Link>
 
             <Link className="nav-link" to="/juego" style={{ color: "#fff" }}>
-              JUEGO
+              Juego 
             </Link>
 
             <Link
@@ -89,7 +89,7 @@ export const Header = () => {
                   objectFit: "contain",
                 }}
               />
-              EXPLORAR MUSEO
+              Explorar Museo 
             </Link>
 
           </div>

@@ -35,7 +35,7 @@ color: brown;
   position: relative;
   width: 100%;
   height: 100vh;
-  background-image: url("/Fondoinicio.png");
+  background-image: url("/Libro Banner.jpg");
   background-size: cover;
   background-position: center;
 }
@@ -70,7 +70,7 @@ color: brown;
   letter-spacing: 5px;
   font-size: 18px;
   margin-bottom: 20px;
-  font-family: monospace;
+  font-family: glacia;
 }
 
 
@@ -87,7 +87,7 @@ color: brown;
   font-size: 18px;
   line-height: 1.6;
   margin-bottom: 30px;
-  font-family: monospace;
+  font-family: glacia;
 }
 
 
@@ -127,7 +127,7 @@ color: brown;
   color: #bfa76a;
   font-size: 18px;
   margin-bottom: 20px;
-  font-family: monospace;
+  font-family:glacia;
 }
 
 
@@ -135,15 +135,16 @@ color: brown;
   font-size: 50px;
   margin-bottom: 25px;
   font-family: "rxx";
-  text-shadow: 0 0 6px #fff;
+  color:#1ad96d ;
+  text-shadow: 0 0 20px #1ad96d;
 }
 
 
 .sobre-text {
   font-size: 15px;
   line-height: 1.8;
-  color: #cfcfcf;
-  font-family: monospace;
+  color: 312457;
+  font-family:glacia;
   max-width: 600px;
 }
 
@@ -195,7 +196,7 @@ color: brown;
   border-radius: 20px;
   font-size: 11px;
   color: #fff;
-  font-family: monospace;
+  font-family:glacia;
   z-index: 2;
 }
 
@@ -218,7 +219,7 @@ color: brown;
 .card-text {
   color: #cfcfcf;
   font-size: 13px;
-  font-family: monospace;
+  font-family:glacia;
   line-height: 1.6;
   margin-bottom: 20px;
 }
@@ -335,14 +336,14 @@ color: brown;
 
 .card-flip-rol {
   color: #bfa76a;
-  font-family: monospace;
+  font-family:glacia;
   font-size: 14px;
   text-align: center;
 }
 
 .card-flip-desc {
   color: #cfcfcf;
-  font-family: monospace;
+  font-family:glacia;
   font-size: 14px;
   line-height: 1.6;
   text-align: center;
@@ -395,7 +396,7 @@ color: brown;
   color: #bfa76a;
   font-size: 11px;
   letter-spacing: 2px;
-  font-family: monospace;
+  font-family:glacia;
   margin-bottom: 5px;
 }
 
@@ -411,7 +412,7 @@ color: brown;
   color: #ccc;
   font-size: 12px;
   line-height: 1.4;
-  font-family: monospace;
+  font-family:glacia;
   margin-bottom: 15px;
 }
 
@@ -422,7 +423,7 @@ color: brown;
   border: 1px solid #bfa76a;
   color: #bfa76a;
   font-size: 12px;
-  font-family: monospace;
+  font-family:glacia;
 }
 
 
@@ -484,7 +485,7 @@ color: brown;
 
 
 .card-infos-title {
-  color: #fff;
+  color: #1ad96d;
   font-family: "rxx";
   margin-bottom: 10px;
 }
@@ -492,7 +493,7 @@ color: brown;
 
 .card-infos-desc {
   color: #cfcfcf;
-  font-family: monospace;
+  font-family:glacia;
   font-size: 14px;
   line-height: 1.7;
 }
@@ -513,8 +514,8 @@ color: brown;
 
 .card-recomendacion:hover {
   transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 0 20px rgba(191, 167, 106, 0.4);
-  border: 1px solid #bfa76a;
+  box-shadow: 0 0 20px rgba(64, 152, 63, 0.4);
+  border: 1px solid #1ad96d;
 }
 
 
@@ -527,17 +528,18 @@ color: brown;
 
 
 .card-recomendacion-title {
-  color: #fff;
+  color: #1ad96d;
   font-family: "rxx";
   font-size: 16px;
   margin-bottom: 5px;
+  text-shadow: 0 0 8px #1ad96d;
 }
 
 
 .card-recomendacion-meta {
   color: #bfa76a;
   font-size: 11px;
-  font-family: monospace;
+  font-family:glacia;
   margin-bottom: 8px;
 }
 
@@ -545,7 +547,7 @@ color: brown;
 .card-recomendacion-desc {
   color: #ccc;
   font-size: 12px;
-  font-family: monospace;
+  font-family:glacia;
   line-height: 1.4;
 }
 
@@ -615,7 +617,7 @@ color: brown;
   border-radius: 20px;
   font-size: 13px;
   color: #bfa76a;
-  font-family: monospace;
+  font-family:glacia;
 }
 
 
@@ -629,7 +631,7 @@ color: brown;
   font-size: 13px;
   letter-spacing: 3px;
   margin-bottom: 8px;
-  font-family: monospace;
+  font-family:glacia;
 }
 
 
@@ -638,7 +640,8 @@ color: brown;
   letter-spacing: 2px;
   margin-bottom: 20px;
   font-family: "rxx";
-  text-shadow: 0 0 6px #ffffff;
+  text-shadow: 0 0 6px #1ad96d;
+  color: #1ad96d;
 }
 
 
@@ -647,7 +650,7 @@ color: brown;
   color: #cfcfcf;
   margin-bottom: 20px;
   line-height: 1.6;
-  font-family: monospace;
+  font-family:glacia;
 }
 
 
@@ -663,7 +666,7 @@ color: brown;
   line-height: 1.8;
   color: #ddd;
   font-size: 16px;
-  font-family: monospace;
+  font-family:glacia;
 }
 
 .historia-container {
@@ -704,22 +707,22 @@ color: brown;
   font-size: 13px;
   color: #bfa76a;
   margin-bottom: 15px;
-  font-family: monospace;
+  font-family:glacia;
 }
 
 .historia-title {
   font-size: 40px;
   margin-bottom: 20px;
   font-family: "rxx";
-  color: #ffffff;
-  text-shadow: 0 0 6px #ffffff;
+  color: #1ad96d ;;
+  text-shadow: 0 0 6px #1ad96d;
 }
 
 .historia-desc {
   font-size: 18px;
   line-height: 1.8;
   color: #cfcfcf;
-  font-family: monospace;
+  font-family:glacia;
 }
 
 .titulo-capitulos {
@@ -729,7 +732,7 @@ color: brown;
 
 .titulo-sub {
   color: #bfa76a;
-  font-family: monospace;
+  font-family:glacia;
   font-size: 15px;
   letter-spacing: 4px;
   margin-bottom: 10px;
@@ -753,16 +756,16 @@ color: brown;
   color: #bfa76a;
   letter-spacing: 6px;
   font-size: 18px;
-  font-family: monospace;
+  font-family:glacia;
   margin-bottom: 15px;
 }
 
 .equipo-main {
-  color: #fff;
+  color: #1ad96d;
   font-family: "rxx";
   font-size: 50px;
   letter-spacing: 2px;
-  text-shadow: 0 0 6px #fff;
+  text-shadow: 0 0 6p x#1ad96d;
 }
 
 .titulo-personajes {
@@ -774,20 +777,20 @@ color: brown;
   color: #bfa76a;
   letter-spacing: 4px;
   font-size: 12px;
-  font-family: monospace;
+  font-family:glacia;
 }
 
 .personajes-main {
-  color: #eaeaea;
+  color: #1ad96d;
   font-family: "rxx";
   font-size: 48px;
   margin: 10px 0;
-  text-shadow: 0 0 8px #fff;
+  text-shadow: 0 0 8px #1ad96d;
 }
 
 .personajes-desc {
   color: #aaa;
-  font-family: monospace;
+  font-family:glacia;
   font-size: 14px;
   max-width: 600px;
   margin: 0 auto;
@@ -802,20 +805,20 @@ color: brown;
   color: #bfa76a;
   letter-spacing: 4px;
   font-size: 12px;
-  font-family: monospace;
+  font-family:glacia;
 }
 
 .reco-main {
-  color: #eaeaea;
+  color: #1ad96d;
   font-family: "rxx";
   font-size: 42px;
   margin: 10px 0;
-  text-shadow: 0 0 6px #fff;
+  text-shadow: 0 0 6px #1ad96d;
 }
 
 .reco-desc {
   color: #aaa;
-  font-family: monospace;
+  font-family:glacia;
   font-size: 14px;
   max-width: 500px;
   margin: 0 auto;
@@ -828,12 +831,12 @@ color: brown;
 }
 
 .video-title {
-  color: #fff;
+  color: #1ad96d;
   font-family: "rxx";
   font-size: 50px;
   margin-bottom: 40px;
   text-align: center;
-  text-shadow: 0 0 6px #ffffff;
+  text-shadow: 0 0 6px #1ad96d;
 }
 
 .video-box {
@@ -887,7 +890,7 @@ color: brown;
   color: #e5e5e5;
   font-size: 13px;
   letter-spacing: 2px;
-  font-family: monospace;
+  font-family:glacia;
   background-color: rgba(255, 255, 255, 0.05);
   border: 2px solid #cfcfcf;
   border-radius: 13px;
@@ -906,7 +909,7 @@ color: brown;
 
 .visor-cap {
   color: #888;
-  font-family: monospace;
+  font-family:glacia;
   font-size: 11px;
   letter-spacing: 2px;
 }
@@ -949,7 +952,7 @@ color: brown;
   padding: 15px 25px;
   border-radius: 10px;
   color: #fff;
-  font-family: monospace;
+  font-family:glacia;
   text-align: center;
   max-width: 600px;
 }
@@ -1015,7 +1018,7 @@ color: brown;
   color: #e5e5e5;
   font-size: 13px;
   letter-spacing: 2px;
-  font-family: monospace;
+  font-family:glacia;
   background-color: rgba(255, 255, 255, 0.05);
   border: 2px solid #cfcfcf;
   border-radius: 13px;
@@ -1040,7 +1043,7 @@ color: brown;
 
 .visor-capitulo {
   color: #888;
-  font-family: monospace;
+  font-family:glacia;
   font-size: 11px;
   letter-spacing: 2px;
 }
@@ -1089,7 +1092,7 @@ color: brown;
   padding: 15px 25px;
   border-radius: 10px;
   color: #fff;
-  font-family: monospace;
+  font-family:glacia;
   text-align: center;
   max-width: 600px;
 }
@@ -1327,7 +1330,7 @@ body:has(.cthulhu-container) {
 }
 
 .footer-copy {
-  font-family: monospace;
+  font-family:glacia;
   font-size: 11px;
   letter-spacing: 2px;
   color: #cfcfcf;
