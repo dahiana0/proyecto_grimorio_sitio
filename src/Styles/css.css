@@ -35,7 +35,7 @@ color: brown;
   position: relative;
   width: 100%;
   height: 100vh;
-  background-image: url("/Fondoinicio.png");
+  background-image: url("/Libro Banner.jpg");
   background-size: cover;
   background-position: center;
 }
@@ -135,14 +135,15 @@ color: brown;
   font-size: 50px;
   margin-bottom: 25px;
   font-family: "rxx";
-  text-shadow: 0 0 6px #fff;
+  color:#1ad96d ;
+  text-shadow: 0 0 20px #1ad96d;
 }
 
 
 .sobre-text {
   font-size: 15px;
   line-height: 1.8;
-  color: #cfcfcf;
+  color: 312457;
   font-family:glacia;
   max-width: 600px;
 }
@@ -484,7 +485,7 @@ color: brown;
 
 
 .card-infos-title {
-  color: #fff;
+  color: #1ad96d;
   font-family: "rxx";
   margin-bottom: 10px;
 }
@@ -513,8 +514,8 @@ color: brown;
 
 .card-recomendacion:hover {
   transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 0 20px rgba(191, 167, 106, 0.4);
-  border: 1px solid #bfa76a;
+  box-shadow: 0 0 20px rgba(64, 152, 63, 0.4);
+  border: 1px solid #1ad96d;
 }
 
 
@@ -527,10 +528,11 @@ color: brown;
 
 
 .card-recomendacion-title {
-  color: #fff;
+  color: #1ad96d;
   font-family: "rxx";
   font-size: 16px;
   margin-bottom: 5px;
+  text-shadow: 0 0 8px #1ad96d;
 }
 
 
@@ -638,7 +640,8 @@ color: brown;
   letter-spacing: 2px;
   margin-bottom: 20px;
   font-family: "rxx";
-  text-shadow: 0 0 6px #ffffff;
+  text-shadow: 0 0 6px #1ad96d;
+  color: #1ad96d;
 }
 
 
@@ -711,8 +714,8 @@ color: brown;
   font-size: 40px;
   margin-bottom: 20px;
   font-family: "rxx";
-  color: #ffffff;
-  text-shadow: 0 0 6px #ffffff;
+  color: #1ad96d ;;
+  text-shadow: 0 0 6px #1ad96d;
 }
 
 .historia-desc {
@@ -758,11 +761,11 @@ color: brown;
 }
 
 .equipo-main {
-  color: #fff;
+  color: #1ad96d;
   font-family: "rxx";
   font-size: 50px;
   letter-spacing: 2px;
-  text-shadow: 0 0 6px #fff;
+  text-shadow: 0 0 6p x#1ad96d;
 }
 
 .titulo-personajes {
@@ -778,11 +781,11 @@ color: brown;
 }
 
 .personajes-main {
-  color: #eaeaea;
+  color: #1ad96d;
   font-family: "rxx";
   font-size: 48px;
   margin: 10px 0;
-  text-shadow: 0 0 8px #fff;
+  text-shadow: 0 0 8px #1ad96d;
 }
 
 .personajes-desc {
@@ -806,11 +809,11 @@ color: brown;
 }
 
 .reco-main {
-  color: #eaeaea;
+  color: #1ad96d;
   font-family: "rxx";
   font-size: 42px;
   margin: 10px 0;
-  text-shadow: 0 0 6px #fff;
+  text-shadow: 0 0 6px #1ad96d;
 }
 
 .reco-desc {
@@ -828,12 +831,12 @@ color: brown;
 }
 
 .video-title {
-  color: #fff;
+  color: #1ad96d;
   font-family: "rxx";
   font-size: 50px;
   margin-bottom: 40px;
   text-align: center;
-  text-shadow: 0 0 6px #ffffff;
+  text-shadow: 0 0 6px #1ad96d;
 }
 
 .video-box {

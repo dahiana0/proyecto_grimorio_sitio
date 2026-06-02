@@ -7,8 +7,8 @@ export const CardEquipoFlip = ({
   descripcion,
   imagen,
   iniciales = "SA",
-  colorFondo = "#bfa76a",
-  colorBorde = "#bfa76a",
+  colorFondo = "#1ad96d",
+  colorBorde = "#1ad96d",
   colorIniciales = "#000",
 }) => {
   const [flip, setFlip] = useState(false);
