@@ -1,4 +1,4 @@
-.container-mapa{
+.Container-mapa{
   background-image: url("/Mapa-Cap.png");
   min-height: 100vh;
   padding: 50px 20px;
@@ -64,14 +64,14 @@
 }
 
 .titulo-mapa{
-  margin-left:150px ;
+ 
   margin-top: 10px;
   top: 100px;
   color: #f5deb3;
   font-size: 40px;
   text-shadow: 3px 3px 10px black;
   font-family: rxx;
-  margin-right: 50px;
+  
 
 }
 
