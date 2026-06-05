@@ -42,7 +42,7 @@ export const App = () => {
     <>
       <BrowserRouter>
         <Routes>
-         <Route path="/" element={<Inicio />} />
+        <Route path="/" element={<Inicio />} />
         <Route path="/sobrenosotros" element={<SobreNosotros />} />
         <Route path="/personajes" element={<Personajes />} />
         <Route path="/Recomendaciones" element={<Recomendaciones />} />
