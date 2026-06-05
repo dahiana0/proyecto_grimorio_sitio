@@ -55,7 +55,7 @@ export const VideoIntroductorio = () => {
           onClick={handlePlayPause}
         >
           <img
-            src={play ? "/pause.png" : "/play.png"}
+            src={play ? "/pause.png" : "/player-play.svg"}
             alt="Play Pause"
           />
         </button>
