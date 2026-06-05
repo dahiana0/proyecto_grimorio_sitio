@@ -1,15 +1,31 @@
-import React from 'react'
-import Lottie from "lottie-react";
-import dataSofia from '../assets/dataSofia.json'
+import LottieModule from "lottie-react";
+import osoSofia from '../assets/oso-S.json'
+import { useRef } from "react";
+
+const Lottie = LottieModule.default;
 
 export const LootieSofia = () => {
+
+  const lottieRef = useRef()
+
+  const reproducir = () => {
+    lottieRef.current.stop()
+    lottieRef.current.play()
+  }
   return (
-    <div>
+    <>
+      <div onClick={reproducir}>
         <Lottie
-        dataSofia={dataSofia}
-        loop={true}
-        style={{width: 500, height: 500 }}
+          lottieRef={lottieRef}
+          animationData={osoSofia}
+          loop={false}
+          autoplay={false}
+          style={{
+            width: 500,
+            height: 500
+          }}
         />
-    </div>
+      </div>
+    </>
   )
 }
