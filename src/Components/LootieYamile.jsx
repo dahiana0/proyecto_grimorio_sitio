@@ -1,5 +1,5 @@
 import LottieModule  from "lottie-react";
-import peloticaYamile from "../assets/data-yamile.json";
+import peloticaYamile from "../assets/data-oso-yamile.json";
 import { useRef } from "react";
 
 const Lottie = LottieModule.default;
