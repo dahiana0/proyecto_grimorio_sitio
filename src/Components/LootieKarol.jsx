@@ -1,6 +1,6 @@
 import LottieModule from "lottie-react";
 import osokarol from "../assets/Oso Animado 1.json";
-import pinguin from "../assets/Pinguino-Karol.json"
+import pinguin from "../assets/pinguino-sofi.json"
 import { useRef } from "react";
 import "../Styles/LootieKarol.css"
 
@@ -9,6 +9,7 @@ export const LootieKarol = () => {
 
   const lottieRefOso = useRef()
   const lottieRefPinguin = useRef()
+  
 
   const reproducirOso = () => {
 
@@ -21,6 +22,16 @@ export const LootieKarol = () => {
     lottieRefPinguin.current.stop()
     lottieRefPinguin.current.play()
   }
+
+  const lanzaHielo = () => {
+   lottieRefPinguin.current.stop()
+   lottieRefPinguin.current.playSegments([0,34],true)
+  }
+
+  const moverPez =( ) => {
+   lottieRefPinguin.current.stop()
+   lottieRefPinguin.current.playSegments([34,124],true)
+  }
   return (
     <>
 
@@ -28,8 +39,8 @@ export const LootieKarol = () => {
         <img className="fondo" src="../fondo.webp" alt="" />
         <img className="nube1" src="nube1.webp" alt="" />
         <img className="nube2" src="nube2.webp" alt="" />
-        <img className="pezM" src="/pezEspinas.svg" alt="" />
-        <img className="hielo" src="/cuboHielo.svg" alt="" />
+        <img className="pezM"  onClick={moverPez} src="/pezEspinas.svg" alt="" />
+        <img className="hielo" onClick={lanzaHielo} src="/cuboHielo.svg" alt="" />
 
         <div className="oso" onClick={reproducirOso}>
           <Lottie
@@ -40,7 +51,7 @@ export const LootieKarol = () => {
           />
         </div>
 
-        <div className="pinguin" onClick={reproducirPinguin}>
+        <div className="pinguino" onClick={reproducirPinguin}>
           <Lottie
             lottieRef={lottieRefPinguin}
             animationData={pinguin}
