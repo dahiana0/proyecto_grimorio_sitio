@@ -1,31 +1,51 @@
 import LottieModule from "lottie-react";
-import osoSofia from '../assets/oso-S.json'
+import pinguin from '../assets/pinguino-sofi.json'
 import { useRef } from "react";
+import '../Styles/lootieSofia.css'
+import osoSofia from '../assets/oso-S.json'
 
 const Lottie = LottieModule.default;
 
 export const LootieSofia = () => {
 
   const lottieRef = useRef()
+  const lottieRefP = useRef()
 
   const reproducir = () => {
     lottieRef.current.stop()
     lottieRef.current.play()
   }
+  const reproducirP = () => {
+    lottieRefP.current.stop()
+    lottieRefP.current.play()
+  }
+  
   return (
     <>
-      <div onClick={reproducir}>
+      <div className="screen">
+        <img className="fondo" src="fondo.webp" alt=""/>
+        <img className= "nube1"src="nube1.webp" alt="" />
+        <img className= "nube2"src="nube2.webp" alt="" />
+        <img className=" pez-espinas" src="pezEspinas.svg" alt="" />
+        <img className="hielo"src="cuboHielo.svg" alt="" />
+      <div className= "oso" onClick={reproducir}>
         <Lottie
           lottieRef={lottieRef}
           animationData={osoSofia}
           loop={false}
           autoplay={false}
-          style={{
-            width: 500,
-            height: 500
-          }}
+        />
+      </div> 
+      <div className= "pinguin" onClick={reproducirP}>
+        <Lottie
+          lottieRef={lottieRefP}
+          animationData={pinguin}
+          loop={false}
+          autoplay={false}
         />
       </div>
+      </div>
+
     </>
   )
 }
