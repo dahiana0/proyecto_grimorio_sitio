@@ -1,0 +1,85 @@
+.screen {
+    width: 1000px;
+    height: 408px;
+    position: relative;
+    overflow: hidden;
+}
+
+.fondo {
+    position: absolute;
+    top: 0;
+    left: -30px;
+}
+
+.nube1 {
+    position: absolute;
+    top: 31px;
+    left: 36px;
+    animation: nube1 50s linear infinite;
+}
+
+.nube2 {
+    position: absolute;
+    top: 31px;
+    right: 36px;
+    animation: nube2 50s linear infinite;
+}
+
+@keyframes nube1 {
+    0% {
+        transform: translateX(0);
+    }
+
+    50% {
+        transform: translateX(500px);
+    }
+
+    0% {
+        transform: translateX(0px);
+    }
+}
+
+@keyframes nube2 {
+    0% {
+        transform: translateX(0);
+    }
+
+    50% {
+        transform: translateX(-700px);
+    }
+
+    100% {
+        transform: translateX(0px);
+    }
+}
+
+.oso {
+    position: absolute;
+    width: 350;
+    left: 450px;
+
+}
+
+.pezM{
+    position: absolute;
+    left: 273px;
+    width: 70px;
+    bottom: 41px;
+    transform: rotate(6deg);
+
+}
+
+.hielo{
+    position: absolute;
+    width: 50px;
+    left: 35px;
+    bottom: 35px;    
+}
+
+.pinguin{
+ width: 300px;
+ position: absolute;
+ left: 138px;
+ bottom: 52px;
+}
+
