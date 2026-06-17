@@ -66,12 +66,11 @@ export const App = () => {
         <Route path="/guia" element={<SofiaGuia/>} />
         <Route path="/intro-juego" element={<IntroJuego />} />
         <Route path="/juego" element={<Juego />} />
+        {/*
         <Route path="/lootyami" element={<LootieYamile />} />
         <Route path="/lootsofi" element={<LootieSofia />} />
         <Route path="/lootkarol" element={<LootieKarol />} />
-
-
-        {/*<Route path="reproductor1" element={<ReproductorYamile />} />
+        <Route path="reproductor1" element={<ReproductorYamile />} />
         <Route path="reproductor2" element={<ReproductorSofia />} />
         <Route path="reproductor3" element={<ReproductorKarol />} />*/}
 
