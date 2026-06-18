@@ -7,12 +7,10 @@ export const Footer = () => {
       style={{
         width: "100%",
         backgroundColor: "#040f08",
-        padding: "30px 0", 
+        padding: "30px 0",
       }}
     >
-     
       <div className="container">
-        
         <div
           style={{
             width: "100%",
@@ -32,7 +30,6 @@ export const Footer = () => {
             fontSize: "13px",
           }}
         >
-          
           <div
             style={{
               fontFamily: "haus",
@@ -41,7 +38,15 @@ export const Footer = () => {
               textShadow: "0 0 6px #ffffff",
             }}
           >
-            GRIMORIO
+            <img
+              src="./Logo.svg"
+              alt="Logo"
+              style={{
+                width: "170px",
+                objectFit: "contain",
+                marginRight: "8px",
+              }}
+            />
           </div>
 
           <div
@@ -49,7 +54,7 @@ export const Footer = () => {
               display: "flex",
               alignItems: "center",
               gap: "15px",
-              fontFamily: "monospace",
+              fontFamily: "glacia",
               fontSize: "10px",
             }}
           >
@@ -71,7 +76,6 @@ export const Footer = () => {
               />
             </div>
           </div>
-
         </div>
       </div>
     </div>

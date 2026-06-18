@@ -6,11 +6,11 @@ const TituloRecomendaciones = () => {
     <div className="titulo-recomendaciones">
 
       <p className="reco-sub">
-        MÁS ALLÁ DEL GRIMORIO
+        Más Allá Del Grimorio
       </p>
 
       <h1 className="reco-main">
-        LECTURAS RECOMENDADAS
+        Lecturas Recomendadas
       </h1>
 
       <p className="reco-desc">

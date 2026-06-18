@@ -6,11 +6,11 @@ const TituloPersonajes = () => {
     <div className="titulo-personajes">
 
       <p className="personajes-sub">
-        ARCHIVO DE PERSONAJES
+        Archivo De Personajes
       </p>
 
       <h1 className="personajes-main">
-        CONOCE A LOS PERSONAJES
+        Conoce A Los Personajes
       </h1>
 
       <p className="personajes-desc">

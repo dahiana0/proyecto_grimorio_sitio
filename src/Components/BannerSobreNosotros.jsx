@@ -9,11 +9,11 @@ export const BannerSobreNosotros = () => {
       <div className="sobre-content text-white">
 
         <p className="sobre-subtitle">
-          SOBRE NOSOTROS
+          Sobre Nosotros
         </p>
 
         <h1 className="sobre-title">
-          DONDE LO OCULTO SE REVELA
+          Donde Lo Oculto Se Revela
         </h1>
 
         <p className="sobre-text">

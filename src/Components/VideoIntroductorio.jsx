@@ -26,7 +26,7 @@ export const VideoIntroductorio = () => {
     <div className="video-container">
 
       <h2 className="video-title">
-        VIDEO INTRODUCTORIO
+        Video Introductorio
       </h2>
 
       <div className="grimorio-portal">

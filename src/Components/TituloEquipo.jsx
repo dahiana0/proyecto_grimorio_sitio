@@ -6,11 +6,11 @@ export const TituloEquipo = () => {
     <div className="titulo-equipo">
 
       <p className="equipo-sub">
-        NUESTRO EQUIPO
+        Nuestro Equipo
       </p>
 
       <h1 className="equipo-main">
-        GUARDIANAS DE GRIMORIO
+        Guardianas De Grimorio 
       </h1>
 
     </div>

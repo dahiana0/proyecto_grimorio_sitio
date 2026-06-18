@@ -15,26 +15,26 @@ export const SobreNosotros = () => {
       <BannerSobreNosotros />
 
       <CardInfoS
-        titulo="MISIÓN"
+        titulo="Misión"
         texto="Crear experiencias digitales interactivas que despierten el interés de los jóvenes por la lectura, integrando elementos visuales, sonoros y narrativos."
         imagen="./book (3).svg"
       />
 
       <CardInfoS
-        titulo="VISIÓN"
+        titulo="Visión"
         texto="Convertirnos en una plataforma referente de lectura alternativa en Latinoamérica, donde la literatura pueda reimaginarse en formatos inmersivos."
         imagen="./eye (1).svg"
         derecha={true}
       />
 
       <CardInfoS
-        titulo="PROPÓSITO"
+        titulo="Propósito"
         texto="Fomentar la lectura digital inmersiva. Llevar a los jóvenes más allá del simple acto de leer un texto — que se sientan parte de la historia."
         imagen="./compass.svg"
       />
 
       <CardInfoS
-        titulo="INSPIRACIÓN"
+        titulo="Inspiración"
         texto="Basado en 'El Horror del Museo' (1933) de H.P. Lovecraft & Hazel Heald. Lo prohibido cobra vida en una experiencia interactiva."
         imagen="./sparkles-2 (3).svg"
         derecha={true}

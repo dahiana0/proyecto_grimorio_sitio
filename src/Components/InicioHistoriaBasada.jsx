@@ -33,11 +33,11 @@ export const InicioHistoriaBasada = () => {
 
         <div className="historia-text">
           <p className="historia-subtitle">
-            HISTORIA BASADA EN
+            Historia Basada En 
           </p>
 
           <h1 className="historia-title">
-            "EL HORROR EN EL MUSEO" 1933
+            "El Horror En El Museo" 1933
           </h1>
 
           <p className="historia-desc">

@@ -27,7 +27,15 @@ export const Header = () => {
             textShadow: "0 0 6px #fff",
           }}
         >
-          GRIMORIO
+         <img
+            src="./Logo.svg"
+            alt="Logo"
+            style={{
+              width: "170px",
+              objectFit: "contain",
+              marginRight: "8px",
+            }}
+          />
         </Link>
 
       
