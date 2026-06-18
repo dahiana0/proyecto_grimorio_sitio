@@ -862,59 +862,83 @@ color: brown;
   background: #000;
 }
 
-.video-player {
+.video-wrapper {
+  position: relative;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  max-width: 1200px;
+  margin: auto;
+  overflow: hidden;
+  border-radius: 12px;
 }
 
-/* BARRA DE CONTROLES */
+.video-player {
+  width: 100%;
+  display: block;
+}
 
-.video-controls {
-  margin-top: 35px;
+.controls {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 15px 20px;
 
-  width: 60%;
-  max-width: 800px;
-  min-height: 110px;
+  background: linear-gradient(
+    transparent,
+    rgba(0, 0, 0, 0.75)
+  );
 
+  opacity: 0;
+  transition: 0.25s ease;
+}
+
+.controls.show {
+  opacity: 1;
+}
+
+.progress-bar {
+  width: 100%;
+  margin-bottom: 12px;
+  height: 4px;
+  cursor: pointer;
+  accent-color: #ffffff;
+}
+
+.controls-bottom {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 80px;
-
-  background: rgba(0, 0, 0, 0.55);
-
-  border: 1px solid #1ad96d;
-  border-radius: 25px;
-
-  box-shadow:
-    0 0 15px rgba(26, 217, 109, 0.5),
-    inset 0 0 15px rgba(26, 217, 109, 0.1);
 }
 
-.video-controls button {
+.center-buttons {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.center-buttons button,
+.fullscreen-btn {
+  background: none;
   border: none;
-  background: transparent;
   cursor: pointer;
-
-  transition: all 0.3s ease;
+  padding: 5px;
 }
 
-.video-controls button:hover {
-  transform: scale(1.1);
+.center-buttons img,
+.fullscreen-btn img {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) invert(1);
 }
 
-.video-controls img {
-  width: 65px;
-  height: 65px;
-  object-fit: contain;
+.center-buttons button:hover,
+.fullscreen-btn:hover {
+  transform: scale(1.08);
 }
 
-/* BOTÓN CENTRAL MÁS GRANDE */
-
-.play-button img {
-  width: 95px;
-  height: 95px;
+.fullscreen-btn {
+  position: absolute;
+  right: 0;
 }
 
 /* RESPONSIVE */
