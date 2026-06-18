@@ -258,132 +258,161 @@
   font-size: 1.1rem;
   font-weight: bold;
   border-radius: 6px;
+}
+
+.comentarios-page {
+  min-height: 100vh;
+  padding: 4rem 1.5rem 2rem;
+  display: flex;
+  justify-content: center;
+  background: #f4f5f7;
+}
+
+.comentarios-container {
+  width: min(980px, 100%);
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 24px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
+  padding: 2.5rem 2rem;
+}
+
+.comentarios-titulo {
+  font-family: "rxx", sans-serif;
+  font-size: clamp(2rem, 2.5vw, 3rem);
+  color: #0f172a;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.comentarios-descripcion {
+  color: #475569;
+  max-width: 740px;
+  margin: 0 auto 2rem;
+  text-align: center;
+  line-height: 1.8;
+}
+
+.comentarios-form {
+  display: grid;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.form-field {
+  display: grid;
+  gap: 0.65rem;
+  text-align: left;
+}
+
+.form-field label {
+  color: #1f2937;
+  font-weight: 700;
+}
+
+.form-field input,
+.form-field textarea {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 16px;
+  padding: 0.95rem 1rem;
+  font-size: 1rem;
+  color: #0f172a;
+  outline: none;
+  background: #f8fafc;
+}
+
+.form-field textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.12);
+}
+
+.comentarios-boton {
+  width: fit-content;
+  align-self: flex-end;
+  background: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  padding: 0.95rem 1.75rem;
+  font-size: 1rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  box-shadow: 0 4px 15px rgba(22, 163, 74, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.juego-reiniciar:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(22, 163, 74, 0.6);
-  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-}
-
-.juego-reiniciar:active {
+.comentarios-boton:hover {
   transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(56, 189, 248, 0.2);
 }
 
-@keyframes titleGlow {
-  0%,
-  100% {
-    text-shadow:
-      0 0 20px rgba(22, 163, 74, 0.5),
-      0 0 40px rgba(22, 163, 74, 0.3);
-  }
-  50% {
-    text-shadow:
-      0 0 30px rgba(22, 163, 74, 0.7),
-      0 0 60px rgba(22, 163, 74, 0.5);
-  }
+.comentarios-lista {
+  display: grid;
+  gap: 1rem;
 }
 
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.comentarios-lista-titulo {
+  font-size: 1.5rem;
+  color: #0f172a;
+  margin-bottom: 0.75rem;
 }
 
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.7;
-  }
+.comentario-card {
+  padding: 1.35rem 1.5rem;
+  border-radius: 20px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
 }
 
-@media (max-width: 768px) {
-  #juego {
-    padding: 30px 15px;
-    min-height: auto;
-  }
-
-  .juego-titulo {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-  }
-
-  .juego-subtitulo {
-    font-size: 1rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .juego-puertas {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    margin: 2rem 0;
-  }
-
-  .juego-puerta {
-    padding: 1.5rem 1rem;
-    font-size: 1.1rem;
-  }
-
-  .juego-resultado {
-    margin-top: 2rem;
-    padding: 1.5rem;
-  }
-
-  .juego-resultado-titulo {
-    font-size: 1.5rem;
-  }
-
-  .juego-resultado-mensaje {
-    font-size: 1rem;
-  }
-
-  .juego-intentos {
-    font-size: 1.1rem;
-  }
-
-  .juego-reiniciar {
-    padding: 0.7rem 2rem;
-    font-size: 1rem;
-  }
+.comentario-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
 }
 
-@media (max-width: 480px) {
-  #juego {
-    padding: 20px 10px;
+.comentario-meta strong {
+  color: #0f172a;
+  font-size: 1rem;
+}
+
+.comentario-meta span {
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+.comentario-card p {
+  color: #334155;
+  line-height: 1.75;
+  margin: 0;
+}
+
+.sin-comentarios {
+  color: #475569;
+  font-size: 1rem;
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .comentarios-container {
+    padding: 1.75rem 1.25rem;
   }
 
-  .juego-titulo {
-    font-size: 1.5rem;
-    letter-spacing: 2px;
+  .comentario-meta {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
-  .juego-subtitulo {
-    font-size: 0.95rem;
-  }
-
-  .juego-puerta {
-    padding: 1.2rem 0.8rem;
-    font-size: 1rem;
-  }
-
-  .juego-resultado-titulo {
-    font-size: 1.3rem;
-  }
-
-  .juego-resultado-mensaje {
-    font-size: 0.95rem;
+  .comentarios-boton {
+    width: 100%;
+    text-align: center;
+   
   }
 }
