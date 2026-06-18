@@ -52,19 +52,19 @@ export const SobreNosotros = () => {
         />
 
         <CardEquipoFlip
-          nombre="Karol Dahiana Usuga"
-          rol="DESARROLLADORA LÍDER"
-          descripcion="Encargada del desarrollo técnico del proyecto."
-          imagen="./Karol.jpeg"
-          iniciales="KU"
-        />
-
-        <CardEquipoFlip
           nombre="Yamile Arias Pérez"
           rol="ARTISTA CONCEPTUAL"
           descripcion="Creadora del estilo visual oscuro de Grimorio."
           imagen="./Yamile.jpeg"
           iniciales="YA"
+        />
+
+        <CardEquipoFlip
+          nombre="Karol Dahiana Usuga"
+          rol="DESARROLLADORA LÍDER"
+          descripcion="Encargada del desarrollo técnico del proyecto."
+          imagen="./Karol.jpeg"
+          iniciales="KU"
         />
       </div>
 
