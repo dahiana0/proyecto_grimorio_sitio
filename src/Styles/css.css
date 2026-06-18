@@ -465,12 +465,12 @@ color: brown;
   width: 70px;
   height: 70px;
   border-radius: 12px;
-  border: 1px solid #d2b87933;
+  border: 1px solid #1ad96d;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
-  background-color: rgba(210, 184, 121, 0.1);
+  background-color: rgba(83, 205, 105, 0.1);
 }
 
 
@@ -843,7 +843,6 @@ color: brown;
 }
 
 
-/* CONTENEDOR DEL VIDEO */
 
 .grimorio-portal {
   width: 90%;

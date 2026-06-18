@@ -24,8 +24,6 @@ import VisorComic5 from "./Components/VisorComic5";
 import Footer from "./Components/footer";
 import {MapaCapitulos } from "./Pages/MapaCapitulos";
 import {SofiaGuia} from "./Pages/SofiaGuia"
-import { IntroJuego } from "./Pages/IntroJuego";
-import { Juego } from "./Pages/Juego";
 import { ReproductorYamile } from "./Components/ReproductorYamile";
 import { ReproductorSofia } from "./Components/ReproductorSofia";
 import { ReproductorKarol} from "./Components/ReproductorKarol"
@@ -64,8 +62,7 @@ export const App = () => {
         <Route path="/visor-5" element={<VisorComic5 />} />
         <Route path="/capitulos" element={<MapaCapitulos />} />
         <Route path="/guia" element={<SofiaGuia/>} />
-        <Route path="/intro-juego" element={<IntroJuego />} />
-        <Route path="/juego" element={<Juego />} />
+      
         {/*
         <Route path="/lootyami" element={<LootieYamile />} />
         <Route path="/lootsofi" element={<LootieSofia />} />
