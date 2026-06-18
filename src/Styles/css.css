@@ -367,8 +367,8 @@ color: brown;
 
 .card-grande:hover {
   transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 0 25px rgba(191, 167, 106, 0.5);
-  border: 1px solid #bfa76a;
+  box-shadow: 0 0 25px #1ad96dc4(191, 167, 106, 0.5);
+  border: 1px solid #1ad96d;
 }
 
 
@@ -393,7 +393,7 @@ color: brown;
 
 
 .card-grande-rol {
-  color: #bfa76a;
+  color: #1ad96d;
   font-size: 11px;
   letter-spacing: 2px;
   font-family:glacia;
@@ -420,8 +420,8 @@ color: brown;
 .card-grande-tag {
   padding: 4px 10px;
   border-radius: 20px;
-  border: 1px solid #bfa76a;
-  color: #bfa76a;
+  border: 1px solid #1ad96d;
+  color: #1ad96d;
   font-size: 12px;
   font-family:glacia;
 }
@@ -430,9 +430,9 @@ color: brown;
 .card-grande-btn {
   padding: 6px 12px;
   border-radius: 6px;
-  border: 1px solid #bfa76a;
+  border: 1px solid #1ad96d;
   background: rgba(191, 167, 106, 0.1);
-  color: #bfa76a;
+  color: #1ad96d;
   font-size: 11px;
   cursor: pointer;
   font-family: "rxx";
@@ -440,7 +440,7 @@ color: brown;
 }
 
 .card-grande-btn:hover {
-  background: #bfa76a;
+  background: #1ad96d;
   color: #000;
 }
 

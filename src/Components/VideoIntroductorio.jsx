@@ -50,86 +50,92 @@ export default function VideoIntroductorio() {
   };
 
   return (
-    <div
-      ref={containerRef}
-      className="video-wrapper"
-      onMouseEnter={() => setShowControls(true)}
-      onMouseLeave={() => setShowControls(false)}
-    >
-      <video
-        ref={videoRef}
-        className="video-player"
-        onTimeUpdate={handleTimeUpdate}
-      >
-        <source
-          src="/VideoIntroductorio.mp4"
-          type="video/mp4"
-        />
-      </video>
+    <div className="video-section">
+      <h1 className="video-title">
+        Video Introductorio
+      </h1>
 
       <div
-        className={`controls ${
-          showControls ? "show" : ""
-        }`}
+        ref={containerRef}
+        className="video-wrapper"
+        onMouseEnter={() => setShowControls(true)}
+        onMouseLeave={() => setShowControls(false)}
       >
-        <input
-          type="range"
-          min="0"
-          max="100"
-          value={progress}
-          onChange={handleProgressChange}
-          className="progress-bar"
-        />
+        <video
+          ref={videoRef}
+          className="video-player"
+          onTimeUpdate={handleTimeUpdate}
+        >
+          <source
+            src="/VideoIntroductorio.mp4"
+            type="video/mp4"
+          />
+        </video>
 
-        <div className="controls-bottom">
-          <div className="center-buttons">
+        <div
+          className={`controls ${
+            showControls ? "show" : ""
+          }`}
+        >
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value={progress}
+            onChange={handleProgressChange}
+            className="progress-bar"
+          />
+
+          <div className="controls-bottom">
+            <div className="center-buttons">
+              <button
+                onClick={() =>
+                  (videoRef.current.currentTime -= 10)
+                }
+              >
+                <img
+                  src="/icons8-rewind-50.png"
+                  alt="Retroceder"
+                />
+              </button>
+
+              <button onClick={handlePlayPause}>
+                <img
+                  src={
+                    play
+                      ? "/icons8-pause-50.png"
+                      : "/icons8-play-50.png"
+                  }
+                  alt="Play"
+                />
+              </button>
+
+              <button
+                onClick={() =>
+                  (videoRef.current.currentTime += 10)
+                }
+              >
+                <img
+                  src="/icons8-fast-forward-50.png"
+                  alt="Adelantar"
+                />
+              </button>
+            </div>
+
             <button
-              onClick={() =>
-                (videoRef.current.currentTime -= 10)
-              }
+              className="fullscreen-btn"
+              onClick={handleFullscreen}
             >
-              <img
-                src="/icons8-rewind-50.png"
-                alt="Retroceder"
-              />
-            </button>
-
-            <button onClick={handlePlayPause}>
               <img
                 src={
-                  play
-                    ? "/icons8-pause-50.png"
-                    : "/icons8-play-50.png"
+                  isFullscreen
+                    ? "/icons8-pantalla-normal-50.png"
+                    : "/icons8-pantalla-completa-50.png"
                 }
-                alt="Play"
-              />
-            </button>
-
-            <button
-              onClick={() =>
-                (videoRef.current.currentTime += 10)
-              }
-            >
-              <img
-                src="/icons8-fast-forward-50.png"
-                alt="Adelantar"
+                alt="Pantalla completa"
               />
             </button>
           </div>
-
-          <button
-            className="fullscreen-btn"
-            onClick={handleFullscreen}
-          >
-            <img
-              src={
-                isFullscreen
-                  ? "/icons8-pantalla-normal-50.png"
-                  : "/icons8-pantalla-completa-50.png"
-              }
-              alt="Pantalla completa"
-            />
-          </button>
         </div>
       </div>
     </div>
