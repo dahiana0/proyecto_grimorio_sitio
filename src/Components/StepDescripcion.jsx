@@ -26,7 +26,7 @@ export const StepDescripcion = () => {
 
         <div>
           <img
-            src="./stephen.jpg"
+            src="./stephen.jpeg"
             alt="Stephen Jones"
             className="cthulhu-img"
           />

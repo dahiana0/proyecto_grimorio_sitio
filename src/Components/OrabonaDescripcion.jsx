@@ -26,7 +26,7 @@ export const OrabonaDescripcion = () => {
 
         <div>
           <img
-            src="./orabona.jpg"
+            src="./orabona.png"
             alt="Orabona"
             className="cthulhu-img"
           />

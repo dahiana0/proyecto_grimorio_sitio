@@ -30,7 +30,7 @@ export const CthulhuDescripcion = () => {
         
         <div>
           <img
-            src="./cthulhu.jpg"
+            src="./monstruo.png"
             alt="Cthulhu"
             className="cthulhu-img"
           />
