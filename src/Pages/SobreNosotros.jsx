@@ -8,6 +8,7 @@ import TituloEquipo from "../Components/TituloEquipo";
 import "../Styles/css.css";
 
 export const SobreNosotros = () => {
+  
   return (
     <>
       <Header />
