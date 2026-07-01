@@ -69,7 +69,7 @@ export const Header = () => {
             </Link>
 
             <Link className="nav-link" to="/intro-juego" style={{ color: "#fff" }}>
-              Juego 
+              Comentarios 
             </Link>
 
             <Link

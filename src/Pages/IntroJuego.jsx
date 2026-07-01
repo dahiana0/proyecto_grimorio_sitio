@@ -1,61 +1,86 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../Styles/juego.css";
-import heroImg from "../../public/puerta1.svg";
+
+const datos = [
+  { titulo: "Nuevos Comentarios", clase: "nuevos" },
+  { titulo: "Más Populares", clase: "populares" },
+  { titulo: "Comentarios Antiguos", clase: "antiguos" },
+];
 
 export const IntroJuego = () => {
   const navigate = useNavigate();
-  const [correctDoor, setCorrectDoor] = useState(() =>
-    Math.ceil(Math.random() * 5),
-  );
   const [selectedDoor, setSelectedDoor] = useState(null);
-  const [result, setResult] = useState(null);
-  const [attempts, setAttempts] = useState(0);
 
   const pickDoor = (door) => {
+    setSelectedDoor(door);
     navigate("/juego");
-  };
-
-  const restart = () => {
-    setCorrectDoor(Math.ceil(Math.random() * 5));
-    setSelectedDoor(null);
-    setResult(null);
-    setAttempts(0);
   };
 
   return (
     <div id="juego">
-      <div className="juego-container">
-        <h1 className="juego-titulo">
-          {" "}
-          Sección De<br></br>
-          Comentarios
-        </h1>
-        <br />
-        <br />
-        <p className="juego-subtitulo">
-          En el museo de Grimorio, Queremos leer tu opinión.
-        </p>
-        <p className="juego-subtitulo">
-         Dejanos leer tu escalofriante opinión <br></br> 
-        </p>
+      <button 
+        onClick={() => navigate("/")}
+        title="Volver al inicio"
+        style={{
+          position: "fixed",
+          top: "20px",
+          left: "20px",
+          border: "1px solid #ffffff",
+          padding: "8px 16px",
+          borderRadius: "8px",
+          color: "#ffffff",
+          fontSize: "12px",
+          letterSpacing: "1px",
+          fontFamily: "rxx",
+          backgroundColor: "#ffffff1a",
+          cursor: "pointer",
+          zIndex: 1000,
+        }}
+      >
+        ← VOLVER AL INICIO
+      </button>
+      <div id="tablero" className="tablero">
+        <div className="contenedor titulo">
+          <h1>Sección de Comentarios</h1>
+          <p>
+            En el museo de Grimorio, queremos leer tu opinión. Explora los
+            testimonios de otros visitantes.
+          </p>
+        </div>
 
-        <div className="juego-puertas">
-          <div className="puertas-row top">
-            {[1].map((door) => (
-              <img
-                key={door}
-                src={heroImg}
-                alt={`PUERTA ${door}`}
-                className={`puerta-img ${selectedDoor === door ? "seleccionada" : ""}`}
-                onClick={() => pickDoor(door)}
-              />
-            ))}
+        <div className="contenedor objetivo">
+          <h2>Objetivo</h2>
+          <p>
+            Explorar los testimonios de otros visitantes para descubrir nuevas
+            pistas y perspectivas sobre los misterios del museo.
+          </p>
+        </div>
+
+        <div className="contenedor foto">
+          <img src="/castilloComen.png" alt="Museo Grimorio" />
+        </div>
+
+        {datos.map((item) => (
+          <div key={item.clase} className={`contenedor comentarios ${item.clase}`}>
+            <h2>{item.titulo}</h2>
           </div>
+        ))}
+
+        <div
+          className="contenedor boton-comentario"
+          role="button"
+          tabIndex={0}
+          onClick={() => pickDoor(1)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") pickDoor(1);
+          }}
+        >
+          HAZ TU COMENTARIO
         </div>
       </div>
     </div>
   );
 };
 
-
+export default IntroJuego;

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../Styles/juego.css";
 
 export const Juego = () => {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const [comments, setComments] = useState([]);
@@ -35,64 +37,63 @@ export const Juego = () => {
 
   return (
     <section id="comentarios-page" className="comentarios-page">
-      <div className="comentarios-container">
-        <h1 className="comentarios-titulo">Sección de comentarios</h1>
-        <p className="comentarios-descripcion">
-          Comparte tu opinión sobre Grimorio y lee los comentarios de otros visitantes.
-        </p>
+      <button
+        onClick={() => navigate("/intro-juego")}
+        title="Volver al inicio"
+        style={{
+          position: "fixed",
+          top: "20px",
+          left: "20px",
+          border: "1px solid #ffffff",
+          padding: "8px 16px",
+          borderRadius: "8px",
+          color: "#ffffff",
+          fontSize: "12px",
+          letterSpacing: "1px",
+          fontFamily: "rxx",
+          backgroundColor: "#ffffff1a",
+          cursor: "pointer",
+          zIndex: 1000,
+          display: "inline-flex",
+          width: "fit-content",
+          whiteSpace: "nowrap",
+        }}
+      >
+        ← VOLVER
+      </button>
 
-        <form className="comentarios-form" onSubmit={handleSubmit}>
-          <div className="form-field">
-            <label htmlFor="name">Nombre</label>
-            <input
-              id="name"
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Tu nombre"
-            />
-          </div>
+      <h1 className="comentarios-titulo">Sección de comentarios</h1>
+      <p className="comentarios-descripcion">
+        Comparte tu opinión sobre Grimorio y lee los comentarios de otros
+        visitantes.
+      </p>
 
-          <div className="form-field">
-            <label htmlFor="message">Comentario</label>
-            <textarea
-              id="message"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              placeholder="Escribe tu comentario aquí"
-            />
-          </div>
-
-          <button className="comentarios-boton" type="submit">
-            Publicar comentario
-          </button>
-        </form>
-
-        <div className="comentarios-lista">
-          <h2 className="comentarios-lista-titulo">Comentarios recientes</h2>
-          {comments.length === 0 ? (
-            <p className="sin-comentarios">Aún no hay comentarios. Sé el primero en escribir.</p>
-          ) : (
-            comments.map((comment) => (
-              <article key={comment.id} className="comentario-card">
-                <div className="comentario-meta">
-                  <strong>{comment.name}</strong>
-                  <span>
-                    {new Date(comment.createdAt).toLocaleString("es-ES", {
-                      day: "2-digit",
-                      month: "2-digit",
-                      year: "numeric",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </span>
-                </div>
-                <p>{comment.message}</p>
-              </article>
-            ))
-          )}
+      <form className="comentarios-form" onSubmit={handleSubmit}>
+        <div className="form-field">
+          <label htmlFor="name">Nombre</label>
+          <input
+            id="name"
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Tu nombre"
+          />
         </div>
-      </div>
+
+        <div className="form-field">
+          <label htmlFor="message">Comentario</label>
+          <textarea
+            id="message"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            placeholder="Escribe tu comentario aquí"
+          />
+        </div>
+
+        <button className="comentarios-boton" type="submit">
+          Publicar comentario
+        </button>
+      </form>
     </section>
   );
 };

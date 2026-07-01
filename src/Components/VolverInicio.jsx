@@ -25,7 +25,7 @@ export const VolverInicio = () => {
           color: "#ffffff",
           fontSize: "12px",
           letterSpacing: "1px",
-          fontFamily:"haus",
+          fontFamily:"rxx",
           backgroundColor:"#ffffff1a"
         }}
       >
