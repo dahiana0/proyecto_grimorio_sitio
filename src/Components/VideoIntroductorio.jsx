@@ -109,7 +109,7 @@ export default function VideoIntroductorio() {
           onTimeUpdate={handleTimeUpdate}
         >
           <source
-            src="/VideoIntroductorio.mp4"
+            src="./VideoIntroductorio.mp4"
             type="video/mp4"
           />
         </video>
