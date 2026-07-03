@@ -2,26 +2,26 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../Styles/SofiaGuia.css";
 
-export function SofiaGuia() {
+export default function SofiaGuia() {
   const navigate = useNavigate();
 
   const dialogos = [
     {
       texto: "Bienvenido a Grimorio.",
-      audio: "./audios/bienvenida.mp3",
+      audio: "/audios/bienvenida.mp3",
     },
     {
       texto:
         "A continuación entrarás en una aventura donde cada paso revela secretos prohibidos.",
-      audio: "./audios/mensaje2.mp3",
+      audio: "/audios/mensaje2.mp3",
     },
     {
       texto: "Este no es un museo común...",
-      audio: "./audios/mensaje3.mp3",
+      audio: "/audios/mensaje3.mp3",
     },
     {
       texto: "Aquí las historias te observan. Atrévete a continuar.",
-      audio: "./audios/mensaje4.mp3",
+      audio: "/audios/mensaje4.mp3",
     },
   ];
 
@@ -30,13 +30,11 @@ export function SofiaGuia() {
   const [iniciado, setIniciado] = useState(false);
 
   const audioRef = useRef(null);
-
-  // Sonido del botón
-  const sonidoBoton = useRef(new Audio("./audios/sonidoboton.ogg"));
+  const sonidoBoton = useRef(new Audio("/audios/sonidoboton.ogg"));
 
   const reproducirSonido = () => {
     sonidoBoton.current.currentTime = 0;
-    sonidoBoton.current.play().catch(() => {});
+    sonidoBoton.current.play().catch((err) => console.error(err));
   };
 
   const irAlInicio = () => {
@@ -55,25 +53,6 @@ export function SofiaGuia() {
     }, 150);
   };
 
-  useEffect(() => {
-    if (!iniciado) return;
-
-    const audio = audioRef.current;
-
-    if (!audio) return;
-
-    audio.pause();
-    audio.currentTime = 0;
-    audio.src = dialogos[actual].audio;
-
-    audio.play().catch(console.error);
-
-    return () => {
-      audio.pause();
-      audio.currentTime = 0;
-    };
-  }, [actual, iniciado]);
-
   const iniciarHistoria = () => {
     if (iniciado) return;
     setIniciado(true);
@@ -87,18 +66,38 @@ export function SofiaGuia() {
     }
   };
 
+  useEffect(() => {
+    if (!iniciado || !audioRef.current) return;
+
+    const audio = audioRef.current;
+
+    audio.pause();
+    audio.currentTime = 0;
+    audio.src = dialogos[actual].audio;
+
+    audio
+      .play()
+      .then(() => {
+        console.log("Audio reproducido:", audio.src);
+      })
+      .catch((error) => {
+        console.error("Error reproduciendo audio:", error);
+        console.log("Ruta del audio:", audio.src);
+      });
+
+    return () => {
+      audio.pause();
+      audio.currentTime = 0;
+    };
+  }, [actual, iniciado]);
+
   return (
     <div className="container-sofia">
-
-      <button
-        className="back-btn"
-        onClick={irAlInicio}
-      >
+      <button className="back-btn" onClick={irAlInicio}>
         Volver al inicio
       </button>
 
       <div className="character" onClick={iniciarHistoria}>
-
         <img
           className="base-guia"
           src="/base.png"
@@ -110,11 +109,9 @@ export function SofiaGuia() {
           src="/guia-grimorio.webp"
           alt="Guía Grimorio"
         />
-
       </div>
 
       <div className="dialogues">
-
         {!iniciado ? (
           <div className="speech-box aparecer">
             <p>Toca la guía para iniciar...</p>
@@ -127,7 +124,6 @@ export function SofiaGuia() {
 
         <audio
           ref={audioRef}
-          src={dialogos[actual].audio}
           preload="auto"
           onEnded={siguienteDialogo}
         />
@@ -138,11 +134,7 @@ export function SofiaGuia() {
         >
           Explorar Museo
         </button>
-
       </div>
-
     </div>
   );
 }
-
-export default SofiaGuia;
