@@ -1,20 +1,50 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../Styles/juego.css";
 
 const datos = [
-  { titulo: "Nuevos Comentarios", clase: "nuevos" },
-  { titulo: "Más Populares", clase: "populares" },
-  { titulo: "Comentarios Antiguos", clase: "antiguos" },
+  { titulo: "Nuevos Comentarios", clase: "nuevos", ruta: "/comentariosCompletos/nuevos" },
+  { titulo: "Comentarios Antiguos", clase: "antiguos", ruta: "/comentariosCompletos/antiguos" },
 ];
 
 export const IntroJuego = () => {
   const navigate = useNavigate();
   const [selectedDoor, setSelectedDoor] = useState(null);
+  const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    const savedComments = window.localStorage.getItem("grimorio-comments");
+    if (savedComments) {
+      try {
+        setComments(JSON.parse(savedComments));
+      } catch (error) {
+        console.error("Error al leer comentarios guardados:", error);
+      }
+    }
+  }, []);
+
+  const threeDaysMs = 3 * 24 * 60 * 60 * 1000;
+  const now = Date.now();
+
+  const comentariosRecientes = comments.filter((comment) => {
+    const fechaComentario = new Date(comment.createdAt).getTime();
+    return now - fechaComentario <= threeDaysMs;
+  });
+
+  const comentariosAntiguos = comments.filter((comment) => {
+    const fechaComentario = new Date(comment.createdAt).getTime();
+    return now - fechaComentario > threeDaysMs;
+  });
 
   const pickDoor = (door) => {
     setSelectedDoor(door);
     navigate("/juego");
+  };
+
+  const openComentarios = (ruta) => {
+    if (ruta) {
+      navigate(ruta);
+    }
   };
 
   return (
@@ -58,12 +88,37 @@ export const IntroJuego = () => {
         </div>
 
         <div className="contenedor foto">
+          <img src="/personajesComen.png" alt="Museo Grimorio" />
+        </div>
+
+        <div className="contenedor foto">
           <img src="/castilloComen.png" alt="Museo Grimorio" />
         </div>
 
         {datos.map((item) => (
-          <div key={item.clase} className={`contenedor comentarios ${item.clase}`}>
+          <div
+            key={item.clase}
+            className={`contenedor comentarios ${item.clase}`}
+            role={item.ruta ? "button" : undefined}
+            tabIndex={item.ruta ? 0 : undefined}
+            onClick={() => openComentarios(item.ruta)}
+            onKeyDown={(e) => {
+              if (item.ruta && (e.key === "Enter" || e.key === " ")) {
+                openComentarios(item.ruta);
+              }
+            }}
+          >
             <h2>{item.titulo}</h2>
+            {item.clase === "nuevos" && (
+              <p>
+                {comentariosRecientes.length} comentario{comentariosRecientes.length === 1 ? "" : "s"} nuevos
+              </p>
+            )}
+            {item.clase === "antiguos" && (
+              <p>
+                {comentariosAntiguos.length} comentario{comentariosAntiguos.length === 1 ? "" : "s"} antiguos
+              </p>
+            )}
           </div>
         ))}
 

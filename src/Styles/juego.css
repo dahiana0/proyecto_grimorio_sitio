@@ -225,6 +225,22 @@
     filter:brightness(.85);
 }
 
+.populares{
+    padding:10px;
+    border:4px solid #8d7760;
+    background: rgba(255,255,255,0.9);
+    display: grid;
+    place-items: center;
+    min-height: 250px;
+    text-align: center;
+}
+
+.populares h2{
+    margin: 0;
+    font-family: rxx;
+    color: #4d3b2a;
+}
+
 .comentarios{
     min-height:250px;
 }
@@ -268,6 +284,11 @@
      font-family: rxx;
 }
 
+.nuevos p,
+.antiguos p {
+    font-family: glacia;
+}
+
 .populares h2{
     color:#37553d;
     font-family: rxx;
@@ -276,6 +297,18 @@
 .antiguos h2{
     color:#31456d;
      font-family: rxx;
+}
+
+.contenedor.comentarios.nuevos,
+.contenedor.comentarios.antiguos {
+    transition: transform .3s ease, box-shadow .3s ease;
+    cursor: pointer;
+}
+
+.contenedor.comentarios.nuevos:hover,
+.contenedor.comentarios.antiguos:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,.2);
 }
 
 .boton-comentario{

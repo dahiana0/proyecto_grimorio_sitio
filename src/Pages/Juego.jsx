@@ -69,32 +69,31 @@ export const Juego = () => {
       </p>
 
       <form className="comentarios-form" onSubmit={handleSubmit}>
-        <div className="form-field">
-          <label htmlFor="name">Nombre</label>
-          <input
-            id="name"
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Tu nombre"
-          />
-        </div>
+          <div className="form-field">
+            <label htmlFor="name">Nombre</label>
+            <input
+              id="name"
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Tu nombre"
+            />
+          </div>
 
-        <div className="form-field">
-          <label htmlFor="message">Comentario</label>
-          <textarea
-            id="message"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder="Escribe tu comentario aquí"
-          />
-        </div>
+          <div className="form-field">
+            <label htmlFor="message">Comentario</label>
+            <textarea
+              id="message"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder="Escribe tu comentario aquí"
+            />
+          </div>
 
-        <button className="comentarios-boton" type="submit">
-          Publicar comentario
-        </button>
+          <button className="comentarios-boton" type="submit">
+            Publicar comentario
+          </button>
       </form>
     </section>
   );
 };
-
