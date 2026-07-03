@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import "../Styles/css.css";
 
 export const InicioHistoriaBasada = () => {
@@ -21,19 +22,58 @@ export const InicioHistoriaBasada = () => {
   }, []);
 
   return (
-    <div className="historia-container d-flex justify-content-center align-items-center">
-
+    <motion.div
+      className="historia-container d-flex justify-content-center align-items-center"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+      viewport={{ once: false, amount: 0.3 }}
+    >
       <div className="historia-content d-flex align-items-center justify-content-center">
 
-        <img
+        {/* Imagen */}
+        <motion.img
           src={imagenes[index]}
           alt="Libro animado"
           className={`historia-img ${fade ? "fade-in" : "fade-out"}`}
+          initial={{
+            opacity: 0,
+            x: -120,
+            rotate: -8,
+            scale: 0.8,
+          }}
+          whileInView={{
+            opacity: 1,
+            x: 0,
+            rotate: 0,
+            scale: 1,
+          }}
+          transition={{
+            duration: 1.2,
+            ease: "easeOut",
+          }}
+          viewport={{ once: false }}
         />
 
-        <div className="historia-text">
+        {/* Texto */}
+        <motion.div
+          className="historia-text"
+          initial={{
+            opacity: 0,
+            x: 120,
+          }}
+          whileInView={{
+            opacity: 1,
+            x: 0,
+          }}
+          transition={{
+            duration: 1,
+            delay: 0.3,
+          }}
+          viewport={{ once: false }}
+        >
           <p className="historia-subtitle">
-            Historia Basada En 
+            Historia Basada En
           </p>
 
           <h1 className="historia-title">
@@ -46,10 +86,10 @@ export const InicioHistoriaBasada = () => {
             que parece. Las figuras, demasiado reales, parecen observarte…
             y esconden un secreto perturbador: quizá no siempre fueron solo cera.
           </p>
-        </div>
+        </motion.div>
 
       </div>
-    </div>
+    </motion.div>
   );
 };
 

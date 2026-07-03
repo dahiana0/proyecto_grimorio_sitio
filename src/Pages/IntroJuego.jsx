@@ -70,7 +70,7 @@ export const IntroJuego = () => {
       >
         ← VOLVER AL INICIO
       </button>
-      <div id="tablero" className="tablero">
+      <div id="tablero1" className="tablero1">
         <div className="contenedor titulo">
           <h1>Sección de Comentarios</h1>
           <p>
