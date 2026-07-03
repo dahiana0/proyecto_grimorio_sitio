@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import "../Styles/css.css";
 import { useNavigate } from "react-router-dom";
 
@@ -12,6 +12,23 @@ export const CardGrande = ({
   ruta,
 }) => {
   const navigate = useNavigate();
+
+  // Audio del botón
+  const sonidoBoton = useRef(new Audio("./audios/sonidoboton.ogg"));
+
+  const reproducirSonido = () => {
+    sonidoBoton.current.currentTime = 0;
+    sonidoBoton.current.play().catch(() => {});
+  };
+
+  const irAPagina = () => {
+    reproducirSonido();
+
+    // Espera un momento para que se escuche el sonido
+    setTimeout(() => {
+      navigate(ruta);
+    }, 150);
+  };
 
   return (
     <div className="card-grande">
@@ -38,7 +55,7 @@ export const CardGrande = ({
         </div>
 
         <button
-          onClick={() => navigate(ruta)}
+          onClick={irAPagina}
           className="card-grande-btn"
         >
           VER MÁS

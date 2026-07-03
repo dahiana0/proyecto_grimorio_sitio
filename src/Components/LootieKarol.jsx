@@ -1,67 +1,180 @@
-import LottieModule from "lottie-react";
-import osokarol from "../assets/Oso Animado 1.json";
-import pinguin from "../assets/pinguino-sofi.json"
 import { useRef } from "react";
-import "../Styles/LootieKarol.css"
+import LottieModule from "lottie-react";
+import GuardarInteraccion from "./GuardarInteraccion";
+
+import tableroo from "../assets/tablero.json";
+import calabera from "../assets/calavera.json";
+import step from "../assets/step1.json";
+import libroM from "../assets/libro mesa.json";
+import libroc from "../assets/libro cae.json";
+
+import "../Styles/LootieKarol.css";
 
 const Lottie = LottieModule.default;
-export const LootieKarol = () => {
 
-  const lottieRefOso = useRef()
-  const lottieRefPinguin = useRef()
+const LootieKarol = () => {
+
+  const tableroRef = useRef(null);
+  const calaveraRef = useRef(null);
+  const stepRef = useRef(null);
+  const libroRef = useRef(null);
+  const libroCRef = useRef(null);
+
+  
+  const animarTablero = () => {
+
+    tableroRef.current?.stop();
+    tableroRef.current?.play();
+
+    GuardarInteraccion(
+      "tablero",
+      "Tablero de investigación",
+      "tablero"
+    );
+
+  };
+
+
+
+  const animarCalavera = () => {
+
+    calaveraRef.current?.stop();
+    calaveraRef.current?.play();
+
+    GuardarInteraccion(
+      "calavera",
+      "Calavera",
+      "calavera"
+    );
+
+  };
+
+  
+  const animarStep = () => {
+
+    stepRef.current?.stop();
+    stepRef.current?.play();
+
+    GuardarInteraccion(
+      "step",
+      "Step",
+      "step"
+    );
+
+  };
+
+  
+  const animarLibro = () => {
+
+    libroRef.current?.stop();
+    libroRef.current?.play();
+
+    GuardarInteraccion(
+      "libro",
+      "Libro antiguo",
+      "libro"
+    );
+
+  };
+
   
 
-  const reproducirOso = () => {
+  const animarLibroC = () => {
 
-    lottieRefOso.current.stop()
-    lottieRefOso.current.play()
-  }
+    libroCRef.current?.stop();
+    libroCRef.current?.play();
 
-  const reproducirPinguin = () => {
+    GuardarInteraccion(
+      "libroC",
+      "Libro caído",
+      "libroC"
+    );
 
-    lottieRefPinguin.current.stop()
-    lottieRefPinguin.current.play()
-  }
+  };
 
-  const lanzaHielo = () => {
-   lottieRefPinguin.current.stop()
-   lottieRefPinguin.current.playSegments([0,34],true)
-  }
-
-  const moverPez =( ) => {
-   lottieRefPinguin.current.stop()
-   lottieRefPinguin.current.playSegments([34,124],true)
-  }
   return (
-    <>
 
-      <div className="screen">
-        <img className="fondo" src="../fondo.webp" alt="" />
-        <img className="nube1" src="nube1.webp" alt="" />
-        <img className="nube2" src="nube2.webp" alt="" />
-        <img className="pezM"  onClick={moverPez} src="/pezEspinas.svg" alt="" />
-        <img className="hielo" onClick={lanzaHielo} src="/cuboHielo.svg" alt="" />
+    <div className="escena">
 
-        <div className="oso" onClick={reproducirOso}>
+      <div className="camara">
+
+        <img
+          className="fondo"
+          src="/Escenario-Oficina-Step-Final-1.png"
+          alt="Fondo"
+        />
+
+        {/* TABLERO */}
+        <div
+          className="tablero"
+          onClick={animarTablero}
+        >
           <Lottie
-            lottieRef={lottieRefOso}
-            animationData={osokarol}
-            loop={false}
+            lottieRef={tableroRef}
+            animationData={tableroo}
             autoplay={false}
+            loop={false}
           />
         </div>
 
-        <div className="pinguino" onClick={reproducirPinguin}>
+        {/* CALAVERA */}
+        <div
+          className="calavera"
+          onClick={animarCalavera}
+        >
           <Lottie
-            lottieRef={lottieRefPinguin}
-            animationData={pinguin}
-            loop={false}
+            lottieRef={calaveraRef}
+            animationData={calabera}
             autoplay={false}
+            loop={false}
           />
-        </div> 
-       
-        
+        </div>
+
+        {/* STEP */}
+        <div
+          className="step"
+          onClick={animarStep}
+        >
+          <Lottie
+            lottieRef={stepRef}
+            animationData={step}
+            autoplay={false}
+            loop={false}
+          />
+        </div>
+
+        {/* LIBRO */}
+        <div
+          className="libro"
+          onClick={animarLibro}
+        >
+          <Lottie
+            lottieRef={libroRef}
+            animationData={libroM}
+            autoplay={false}
+            loop={false}
+          />
+        </div>
+
+        {/* LIBRO CAÍDO */}
+        <div
+          className="libroC"
+          onClick={animarLibroC}
+        >
+          <Lottie
+            lottieRef={libroCRef}
+            animationData={libroc}
+            autoplay={false}
+            loop={false}
+          />
+        </div>
+
       </div>
-    </>
+
+    </div>
+
   );
+
 };
+
+export default LootieKarol;

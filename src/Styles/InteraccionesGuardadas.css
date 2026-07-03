@@ -1,0 +1,498 @@
+/* ===========================
+   CONTENEDOR PRINCIPAL
+=========================== */
+
+.grimorio{
+    width:100%;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:60px;
+    box-sizing:border-box;
+    background:#1b120c;
+}
+
+/* ===========================
+   FONDO MADERA
+=========================== */
+
+.madera{
+    width:100%;
+    max-width:1500px;
+    min-height:900px;
+
+    padding:45px;
+
+    border-radius:18px;
+
+    background-image:url("/madera.jpg");
+    background-size:cover;
+    background-position:center;
+
+    box-shadow:
+        inset 0 0 60px rgba(0,0,0,.55),
+        0 15px 45px rgba(0,0,0,.5);
+
+    position:relative;
+}
+
+.madera::before{
+
+    content:"";
+
+    position:absolute;
+    inset:0;
+
+    background:rgba(22,15,10,.18);
+
+    border-radius:18px;
+
+    pointer-events:none;
+
+}
+
+/* ===========================
+   PERGAMINO
+=========================== */
+
+.pergamino{
+
+    position:relative;
+
+    z-index:2;
+
+    width:100%;
+    min-height:800px;
+
+    padding:45px;
+
+    border-radius:12px;
+
+    background:
+    linear-gradient(
+        rgba(255,250,230,.96),
+        rgba(241,228,194,.96)
+    );
+
+    border:5px solid #8b6a42;
+
+    box-shadow:
+        inset 0 0 35px rgba(110,80,40,.28),
+        0 10px 30px rgba(0,0,0,.28);
+
+    font-family:glacial;
+
+    max-height:85vh;
+
+    overflow-y:auto;
+
+}
+
+.pergamino::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+.pergamino::-webkit-scrollbar-track{
+
+    background:#d8c39c;
+
+    border-radius:20px;
+
+}
+
+.pergamino::-webkit-scrollbar-thumb{
+
+    background:#8b6239;
+
+    border-radius:20px;
+
+}
+
+.pergamino::-webkit-scrollbar-thumb:hover{
+
+    background:#6e4826;
+
+}
+
+/* ===========================
+   ENCABEZADO
+=========================== */
+
+.encabezado{
+
+    text-align:center;
+
+    margin-bottom:30px;
+
+}
+
+.encabezado h1{
+
+    font-size:42px;
+
+    letter-spacing:3px;
+
+    color:#3d2712;
+
+    margin-bottom:12px;
+
+    text-transform:uppercase;
+
+    font-family:rxx;
+
+}
+
+.encabezado p{
+
+    color:#71573d;
+
+    font-size:18px;
+
+    font-family:glacia;
+
+}
+
+/* ===========================
+   INFORMACIÓN
+=========================== */
+
+.informacion{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    gap:15px;
+
+    margin-bottom:35px;
+
+}
+
+.informacion span{
+
+    font-size:18px;
+
+    color:#55381d;
+
+    font-family:glacia;
+
+}
+
+.informacion strong{
+
+    color:#8d2d0f;
+
+    font-family:rxx;
+
+}
+
+/* ===========================
+   BOTÓN LIMPIAR
+=========================== */
+
+.btnLimpiar{
+
+    border:none;
+
+    cursor:pointer;
+
+    padding:12px 22px;
+
+    border-radius:8px;
+
+    background:#6e3f1e;
+
+    color:white;
+
+    font-size:17px;
+
+    font-family:rxx;
+
+    transition:.3s;
+
+}
+
+.btnLimpiar:hover{
+
+    background:#8f5125;
+
+}
+
+/* ===========================
+   MENSAJE VACÍO
+=========================== */
+
+.vacio{
+
+    width:100%;
+
+    padding:70px;
+
+    text-align:center;
+
+    border:3px dashed #ae8f65;
+
+    border-radius:12px;
+
+    margin-bottom:35px;
+
+}
+
+.vacio h2{
+
+    color:#5b3415;
+
+    margin-bottom:15px;
+
+    font-size:32px;
+
+    font-family:rxx;
+
+}
+
+.vacio p{
+
+    color:#7d654d;
+
+    font-size:18px;
+
+    line-height:1.6;
+
+    font-family:glacia;
+
+}
+
+/* ===========================
+   GRID
+=========================== */
+
+.contenedorTarjetas{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fill,minmax(210px,1fr));
+
+    gap:25px;
+
+}
+
+/* ===========================
+   TARJETAS
+=========================== */
+
+.tarjeta{
+
+    background:#f6ecd2;
+
+    border:2px solid #a38357;
+
+    border-radius:12px;
+
+    padding:18px;
+
+    transition:.35s;
+
+    box-shadow:
+        0 6px 15px rgba(0,0,0,.18);
+
+}
+
+.tarjeta:hover{
+
+    transform:
+        translateY(-8px)
+        rotate(-2deg);
+
+    box-shadow:
+        0 18px 28px rgba(0,0,0,.28);
+
+}
+
+/* ===========================
+   LOTTIE
+=========================== */
+
+.imagenTarjeta{
+
+    width:100%;
+
+    height:170px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    margin-bottom:15px;
+
+}
+
+.imagenTarjeta svg{
+
+    width:150px !important;
+
+    height:150px !important;
+
+}
+
+.imagenTarjeta canvas{
+
+    width:150px !important;
+
+    height:150px !important;
+
+}
+
+/* ===========================
+   CONTENIDO
+=========================== */
+
+.contenidoTarjeta{
+
+    text-align:center;
+
+}
+
+.contenidoTarjeta h3{
+
+    color:#44290f;
+
+    margin-bottom:10px;
+
+    font-size:22px;
+
+    font-family:rxx;
+
+}
+
+.contenidoTarjeta span{
+
+    display:block;
+
+    color:#7a654f;
+
+    font-size:15px;
+
+    margin-bottom:18px;
+
+    font-family:glacia;
+
+}
+
+/* ===========================
+   BOTÓN ELIMINAR
+=========================== */
+
+.btnEliminar{
+
+    width:100%;
+
+    padding:12px;
+
+    border:none;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    background:#7b2c23;
+
+    color:white;
+
+    font-size:16px;
+
+    font-family:rxx;
+
+    transition:.3s;
+
+}
+
+.btnEliminar:hover{
+
+    background:#a73b2f;
+
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+@media(max-width:768px){
+
+.grimorio{
+
+    padding:20px;
+
+}
+
+.madera{
+
+    padding:20px;
+
+}
+
+.pergamino{
+
+    padding:20px;
+
+}
+
+.encabezado h1{
+
+    font-size:30px;
+
+}
+
+.encabezado p{
+
+    font-size:16px;
+
+}
+
+.informacion{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+}
+
+.contenedorTarjetas{
+
+    grid-template-columns:
+    repeat(auto-fill,minmax(160px,1fr));
+
+}
+
+.imagenTarjeta{
+
+    height:140px;
+
+}
+
+.imagenTarjeta svg{
+
+    width:120px !important;
+
+    height:120px !important;
+
+}
+
+.imagenTarjeta canvas{
+
+    width:120px !important;
+
+    height:120px !important;
+
+}
+
+}

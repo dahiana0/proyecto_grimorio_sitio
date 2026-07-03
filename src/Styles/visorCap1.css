@@ -1,0 +1,436 @@
+/*=========================================
+            VISOR GENERAL
+=========================================*/
+
+.visor-container{
+
+    width:100%;
+    min-height:100vh;
+
+    background:#0b0f0e;
+
+    padding:20px;
+
+}
+
+/*=========================================
+            ENCABEZADO
+=========================================*/
+
+.visor-top{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:15px;
+
+}
+
+.visor-btn{
+
+    color:#e5e5e5;
+
+    font-size:13px;
+
+    letter-spacing:2px;
+
+    font-family:glacia;
+
+    background:rgba(255,255,255,.05);
+
+    border:2px solid #cfcfcf;
+
+    border-radius:13px;
+
+    padding:6px 18px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.visor-btn:hover{
+
+    background:#ffffff;
+
+    color:#111;
+
+}
+
+.visor-line{
+
+    width:1px;
+    height:18px;
+
+    background:#444;
+
+}
+
+.visor-cap{
+
+    color:#888;
+
+    font-family:glacia;
+
+    font-size:11px;
+
+    letter-spacing:2px;
+
+}
+
+.visor-title{
+
+    color:#fff;
+
+    font-family:rxx;
+
+    font-size:15px;
+
+}
+
+.visor-icon{
+
+    width:22px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.visor-icon:hover{
+
+    transform:scale(1.1);
+
+}
+
+.visor-icon.off{
+
+    opacity:.4;
+
+}
+
+
+/*=========================================
+        CONTENEDOR ESCENA
+=========================================*/
+
+.visor-scene{
+
+    position:relative;
+
+    width:100%;
+    height:650px;
+
+    border-radius:12px;
+
+    overflow:hidden;
+
+    background:#101010;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+}
+
+/*=========================================
+            LOTTIE
+=========================================*/
+
+.visor-lottie{
+
+    width:100%;
+    height:100%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+}
+
+/* Si el componente Lottie ocupa todo el espacio */
+
+.visor-lottie > div{
+
+    width:100%;
+    height:100%;
+
+}
+
+/*=========================================
+            VIDEO
+=========================================*/
+
+.visor-video{
+
+    width:100%;
+    height:100%;
+
+    object-fit:contain;
+
+    background:#000;
+
+}
+
+/*=========================================
+            SUBTÍTULOS
+=========================================*/
+
+.visor-sub{
+
+    position:absolute;
+
+    left:50%;
+    bottom:35px;
+
+    transform:translateX(-50%);
+
+    max-width:700px;
+
+    padding:14px 24px;
+
+    border-radius:10px;
+
+    background:rgba(0,0,0,.72);
+
+    color:#fff;
+
+    text-align:center;
+
+    font-family:glacia;
+
+    font-size:17px;
+
+    line-height:1.5;
+
+    z-index:10;
+
+}
+
+.visor-sub p{
+
+    margin:0;
+
+}
+
+/*=========================================
+            FLECHAS
+=========================================*/
+
+.visor-arrow{
+
+    position:absolute;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    width:46px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    z-index:20;
+
+}
+
+.visor-arrow.left{
+
+    left:20px;
+
+}
+
+.visor-arrow.right{
+
+    right:20px;
+
+}
+
+.visor-arrow:hover{
+
+    transform:translateY(-50%) scale(1.12);
+
+}
+
+.visor-arrow.disabled{
+
+    opacity:.25;
+
+    pointer-events:none;
+
+}
+
+/*=========================================
+            PUNTOS
+=========================================*/
+
+.visor-dots{
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    gap:10px;
+
+    margin-top:18px;
+
+}
+
+.dot{
+
+    width:10px;
+    height:10px;
+
+    border-radius:50%;
+
+    background:#555;
+
+    transition:.3s;
+
+}
+
+.dot.active{
+
+    background:#bfa76a;
+
+    transform:scale(1.3);
+
+}
+
+/*=========================================
+        VIDEO PERSONALIZADO
+=========================================*/
+
+.visor-video-wrapper{
+
+    position:relative;
+
+    width:100%;
+    height:100%;
+
+    background:#000;
+
+    overflow:hidden;
+
+}
+
+.visor-video{
+
+    width:100%;
+    height:100%;
+
+    object-fit:contain;
+
+    background:#000;
+
+}
+
+/*=========================================
+        CONTROLES
+=========================================*/
+
+.visor-controls{
+
+    position:absolute;
+
+    left:0;
+    bottom:0;
+
+    width:100%;
+
+    padding:18px;
+
+    background:linear-gradient(
+        transparent,
+        rgba(0,0,0,.82)
+    );
+
+    opacity:0;
+
+    transition:.25s;
+
+}
+
+.visor-controls.show{
+
+    opacity:1;
+
+}
+
+/*=========================================
+        BARRA
+=========================================*/
+
+.visor-progress{
+
+    width:100%;
+
+    cursor:pointer;
+
+    margin-bottom:18px;
+
+}
+
+/*=========================================
+        BOTONES
+=========================================*/
+
+.visor-controls-bottom{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:18px;
+
+}
+
+.video-btn{
+
+    width:55px;
+    height:55px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.12);
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+.video-btn:hover{
+
+    background:rgba(255,255,255,.25);
+
+    transform:scale(1.08);
+
+}
+
+.video-btn img{
+
+    width:28px;
+
+}
+
+.play-btn{
+
+    width:70px;
+    height:70px;
+
+}

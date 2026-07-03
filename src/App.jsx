@@ -30,8 +30,9 @@ import { ReproductorYamile } from "./Components/ReproductorYamile";
 import { ReproductorSofia } from "./Components/ReproductorSofia";
 import { ReproductorKarol} from "./Components/ReproductorKarol"
 import { LootieYamile } from "./Components/LootieYamile";
-import { LootieKarol } from "./Components/LootieKarol";
+import  LootieKarol  from "./Components/LootieKarol";
 import { LootieSofia } from "./Components/LootieSofia";
+import InteraccionesGuardadas from "./Components/InteraccionesGuardadas";
 
 
 
@@ -66,13 +67,14 @@ export const App = () => {
         <Route path="/guia" element={<SofiaGuia/>} />
         <Route path="/intro-juego" element={<IntroJuego />} />
         <Route path="/juego" element={<Juego />} />
-        {/*
+        
         <Route path="/lootyami" element={<LootieYamile />} />
         <Route path="/lootsofi" element={<LootieSofia />} />
         <Route path="/lootkarol" element={<LootieKarol />} />
         <Route path="reproductor1" element={<ReproductorYamile />} />
         <Route path="reproductor2" element={<ReproductorSofia />} />
-        <Route path="reproductor3" element={<ReproductorKarol />} />*/}
+        <Route path="reproductor3" element={<ReproductorKarol />} />
+        <Route path="/archivo" element={<InteraccionesGuardadas />} />
 
        </Routes>
       </BrowserRouter>

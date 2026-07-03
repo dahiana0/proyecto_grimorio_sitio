@@ -7,10 +7,15 @@ const CardRecomendacion = ({
   autor,
   anio,
   descripcion,
+  delay = 0,
 }) => {
   return (
-    <div className="card-recomendacion d-flex">
-
+    <div
+      className="card-recomendacion d-flex"
+      data-aos="fade-up"
+      data-aos-duration="900"
+      data-aos-delay={delay}
+    >
       <img
         src={imagen}
         alt={titulo}

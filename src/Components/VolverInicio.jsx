@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const VolverInicio = () => {
   const navigate = useNavigate();
+
+  // Sonido del botón
+  const sonidoBoton = useRef(new Audio("./audios/sonidoboton.ogg"));
+
+  const volverAlInicio = () => {
+    sonidoBoton.current.currentTime = 0;
+    sonidoBoton.current.play().catch(() => {});
+
+    setTimeout(() => {
+      navigate("/");
+    }, 150);
+  };
+
   return (
     <div
       style={{
@@ -13,9 +26,8 @@ export const VolverInicio = () => {
         marginBottom: "40px",
       }}
     >
-    
-     <button
-        onClick={() => navigate("/")}
+      <button
+        onClick={volverAlInicio}
         style={{
           top: "20px",
           left: "20px",

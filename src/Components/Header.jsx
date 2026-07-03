@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import "../Styles/css.css";
 
 export const Header = () => {
+  const sonidoBoton = useRef(new Audio("./audios/sonidoboton.ogg"));
+
+  const reproducirSonido = () => {
+    sonidoBoton.current.currentTime = 0;
+    sonidoBoton.current.play().catch(() => {});
+  };
+
   return (
     <nav
       className="navbar navbar-expand-lg mainmenu"
@@ -16,10 +23,11 @@ export const Header = () => {
     >
       <div className="container">
 
-     
+       
         <Link
           className="navbar-brand"
           to="/"
+          onClick={reproducirSonido}
           style={{
             color: "#ffffff",
             letterSpacing: "3px",
@@ -27,7 +35,7 @@ export const Header = () => {
             textShadow: "0 0 6px #fff",
           }}
         >
-         <img
+          <img
             src="./Logo.svg"
             alt="Logo"
             style={{
@@ -38,42 +46,69 @@ export const Header = () => {
           />
         </Link>
 
-      
+        {/* Botón responsive */}
         <button
           className="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarNav"
+          onClick={reproducirSonido}
         >
           <span className="navbar-toggler-icon"></span>
         </button>
 
-    
+        {/* Menú */}
         <div className="collapse navbar-collapse" id="navbarNav">
           <div className="ms-auto d-flex flex-column flex-lg-row align-items-center gap-3">
 
-            <Link className="nav-link" to="/" style={{ color: "#fff" }}>
+            <Link
+              className="nav-link"
+              to="/"
+              onClick={reproducirSonido}
+              style={{ color: "#fff" }}
+            >
               Inicio
             </Link>
 
-            <Link className="nav-link" to="/sobrenosotros" style={{ color: "#fff" }}>
+            <Link
+              className="nav-link"
+              to="/sobrenosotros"
+              onClick={reproducirSonido}
+              style={{ color: "#fff" }}
+            >
               Sobre Nosotros
             </Link>
 
-            <Link className="nav-link" to="/personajes" style={{ color: "#fff" }}>
+            <Link
+              className="nav-link"
+              to="/personajes"
+              onClick={reproducirSonido}
+              style={{ color: "#fff" }}
+            >
               Personajes
             </Link>
 
-            <Link className="nav-link" to="/recomendaciones" style={{ color: "#fff" }}>
+            <Link
+              className="nav-link"
+              to="/recomendaciones"
+              onClick={reproducirSonido}
+              style={{ color: "#fff" }}
+            >
               Recomendaciones
             </Link>
 
-            <Link className="nav-link" to="/intro-juego" style={{ color: "#fff" }}>
-              Comentarios 
+            <Link
+              className="nav-link"
+              to="/intro-juego"
+              onClick={reproducirSonido}
+              style={{ color: "#fff" }}
+            >
+              Juego
             </Link>
 
             <Link
-              to="/explorarmuseo"
+              to="/guia"
+              onClick={reproducirSonido}
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -97,7 +132,7 @@ export const Header = () => {
                   objectFit: "contain",
                 }}
               />
-              Explorar Museo 
+              Explorar Museo
             </Link>
 
           </div>

@@ -10,13 +10,22 @@ export const Recomendaciones = () => {
     <>
       <Header />
       <br />
+
       <div className="recomendaciones-section container">
-        <TituloRecomendaciones />
+
+        <div
+          data-aos="fade-down"
+          data-aos-duration="1000"
+        >
+          <TituloRecomendaciones />
+        </div>
 
         <br />
 
         <div className="recomendaciones-grid">
+
           <CardRecomendacion
+            delay={100}
             imagen="./La-llama.jpg"
             titulo="La Llamada De Cthulhu"
             autor="H.P. Lovecraft"
@@ -25,6 +34,7 @@ export const Recomendaciones = () => {
           />
 
           <CardRecomendacion
+            delay={200}
             imagen="./El-color.jpg"
             titulo="El Color Que Cayó Del Cielo"
             autor="H.P. Lovecraft"
@@ -33,6 +43,7 @@ export const Recomendaciones = () => {
           />
 
           <CardRecomendacion
+            delay={300}
             imagen="./Las-Montañas.jpg"
             titulo="En Las Montañas De La Locura"
             autor="H.P. Lovecraft"
@@ -41,6 +52,7 @@ export const Recomendaciones = () => {
           />
 
           <CardRecomendacion
+            delay={400}
             imagen="./El-Caso.jpg"
             titulo="El Caso De Charles Dexter Ward"
             autor="H.P. Lovecraft"
@@ -49,6 +61,7 @@ export const Recomendaciones = () => {
           />
 
           <CardRecomendacion
+            delay={500}
             imagen="./La-Sombra.jpg"
             titulo="La Sombra Sobre Innsmouth"
             autor="H.P. Lovecraft"
@@ -57,12 +70,14 @@ export const Recomendaciones = () => {
           />
 
           <CardRecomendacion
+            delay={600}
             imagen="./Dagon.jpg"
             titulo="Dagon"
             autor="H.P. Lovecraft"
             anio="1919"
             descripcion="narra cómo un náufrago llega a una isla surgida del fondo del mar. Allí descubre un monolito antiguo y una criatura gigantesca. Aterrorizado por lo que vio, queda marcado por la experiencia."
           />
+
         </div>
       </div>
 

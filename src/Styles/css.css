@@ -965,7 +965,7 @@ color: brown;
     width: 70px;
     height: 70px;
   }
-}
+}/* 
 .visor-container {
   width: 100%;
   background-color: #0b0f0e;
@@ -1246,7 +1246,7 @@ color: brown;
   font-family: "rxx";
   background-color: #ffffff1a;
   cursor: pointer;
-}
+} */
 
 .explorar-header {
   background-color: #040f08;
@@ -2335,4 +2335,136 @@ body:has(.cthulhu-container) {
   .card-infos-text {
     text-align: center !important;
   }
+}
+
+
+
+/* ========================= */
+/* Historia Cinemática */
+/* ========================= */
+
+.historia-img{
+    transition:0.6s;
+    cursor:pointer;
+}
+
+.historia-img:hover{
+    transform:scale(1.05) rotate(-2deg);
+    filter:drop-shadow(0 0 18px rgba(26,217,109,.45));
+}
+
+.historia-title{
+    transition:.4s;
+}
+
+.historia-title:hover{
+    letter-spacing:2px;
+}
+
+.historia-text{
+    overflow:hidden;
+}
+
+/* ================= VIDEO CINEMÁTICO ================= */
+
+.video-wrapper{
+    transition: all .4s ease;
+    border-radius:18px;
+    overflow:hidden;
+    border:1px solid rgba(26,217,109,.25);
+
+    box-shadow:
+    0 0 15px rgba(26,217,109,.15);
+}
+
+.video-wrapper:hover{
+
+    transform:scale(1.02);
+
+    box-shadow:
+    0 0 30px rgba(26,217,109,.35);
+}
+
+.video-player{
+    transition:.5s;
+}
+
+.video-wrapper:hover .video-player{
+    filter:brightness(1.08);
+}
+
+.video-title{
+    transition:.4s;
+}
+
+.video-title:hover{
+    letter-spacing:2px;
+}
+
+/*========================*/
+/* BANNER PREMIUM */
+/*========================*/
+
+.banner-container{
+    position:relative;
+    overflow:hidden;
+}
+
+.banner-overlay{
+
+    animation:overlayFade 2s ease;
+
+}
+
+.banner-content{
+
+    z-index:5;
+
+}
+
+.banner-title{
+
+    transition:.35s;
+
+}
+
+.banner-title:hover{
+
+    transform:scale(1.04);
+
+    text-shadow:
+    0 0 12px #1ad96d,
+    0 0 30px #1ad96d;
+
+}
+
+.banner-btn{
+
+    transition:.35s;
+
+}
+
+.banner-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+    0 0 20px rgba(26,217,109,.45);
+
+}
+
+@keyframes overlayFade{
+
+    from{
+
+        opacity:0;
+
+    }
+
+    to{
+
+        opacity:1;
+
+    }
+
 }

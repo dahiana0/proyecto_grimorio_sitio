@@ -1,85 +1,129 @@
-.screen {
-    width: 1000px;
-    height: 408px;
+/* ===========================
+   ESCENA
+=========================== */
+
+.escena {
     position: relative;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
 }
 
+/* Cámara (zoom inicial) */
+.camara {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-origin: center center;
+    animation: zoomInicial 3s ease-in-out forwards;
+}
+
+@keyframes zoomInicial {
+    /* Empieza con zoom */
+    0% {
+        transform: scale(1.8) translate(-20px, 120px);
+    }
+
+    /* Mantiene el zoom */
+    40% {
+        transform: scale(1.8) translate(-20px, 120px);
+    }
+
+    /* Regresa al tamaño normal */
+    100% {
+        transform: scale(1) translate(0, 0);
+    }
+}
+
+/* ===========================
+   FONDO
+=========================== */
+
 .fondo {
     position: absolute;
-    top: 0;
-    left: -30px;
+    inset: 0;
+    width: 105%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
 }
 
-.nube1 {
-    position: absolute;
-    top: 31px;
-    left: 36px;
-    animation: nube1 50s linear infinite;
-}
+/* ===========================
+   RESPLANDOR
+=========================== */
 
-.nube2 {
-    position: absolute;
-    top: 31px;
-    right: 36px;
-    animation: nube2 50s linear infinite;
-}
-
-@keyframes nube1 {
+@keyframes resplandor {
     0% {
-        transform: translateX(0);
+        filter: drop-shadow(0 0 2px #1ad96d00);
     }
 
     50% {
-        transform: translateX(500px);
-    }
-
-    0% {
-        transform: translateX(0px);
-    }
-}
-
-@keyframes nube2 {
-    0% {
-        transform: translateX(0);
-    }
-
-    50% {
-        transform: translateX(-700px);
+        filter: drop-shadow(0 0 6px #1ad96d00);
     }
 
     100% {
-        transform: translateX(0px);
+        filter: drop-shadow(0 0 2px #1ad96d00);
     }
 }
 
-.oso {
+/* ===========================
+   ELEMENTOS INTERACTIVOS
+=========================== */
+
+.tablero,
+.calavera,
+.step,
+.libro,
+.libroC {
     position: absolute;
-    width: 350;
-    left: 450px;
-
+    cursor: pointer;
+    animation: resplandor 2.5s ease-in-out infinite;
+    transition: transform .25s ease;
 }
 
-.pezM{
-    position: absolute;
-    left: 273px;
-    width: 70px;
-    bottom: 41px;
-    transform: rotate(6deg);
-
+.tablero:hover,
+.calavera:hover,
+.step:hover,
+.libro:hover,
+.libroC:hover {
+    transform: scale(1.03);
 }
 
-.hielo{
-    position: absolute;
-    width: 50px;
-    left: 35px;
-    bottom: 35px;    
+/* ===========================
+   POSICIONES
+=========================== */
+
+.tablero {
+    left: 620px;
+    top: 110px;
+    width: 300px;
+    z-index: 2;
 }
 
-.pinguino {
-  width: 120px;
-  position: absolute;
-  left: 138px;
-  bottom: 52px;
+.calavera {
+    left: 310px;
+    top: 330px;
+    width: 180px;
+    z-index: 3;
 }
 
+.step {
+    left: 540px;
+    top: 200px;
+    width: 500px;
+    z-index: 4;
+}
+
+.libro {
+    left: 820px;
+    top: 340px;
+    width: 100px;
+    z-index: 5;
+}
+
+.libroC {
+    left: 390px;
+    top: 375px;
+    width: 90px;
+    z-index: 6;
+}

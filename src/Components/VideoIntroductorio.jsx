@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { motion } from "framer-motion";
 import "../Styles/css.css";
 
 export default function VideoIntroductorio() {
@@ -50,16 +51,57 @@ export default function VideoIntroductorio() {
   };
 
   return (
-    <div className="video-section">
-      <h1 className="video-title">
+    <motion.div
+      className="video-section"
+      initial={{ opacity: 0, y: 120 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{
+        duration: 1,
+        ease: "easeOut",
+      }}
+      viewport={{
+        once: false,
+        amount: 0.3,
+      }}
+    >
+      <motion.h1
+        className="video-title"
+        initial={{ opacity: 0, y: -40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{
+          delay: 0.2,
+          duration: 0.8,
+        }}
+        viewport={{ once: false }}
+      >
         Video Introductorio
-      </h1>
+      </motion.h1>
 
-      <div
+      <motion.div
         ref={containerRef}
         className="video-wrapper"
         onMouseEnter={() => setShowControls(true)}
         onMouseLeave={() => setShowControls(false)}
+        initial={{
+          opacity: 0,
+          scale: 0.85,
+          y: 80,
+          filter: "blur(6px)",
+        }}
+        whileInView={{
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          filter: "blur(0px)",
+        }}
+        transition={{
+          duration: 1.1,
+          ease: "easeOut",
+        }}
+        viewport={{
+          once: false,
+          amount: 0.4,
+        }}
       >
         <video
           ref={videoRef}
@@ -88,6 +130,7 @@ export default function VideoIntroductorio() {
 
           <div className="controls-bottom">
             <div className="center-buttons">
+
               <button
                 onClick={() =>
                   (videoRef.current.currentTime -= 10)
@@ -120,6 +163,7 @@ export default function VideoIntroductorio() {
                   alt="Adelantar"
                 />
               </button>
+
             </div>
 
             <button
@@ -135,9 +179,11 @@ export default function VideoIntroductorio() {
                 alt="Pantalla completa"
               />
             </button>
+
           </div>
         </div>
-      </div>
-    </div>
+
+      </motion.div>
+    </motion.div>
   );
 }
