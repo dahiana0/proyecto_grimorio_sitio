@@ -4,14 +4,6 @@ import { useRef } from "react";
 /* import lampara1 from "../assets/lampara1.json";
 import lampara2 from "../assets/lampara2.json";
 
-import monstruo1 from "../assets/monstruo1.json";
-import monstruo2 from "../assets/monstruo2.json";
-import monstruo3 from "../assets/monstruo3.json";
-import monstruo4 from "../assets/monstruo4.json";
-
-import telarana1 from "../assets/telarana1.json";
-import telarana2 from "../assets/telarana2.json";
-
 import stepFrente from "../assets/stepFrente.json";
 import stepEspaldas from "../assets/stepEspaldas.json";
 import stepLado from "../assets/stepLado.json";
@@ -23,26 +15,34 @@ import "../Styles/LootieParte3.css";
 const Lottie = LottieModule.default;
 
 const LootieParte3 = () => {
-/*   const lampara1Ref = useRef(null);
+  /* const lampara1Ref = useRef(null);
   const lampara2Ref = useRef(null);
-
-  const monstruo1Ref = useRef(null);
-  const monstruo2Ref = useRef(null);
-  const monstruo3Ref = useRef(null);
-  const monstruo4Ref = useRef(null);
-
-  const telarana1Ref = useRef(null);
-  const telarana2Ref = useRef(null);
 
   const stepFrenteRef = useRef(null);
   const stepEspaldasRef = useRef(null);
   const stepLadoRef = useRef(null);
 
-  const rogesRef = useRef(null); */
+  const rogesRef = useRef(null);
+ */
+  const monstruo1Ref = useRef(null);
+  /* const monstruo2Ref = useRef(null);
+  const monstruo3Ref = useRef(null);
+  const monstruo4Ref = useRef(null);
 
-  const reproducir = (ref) => {
+  const telarana1Ref = useRef(null);
+  const telarana2Ref = useRef(null); */
+
+  const reproducirLottie = (ref) => {
     ref.current?.stop();
     ref.current?.play();
+  };
+
+  const reproducirVideo = (ref) => {
+    if (ref.current) {
+      ref.current.pause();
+      ref.current.currentTime = 0;
+      ref.current.play();
+    }
   };
 
   return (
@@ -54,9 +54,11 @@ const LootieParte3 = () => {
         alt=""
       />
 
-{/*       <div
+  
+
+      {/* <div
         className="lampara1"
-        onClick={() => reproducir(lampara1Ref)}
+        onClick={() => reproducirLottie(lampara1Ref)}
       >
         <Lottie
           lottieRef={lampara1Ref}
@@ -68,7 +70,7 @@ const LootieParte3 = () => {
 
       <div
         className="lampara2"
-        onClick={() => reproducir(lampara2Ref)}
+        onClick={() => reproducirLottie(lampara2Ref)}
       >
         <Lottie
           lottieRef={lampara2Ref}
@@ -76,83 +78,83 @@ const LootieParte3 = () => {
           autoplay={false}
           loop={false}
         />
-      </div>
+      </div> */}
 
-      <div
-        className="monstruo1"
-        onClick={() => reproducir(monstruo1Ref)}
-      >
-        <Lottie
-          lottieRef={monstruo1Ref}
-          animationData={monstruo1}
-          autoplay={false}
-          loop={false}
-        />
-      </div>
+      
 
-      <div
-        className="monstruo2"
-        onClick={() => reproducir(monstruo2Ref)}
-      >
-        <Lottie
-          lottieRef={monstruo2Ref}
-          animationData={monstruo2}
-          autoplay={false}
-          loop={false}
-        />
-      </div>
-
-      <div
-        className="monstruo3"
-        onClick={() => reproducir(monstruo3Ref)}
-      >
-        <Lottie
-          lottieRef={monstruo3Ref}
-          animationData={monstruo3}
-          autoplay={false}
-          loop={false}
-        />
-      </div>
-
-      <div
-        className="monstruo4"
-        onClick={() => reproducir(monstruo4Ref)}
-      >
-        <Lottie
-          lottieRef={monstruo4Ref}
-          animationData={monstruo4}
-          autoplay={false}
-          loop={false}
-        />
-      </div>
-
-      <div
+      {/* <video
+        ref={telarana1Ref}
         className="telarana1"
-        onClick={() => reproducir(telarana1Ref)}
+        muted
+        playsInline
+        preload="auto"
+        onClick={() => reproducirVideo(telarana1Ref)}
       >
-        <Lottie
-          lottieRef={telarana1Ref}
-          animationData={telarana1}
-          autoplay={false}
-          loop={false}
-        />
-      </div>
+        <source src="/telarana1.webm" type="video/webm" />
+      </video>
 
-      <div
+      <video
+        ref={telarana2Ref}
         className="telarana2"
-        onClick={() => reproducir(telarana2Ref)}
+        muted
+        playsInline
+        preload="auto"
+        onClick={() => reproducirVideo(telarana2Ref)}
       >
-        <Lottie
-          lottieRef={telarana2Ref}
-          animationData={telarana2}
-          autoplay={false}
-          loop={false}
-        />
-      </div>
+        <source src="/telarana2.webm" type="video/webm" />
+      </video> */}
 
-      <div
+   
+
+      <video
+        ref={monstruo1Ref}
+        className="monstruo1"
+        muted
+        playsInline
+        preload="auto"
+        onClick={() => reproducirVideo(monstruo1Ref)}
+      >
+        <source src="/monstruo1.webm" type="video/webm" />
+      </video>
+
+      {/* <video
+        ref={monstruo2Ref}
+        className="monstruo2"
+        muted
+        playsInline
+        preload="auto"
+        onClick={() => reproducirVideo(monstruo2Ref)}
+      >
+        <source src="/monstruo2.webm" type="video/webm" />
+      </video>
+
+      <video
+        ref={monstruo3Ref}
+        className="monstruo3"
+        muted
+        playsInline
+        preload="auto"
+        onClick={() => reproducirVideo(monstruo3Ref)}
+      >
+        <source src="/monstruo3.webm" type="video/webm" />
+      </video>
+
+      <video
+        ref={monstruo4Ref}
+        className="monstruo4"
+        muted
+        playsInline
+        preload="auto"
+        onClick={() => reproducirVideo(monstruo4Ref)}
+      >
+        <source src="/monstruo4.webm" type="video/webm" />
+      </video> */}
+
+      {/* STEPS */}
+
+      {/* <div
         className="stepFrente"
-        onClick={() => reproducir(stepFrenteRef)}
+        onClick={() => reproducirLottie(stepFrenteRef)}
       >
         <Lottie
           lottieRef={stepFrenteRef}
@@ -164,7 +166,7 @@ const LootieParte3 = () => {
 
       <div
         className="stepEspaldas"
-        onClick={() => reproducir(stepEspaldasRef)}
+        onClick={() => reproducirLottie(stepEspaldasRef)}
       >
         <Lottie
           lottieRef={stepEspaldasRef}
@@ -176,7 +178,7 @@ const LootieParte3 = () => {
 
       <div
         className="stepLado"
-        onClick={() => reproducir(stepLadoRef)}
+        onClick={() => reproducirLottie(stepLadoRef)}
       >
         <Lottie
           lottieRef={stepLadoRef}
@@ -184,11 +186,13 @@ const LootieParte3 = () => {
           autoplay={false}
           loop={false}
         />
-      </div>
+      </div> */}
 
-      <div
+      {/* ROGER */}
+
+      {/* <div
         className="roges"
-        onClick={() => reproducir(rogesRef)}
+        onClick={() => reproducirLottie(rogesRef)}
       >
         <Lottie
           lottieRef={rogesRef}

@@ -1,147 +1,134 @@
 .escena{
     position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+    width:100%;
+    height:100%;
+    overflow:hidden;
 }
-
-
 
 .fondo3{
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 1;
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:1;
 }
 
+/* Todos los videos */
 
+.monstruo1,
+.monstruo2,
+.monstruo3,
+.monstruo4,
+.telarana1,
+.telarana2{
+    position:absolute;
+    object-fit:contain;
+    cursor:pointer;
+}
+
+/* Lámparas */
 
 .lampara1{
-    position: absolute;
-    left: 180px;
-    top: 25px;
-    width: 180px;
-    z-index: 2;
-    cursor: pointer;
+    position:absolute;
+    left:180px;
+    top:25px;
+    width:180px;
+    z-index:2;
+    cursor:pointer;
 }
-
-
 
 .lampara2{
-    position: absolute;
-    right: 180px;
-    top: 25px;
-    width: 180px;
-    z-index: 2;
-    cursor: pointer;
+    position:absolute;
+    right:180px;
+    top:25px;
+    width:180px;
+    z-index:2;
+    cursor:pointer;
 }
 
-
+/* Telarañas */
 
 .telarana1{
-    position: absolute;
-    left: 15px;
-    top: 0;
-    width: 230px;
-    z-index: 3;
-    cursor: pointer;
+    left:15px;
+    top:0;
+    width:230px;
+    z-index:3;
 }
-
-
 
 .telarana2{
-    position: absolute;
-    right: 15px;
-    top: 0;
-    width: 230px;
-    z-index: 3;
-    cursor: pointer;
+    right:15px;
+    top:0;
+    width:230px;
+    z-index:3;
 }
 
-
+/* Monstruos */
 
 .monstruo1{
-    position: absolute;
-    left: 70px;
-    bottom: 80px;
-    width: 220px;
-    z-index: 4;
-    cursor: pointer;
+    left:70px;
+    bottom:80px;
+    width:220px;
+    z-index:4;
 }
-
 
 .monstruo2{
-    position: absolute;
-    left: 360px;
-    bottom: 140px;
-    width: 240px;
-    z-index: 4;
-    cursor: pointer;
+    left:360px;
+    bottom:140px;
+    width:240px;
+    z-index:4;
 }
-
-
 
 .monstruo3{
-    position: absolute;
-    right: 360px;
-    bottom: 130px;
-    width: 230px;
-    z-index: 4;
-    cursor: pointer;
+    right:360px;
+    bottom:130px;
+    width:230px;
+    z-index:4;
 }
-
-
 
 .monstruo4{
-    position: absolute;
-    right: 70px;
-    bottom: 70px;
-    width: 220px;
-    z-index: 4;
-    cursor: pointer;
+    right:70px;
+    bottom:70px;
+    width:220px;
+    z-index:4;
 }
 
-
+/* Steps */
 
 .stepFrente{
-    position: absolute;
-    left: 520px;
-    bottom: 60px;
-    width: 250px;
-    z-index: 5;
-    cursor: pointer;
+    position:absolute;
+    left:520px;
+    bottom:60px;
+    width:250px;
+    z-index:5;
+    cursor:pointer;
 }
-
 
 .stepEspaldas{
-    position: absolute;
-    left: 720px;
-    bottom: 60px;
-    width: 250px;
-    z-index: 5;
-    cursor: pointer;
+    position:absolute;
+    left:720px;
+    bottom:60px;
+    width:250px;
+    z-index:5;
+    cursor:pointer;
 }
-
-
 
 .stepLado{
-    position: absolute;
-    left: 920px;
-    bottom: 60px;
-    width: 250px;
-    z-index: 5;
-    cursor: pointer;
+    position:absolute;
+    left:920px;
+    bottom:60px;
+    width:250px;
+    z-index:5;
+    cursor:pointer;
 }
 
-
+/* Roger */
 
 .roges{
-    position: absolute;
-    left: 640px;
-    bottom: 35px;
-    width: 320px;
-    z-index: 6;
-    cursor: pointer;
+    position:absolute;
+    left:640px;
+    bottom:35px;
+    width:320px;
+    z-index:6;
+    cursor:pointer;
 }

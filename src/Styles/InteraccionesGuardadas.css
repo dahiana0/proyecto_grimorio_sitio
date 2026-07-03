@@ -1,498 +1,461 @@
-/* ===========================
-   CONTENEDOR PRINCIPAL
-=========================== */
-
-.grimorio{
-    width:100%;
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:60px;
-    box-sizing:border-box;
-    background:#1b120c;
+.grimorio {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px;
+    box-sizing: border-box;
+    background: #1b120c;
 }
 
-/* ===========================
-   FONDO MADERA
-=========================== */
 
-.madera{
-    width:100%;
-    max-width:1500px;
-    min-height:900px;
+.madera {
+    width: 100%;
+    max-width: 1500px;
+    min-height: 900px;
 
-    padding:45px;
+    padding: 45px;
 
-    border-radius:18px;
+    border-radius: 18px;
 
-    background-image:url("/madera.jpg");
-    background-size:cover;
-    background-position:center;
+    background-image: url("/madera.jpg");
+    background-size: cover;
+    background-position: center;
 
     box-shadow:
-        inset 0 0 60px rgba(0,0,0,.55),
-        0 15px 45px rgba(0,0,0,.5);
+        inset 0 0 60px rgba(0, 0, 0, .55),
+        0 15px 45px rgba(0, 0, 0, .5);
 
-    position:relative;
+    position: relative;
 }
 
-.madera::before{
+.madera::before {
 
-    content:"";
+    content: "";
 
-    position:absolute;
-    inset:0;
+    position: absolute;
+    inset: 0;
 
-    background:rgba(22,15,10,.18);
+    background: rgba(22, 15, 10, .18);
 
-    border-radius:18px;
+    border-radius: 18px;
 
-    pointer-events:none;
+    pointer-events: none;
 
 }
 
-/* ===========================
-   PERGAMINO
-=========================== */
 
-.pergamino{
+.pergamino {
 
-    position:relative;
+    position: relative;
 
-    z-index:2;
+    z-index: 2;
 
-    width:100%;
-    min-height:800px;
+    width: 100%;
+    min-height: 800px;
 
-    padding:45px;
+    padding: 45px;
 
-    border-radius:12px;
+    border-radius: 12px;
 
     background:
-    linear-gradient(
-        rgba(255,250,230,.96),
-        rgba(241,228,194,.96)
-    );
+        linear-gradient(rgba(255, 250, 230, .96),
+            rgba(241, 228, 194, .96));
 
-    border:5px solid #8b6a42;
+    border: 5px solid #8b6a42;
 
     box-shadow:
-        inset 0 0 35px rgba(110,80,40,.28),
-        0 10px 30px rgba(0,0,0,.28);
+        inset 0 0 35px rgba(110, 80, 40, .28),
+        0 10px 30px rgba(0, 0, 0, .28);
 
-    font-family:glacial;
+    font-family: glacial;
 
-    max-height:85vh;
+    max-height: 85vh;
 
-    overflow-y:auto;
-
-}
-
-.pergamino::-webkit-scrollbar{
-
-    width:10px;
+    overflow-y: auto;
 
 }
 
-.pergamino::-webkit-scrollbar-track{
+.pergamino::-webkit-scrollbar {
 
-    background:#d8c39c;
-
-    border-radius:20px;
+    width: 10px;
 
 }
 
-.pergamino::-webkit-scrollbar-thumb{
+.pergamino::-webkit-scrollbar-track {
 
-    background:#8b6239;
+    background: #d8c39c;
 
-    border-radius:20px;
-
-}
-
-.pergamino::-webkit-scrollbar-thumb:hover{
-
-    background:#6e4826;
+    border-radius: 20px;
 
 }
 
-/* ===========================
-   ENCABEZADO
-=========================== */
+.pergamino::-webkit-scrollbar-thumb {
 
-.encabezado{
+    background: #8b6239;
 
-    text-align:center;
-
-    margin-bottom:30px;
+    border-radius: 20px;
 
 }
 
-.encabezado h1{
+.pergamino::-webkit-scrollbar-thumb:hover {
 
-    font-size:42px;
-
-    letter-spacing:3px;
-
-    color:#3d2712;
-
-    margin-bottom:12px;
-
-    text-transform:uppercase;
-
-    font-family:rxx;
+    background: #6e4826;
 
 }
 
-.encabezado p{
 
-    color:#71573d;
 
-    font-size:18px;
+.encabezado {
 
-    font-family:glacia;
+    text-align: center;
 
-}
-
-/* ===========================
-   INFORMACIÓN
-=========================== */
-
-.informacion{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    flex-wrap:wrap;
-
-    gap:15px;
-
-    margin-bottom:35px;
+    margin-bottom: 30px;
 
 }
 
-.informacion span{
+.encabezado h1 {
 
-    font-size:18px;
+    font-size: 42px;
 
-    color:#55381d;
+    letter-spacing: 3px;
 
-    font-family:glacia;
+    color: #3d2712;
 
-}
+    margin-bottom: 12px;
 
-.informacion strong{
+    text-transform: uppercase;
 
-    color:#8d2d0f;
-
-    font-family:rxx;
+    font-family: rxx;
 
 }
 
-/* ===========================
-   BOTÓN LIMPIAR
-=========================== */
+.encabezado p {
 
-.btnLimpiar{
+    color: #71573d;
 
-    border:none;
+    font-size: 18px;
 
-    cursor:pointer;
-
-    padding:12px 22px;
-
-    border-radius:8px;
-
-    background:#6e3f1e;
-
-    color:white;
-
-    font-size:17px;
-
-    font-family:rxx;
-
-    transition:.3s;
+    font-family: glacia;
 
 }
 
-.btnLimpiar:hover{
 
-    background:#8f5125;
 
-}
+.informacion {
 
-/* ===========================
-   MENSAJE VACÍO
-=========================== */
+    display: flex;
 
-.vacio{
+    justify-content: space-between;
 
-    width:100%;
+    align-items: center;
 
-    padding:70px;
+    flex-wrap: wrap;
 
-    text-align:center;
+    gap: 15px;
 
-    border:3px dashed #ae8f65;
-
-    border-radius:12px;
-
-    margin-bottom:35px;
+    margin-bottom: 35px;
 
 }
 
-.vacio h2{
+.informacion span {
 
-    color:#5b3415;
+    font-size: 18px;
 
-    margin-bottom:15px;
+    color: #55381d;
 
-    font-size:32px;
-
-    font-family:rxx;
+    font-family: glacia;
 
 }
 
-.vacio p{
+.informacion strong {
 
-    color:#7d654d;
+    color: #8d2d0f;
 
-    font-size:18px;
-
-    line-height:1.6;
-
-    font-family:glacia;
+    font-family: rxx;
 
 }
 
-/* ===========================
-   GRID
-=========================== */
 
-.contenedorTarjetas{
 
-    display:grid;
+.btnLimpiar {
+
+    border: none;
+
+    cursor: pointer;
+
+    padding: 12px 22px;
+
+    border-radius: 8px;
+
+    background: #6e3f1e;
+
+    color: white;
+
+    font-size: 17px;
+
+    font-family: rxx;
+
+    transition: .3s;
+
+}
+
+.btnLimpiar:hover {
+
+    background: #8f5125;
+
+}
+
+
+.vacio {
+
+    width: 100%;
+
+    padding: 70px;
+
+    text-align: center;
+
+    border: 3px dashed #ae8f65;
+
+    border-radius: 12px;
+
+    margin-bottom: 35px;
+
+}
+
+.vacio h2 {
+
+    color: #5b3415;
+
+    margin-bottom: 15px;
+
+    font-size: 32px;
+
+    font-family: rxx;
+
+}
+
+.vacio p {
+
+    color: #7d654d;
+
+    font-size: 18px;
+
+    line-height: 1.6;
+
+    font-family: glacia;
+
+}
+
+
+
+.contenedorTarjetas {
+
+    display: grid;
 
     grid-template-columns:
-    repeat(auto-fill,minmax(210px,1fr));
+        repeat(auto-fill, minmax(210px, 1fr));
 
-    gap:25px;
+    gap: 25px;
 
 }
 
-/* ===========================
-   TARJETAS
-=========================== */
 
-.tarjeta{
 
-    background:#f6ecd2;
+.tarjeta {
 
-    border:2px solid #a38357;
+    background: #f6ecd2;
 
-    border-radius:12px;
+    border: 2px solid #a38357;
 
-    padding:18px;
+    border-radius: 12px;
 
-    transition:.35s;
+    padding: 18px;
+
+    transition: .35s;
 
     box-shadow:
-        0 6px 15px rgba(0,0,0,.18);
+        0 6px 15px rgba(0, 0, 0, .18);
 
 }
 
-.tarjeta:hover{
+.tarjeta:hover {
 
     transform:
-        translateY(-8px)
-        rotate(-2deg);
+        translateY(-8px) rotate(-2deg);
 
     box-shadow:
-        0 18px 28px rgba(0,0,0,.28);
+        0 18px 28px rgba(0, 0, 0, .28);
 
 }
 
-/* ===========================
-   LOTTIE
-=========================== */
 
-.imagenTarjeta{
+.imagenTarjeta {
 
-    width:100%;
+    width: 100%;
 
-    height:170px;
+    height: 170px;
 
-    display:flex;
+    display: flex;
 
-    justify-content:center;
+    justify-content: center;
 
-    align-items:center;
+    align-items: center;
 
-    margin-bottom:15px;
+    margin-bottom: 15px;
 
 }
 
-.imagenTarjeta svg{
+.imagenTarjeta svg {
 
-    width:150px !important;
+    width: 150px !important;
 
-    height:150px !important;
-
-}
-
-.imagenTarjeta canvas{
-
-    width:150px !important;
-
-    height:150px !important;
+    height: 150px !important;
 
 }
 
-/* ===========================
-   CONTENIDO
-=========================== */
+.imagenTarjeta canvas {
 
-.contenidoTarjeta{
+    width: 150px !important;
 
-    text-align:center;
+    height: 150px !important;
 
 }
 
-.contenidoTarjeta h3{
 
-    color:#44290f;
+.contenidoTarjeta {
 
-    margin-bottom:10px;
-
-    font-size:22px;
-
-    font-family:rxx;
+    text-align: center;
 
 }
 
-.contenidoTarjeta span{
+.contenidoTarjeta h3 {
 
-    display:block;
+    color: #44290f;
 
-    color:#7a654f;
+    margin-bottom: 10px;
 
-    font-size:15px;
+    font-size: 22px;
 
-    margin-bottom:18px;
-
-    font-family:glacia;
+    font-family: rxx;
 
 }
 
-/* ===========================
-   BOTÓN ELIMINAR
-=========================== */
+.contenidoTarjeta span {
 
-.btnEliminar{
+    display: block;
 
-    width:100%;
+    color: #7a654f;
 
-    padding:12px;
+    font-size: 15px;
 
-    border:none;
+    margin-bottom: 18px;
 
-    border-radius:8px;
-
-    cursor:pointer;
-
-    background:#7b2c23;
-
-    color:white;
-
-    font-size:16px;
-
-    font-family:rxx;
-
-    transition:.3s;
+    font-family: glacia;
 
 }
 
-.btnEliminar:hover{
 
-    background:#a73b2f;
 
-}
+.btnEliminar {
 
-/* ===========================
-   RESPONSIVE
-=========================== */
+    width: 100%;
 
-@media(max-width:768px){
+    padding: 12px;
 
-.grimorio{
+    border: none;
 
-    padding:20px;
+    border-radius: 8px;
 
-}
+    cursor: pointer;
 
-.madera{
+    background: #7b2c23;
 
-    padding:20px;
+    color: white;
 
-}
+    font-size: 16px;
 
-.pergamino{
+    font-family: rxx;
 
-    padding:20px;
+    transition: .3s;
 
 }
 
-.encabezado h1{
+.btnEliminar:hover {
 
-    font-size:30px;
-
-}
-
-.encabezado p{
-
-    font-size:16px;
+    background: #a73b2f;
 
 }
 
-.informacion{
 
-    flex-direction:column;
+@media(max-width:768px) {
 
-    align-items:flex-start;
+    .grimorio {
 
-}
+        padding: 20px;
 
-.contenedorTarjetas{
+    }
 
-    grid-template-columns:
-    repeat(auto-fill,minmax(160px,1fr));
+    .madera {
 
-}
+        padding: 20px;
 
-.imagenTarjeta{
+    }
 
-    height:140px;
+    .pergamino {
 
-}
+        padding: 20px;
 
-.imagenTarjeta svg{
+    }
 
-    width:120px !important;
+    .encabezado h1 {
 
-    height:120px !important;
+        font-size: 30px;
 
-}
+    }
 
-.imagenTarjeta canvas{
+    .encabezado p {
 
-    width:120px !important;
+        font-size: 16px;
 
-    height:120px !important;
+    }
 
-}
+    .informacion {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+    }
+
+    .contenedorTarjetas {
+
+        grid-template-columns:
+            repeat(auto-fill, minmax(160px, 1fr));
+
+    }
+
+    .imagenTarjeta {
+
+        height: 140px;
+
+    }
+
+    .imagenTarjeta svg {
+
+        width: 120px !important;
+
+        height: 120px !important;
+
+    }
+
+    .imagenTarjeta canvas {
+
+        width: 120px !important;
+
+        height: 120px !important;
+
+    }
 
 }

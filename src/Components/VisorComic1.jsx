@@ -26,7 +26,7 @@ export default function VisorCapitulo({
 
   const [subtituloActual, setSubtituloActual] = useState("");
 
-  // Subtítulos escena 1 (LootieKarol)
+
   const subtitulosKarol = [
     {
       inicio: 0.44,
@@ -58,7 +58,7 @@ export default function VisorCapitulo({
     },
   ];
 
-  // Subtítulos escena 2 (LootieParte2)
+
   const subtitulosParte2 = [
     {
       inicio: 0.4,
@@ -89,11 +89,10 @@ export default function VisorCapitulo({
     },
   ];
 
-  // Subtítulos escena 3 (LootieParte3)
-  // TODO: reemplazar con los tiempos/textos reales de la Parte 3
+
   const subtitulosParte3 = [];
 
-  // Mapa índice de escena -> array de subtítulos correspondiente
+
   const subtitulosPorEscena = {
     0: subtitulosKarol,
     1: subtitulosParte2,
@@ -114,7 +113,7 @@ export default function VisorCapitulo({
     {
       tipo: "lottie",
       componente: <LootieParte3 />,
-      audio: "/audios/Cap1P3.wav", // TODO: confirmar nombre del archivo
+      audio: "/audios/Cap1P3.wav",
     },
     {
       tipo: "video",
@@ -320,9 +319,8 @@ export default function VisorCapitulo({
           onClick={siguiente}
           src="./circle-chevron-right.svg"
           alt="Siguiente"
-          className={`visor-arrow right ${
-            index === escenas.length - 1 ? "disabled" : ""
-          }`}
+          className={`visor-arrow right ${index === escenas.length - 1 ? "disabled" : ""
+            }`}
         />
       </div>
 

@@ -13,12 +13,11 @@ export const SobreNosotros = () => {
       <Header />
       <br />
 
-      {/* Banner */}
+
       <div data-aos="fade-down">
         <BannerSobreNosotros />
       </div>
 
-      {/* Misión */}
       <div data-aos="fade-right">
         <CardInfoS
           titulo="Misión"
@@ -27,7 +26,7 @@ export const SobreNosotros = () => {
         />
       </div>
 
-      {/* Visión */}
+
       <div data-aos="fade-left">
         <CardInfoS
           titulo="Visión"
@@ -37,7 +36,6 @@ export const SobreNosotros = () => {
         />
       </div>
 
-      {/* Propósito */}
       <div data-aos="fade-right">
         <CardInfoS
           titulo="Propósito"
@@ -46,7 +44,7 @@ export const SobreNosotros = () => {
         />
       </div>
 
-      {/* Inspiración */}
+
       <div data-aos="fade-left">
         <CardInfoS
           titulo="Inspiración"
@@ -56,12 +54,12 @@ export const SobreNosotros = () => {
         />
       </div>
 
-      {/* Título */}
+
       <div data-aos="fade-up">
         <TituloEquipo />
       </div>
 
-      {/* Equipo */}
+
       <div className="equipo-container d-flex justify-content-center flex-wrap gap-4 mt-5 align-items-start">
         <div data-aos="fade-up" data-aos-delay="100">
           <CardEquipoFlip

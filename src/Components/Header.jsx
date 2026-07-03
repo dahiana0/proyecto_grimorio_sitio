@@ -7,7 +7,7 @@ export const Header = () => {
 
   const reproducirSonido = () => {
     sonidoBoton.current.currentTime = 0;
-    sonidoBoton.current.play().catch(() => {});
+    sonidoBoton.current.play().catch(() => { });
   };
 
   return (
@@ -23,7 +23,7 @@ export const Header = () => {
     >
       <div className="container">
 
-       
+
         <Link
           className="navbar-brand"
           to="/"
@@ -46,7 +46,7 @@ export const Header = () => {
           />
         </Link>
 
-        {/* Botón responsive */}
+
         <button
           className="navbar-toggler"
           type="button"
@@ -57,7 +57,7 @@ export const Header = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        {/* Menú */}
+
         <div className="collapse navbar-collapse" id="navbarNav">
           <div className="ms-auto d-flex flex-column flex-lg-row align-items-center gap-3">
 

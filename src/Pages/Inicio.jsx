@@ -15,7 +15,7 @@ export const Inicio = () => {
 
       <Header />
 
-      {/* Banner */}
+
       <motion.section
         className="inicio-banner"
         initial={{ opacity: 0, scale: 1.08 }}
@@ -28,7 +28,7 @@ export const Inicio = () => {
         <Banner />
       </motion.section>
 
-      {/* Historia */}
+
       <motion.section
         className="inicio-historia container py-5"
         initial={{ opacity: 0, y: 120 }}
@@ -42,7 +42,7 @@ export const Inicio = () => {
         <InicioHistoriaBasada />
       </motion.section>
 
-      {/* Video */}
+
       <motion.section
         className="inicio-video container py-5"
         initial={{

@@ -23,10 +23,6 @@ const InteraccionesGuardadas = () => {
 
   const [interacciones, setInteracciones] = useState([]);
 
-  // ===============================
-  // Cargar interacciones
-  // ===============================
-
   useEffect(() => {
 
     const cargarInteracciones = () => {
@@ -59,9 +55,6 @@ const InteraccionesGuardadas = () => {
 
   }, []);
 
-  // ===============================
-  // Eliminar
-  // ===============================
 
   const eliminarInteraccion = (id) => {
 
@@ -78,9 +71,6 @@ const InteraccionesGuardadas = () => {
 
   };
 
-  // ===============================
-  // Vaciar
-  // ===============================
 
   const limpiarGrimorio = () => {
 
@@ -94,9 +84,6 @@ const InteraccionesGuardadas = () => {
 
   };
 
-  // ===============================
-  // Fecha
-  // ===============================
 
   const obtenerFecha = (fecha) => {
 

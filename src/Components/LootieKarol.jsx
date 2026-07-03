@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import LottieModule from "lottie-react";
 import GuardarInteraccion from "./GuardarInteraccion";
 
@@ -20,8 +20,26 @@ const LootieKarol = () => {
   const libroRef = useRef(null);
   const libroCRef = useRef(null);
 
-  
+
+
+  const sonidoTablero = useRef(new Audio("/audios/tablero.mp3"));
+  const sonidoCalavera = useRef(new Audio("/audios/calavera.mp3"));
+  const sonidoLibro = useRef(new Audio("/audios/libro.mp3"));
+
+
+
+  useEffect(() => {
+    sonidoTablero.current.volume = 0.20;
+    sonidoCalavera.current.volume = 0.20;
+    sonidoLibro.current.volume = 0.35;
+  }, []);
+
+
+
   const animarTablero = () => {
+
+    sonidoTablero.current.currentTime = 0;
+    sonidoTablero.current.play();
 
     tableroRef.current?.stop();
     tableroRef.current?.play();
@@ -31,12 +49,14 @@ const LootieKarol = () => {
       "Tablero de investigación",
       "tablero"
     );
-
   };
 
 
 
   const animarCalavera = () => {
+
+    sonidoCalavera.current.currentTime = 0;
+    sonidoCalavera.current.play();
 
     calaveraRef.current?.stop();
     calaveraRef.current?.play();
@@ -46,10 +66,10 @@ const LootieKarol = () => {
       "Calavera",
       "calavera"
     );
-
   };
 
-  
+
+
   const animarStep = () => {
 
     stepRef.current?.stop();
@@ -60,11 +80,14 @@ const LootieKarol = () => {
       "Step",
       "step"
     );
-
   };
 
-  
+
+
   const animarLibro = () => {
+
+    sonidoLibro.current.currentTime = 0;
+    sonidoLibro.current.play();
 
     libroRef.current?.stop();
     libroRef.current?.play();
@@ -74,10 +97,9 @@ const LootieKarol = () => {
       "Libro antiguo",
       "libro"
     );
-
   };
 
-  
+
 
   const animarLibroC = () => {
 
@@ -89,7 +111,6 @@ const LootieKarol = () => {
       "Libro caído",
       "libroC"
     );
-
   };
 
   return (
@@ -104,7 +125,7 @@ const LootieKarol = () => {
           alt="Fondo"
         />
 
-        {/* TABLERO */}
+
         <div
           className="tablero"
           onClick={animarTablero}
@@ -117,7 +138,7 @@ const LootieKarol = () => {
           />
         </div>
 
-        {/* CALAVERA */}
+
         <div
           className="calavera"
           onClick={animarCalavera}
@@ -130,7 +151,6 @@ const LootieKarol = () => {
           />
         </div>
 
-        {/* STEP */}
         <div
           className="step"
           onClick={animarStep}
@@ -143,7 +163,7 @@ const LootieKarol = () => {
           />
         </div>
 
-        {/* LIBRO */}
+
         <div
           className="libro"
           onClick={animarLibro}
@@ -156,7 +176,7 @@ const LootieKarol = () => {
           />
         </div>
 
-        {/* LIBRO CAÍDO */}
+
         <div
           className="libroC"
           onClick={animarLibroC}
@@ -174,7 +194,6 @@ const LootieKarol = () => {
     </div>
 
   );
-
 };
 
 export default LootieKarol;

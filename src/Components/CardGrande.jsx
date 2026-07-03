@@ -24,7 +24,6 @@ export const CardGrande = ({
   const irAPagina = () => {
     reproducirSonido();
 
-    // Espera un momento para que se escuche el sonido
     setTimeout(() => {
       navigate(ruta);
     }, 150);

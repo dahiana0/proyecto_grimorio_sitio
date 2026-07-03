@@ -1,7 +1,3 @@
-/* ===========================
-   ESCENA
-=========================== */
-
 .escena {
     position: relative;
     width: 100%;
@@ -9,7 +5,7 @@
     overflow: hidden;
 }
 
-/* Cámara (zoom inicial) */
+
 .camara {
     position: relative;
     width: 100%;
@@ -19,6 +15,7 @@
 }
 
 @keyframes zoomInicial {
+
     /* Empieza con zoom */
     0% {
         transform: scale(1.8) translate(-20px, 120px);
@@ -35,9 +32,6 @@
     }
 }
 
-/* ===========================
-   FONDO
-=========================== */
 
 .fondo {
     position: absolute;
@@ -48,9 +42,7 @@
     z-index: 1;
 }
 
-/* ===========================
-   RESPLANDOR
-=========================== */
+
 
 @keyframes resplandor {
     0% {
@@ -66,9 +58,7 @@
     }
 }
 
-/* ===========================
-   ELEMENTOS INTERACTIVOS
-=========================== */
+
 
 .tablero,
 .calavera,
@@ -89,9 +79,7 @@
     transform: scale(1.03);
 }
 
-/* ===========================
-   POSICIONES
-=========================== */
+
 
 .tablero {
     left: 620px;

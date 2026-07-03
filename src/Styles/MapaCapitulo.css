@@ -1,1063 +1,937 @@
-/*=========================================
-        CONTENEDOR GENERAL
-=========================================*/
+.Container-mapa {
 
-.Container-mapa{
+    width: 100%;
+    min-height: 100vh;
 
-    width:100%;
-    min-height:100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
 
-    display:flex;
-    justify-content:center;
-    align-items:flex-start;
-
-    padding:20px;
+    padding: 20px;
 
 }
 
-/*=========================================
-            PERGAMINO
-=========================================*/
 
-.marco-pergamino{
+.marco-pergamino {
 
-    width:1200px;
-    height:700px;
+    width: 1200px;
+    height: 700px;
 
-    background:url("/Mapa-Cap-.png");
-    background-size:100% 100%;
-    background-repeat:no-repeat;
+    background: url("/Mapa-Cap-.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
 
-    padding:30px 35px;
+    padding: 30px 35px;
 
-    overflow:hidden;
+    overflow: hidden;
 
-    animation:aparecer .7s ease;
+    animation: aparecer .7s ease;
 
 }
 
-@keyframes aparecer{
+@keyframes aparecer {
 
-    from{
+    from {
 
-        opacity:0;
-        transform:scale(.98);
+        opacity: 0;
+        transform: scale(.98);
 
     }
 
-    to{
+    to {
 
-        opacity:1;
-        transform:scale(1);
-
-    }
-
-}
-
-/*=========================================
-            ENCABEZADO
-=========================================*/
-
-.header-mapa{
-
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-
-}
-
-/*=========================================
-              TITULO
-=========================================*/
-
-.titulo-lado{
-
-    width:240px;
-
-    margin-top:50px;
-    margin-left:100px;
-
-}
-
-.titulo-mapa{
-
-    font-size:40px;
-
-    line-height:48px;
-
-    font-family:rxx;
-
-    color:#20160d;
-
-    margin:0;
-
-}
-
-/*=========================================
-            SUBTITULO
-=========================================*/
-
-.titulo-lado span{
-
-    display:block;
-
-    margin-top:4px;
-
-    font-size:15px;
-
-    color:#2f2117;
-
-    font-family:rxx;
-
-}
-
-/*=========================================
-                FRASE
-=========================================*/
-
-.frase-mapa{
-
-    margin-top:22px;
-
-    text-align:center;
-
-}
-
-.frase-mapa p{
-
-    margin:0;
-
-    font-size:17px;
-
-    color:#2b2118;
-
-    line-height:27px;
-
-}
-
-/*=========================================
-                OJO
-=========================================*/
-
-.ojo{
-
-    margin-top:8px;
-
-    font-size:20px;
-
-}
-
-/*=========================================
-        CONTENIDO PRINCIPAL
-=========================================*/
-
-.contenido-principal{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:flex-start;
-
-   
-
-}
-
-/*=========================================
-                MAPA
-=========================================*/
-
-.zona-mapa{
-
-    flex:1;
-
-}
-
-.mapa{
-
-    position:relative;
-
-    width:700px;
-
-    margin-left:70px;
-
-    margin-top:10px;
-
-}
-
-.img-mapa{
-
-    width:100%;
-
-    display:block;
-
-}
-
-/*=========================================
-        BOTONES DEL MAPA
-=========================================*/
-
-.contenedor-btn{
-
-    position:absolute;
-
-}
-
-.btn-mapa{
-
-    width:75px;
-
-    display:block;
-
-    cursor:pointer;
-
- 
-
-    border:none;
-
-    transition:.35s;
-
-}
-
-.btn-mapa:hover{
-
-    transform:scale(1.08);
-
-}
-
-/*=========================================
-    CAPÍTULO 1 (ROJO)
-=========================================*/
-
-.btn-mapa.activo1{
-
-    transform:scale(1.15);
-
-    filter:
-    drop-shadow(0 0 12px #eb482f);
-
-}
-
-/*=========================================
-    CAPÍTULO 2 (VERDE)
-=========================================*/
-
-.btn-mapa.activo2{
-
-    transform:scale(1.15);
-
-    filter:
-    drop-shadow(0 0 12px #c6d767);
-
-}
-
-/*=========================================
-    CAPÍTULO 3 (AZUL)
-=========================================*/
-
-.btn-mapa.activo3{
-
-    transform:scale(1.15);
-
-    filter:
-    drop-shadow(0 0 12px #738ab3);
-
-}
-
-/*=========================================
-    CAPÍTULO 4 (DORADO)
-=========================================*/
-
-.btn-mapa.activo4{
-
-    transform:scale(1.15);
-
-    filter:
-    drop-shadow(0 0 12px #b58305);
-
-}
-
-/*=========================================
-    CAPÍTULO 5 (MORADO)
-=========================================*/
-
-.btn-mapa.activo5{
-
-    transform:scale(1.15);
-
-    filter:
-    drop-shadow(0 0 12px #b257ae);
-
-}
-
-/*=========================================
-            BOTÓN MAPA 1
-=========================================*/
-
-.btn1{
-
-    top:70px;
-    left:150px;
-
-}
-
-.btn1 img{
-
-    width:50px;
-
-}
-
-/*=========================================
-            BOTÓN MAPA 2
-=========================================*/
-
-.btn2{
-
-    top:70px;
-    left:323px;
-
-}
-
-.btn2 img{
-
-    width:65px;
-
-}
-
-/*=========================================
-            BOTÓN MAPA 3
-=========================================*/
-
-.btn3{
-
-    top:85px;
-    right:150px;
-
-}
-
-.btn3 img{
-
-    width:60px;
-
-}
-
-/*=========================================
-            BOTÓN MAPA 4
-=========================================*/
-
-.btn4{
-
-    bottom:80px;
-    left:350px;
-
-}
-
-.btn4 img{
-
-    width:60px;
-
-}
-
-/*=========================================
-            BOTÓN MAPA 5
-=========================================*/
-
-.btn5{
-
-    bottom:75px;
-    left:155px;
-
-}
-
-.btn5 img{
-
-    width:60px;
-
-}
-
-
-/*=========================================
-            CARD
-=========================================*/
-
-.panel-capitulo{
-
-    width:260px;
-    margin-right:35px;
-
-}
-
-/*=========================================
-        CONTENIDO CARD
-=========================================*/
-
-.panel-contenido{
-
-    width:100%;
-
-    min-height:450px;
-
-    padding:18px;
-
-    border-radius:12px;
-
-    background:linear-gradient(#1d1712,#0f0b08);
-
-    border:2px solid #3b2a1b;
-
-    box-shadow:
-    0 0 20px rgba(0,0,0,.45);
-
-    animation:panel .45s ease;
-
-}
-
-/*=========================================
-        PANEL CAPÍTULO 1
-=========================================*/
-
-.panel1{
-
-   border:2px solid #992f1e;
-
-    box-shadow:
-    0 0 12px #992f1e,
-    0 0 25px rgba(255,64,64,.45);
-
-}
-
-/*=========================================
-        PANEL CAPÍTULO 2
-=========================================*/
-
-.panel2{
-
-    border:2px solid #6d7737;
-
-    box-shadow:
-    0 0 12px #6d7737,
-    0 0 25px rgba(15, 34, 17, 0.45);
-
-}
-
-/*=========================================
-        PANEL CAPÍTULO 3
-=========================================*/
-
-.panel3{
-
-    border:2px solid #3f4b62;
-
-    box-shadow:
-    0 0 12px #3f4b62,
-    0 0 25px rgba(69,184,255,.45);
-
-}
-
-/*=========================================
-        PANEL CAPÍTULO 4
-=========================================*/
-
-.panel4{
-
-    border:2px solid #c1a96c;
-
-    box-shadow:
-    0 0 12px #c1a96c,
-    0 0 25px rgba(255,211,77,.45);
-
-}
-
-/*=========================================
-        PANEL CAPÍTULO 5
-=========================================*/
-
-.panel5{
-
-    border:2px solid #673364;
-
-    box-shadow:
-    0 0 12px #673364,
-    0 0 25px rgba(211,77,255,.45);
-
-}
-
-/*=========================================
-        ICONO SUPERIOR
-=========================================*/
-
-.icono-panel{
-
-    width:48px;
-
-    display:block;
-
-    margin:0 auto 15px;
-
-}
-
-/*=========================================
-      IMAGEN DEL CAPITULO
-=========================================*/
-
-.imagen-panel{
-
-    display:flex;
-
-    justify-content:center;
-
-    margin:5px 0 15px;
-
-}
-
-.icono-capitulo-panel{
-
-    width:72px;
-
-    transition:.3s;
-
-}
-
-.icono-capitulo-panel:hover{
-
-    transform:scale(1.08);
-
-}
-
-/*=========================================
-        TITULO CARD
-=========================================*/
-
-.panel-contenido h2{
-
-    text-align:center;
-
-    font-size:24px;
-
-    color:#f4ddb2;
-
-    font-family:rxx;
-
-    margin-bottom:10px;
-
-}
-
-/*=========================================
-        LINEA
-=========================================*/
-
-.linea{
-
-    width:70px;
-
-    height:2px;
-
-    margin:15px auto;
-
-    background:#c89c53;
-
-}
-
-/*=========================================
-      DESCRIPCION CARD
-=========================================*/
-
-.descripcion-panel{
-
-    text-align:center;
-
-    font-size:14px;
-
-    color:#e8e8e8;
-
-    line-height:26px;
-
-    margin-bottom:30px;
-
-}
-
-/*=========================================
-        BOTON VER MAS
-=========================================*/
-
-.link-ver{
-
-    text-decoration:none;
-
-}
-
-.btn-vermas{
-
-    width:155px;
-
-    height:42px;
-
-    display:block;
-
-    margin:0 auto;
-
-    border:none;
-
-    border-radius:8px;
-
-    color:white;
-
-    font-family:rxx;
-
-    font-size:16px;
-
-    cursor:pointer;
-
-    transition:.3s;
-
-}
-
-/*=========================================
-        BOTON VER MAS CAPÍTULO 1
-=========================================*/
-
-.btn-ver1{
-
-    background:linear-gradient(#992f1e,#992f1e);
-
-}
-
-/*=========================================
-        BOTON VER MAS CAPÍTULO 2
-=========================================*/
-
-.btn-ver2{
-
-    background:linear-gradient(#6d7737,#6d7737);
-
-}
-
-/*=========================================
-        BOTON VER MAS CAPÍTULO 3
-=========================================*/
-
-.btn-ver3{
-
-    background:linear-gradient(#3f4b62,#3f4b62);
-
-}
-
-/*=========================================
-        BOTON VER MAS CAPÍTULO 4
-=========================================*/
-
-.btn-ver4{
-
-    background:linear-gradient(#c1a96c,#c1a96c);
-
-}
-
-/*=========================================
-        BOTON VER MAS CAPÍTULO 5
-=========================================*/
-
-.btn-ver5{
-
-    background:linear-gradient(#673364,#673364);
-
-}
-
-/*=========================================
-        ANIMACION CARD
-=========================================*/
-
-@keyframes panel{
-
-    from{
-
-        opacity:0;
-
-        transform:translateX(20px);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:translateX(0);
+        opacity: 1;
+        transform: scale(1);
 
     }
 
 }
 
 
-/*=========================================
-            BARRA INFERIOR
-=========================================*/
 
-.barra-capitulos{
+.header-mapa {
 
-    width:590px;
-
-    height:70px;
-
-    margin:18px auto 0;
-
-    display:flex;
-    justify-content:space-evenly;
-    align-items:center;
-
-    background:rgba(18,13,10,.92);
-
-    border:2px solid #49331f;
-
-    border-radius:12px;
-
-    padding:8px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
 
 }
 
-/*=========================================
-        ITEM BARRA
-=========================================*/
 
-.item-capitulo{
+.titulo-lado {
 
-    width:150px;
+    width: 240px;
 
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-
-    cursor:pointer;
-
-    transition:.3s;
+    margin-top: 50px;
+    margin-left: 100px;
 
 }
 
-.item-capitulo:hover{
+.titulo-mapa {
 
-    transform:translateY(-3px);
+    font-size: 40px;
 
-}
+    line-height: 48px;
 
-/*=========================================
-        IMAGEN BARRA
-=========================================*/
+    font-family: rxx;
 
-.icono-barra{
+    color: #20160d;
 
-    width:25px;
-
-    transition:.3s;
+    margin: 0;
 
 }
 
-/*=========================================
-        TEXTO BARRA
-=========================================*/
 
-.item-capitulo p{
+.titulo-lado span {
 
-    margin-top:5px;
+    display: block;
 
-    font-size:9px;
+    margin-top: 4px;
 
-    line-height:13px;
+    font-size: 15px;
 
-    color:#ddb97d;
+    color: #2f2117;
 
-    text-align:center;
-
-    font-family:rxx;
+    font-family: rxx;
 
 }
 
-/*=========================================
-        CAPÍTULO 1 BARRA
-=========================================*/
 
-.seleccionado1 .icono-barra{
 
-    transform:scale(1.12);
+.frase-mapa {
+
+    margin-top: 22px;
+
+    text-align: center;
+
+}
+
+.frase-mapa p {
+
+    margin: 0;
+
+    font-size: 17px;
+
+    color: #2b2118;
+
+    line-height: 27px;
+
+}
+
+
+
+.ojo {
+
+    margin-top: 8px;
+
+    font-size: 20px;
+
+}
+
+
+
+.contenido-principal {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+
+
+}
+
+
+.zona-mapa {
+
+    flex: 1;
+
+}
+
+.mapa {
+
+    position: relative;
+
+    width: 700px;
+
+    margin-left: 70px;
+
+    margin-top: 10px;
+
+}
+
+.img-mapa {
+
+    width: 100%;
+
+    display: block;
+
+}
+
+
+
+.contenedor-btn {
+
+    position: absolute;
+
+}
+
+.btn-mapa {
+
+    width: 75px;
+
+    display: block;
+
+    cursor: pointer;
+
+
+
+    border: none;
+
+    transition: .35s;
+
+}
+
+.btn-mapa:hover {
+
+    transform: scale(1.08);
+
+}
+
+
+
+.btn-mapa.activo1 {
+
+    transform: scale(1.15);
 
     filter:
-    drop-shadow(0 0 6px #992f1e)
-    drop-shadow(0 0 14px #992f1e);
+        drop-shadow(0 0 12px #eb482f);
 
 }
 
-/*=========================================
-        CAPÍTULO 2 BARRA
-=========================================*/
 
-.seleccionado2 .icono-barra{
+.btn-mapa.activo2 {
 
-    transform:scale(1.12);
+    transform: scale(1.15);
 
     filter:
-    drop-shadow(0 0 6px #6d7737)
-    drop-shadow(0 0 14px #6d7737);
+        drop-shadow(0 0 12px #c6d767);
 
 }
 
-/*=========================================
-        CAPÍTULO 3 BARRA
-=========================================*/
 
-.seleccionado3 .icono-barra{
+.btn-mapa.activo3 {
 
-    transform:scale(1.12);
+    transform: scale(1.15);
 
     filter:
-    drop-shadow(0 0 6px #3f4b62)
-    drop-shadow(0 0 14px #3f4b62);
+        drop-shadow(0 0 12px #738ab3);
 
 }
 
-/*=========================================
-        CAPÍTULO 4 BARRA
-=========================================*/
 
-.seleccionado4 .icono-barra{
 
-    transform:scale(1.12);
+.btn-mapa.activo4 {
+
+    transform: scale(1.15);
 
     filter:
-    drop-shadow(0 0 6px #c1a96c)
-    drop-shadow(0 0 14px #c1a96c);
+        drop-shadow(0 0 12px #b58305);
 
 }
 
-/*=========================================
-        CAPÍTULO 5 BARRA
-=========================================*/
 
-.seleccionado5 .icono-barra{
 
-    transform:scale(1.12);
+.btn-mapa.activo5 {
+
+    transform: scale(1.15);
 
     filter:
-    drop-shadow(0 0 6px #673364)
-    drop-shadow(0 0 14px #673364);
+        drop-shadow(0 0 12px #b257ae);
 
 }
 
-/*=========================================
-        HOVER ICONO BARRA
-=========================================*/
 
-.item-capitulo:hover .icono-barra{
 
-    transform:scale(1.08);
+.btn1 {
 
-}
-
-/*=========================================
-        RESPONSIVE 1400
-=========================================*/
-
-@media(max-width:1400px){
-
-.marco-pergamino{
-
-    width:98%;
+    top: 70px;
+    left: 150px;
 
 }
 
-.mapa{
+.btn1 img {
 
-    width:700px;
-
-}
-
-.barra-capitulos{
-
-    width:680px;
+    width: 50px;
 
 }
 
-.panel-capitulo{
 
-    width:250px;
 
-}
+.btn2 {
 
-}
-
-/*=========================================
-        RESPONSIVE 1200
-=========================================*/
-
-@media(max-width:1200px){
-
-.contenido-principal{
-
-    flex-direction:column;
-
-    align-items:center;
+    top: 70px;
+    left: 323px;
 
 }
 
-.panel-capitulo{
+.btn2 img {
 
-    width:100%;
-
-    max-width:300px;
-
-    margin:25px auto 0;
+    width: 65px;
 
 }
 
-.panel-contenido{
 
-    min-height:auto;
 
-}
+.btn3 {
 
-.mapa{
-
-    width:100%;
-
-    max-width:720px;
-
-    margin:auto;
+    top: 85px;
+    right: 150px;
 
 }
 
-.barra-capitulos{
+.btn3 img {
 
-    width:100%;
-
-    max-width:720px;
+    width: 60px;
 
 }
 
-}
 
-/*=========================================
-        RESPONSIVE MOVIL
-=========================================*/
 
-@media(max-width:768px){
+.btn4 {
 
-.Container-mapa{
-
-    padding:10px;
+    bottom: 80px;
+    left: 350px;
 
 }
 
-.marco-pergamino{
+.btn4 img {
 
-    padding:15px;
-
-    height:auto;
+    width: 60px;
 
 }
 
-.header-mapa{
 
-    flex-direction:column;
 
-    gap:15px;
+.btn5 {
 
-}
-
-.titulo-lado{
-
-    margin-left:0;
+    bottom: 75px;
+    left: 155px;
 
 }
 
-.titulo-mapa{
+.btn5 img {
 
-    font-size:38px;
-
-}
-
-.titulo-lado span{
-
-    font-size:18px;
+    width: 60px;
 
 }
 
-.frase-mapa{
 
-    text-align:left;
 
-    margin-top:10px;
 
-}
+.panel-capitulo {
 
-.frase-mapa p{
-
-    font-size:14px;
+    width: 260px;
+    margin-right: 35px;
 
 }
 
-.ojo{
 
-    font-size:18px;
 
-}
+.panel-contenido {
 
-.mapa{
+    width: 100%;
 
-    width:100%;
+    min-height: 450px;
 
-}
+    padding: 18px;
 
-.barra-capitulos{
+    border-radius: 12px;
 
-    height:auto;
+    background: linear-gradient(#1d1712, #0f0b08);
 
-    flex-wrap:wrap;
+    border: 2px solid #3b2a1b;
 
-    gap:10px;
+    box-shadow:
+        0 0 20px rgba(0, 0, 0, .45);
 
-    padding:10px;
-
-}
-
-.item-capitulo{
-
-    width:70px;
+    animation: panel .45s ease;
 
 }
 
-.icono-barra{
 
-    width:34px;
 
-}
+.panel1 {
 
-.item-capitulo p{
+    border: 2px solid #992f1e;
 
-    font-size:10px;
-
-}
-
-.panel-capitulo{
-
-    width:100%;
+    box-shadow:
+        0 0 12px #992f1e,
+        0 0 25px rgba(255, 64, 64, .45);
 
 }
 
-.panel-contenido{
 
-    padding:15px;
+
+.panel2 {
+
+    border: 2px solid #6d7737;
+
+    box-shadow:
+        0 0 12px #6d7737,
+        0 0 25px rgba(15, 34, 17, 0.45);
+
+}
+
+
+.panel3 {
+
+    border: 2px solid #3f4b62;
+
+    box-shadow:
+        0 0 12px #3f4b62,
+        0 0 25px rgba(69, 184, 255, .45);
 
 }
 
-.panel-contenido h2{
 
-    font-size:20px;
+
+.panel4 {
+
+    border: 2px solid #c1a96c;
+
+    box-shadow:
+        0 0 12px #c1a96c,
+        0 0 25px rgba(255, 211, 77, .45);
+
+}
+
+
+
+.panel5 {
+
+    border: 2px solid #673364;
+
+    box-shadow:
+        0 0 12px #673364,
+        0 0 25px rgba(211, 77, 255, .45);
 
 }
 
-.btn-vermas{
 
-    width:150px;
 
-    height:40px;
+.icono-panel {
+
+    width: 48px;
+
+    display: block;
+
+    margin: 0 auto 15px;
 
 }
+
+
+.imagen-panel {
+
+    display: flex;
+
+    justify-content: center;
+
+    margin: 5px 0 15px;
+
+}
+
+.icono-capitulo-panel {
+
+    width: 72px;
+
+    transition: .3s;
+
+}
+
+.icono-capitulo-panel:hover {
+
+    transform: scale(1.08);
+
+}
+
+
+.panel-contenido h2 {
+
+    text-align: center;
+
+    font-size: 24px;
+
+    color: #f4ddb2;
+
+    font-family: rxx;
+
+    margin-bottom: 10px;
+
+}
+
+
+
+.linea {
+
+    width: 70px;
+
+    height: 2px;
+
+    margin: 15px auto;
+
+    background: #c89c53;
+
+}
+
+
+
+.descripcion-panel {
+
+    text-align: center;
+
+    font-size: 14px;
+
+    color: #e8e8e8;
+
+    line-height: 26px;
+
+    margin-bottom: 30px;
+
+}
+
+
+
+.link-ver {
+
+    text-decoration: none;
+
+}
+
+.btn-vermas {
+
+    width: 155px;
+
+    height: 42px;
+
+    display: block;
+
+    margin: 0 auto;
+
+    border: none;
+
+    border-radius: 8px;
+
+    color: white;
+
+    font-family: rxx;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    transition: .3s;
+
+}
+
+
+
+.btn-ver1 {
+
+    background: linear-gradient(#992f1e, #992f1e);
+
+}
+
+
+.btn-ver2 {
+
+    background: linear-gradient(#6d7737, #6d7737);
+
+}
+
+
+
+.btn-ver3 {
+
+    background: linear-gradient(#3f4b62, #3f4b62);
+
+}
+
+
+
+.btn-ver4 {
+
+    background: linear-gradient(#c1a96c, #c1a96c);
+
+}
+
+
+
+.btn-ver5 {
+
+    background: linear-gradient(#673364, #673364);
+
+}
+
+
+
+@keyframes panel {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateX(20px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: translateX(0);
+
+    }
+
+}
+
+
+
+
+.barra-capitulos {
+
+    width: 590px;
+
+    height: 70px;
+
+    margin: 18px auto 0;
+
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    background: rgba(18, 13, 10, .92);
+
+    border: 2px solid #49331f;
+
+    border-radius: 12px;
+
+    padding: 8px 15px;
+
+}
+
+
+
+.item-capitulo {
+
+    width: 150px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    transition: .3s;
+
+}
+
+.item-capitulo:hover {
+
+    transform: translateY(-3px);
+
+}
+
+
+
+.icono-barra {
+
+    width: 25px;
+
+    transition: .3s;
+
+}
+
+
+
+.item-capitulo p {
+
+    margin-top: 5px;
+
+    font-size: 9px;
+
+    line-height: 13px;
+
+    color: #ddb97d;
+
+    text-align: center;
+
+    font-family: rxx;
+
+}
+
+
+.seleccionado1 .icono-barra {
+
+    transform: scale(1.12);
+
+    filter:
+        drop-shadow(0 0 6px #992f1e) drop-shadow(0 0 14px #992f1e);
+
+}
+
+
+
+.seleccionado2 .icono-barra {
+
+    transform: scale(1.12);
+
+    filter:
+        drop-shadow(0 0 6px #6d7737) drop-shadow(0 0 14px #6d7737);
+
+}
+
+
+
+.seleccionado3 .icono-barra {
+
+    transform: scale(1.12);
+
+    filter:
+        drop-shadow(0 0 6px #3f4b62) drop-shadow(0 0 14px #3f4b62);
+
+}
+
+
+.seleccionado4 .icono-barra {
+
+    transform: scale(1.12);
+
+    filter:
+        drop-shadow(0 0 6px #c1a96c) drop-shadow(0 0 14px #c1a96c);
+
+}
+
+
+
+.seleccionado5 .icono-barra {
+
+    transform: scale(1.12);
+
+    filter:
+        drop-shadow(0 0 6px #673364) drop-shadow(0 0 14px #673364);
+
+}
+
+
+
+.item-capitulo:hover .icono-barra {
+
+    transform: scale(1.08);
+
+}
+
+
+@media(max-width:1400px) {
+
+    .marco-pergamino {
+
+        width: 98%;
+
+    }
+
+    .mapa {
+
+        width: 700px;
+
+    }
+
+    .barra-capitulos {
+
+        width: 680px;
+
+    }
+
+    .panel-capitulo {
+
+        width: 250px;
+
+    }
+
+}
+
+
+@media(max-width:1200px) {
+
+    .contenido-principal {
+
+        flex-direction: column;
+
+        align-items: center;
+
+    }
+
+    .panel-capitulo {
+
+        width: 100%;
+
+        max-width: 300px;
+
+        margin: 25px auto 0;
+
+    }
+
+    .panel-contenido {
+
+        min-height: auto;
+
+    }
+
+    .mapa {
+
+        width: 100%;
+
+        max-width: 720px;
+
+        margin: auto;
+
+    }
+
+    .barra-capitulos {
+
+        width: 100%;
+
+        max-width: 720px;
+
+    }
+
+}
+
+
+@media(max-width:768px) {
+
+    .Container-mapa {
+
+        padding: 10px;
+
+    }
+
+    .marco-pergamino {
+
+        padding: 15px;
+
+        height: auto;
+
+    }
+
+    .header-mapa {
+
+        flex-direction: column;
+
+        gap: 15px;
+
+    }
+
+    .titulo-lado {
+
+        margin-left: 0;
+
+    }
+
+    .titulo-mapa {
+
+        font-size: 38px;
+
+    }
+
+    .titulo-lado span {
+
+        font-size: 18px;
+
+    }
+
+    .frase-mapa {
+
+        text-align: left;
+
+        margin-top: 10px;
+
+    }
+
+    .frase-mapa p {
+
+        font-size: 14px;
+
+    }
+
+    .ojo {
+
+        font-size: 18px;
+
+    }
+
+    .mapa {
+
+        width: 100%;
+
+    }
+
+    .barra-capitulos {
+
+        height: auto;
+
+        flex-wrap: wrap;
+
+        gap: 10px;
+
+        padding: 10px;
+
+    }
+
+    .item-capitulo {
+
+        width: 70px;
+
+    }
+
+    .icono-barra {
+
+        width: 34px;
+
+    }
+
+    .item-capitulo p {
+
+        font-size: 10px;
+
+    }
+
+    .panel-capitulo {
+
+        width: 100%;
+
+    }
+
+    .panel-contenido {
+
+        padding: 15px;
+
+    }
+
+    .panel-contenido h2 {
+
+        font-size: 20px;
+
+    }
+
+    .btn-vermas {
+
+        width: 150px;
+
+        height: 40px;
+
+    }
 
 }
