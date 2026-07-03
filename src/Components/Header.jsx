@@ -103,7 +103,7 @@ export const Header = () => {
               onClick={reproducirSonido}
               style={{ color: "#fff" }}
             >
-              Juego
+              Comentarios
             </Link>
 
             <Link
