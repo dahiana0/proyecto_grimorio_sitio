@@ -23,7 +23,7 @@ import VisorComic4 from "./Components/VisorComic4";
 import VisorComic5 from "./Components/VisorComic5";
 import Footer from "./Components/footer";
 import {MapaCapitulos } from "./Pages/MapaCapitulos";
-import {SofiaGuia} from "./Pages/SofiaGuia"
+import SofiaGuia from "./Pages/SofiaGuia"
 import { IntroJuego } from "./Pages/IntroJuego";
 import { Juego } from "./Pages/Juego";
 import { ComentariosCompletos } from "./Pages/ComentariosCompletos";
