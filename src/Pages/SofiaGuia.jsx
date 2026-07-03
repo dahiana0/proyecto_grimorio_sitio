@@ -8,20 +8,20 @@ export function SofiaGuia() {
   const dialogos = [
     {
       texto: "Bienvenido a Grimorio.",
-      audio: "/audios/bienvenida.mp3",
+      audio: "./audios/bienvenida.mp3",
     },
     {
       texto:
         "A continuación entrarás en una aventura donde cada paso revela secretos prohibidos.",
-      audio: "/audios/mensaje2.mp3",
+      audio: "./audios/mensaje2.mp3",
     },
     {
       texto: "Este no es un museo común...",
-      audio: "/audios/mensaje3.mp3",
+      audio: "./audios/mensaje3.mp3",
     },
     {
       texto: "Aquí las historias te observan. Atrévete a continuar.",
-      audio: "/audios/mensaje4.mp3",
+      audio: "./audios/mensaje4.mp3",
     },
   ];
 
