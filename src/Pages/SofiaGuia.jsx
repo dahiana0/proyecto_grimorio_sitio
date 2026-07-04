@@ -31,29 +31,64 @@ export function SofiaGuia() {
 
   const audioRef = useRef(null);
 
-  // Sonido del botón
+
+
   const sonidoBoton = useRef(new Audio("./audios/sonidoboton.ogg"));
+
+  useEffect(() => {
+    sonidoBoton.current.volume = 0.35;
+  }, []);
 
   const reproducirSonido = () => {
     sonidoBoton.current.currentTime = 0;
-    sonidoBoton.current.play().catch(() => {});
+    sonidoBoton.current.play().catch(() => { });
   };
+
+
 
   const irAlInicio = () => {
     reproducirSonido();
+
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
 
     setTimeout(() => {
       navigate("/");
     }, 150);
   };
 
-  const explorarMuseo = () => {
+
+
+  const omitirIntro = () => {
     reproducirSonido();
+
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
 
     setTimeout(() => {
       navigate("/explorar-museo");
     }, 150);
   };
+
+
+
+  const explorarMuseo = () => {
+    reproducirSonido();
+
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+
+    setTimeout(() => {
+      navigate("/explorar-museo");
+    }, 150);
+  };
+
 
   useEffect(() => {
     if (!iniciado) return;
@@ -74,8 +109,9 @@ export function SofiaGuia() {
     };
   }, [actual, iniciado]);
 
+
+
   const iniciarHistoria = () => {
-    console.log(dialogos[actual])
     if (iniciado) return;
     setIniciado(true);
   };
@@ -91,6 +127,8 @@ export function SofiaGuia() {
   return (
     <div className="container-sofia">
 
+
+
       <button
         className="back-btn"
         onClick={irAlInicio}
@@ -98,7 +136,19 @@ export function SofiaGuia() {
         Volver al inicio
       </button>
 
-      <div className="character" onClick={iniciarHistoria}>
+      <button
+        className="skip-btn"
+        onClick={omitirIntro}
+      >
+        Omitir intro
+      </button>
+
+
+
+      <div
+        className="character"
+        onClick={iniciarHistoria}
+      >
 
         <img
           className="base-guia"
@@ -113,6 +163,8 @@ export function SofiaGuia() {
         />
 
       </div>
+
+
 
       <div className="dialogues">
 

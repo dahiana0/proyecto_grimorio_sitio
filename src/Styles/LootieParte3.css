@@ -1,134 +1,184 @@
-.escena{
+.escena {
     position: relative;
-    width:100%;
-    height:100%;
-    overflow:hidden;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
 
-.fondo3{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    z-index:1;
+.fondo3 {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
 }
 
-/* Todos los videos */
 
+
+.lampara1,
+.lampara2,
+.lampara3 {
+    position: absolute;
+    width: 100px;
+    z-index: 2;
+    cursor: pointer;
+    user-select: none;
+    transform-origin: top center;
+    transition:
+        transform .25s ease,
+        filter .25s ease;
+}
+
+.lampara1 {
+    left: 150px;
+    top: -10px;
+}
+
+.lampara2 {
+    right: 40px;
+    top: -10px;
+}
+
+.lampara3 {
+    right: 600px;
+    top: -10px;
+}
+
+.lampara1:hover,
+.lampara2:hover,
+.lampara3:hover {
+    filter: drop-shadow(0 0 12px rgba(255, 235, 160, .8));
+}
+
+.moverLampara {
+    animation: balanceoLampara .6s ease;
+}
+
+@keyframes balanceoLampara {
+
+    0% {
+        transform: rotate(0deg);
+    }
+
+    15% {
+        transform: rotate(7deg);
+    }
+
+    30% {
+        transform: rotate(-6deg);
+    }
+
+    45% {
+        transform: rotate(5deg);
+    }
+
+    60% {
+        transform: rotate(-4deg);
+    }
+
+    75% {
+        transform: rotate(2deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+
+}
+
+
+
+.telarana1,
+.telarana2,
 .monstruo1,
 .monstruo2,
 .monstruo3,
 .monstruo4,
-.telarana1,
-.telarana2{
-    position:absolute;
-    object-fit:contain;
-    cursor:pointer;
+.stepFrente,
+.stepEspaldas,
+.stepLado {
+    position: absolute;
+    object-fit: contain;
+    cursor: pointer;
+    transition: transform .25s ease;
 }
 
-/* Lámparas */
-
-.lampara1{
-    position:absolute;
-    left:180px;
-    top:25px;
-    width:180px;
-    z-index:2;
-    cursor:pointer;
+.telarana1:hover,
+.telarana2:hover,
+.monstruo1:hover,
+.monstruo2:hover,
+.monstruo3:hover,
+.monstruo4:hover,
+.stepFrente:hover,
+.stepEspaldas:hover,
+.stepLado:hover {
+    transform: scale(1.03);
 }
 
-.lampara2{
-    position:absolute;
-    right:180px;
-    top:25px;
-    width:180px;
-    z-index:2;
-    cursor:pointer;
+
+
+.telarana1 {
+    left: 300px;
+    top: -20px;
+    width: 400px;
+    z-index: 3;
 }
 
-/* Telarañas */
-
-.telarana1{
-    left:15px;
-    top:0;
-    width:230px;
-    z-index:3;
+.telarana2 {
+    right: 15px;
+    top: -20px;
+    width: 400px;
+    z-index: 3;
 }
 
-.telarana2{
-    right:15px;
-    top:0;
-    width:230px;
-    z-index:3;
+
+.monstruo1 {
+    left: 5px;
+    bottom: 80px;
+    width: 300px;
+    z-index: 4;
 }
 
-/* Monstruos */
-
-.monstruo1{
-    left:70px;
-    bottom:80px;
-    width:220px;
-    z-index:4;
+.monstruo2 {
+    left: 270px;
+    bottom: 80px;
+    width: 280px;
+    z-index: 4;
 }
 
-.monstruo2{
-    left:360px;
-    bottom:140px;
-    width:240px;
-    z-index:4;
+.monstruo3 {
+    right: 200px;
+    bottom: 100px;
+    width: 520px;
+    z-index: 4;
 }
 
-.monstruo3{
-    right:360px;
-    bottom:130px;
-    width:230px;
-    z-index:4;
+.monstruo4 {
+    right: 70px;
+    bottom: 70px;
+    width: 400px;
+    z-index: 4;
 }
 
-.monstruo4{
-    right:70px;
-    bottom:70px;
-    width:220px;
-    z-index:4;
+
+.stepFrente {
+    left: 520px;
+    bottom: 60px;
+    width: 250px;
+    z-index: 5;
 }
 
-/* Steps */
-
-.stepFrente{
-    position:absolute;
-    left:520px;
-    bottom:60px;
-    width:250px;
-    z-index:5;
-    cursor:pointer;
+.stepEspaldas {
+    left: 720px;
+    bottom: 60px;
+    width: 250px;
+    z-index: 5;
 }
 
-.stepEspaldas{
-    position:absolute;
-    left:720px;
-    bottom:60px;
-    width:250px;
-    z-index:5;
-    cursor:pointer;
-}
-
-.stepLado{
-    position:absolute;
-    left:920px;
-    bottom:60px;
-    width:250px;
-    z-index:5;
-    cursor:pointer;
-}
-
-/* Roger */
-
-.roges{
-    position:absolute;
-    left:640px;
-    bottom:35px;
-    width:320px;
-    z-index:6;
-    cursor:pointer;
+.stepLado {
+    left: 920px;
+    bottom: 60px;
+    width: 250px;
+    z-index: 5;
 }

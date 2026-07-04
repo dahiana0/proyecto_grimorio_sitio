@@ -1,41 +1,28 @@
-import LottieModule from "lottie-react";
-import { useRef } from "react";
-
-/* import lampara1 from "../assets/lampara1.json";
-import lampara2 from "../assets/lampara2.json";
-
-import stepFrente from "../assets/stepFrente.json";
-import stepEspaldas from "../assets/stepEspaldas.json";
-import stepLado from "../assets/stepLado.json";
-
-import roges from "../assets/roges.json"; */
-
+import { useRef, useState } from "react";
 import "../Styles/LootieParte3.css";
 
-const Lottie = LottieModule.default;
-
 const LootieParte3 = () => {
-  /* const lampara1Ref = useRef(null);
-  const lampara2Ref = useRef(null);
+
+
+
+  const [lampara1Activa, setLampara1Activa] = useState(false);
+  const [lampara2Activa, setLampara2Activa] = useState(false);
+  const [lampara3Activa, setLampara3Activa] = useState(false);
+
+
+
+  const telarana1Ref = useRef(null);
+  const telarana2Ref = useRef(null);
+
+  const monstruo1Ref = useRef(null);
+  const monstruo2Ref = useRef(null);
+  const monstruo3Ref = useRef(null);
+  const monstruo4Ref = useRef(null);
 
   const stepFrenteRef = useRef(null);
   const stepEspaldasRef = useRef(null);
   const stepLadoRef = useRef(null);
 
-  const rogesRef = useRef(null);
- */
-  const monstruo1Ref = useRef(null);
-  /* const monstruo2Ref = useRef(null);
-  const monstruo3Ref = useRef(null);
-  const monstruo4Ref = useRef(null);
-
-  const telarana1Ref = useRef(null);
-  const telarana2Ref = useRef(null); */
-
-  const reproducirLottie = (ref) => {
-    ref.current?.stop();
-    ref.current?.play();
-  };
 
   const reproducirVideo = (ref) => {
     if (ref.current) {
@@ -43,6 +30,44 @@ const LootieParte3 = () => {
       ref.current.currentTime = 0;
       ref.current.play();
     }
+  };
+
+
+
+  const moverLampara1 = () => {
+    setLampara1Activa(false);
+
+    setTimeout(() => {
+      setLampara1Activa(true);
+
+      setTimeout(() => {
+        setLampara1Activa(false);
+      }, 600);
+    }, 10);
+  };
+
+  const moverLampara2 = () => {
+    setLampara2Activa(false);
+
+    setTimeout(() => {
+      setLampara2Activa(true);
+
+      setTimeout(() => {
+        setLampara2Activa(false);
+      }, 600);
+    }, 10);
+  };
+
+  const moverLampara3 = () => {
+    setLampara3Activa(false);
+
+    setTimeout(() => {
+      setLampara3Activa(true);
+
+      setTimeout(() => {
+        setLampara3Activa(false);
+      }, 600);
+    }, 10);
   };
 
   return (
@@ -54,35 +79,31 @@ const LootieParte3 = () => {
         alt=""
       />
 
-  
 
-      {/* <div
-        className="lampara1"
-        onClick={() => reproducirLottie(lampara1Ref)}
-      >
-        <Lottie
-          lottieRef={lampara1Ref}
-          animationData={lampara1}
-          autoplay={false}
-          loop={false}
-        />
-      </div>
 
-      <div
-        className="lampara2"
-        onClick={() => reproducirLottie(lampara2Ref)}
-      >
-        <Lottie
-          lottieRef={lampara2Ref}
-          animationData={lampara2}
-          autoplay={false}
-          loop={false}
-        />
-      </div> */}
+      <img
+        src="/lampara1.png"
+        alt=""
+        className={`lampara1 ${lampara1Activa ? "moverLampara" : ""}`}
+        onClick={moverLampara1}
+      />
 
-      
+      <img
+        src="/lampara1.png"
+        alt=""
+        className={`lampara2 ${lampara2Activa ? "moverLampara" : ""}`}
+        onClick={moverLampara2}
+      />
 
-      {/* <video
+      <img
+        src="/lampara1.png"
+        alt=""
+        className={`lampara3 ${lampara3Activa ? "moverLampara" : ""}`}
+        onClick={moverLampara3}
+      />
+
+
+      <video
         ref={telarana1Ref}
         className="telarana1"
         muted
@@ -102,9 +123,9 @@ const LootieParte3 = () => {
         onClick={() => reproducirVideo(telarana2Ref)}
       >
         <source src="/telarana2.webm" type="video/webm" />
-      </video> */}
+      </video>
 
-   
+
 
       <video
         ref={monstruo1Ref}
@@ -117,7 +138,7 @@ const LootieParte3 = () => {
         <source src="/monstruo1.webm" type="video/webm" />
       </video>
 
-      {/* <video
+      <video
         ref={monstruo2Ref}
         className="monstruo2"
         muted
@@ -148,59 +169,41 @@ const LootieParte3 = () => {
         onClick={() => reproducirVideo(monstruo4Ref)}
       >
         <source src="/monstruo4.webm" type="video/webm" />
-      </video> */}
+      </video>
 
-      {/* STEPS */}
 
-      {/* <div
+      <video
+        ref={stepFrenteRef}
         className="stepFrente"
-        onClick={() => reproducirLottie(stepFrenteRef)}
+        muted
+        playsInline
+        preload="auto"
+        onClick={() => reproducirVideo(stepFrenteRef)}
       >
-        <Lottie
-          lottieRef={stepFrenteRef}
-          animationData={stepFrente}
-          autoplay={false}
-          loop={false}
-        />
-      </div>
+        <source src="/stepFrente.webm" type="video/webm" />
+      </video>
 
-      <div
+      <video
+        ref={stepEspaldasRef}
         className="stepEspaldas"
-        onClick={() => reproducirLottie(stepEspaldasRef)}
+        muted
+        playsInline
+        preload="auto"
+        onClick={() => reproducirVideo(stepEspaldasRef)}
       >
-        <Lottie
-          lottieRef={stepEspaldasRef}
-          animationData={stepEspaldas}
-          autoplay={false}
-          loop={false}
-        />
-      </div>
+        <source src="/stepEspaldas.webm" type="video/webm" />
+      </video>
 
-      <div
+      <video
+        ref={stepLadoRef}
         className="stepLado"
-        onClick={() => reproducirLottie(stepLadoRef)}
+        muted
+        playsInline
+        preload="auto"
+        onClick={() => reproducirVideo(stepLadoRef)}
       >
-        <Lottie
-          lottieRef={stepLadoRef}
-          animationData={stepLado}
-          autoplay={false}
-          loop={false}
-        />
-      </div> */}
-
-      {/* ROGER */}
-
-      {/* <div
-        className="roges"
-        onClick={() => reproducirLottie(rogesRef)}
-      >
-        <Lottie
-          lottieRef={rogesRef}
-          animationData={roges}
-          autoplay={false}
-          loop={false}
-        />
-      </div> */}
+        <source src="/stepLado.webm" type="video/webm" />
+      </video>
 
     </div>
   );
