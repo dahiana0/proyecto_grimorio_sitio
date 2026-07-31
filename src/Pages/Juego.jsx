@@ -30,7 +30,7 @@ export const Juego = () => {
       createdAt: new Date().toISOString(),
     };
 
-    setComments([newComment, ...comments]);
+    setComments((currentComments) => [...currentComments, newComment]);
     setName("");
     setMessage("");
   };
@@ -62,38 +62,40 @@ export const Juego = () => {
         ← VOLVER
       </button>
 
-      <h1 className="comentarios-titulo">Sección de comentarios</h1>
-      <p className="comentarios-descripcion">
-        Comparte tu opinión sobre Grimorio y lee los comentarios de otros
-        visitantes.
-      </p>
+      <div className="contenedor contenedor-comentario">
+        <h1 className="comentarios-titulo">Sección de comentarios</h1>
+        <p className="comentarios-descripcion">
+          Comparte tu opinión sobre Grimorio y lee los comentarios de otros
+          visitantes.
+        </p>
 
-      <form className="comentarios-form" onSubmit={handleSubmit}>
-          <div className="form-field">
-            <label htmlFor="name">Nombre</label>
-            <input
-              id="name"
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Tu nombre"
-            />
-          </div>
+        <form className="comentarios-form" onSubmit={handleSubmit}>
+            <div className="form-field">
+              <label htmlFor="name">Nombre</label>
+              <input
+                id="name"
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Tu nombre"
+              />
+            </div>
 
-          <div className="form-field">
-            <label htmlFor="message">Comentario</label>
-            <textarea
-              id="message"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              placeholder="Escribe tu comentario aquí"
-            />
-          </div>
+            <div className="form-field">
+              <label htmlFor="message">Comentario</label>
+              <textarea
+                id="message"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder="Escribe tu comentario aquí"
+              />
+            </div>
 
-          <button className="comentarios-boton" type="submit">
-            Publicar comentario
-          </button>
-      </form>
+            <button className="comentarios-boton" type="submit">
+              Publicar comentario
+            </button>
+        </form>
+      </div>
     </section>
   );
 };

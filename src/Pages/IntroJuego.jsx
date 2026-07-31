@@ -23,17 +23,17 @@ export const IntroJuego = () => {
     }
   }, []);
 
-  const threeDaysMs = 3 * 24 * 60 * 60 * 1000;
+  const oneYearMs = 365 * 24 * 60 * 60 * 1000;
   const now = Date.now();
 
   const comentariosRecientes = comments.filter((comment) => {
     const fechaComentario = new Date(comment.createdAt).getTime();
-    return now - fechaComentario <= threeDaysMs;
+    return now - fechaComentario <= oneYearMs;
   });
 
   const comentariosAntiguos = comments.filter((comment) => {
     const fechaComentario = new Date(comment.createdAt).getTime();
-    return now - fechaComentario > threeDaysMs;
+    return now - fechaComentario > oneYearMs;
   });
 
   const pickDoor = (door) => {
