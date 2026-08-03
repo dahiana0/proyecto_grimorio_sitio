@@ -7,17 +7,26 @@ export const Juego = () => {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const [comments, setComments] = useState([]);
+  const [commentsLoaded, setCommentsLoaded] = useState(false);
 
   useEffect(() => {
     const savedComments = window.localStorage.getItem("grimorio-comments");
+
     if (savedComments) {
-      setComments(JSON.parse(savedComments));
+      try {
+        setComments(JSON.parse(savedComments));
+      } catch (error) {
+        console.error("Error al leer comentarios guardados:", error);
+      }
     }
+
+    setCommentsLoaded(true);
   }, []);
 
   useEffect(() => {
+    if (!commentsLoaded) return;
     window.localStorage.setItem("grimorio-comments", JSON.stringify(comments));
-  }, [comments]);
+  }, [comments, commentsLoaded]);
 
   const handleSubmit = (event) => {
     event.preventDefault();

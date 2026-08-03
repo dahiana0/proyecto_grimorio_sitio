@@ -6,11 +6,13 @@ export const ComentariosCompletos = () => {
   const navigate = useNavigate();
   const { tipo } = useParams();
   const [comments, setComments] = useState([]);
+  const [commentsLoaded, setCommentsLoaded] = useState(false);
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [editText, setEditText] = useState("");
 
   useEffect(() => {
     const savedComments = window.localStorage.getItem("grimorio-comments");
+
     if (savedComments) {
       try {
         setComments(JSON.parse(savedComments));
@@ -18,21 +20,24 @@ export const ComentariosCompletos = () => {
         console.error("Error al leer comentarios guardados:", error);
       }
     }
+
+    setCommentsLoaded(true);
   }, []);
 
   useEffect(() => {
+    if (!commentsLoaded) return;
     window.localStorage.setItem("grimorio-comments", JSON.stringify(comments));
-  }, [comments]);
+  }, [comments, commentsLoaded]);
 
-  const oneYearMs = 365 * 24 * 60 * 60 * 1000;
+  const tenDaysMs = 10 * 24 * 60 * 60 * 1000;
   const now = Date.now();
 
   const comentariosRecientes = comments
-    .filter((comment) => now - new Date(comment.createdAt).getTime() <= oneYearMs)
+    .filter((comment) => now - new Date(comment.createdAt).getTime() <= tenDaysMs)
     .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
 
   const comentariosAntiguos = comments
-    .filter((comment) => now - new Date(comment.createdAt).getTime() > oneYearMs)
+    .filter((comment) => now - new Date(comment.createdAt).getTime() > tenDaysMs)
     .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
 
   const mostrarNuevos = tipo === "nuevos";
@@ -45,9 +50,9 @@ export const ComentariosCompletos = () => {
     : "Comentarios";
 
   const descripcionPagina = mostrarNuevos
-    ? "Mira sólo los comentarios recientes de los últimos 365 días."
+    ? "Mira sólo los comentarios recientes de los últimos 10 días."
     : mostrarAntiguos
-    ? "Mira sólo los comentarios que tienen más de 365 días."
+    ? "Mira sólo los comentarios que tienen más de 10 días."
     : "Revisa todas las opiniones de los visitantes y navega entre comentarios nuevos y antiguos del museo Grimorio.";
 
   const handleDeleteComment = (commentId) => {
@@ -109,13 +114,6 @@ export const ComentariosCompletos = () => {
             onClick={() => startEditing(comment)}
           >
             Editar
-          </button>
-          <button
-            type="button"
-            className="comentario-accion"
-            onClick={() => resendComment(comment.id)}
-          >
-            Volver a enviar
           </button>
           <button
             type="button"

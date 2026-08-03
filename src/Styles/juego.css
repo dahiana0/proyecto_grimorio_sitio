@@ -5,8 +5,9 @@
   flex-direction: column;
   align-items: center;
   gap: 2rem;
-  background: #f4f5f7 url("/fondoOscuro.png") no-repeat;
-  background-size:100% auto;
+  min-height: 100vh;
+  background: #f4f5f7 url("/fondoOscuro.png") center top / cover no-repeat;
+  background-attachment: scroll;
 }
 
 .comentarios-page > * {
@@ -254,8 +255,8 @@
 
 #juego {
     min-height: 100vh;
-    background: #f4f5f7 url("/fondoOscuro.png") no-repeat;
-    background-size: 100% auto;
+    background: #f4f5f7 url("/fondoOscuro.png") center top / cover no-repeat;
+    background-attachment: scroll;
     padding: 1rem 1rem 2rem;
 }
 
