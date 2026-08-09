@@ -1,29 +1,153 @@
-body {
-    margin: 0;
-    padding: 0;
-    background: #031010;
-    font-family: Arial, sans-serif;
+/* =========================================================
+   FUENTES
+========================================================= */
 
+@font-face {
+    font-family: rxx;
+    src: url("/fonts/rxx.ttf");
+}
+
+@font-face {
+    font-family: glacia;
+    src: url("/fonts/glacia.ttf");
 }
 
 
+/* =========================================================
+   BODY
+========================================================= */
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+
+    background: #020806;
+
+    font-family: Arial, sans-serif;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   ESCENARIO
+   SOLO DEGRADADO - SIN IMAGEN DE FONDO
+========================================================= */
 
 .container-sofia {
 
     width: 100%;
     height: 100vh;
 
+    position: relative;
+
     display: flex;
+
     justify-content: center;
     align-items: center;
 
     gap: 120px;
 
-    background-image: url(/fondoguia.png);
+    overflow: hidden;
+
+    /*
+       Fondo estilo Grimorio
+    */
+
+    background:
+
+        /* Luz verde central */
+        radial-gradient(
+            ellipse at 50% 45%,
+            rgba(26, 105, 70, 0.45) 0%,
+            rgba(12, 62, 42, 0.30) 25%,
+            rgba(3, 25, 18, 0.55) 50%,
+            rgba(0, 7, 5, 0.95) 85%
+        ),
+
+        /* Degradado general */
+        linear-gradient(
+            90deg,
+            #010403 0%,
+            #03140e 25%,
+            #06251a 50%,
+            #03140e 75%,
+            #010403 100%
+        );
 
 }
 
 
+/* =========================================================
+   ILUMINACIÓN VERDE SUAVE
+========================================================= */
+
+.container-sofia::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 35%,
+            rgba(77, 255, 153, 0.12),
+            transparent 38%
+        );
+
+    z-index: 0;
+
+}
+
+
+/* =========================================================
+   OSCURECER LOS BORDES
+========================================================= */
+
+.container-sofia::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.65),
+            transparent 25%,
+            transparent 75%,
+            rgba(0, 0, 0, 0.65)
+        ),
+
+        linear-gradient(
+            0deg,
+            rgba(0, 0, 0, 0.65),
+            transparent 35%,
+            rgba(0, 0, 0, 0.30)
+        );
+
+    z-index: 0;
+
+}
+
+
+/* =========================================================
+   PERSONAJE
+   MEDIDAS ORIGINALES
+========================================================= */
 
 .character {
 
@@ -33,21 +157,32 @@ body {
     height: 620px;
 
     display: flex;
+
     justify-content: center;
     align-items: flex-end;
 
     cursor: pointer;
 
+    z-index: 2;
+
+    flex-shrink: 0;
+
 }
 
+
+/* =========================================================
+   GUÍA
+   NO CAMBIAMOS LA MEDIDA ORIGINAL
+========================================================= */
 
 .guia-img {
 
     position: absolute;
 
-    width: 180px;
+    width: 180px !important;
 
     left: 50%;
+
     bottom: 100px;
 
     transform: translateX(-50%);
@@ -58,17 +193,24 @@ body {
 
     user-select: none;
 
+    pointer-events: none;
+
 }
 
 
+/* =========================================================
+   BASE
+   NO CAMBIAMOS LA MEDIDA ORIGINAL
+========================================================= */
 
 .base-guia {
 
     position: absolute;
 
-    width: 370px;
+    width: 370px !important;
 
     left: 50%;
+
     bottom: -60px;
 
     transform: translateX(-50%);
@@ -78,152 +220,226 @@ body {
     pointer-events: none;
 
     filter:
-        drop-shadow(0 8px 15px rgba(0, 0, 0, .45));
+        drop-shadow(
+            0 8px 15px rgba(0, 0, 0, 0.55)
+        );
 
 }
 
 
+/* =========================================================
+   ANIMACIÓN GUÍA
+========================================================= */
 
 @keyframes rebote {
 
     0% {
-        transform: translateX(-50%) translateY(0px);
+        transform:
+            translateX(-50%)
+            translateY(0);
     }
 
     25% {
-        transform: translateX(-50%) translateY(-12px);
+        transform:
+            translateX(-50%)
+            translateY(-12px);
     }
 
     50% {
-        transform: translateX(-50%) translateY(0px);
+        transform:
+            translateX(-50%)
+            translateY(0);
     }
 
     75% {
-        transform: translateX(-50%) translateY(-6px);
+        transform:
+            translateX(-50%)
+            translateY(-6px);
     }
 
     100% {
-        transform: translateX(-50%) translateY(0px);
+        transform:
+            translateX(-50%)
+            translateY(0);
     }
 
 }
 
 
+/* =========================================================
+   CONTENEDOR DE DIÁLOGOS
+========================================================= */
 
 .dialogues {
 
-    width: 360px;
-    height: 340px;
+    width: 500px;
+    height: 500px;
 
     display: flex;
+
     justify-content: center;
     align-items: center;
+
     flex-direction: column;
 
     position: relative;
 
+    z-index: 3;
+
+    flex-shrink: 0;
+
 }
 
 
+/* =========================================================
+   PERGAMINO
+   AQUÍ TÚ PONES TU IMAGEN
+========================================================= */
 
 .speech-box {
 
-    width: 1050px;
-    height: 1050px;
+    width: 520px;
+    height: 350px;
 
-    background-image: url("/pergaminomensaje.png");
+    /*
+       CAMBIA ESTA IMAGEN POR TU PERGAMINO
+    */
+
+    background-image: url("./pergaminoguia.png");
+
     background-repeat: no-repeat;
-    background-size: contain;
+
     background-position: center;
 
+    background-size: contain;
+
     display: flex;
+
     justify-content: center;
+
     align-items: center;
+
+    position: relative;
+
+    box-sizing: border-box;
 
     opacity: 0;
 
     transition:
-        opacity .5s ease,
-        transform .5s ease;
+        opacity 0.5s ease,
+        transform 0.5s ease;
 
     animation:
-        aparecer .6s ease forwards,
-        brilloCaja 3s ease-in-out infinite;
-
+        aparecer 0.6s ease forwards;
 
 }
 
 
+/* =========================================================
+   TEXTO DENTRO DEL PERGAMINO
+========================================================= */
+
 .speech-box p {
 
-    width: 270px;
+    width: 330px;
+
+    max-width: 330px;
+
+    max-height: 120px;
 
     margin: 0;
-    margin-top: -18px;
+
+    padding: 0;
+
+    box-sizing: border-box;
 
     text-align: center;
 
-    color: #22190f;
+    color: #4dff99;
 
-    font-family: glacia, serif;
+    font-family:rxx;
 
-    font-size: 20px;
+    font-size: 19px;
+
     font-weight: 600;
 
     line-height: 1.35;
 
+    overflow: hidden;
+
+    overflow-wrap: break-word;
+
+    word-break: normal;
+
 }
 
 
+/* =========================================================
+   ANIMACIÓN DEL PERGAMINO
+========================================================= */
 
 @keyframes aparecer {
 
     from {
 
         opacity: 0;
-        transform: translateY(20px) scale(.96);
+
+        transform:
+            translateY(20px)
+            scale(0.96);
 
     }
 
     to {
 
         opacity: 1;
-        transform: translateY(0) scale(1);
+
+        transform:
+            translateY(0)
+            scale(1);
 
     }
 
 }
 
 
+/* =========================================================
+   BOTÓN EXPLORAR MUSEO
+========================================================= */
+
 .start-btn {
 
     width: 320px;
+
     height: 58px;
 
-    margin-top: 25px;
+    margin-top: 20px;
 
-    border: 2px solid rgba(255, 255, 255, .65);
-    border-radius: 10px;
+    border: 1px solid #4dff99;
 
-    background: #0b0b0b;
+    border-radius: 7px;
+
+    background: rgba(0, 8, 6, 0.88);
 
     color: #ffffff;
 
     font-size: 20px;
-    font-family: rxx;
+
+    font-family: rxx, Georgia, serif;
 
     letter-spacing: 1px;
+
     text-transform: uppercase;
 
     cursor: pointer;
 
     text-shadow:
-        0 0 4px rgba(255, 255, 255, .9),
-        0 0 8px rgba(255, 255, 255, .4);
+        0 0 5px rgba(255, 255, 255, 0.9),
+        0 0 10px rgba(77, 255, 153, 0.35);
 
     box-shadow:
-        inset 0 0 8px rgba(255, 255, 255, .08),
-        0 0 10px rgba(255, 255, 255, .08);
+        inset 0 0 10px rgba(77, 255, 153, 0.06),
+        0 0 10px rgba(77, 255, 153, 0.10);
 
     opacity: 0;
 
@@ -232,16 +448,19 @@ body {
     pointer-events: none;
 
     transition:
-        background .25s ease,
-        color .25s ease,
-        border-color .25s ease,
-        box-shadow .25s ease,
-        transform .18s ease,
-        opacity .5s ease;
+        background 0.25s ease,
+        color 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.18s ease,
+        opacity 0.5s ease;
 
 }
 
 
+/* =========================================================
+   BOTÓN VISIBLE
+========================================================= */
 
 .start-btn.mostrar {
 
@@ -251,29 +470,36 @@ body {
 
     pointer-events: auto;
 
-    animation: entradaBoton .8s ease;
+    animation: entradaBoton 0.8s ease;
 
 }
 
 
+/* =========================================================
+   HOVER BOTÓN
+========================================================= */
 
 .start-btn:hover {
 
-    background: #ffffff;
+    background: #4dff99;
 
-    color: #111111;
+    color: #06110c;
 
-    border-color: #ffffff;
+    border-color: #4dff99;
 
     text-shadow: none;
 
     box-shadow:
-        0 0 14px rgba(255, 255, 255, .35);
+        0 0 18px rgba(77, 255, 153, 0.35);
 
     transform: translateY(-2px);
 
 }
 
+
+/* =========================================================
+   ACTIVE BOTÓN
+========================================================= */
 
 .start-btn:active {
 
@@ -281,14 +507,16 @@ body {
 
     color: #111111;
 
-    transform: translateY(2px) scale(.98);
-
-    box-shadow:
-        inset 0 4px 8px rgba(0, 0, 0, .2);
+    transform:
+        translateY(2px)
+        scale(0.98);
 
 }
 
 
+/* =========================================================
+   ANIMACIÓN BOTÓN
+========================================================= */
 
 @keyframes entradaBoton {
 
@@ -297,7 +525,8 @@ body {
         opacity: 0;
 
         transform:
-            translateY(35px) scale(.9);
+            translateY(35px)
+            scale(0.9);
 
     }
 
@@ -306,80 +535,17 @@ body {
         opacity: 1;
 
         transform:
-            translateY(0) scale(1);
+            translateY(0)
+            scale(1);
 
     }
 
 }
 
 
-
-@media (max-width:900px) {
-
-    .container-sofia {
-
-        flex-direction: column;
-
-        gap: 30px;
-
-    }
-
-    .character {
-
-        width: 300px;
-        height: 470px;
-
-    }
-
-    .guia-img {
-
-        width: 220px;
-
-        bottom: 45px;
-
-    }
-
-    .base-guia {
-
-        width: 180px;
-
-    }
-
-    .dialogues {
-
-        width: 100%;
-        height: auto;
-
-    }
-
-    .speech-box {
-
-        width: 850px;
-        height: 850px;
-
-    }
-
-    .speech-box p {
-
-        width: 220px;
-
-        font-size: 17px;
-
-        margin-top: -10px;
-
-    }
-
-    .start-btn {
-
-        width: 260px;
-        height: 50px;
-
-        font-size: 18px;
-
-    }
-
-}
-
+/* =========================================================
+   BOTÓN VOLVER AL INICIO
+========================================================= */
 
 .back-btn {
 
@@ -391,14 +557,16 @@ body {
     width: 220px;
     height: 55px;
 
-    border: 2px solid rgba(255, 255, 255, .65);
-    border-radius: 10px;
+    border: 1px solid #4dff99;
 
-    background: #0b0b0b;
+    border-radius: 7px;
+
+    background: rgba(0, 5, 4, 0.88);
 
     color: #ffffff;
 
     font-size: 18px;
+
     font-family: rxx, Arial, sans-serif;
 
     letter-spacing: 1px;
@@ -408,39 +576,48 @@ body {
     z-index: 999;
 
     text-shadow:
-        0 0 4px rgba(255, 255, 255, .9),
-        0 0 8px rgba(255, 255, 255, .4);
+        0 0 5px rgba(255, 255, 255, 0.9),
+        0 0 8px rgba(77, 255, 153, 0.25);
 
     box-shadow:
-        inset 0 0 8px rgba(255, 255, 255, .08),
-        0 0 10px rgba(255, 255, 255, .08);
+        inset 0 0 8px rgba(77, 255, 153, 0.06),
+        0 0 10px rgba(77, 255, 153, 0.08);
 
     transition:
-        background .25s ease,
-        color .25s ease,
-        border-color .25s ease,
-        box-shadow .25s ease,
-        transform .15s ease;
+        background 0.25s ease,
+        color 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.15s ease;
 
 }
 
 
+/* =========================================================
+   HOVER VOLVER
+========================================================= */
+
 .back-btn:hover {
 
-    background: #ffffff;
+    background: #4dff99;
 
-    color: #111111;
+    color: #06110c;
 
-    border-color: #ffffff;
+    border-color: #4dff99;
 
     text-shadow: none;
 
     box-shadow:
-        0 0 12px rgba(255, 255, 255, .35);
+        0 0 15px rgba(77, 255, 153, 0.35);
 
     transform: translateY(-2px);
 
 }
+
+
+/* =========================================================
+   ACTIVE VOLVER
+========================================================= */
 
 .back-btn:active {
 
@@ -448,31 +625,37 @@ body {
 
     color: #111111;
 
-    transform: translateY(1px) scale(.98);
-
-    box-shadow:
-        inset 0 3px 8px rgba(0, 0, 0, .18);
+    transform:
+        translateY(1px)
+        scale(0.98);
 
 }
+
+
+/* =========================================================
+   BOTÓN OMITIR INTRO
+========================================================= */
 
 .skip-btn {
 
     position: fixed;
 
     top: 30px;
-    left: 1290px;
+    right: 30px;
 
     width: 220px;
     height: 55px;
 
-    border: 2px solid rgba(255, 255, 255, .65);
-    border-radius: 10px;
+    border: 1px solid #4dff99;
 
-    background: #0b0b0b;
+    border-radius: 7px;
+
+    background: rgba(0, 5, 4, 0.88);
 
     color: #ffffff;
 
     font-size: 18px;
+
     font-family: rxx, Arial, sans-serif;
 
     letter-spacing: 1px;
@@ -482,38 +665,48 @@ body {
     z-index: 999;
 
     text-shadow:
-        0 0 4px rgba(255, 255, 255, .9),
-        0 0 8px rgba(255, 255, 255, .4);
+        0 0 5px rgba(255, 255, 255, 0.9),
+        0 0 8px rgba(77, 255, 153, 0.25);
 
     box-shadow:
-        inset 0 0 8px rgba(255, 255, 255, .08),
-        0 0 10px rgba(255, 255, 255, .08);
+        inset 0 0 8px rgba(77, 255, 153, 0.06),
+        0 0 10px rgba(77, 255, 153, 0.08);
 
     transition:
-        background .25s ease,
-        color .25s ease,
-        border-color .25s ease,
-        box-shadow .25s ease,
-        transform .15s ease;
+        background 0.25s ease,
+        color 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.15s ease;
 
 }
 
+
+/* =========================================================
+   HOVER OMITIR
+========================================================= */
+
 .skip-btn:hover {
 
-    background: #ffffff;
+    background: #4dff99;
 
-    color: #111111;
+    color: #06110c;
 
-    border-color: #ffffff;
+    border-color: #4dff99;
 
     text-shadow: none;
 
     box-shadow:
-        0 0 12px rgba(255, 255, 255, .35);
+        0 0 15px rgba(77, 255, 153, 0.35);
 
     transform: translateY(-2px);
 
 }
+
+
+/* =========================================================
+   ACTIVE OMITIR
+========================================================= */
 
 .skip-btn:active {
 
@@ -521,22 +714,160 @@ body {
 
     color: #111111;
 
-    transform: translateY(1px) scale(.98);
-
-    box-shadow:
-        inset 0 3px 8px rgba(0, 0, 0, .18);
+    transform:
+        translateY(1px)
+        scale(0.98);
 
 }
 
 
-@media (max-width:900px) {
+/* =========================================================
+   RESPONSIVE
+========================================================= */
 
-    .skip-btn {
+@media (max-width: 1100px) {
 
-        top: 95px;
+    .container-sofia {
+
+        gap: 50px;
+
+    }
+
+    .dialogues {
+
+        width: 450px;
+
+    }
+
+    .speech-box {
+
+        width: 470px;
+        height: 330px;
+
+    }
+
+}
+
+
+/* =========================================================
+   TABLET / CELULAR
+========================================================= */
+
+@media (max-width: 900px) {
+
+    html,
+    body {
+
+        overflow-y: auto;
+
+    }
+
+    .container-sofia {
+
+        min-height: 100vh;
+        height: auto;
+
+        flex-direction: column;
+
+        gap: 10px;
+
+        padding-top: 100px;
+        padding-bottom: 40px;
+
+        overflow-y: auto;
+
+    }
+
+
+    .character {
+
+        width: 300px;
+        height: 470px;
+
+    }
+
+
+    .guia-img {
+
+        width: 220px !important;
+
+        bottom: 45px;
+
+    }
+
+
+    .base-guia {
+
+        width: 180px !important;
+
+    }
+
+
+    .dialogues {
+
+        width: 100%;
+
+        height: auto;
+
+    }
+
+
+    .speech-box {
+
+        width: 95vw;
+
+        max-width: 520px;
+
+        height: 330px;
+
+    }
+
+
+    .speech-box p {
+
+        width: 280px;
+
+        max-width: 280px;
+
+        font-size: 17px;
+
+    }
+
+
+    .start-btn {
+
+        width: 260px;
+
+        height: 50px;
+
+        font-size: 18px;
+
+    }
+
+
+    .back-btn {
+
+        top: 20px;
+
         left: 20px;
 
         width: 180px;
+
+        height: 50px;
+
+        font-size: 16px;
+
+    }
+
+
+    .skip-btn {
+
+        top: 20px;
+
+        right: 20px;
+
+        width: 180px;
+
         height: 50px;
 
         font-size: 16px;

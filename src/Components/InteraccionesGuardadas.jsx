@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import LottieModule from "lottie-react";
 
 import tablero from "../assets/tablero.json";
@@ -21,7 +22,14 @@ const animaciones = {
 
 const InteraccionesGuardadas = () => {
 
+  const navigate = useNavigate();
+
   const [interacciones, setInteracciones] = useState([]);
+
+
+  /* =====================================================
+     CARGAR INTERACCIONES GUARDADAS
+  ===================================================== */
 
   useEffect(() => {
 
@@ -30,9 +38,13 @@ const InteraccionesGuardadas = () => {
       const datos = localStorage.getItem("grimorio");
 
       if (datos) {
+
         setInteracciones(JSON.parse(datos));
+
       } else {
+
         setInteracciones([]);
+
       }
 
     };
@@ -56,10 +68,14 @@ const InteraccionesGuardadas = () => {
   }, []);
 
 
+  /* =====================================================
+     ELIMINAR UNA INTERACCIÓN
+  ===================================================== */
+
   const eliminarInteraccion = (id) => {
 
     const nuevas = interacciones.filter(
-      item => item.id !== id
+      (item) => item.id !== id
     );
 
     setInteracciones(nuevas);
@@ -72,11 +88,19 @@ const InteraccionesGuardadas = () => {
   };
 
 
+  /* =====================================================
+     VACIAR TODO EL GRIMORIO
+  ===================================================== */
+
   const limpiarGrimorio = () => {
 
     if (
-      !window.confirm("¿Deseas borrar todas las interacciones?")
-    ) return;
+      !window.confirm(
+        "¿Deseas borrar todas las interacciones?"
+      )
+    ) {
+      return;
+    }
 
     localStorage.removeItem("grimorio");
 
@@ -84,6 +108,10 @@ const InteraccionesGuardadas = () => {
 
   };
 
+
+  /* =====================================================
+     FORMATEAR FECHA
+  ===================================================== */
 
   const obtenerFecha = (fecha) => {
 
@@ -100,6 +128,22 @@ const InteraccionesGuardadas = () => {
 
   };
 
+
+  /* =====================================================
+     VOLVER AL INICIO
+  ===================================================== */
+
+  const volverInicio = () => {
+
+    navigate("/");
+
+  };
+
+
+  /* =====================================================
+     RENDER
+  ===================================================== */
+
   return (
 
     <section className="grimorio">
@@ -108,15 +152,45 @@ const InteraccionesGuardadas = () => {
 
         <div className="pergamino">
 
+
+          {/* =================================================
+              BOTÓN VOLVER AL INICIO
+          ================================================= */}
+
+          <div className="volverInicio">
+
+            <button
+              className="btnVolver"
+              onClick={volverInicio}
+            >
+
+              ← Volver al inicio
+
+            </button>
+
+          </div>
+
+
+          {/* =================================================
+              ENCABEZADO
+          ================================================= */}
+
           <div className="encabezado">
 
-            <h1>INTERACCIONES GUARDADAS</h1>
+            <h1>
+              INTERACCIONES GUARDADAS
+            </h1>
 
             <p>
               Tu colección de descubrimientos dentro del Grimorio.
             </p>
 
           </div>
+
+
+          {/* =================================================
+              INFORMACIÓN
+          ================================================= */}
 
           <div className="informacion">
 
@@ -131,98 +205,109 @@ const InteraccionesGuardadas = () => {
 
             </span>
 
-            {
 
-              interacciones.length > 0 && (
+            {interacciones.length > 0 && (
 
-                <button
-                  className="btnLimpiar"
-                  onClick={limpiarGrimorio}
-                >
-                  Vaciar Grimorio
-                </button>
+              <button
+                className="btnLimpiar"
+                onClick={limpiarGrimorio}
+              >
 
-              )
+                🗑 Vaciar Grimorio
 
-            }
+              </button>
+
+            )}
 
           </div>
 
-          {
 
-            interacciones.length === 0 && (
+          {/* =================================================
+              GRIMORIO VACÍO
+          ================================================= */}
 
-              <div className="vacio">
+          {interacciones.length === 0 && (
 
-                <h2>
-                  El Grimorio está vacío
-                </h2>
+            <div className="vacio">
 
-                <p>
-                  Explora el museo e interactúa con los objetos.
-                </p>
+              <h2>
+                El Grimorio está vacío
+              </h2>
 
-              </div>
+              <p>
+                Explora el museo e interactúa con los objetos.
+              </p>
 
-            )
+            </div>
 
-          }
+          )}
+
+
+          {/* =================================================
+              TARJETAS
+          ================================================= */}
 
           <div className="contenedorTarjetas">
 
-            {
+            {interacciones.map((item) => (
 
-              interacciones.map((item) => (
+              <div
+                key={item.id}
+                className="tarjeta"
+              >
 
-                <div
-                  key={item.id}
-                  className="tarjeta"
-                >
 
-                  <div className="imagenTarjeta">
+                {/* IMAGEN / LOTTIE */}
 
-                    {
+                <div className="imagenTarjeta">
 
-                      animaciones[item.imagen] && (
+                  {animaciones[item.imagen] && (
 
-                        <Lottie
-                          animationData={animaciones[item.imagen]}
-                          autoplay
-                          loop
-                        />
-
-                      )
-
-                    }
-
-                  </div>
-
-                  <div className="contenidoTarjeta">
-
-                    <h3>{item.nombre}</h3>
-
-                    <span>
-
-                      {obtenerFecha(item.fecha)}
-
-                    </span>
-
-                    <button
-                      className="btnEliminar"
-                      onClick={() =>
-                        eliminarInteraccion(item.id)
+                    <Lottie
+                      animationData={
+                        animaciones[item.imagen]
                       }
-                    >
-                      ✕ Eliminar
-                    </button>
+                      autoplay
+                      loop
+                    />
 
-                  </div>
+                  )}
 
                 </div>
 
-              ))
 
-            }
+                {/* CONTENIDO */}
+
+                <div className="contenidoTarjeta">
+
+                  <h3>
+                    {item.nombre}
+                  </h3>
+
+
+                  <span>
+                    {obtenerFecha(item.fecha)}
+                  </span>
+
+
+                  {/* ELIMINAR */}
+
+                  <button
+                    className="btnEliminar"
+                    onClick={() =>
+                      eliminarInteraccion(item.id)
+                    }
+                  >
+
+                    ✕ Eliminar
+
+                  </button>
+
+                </div>
+
+              </div>
+
+            ))}
 
           </div>
 

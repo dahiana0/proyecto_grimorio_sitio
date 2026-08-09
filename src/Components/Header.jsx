@@ -7,7 +7,13 @@ export const Header = () => {
 
   const reproducirSonido = () => {
     sonidoBoton.current.currentTime = 0;
-    sonidoBoton.current.play().catch(() => { });
+    sonidoBoton.current.play().catch(() => {});
+  };
+
+
+  const estiloNav = {
+    color: "#fff",
+    textDecoration: "none",
   };
 
   return (
@@ -23,7 +29,7 @@ export const Header = () => {
     >
       <div className="container">
 
-
+        {/* LOGO */}
         <Link
           className="navbar-brand"
           to="/"
@@ -46,7 +52,7 @@ export const Header = () => {
           />
         </Link>
 
-
+        {/* BOTÓN RESPONSIVE */}
         <button
           className="navbar-toggler"
           type="button"
@@ -57,55 +63,82 @@ export const Header = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-
+        {/* MENÚ */}
         <div className="collapse navbar-collapse" id="navbarNav">
           <div className="ms-auto d-flex flex-column flex-lg-row align-items-center gap-3">
 
+            {/* INICIO */}
             <Link
               className="nav-link"
               to="/"
               onClick={reproducirSonido}
-              style={{ color: "#fff" }}
+              style={estiloNav}
             >
               Inicio
             </Link>
 
+            {/* SOBRE NOSOTROS */}
             <Link
               className="nav-link"
               to="/sobrenosotros"
               onClick={reproducirSonido}
-              style={{ color: "#fff" }}
+              style={estiloNav}
             >
               Sobre Nosotros
             </Link>
 
+            {/* PERSONAJES */}
             <Link
               className="nav-link"
               to="/personajes"
               onClick={reproducirSonido}
-              style={{ color: "#fff" }}
+              style={estiloNav}
             >
               Personajes
             </Link>
 
+            {/* RECOMENDACIONES */}
             <Link
               className="nav-link"
               to="/recomendaciones"
               onClick={reproducirSonido}
-              style={{ color: "#fff" }}
+              style={estiloNav}
             >
               Recomendaciones
             </Link>
 
+            {/* COMENTARIOS */}
             <Link
               className="nav-link"
               to="/intro-juego"
               onClick={reproducirSonido}
-              style={{ color: "#fff" }}
+              style={estiloNav}
             >
               Comentarios
             </Link>
 
+
+             {/* DIARIO */}
+            <Link
+              to="/archivo"
+              onClick={reproducirSonido}
+              style={estiloNav}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "7px",
+                color: "#ffffff",
+                textDecoration: "none",
+                letterSpacing: "1px",
+                fontSize: "16px",
+               
+              }}
+            >
+
+              Diario
+            </Link>
+
+            {/* EXPLORAR MUSEO */}
             <Link
               to="/guia"
               onClick={reproducirSonido}
@@ -125,19 +158,19 @@ export const Header = () => {
             >
               <img
                 src="./book.svg"
-                alt="icono"
+                alt="Icono museo"
                 style={{
                   width: "16px",
                   height: "16px",
                   objectFit: "contain",
                 }}
               />
+
               Explorar Museo
             </Link>
 
           </div>
         </div>
-
       </div>
     </nav>
   );
