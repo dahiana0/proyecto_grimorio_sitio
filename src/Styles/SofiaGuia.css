@@ -1,11 +1,11 @@
 @font-face {
     font-family: rxx;
-    src: url("/fonts/rxx.ttf");
+    src: url("../Styles/$RXXVOG2.TTF") format("truetype");
 }
 
 @font-face {
     font-family: glacia;
-    src: url("/fonts/glacia.ttf");
+    src: url("../Styles/glacial-indifference.regular.otf") format("opentype");
 }
 
 

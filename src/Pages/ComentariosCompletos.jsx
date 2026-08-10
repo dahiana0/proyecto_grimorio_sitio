@@ -59,6 +59,11 @@ export const ComentariosCompletos = () => {
     );
   };
 
+  const handleBackToIntro = (event) => {
+    event?.preventDefault();
+    navigate("/intro-juego");
+  };
+
   const startEditing = (comment) => {
     setEditingCommentId(comment.id);
     setEditText(comment.message);
@@ -159,7 +164,8 @@ export const ComentariosCompletos = () => {
   return (
     <section id="comentarios-page" className="comentarios-page">
       <button
-        onClick={() => navigate("/intro-juego")}
+        type="button"
+        onClick={handleBackToIntro}
         title="Volver a comentarios"
         style={{
           position: "fixed",
