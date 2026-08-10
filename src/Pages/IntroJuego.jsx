@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../Styles/juego.css";
+import { getStoredComments } from "../utils/commentsStorage";
 
 const datos = [
   { titulo: "Nuevos Comentarios", clase: "nuevos", ruta: "/comentariosCompletos/nuevos" },
@@ -13,14 +14,16 @@ export const IntroJuego = () => {
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
-    const savedComments = window.localStorage.getItem("grimorio-comments");
-    if (savedComments) {
-      try {
-        setComments(JSON.parse(savedComments));
-      } catch (error) {
-        console.error("Error al leer comentarios guardados:", error);
+    setComments(getStoredComments());
+
+    const handleCommentsUpdated = (event) => {
+      if (Array.isArray(event.detail)) {
+        setComments(event.detail);
       }
-    }
+    };
+
+    window.addEventListener("grimorio-comments-updated", handleCommentsUpdated);
+    return () => window.removeEventListener("grimorio-comments-updated", handleCommentsUpdated);
   }, []);
 
   const tenDaysMs = 10 * 24 * 60 * 60 * 1000;

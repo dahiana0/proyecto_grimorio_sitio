@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../Styles/juego.css";
+import { getStoredComments, persistComments, subscribeToComments } from "../utils/commentsStorage";
 
 export const Juego = () => {
   const navigate = useNavigate();
@@ -10,22 +11,19 @@ export const Juego = () => {
   const [commentsLoaded, setCommentsLoaded] = useState(false);
 
   useEffect(() => {
-    const savedComments = window.localStorage.getItem("grimorio-comments");
-
-    if (savedComments) {
-      try {
-        setComments(JSON.parse(savedComments));
-      } catch (error) {
-        console.error("Error al leer comentarios guardados:", error);
-      }
-    }
-
+    setComments(getStoredComments());
     setCommentsLoaded(true);
+
+    const unsubscribe = subscribeToComments((nextComments) => {
+      setComments(nextComments);
+    });
+
+    return unsubscribe;
   }, []);
 
   useEffect(() => {
     if (!commentsLoaded) return;
-    window.localStorage.setItem("grimorio-comments", JSON.stringify(comments));
+    persistComments(comments);
   }, [comments, commentsLoaded]);
 
   const handleSubmit = (event) => {
