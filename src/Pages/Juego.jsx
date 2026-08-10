@@ -42,10 +42,27 @@ export const Juego = () => {
     setMessage("");
   };
 
+  const handleBackToIntro = (event) => {
+    event?.preventDefault();
+    event?.stopPropagation();
+
+    try {
+      if (window.history.length > 1) {
+        window.history.back();
+        return;
+      }
+    } catch (error) {
+      console.error("No se pudo volver con el historial del navegador", error);
+    }
+
+    navigate("/intro-juego", { replace: true });
+  };
+
   return (
     <section id="comentarios-page" className="comentarios-page">
       <button
-        onClick={() => navigate("/intro-juego")}
+        type="button"
+        onClick={handleBackToIntro}
         title="Volver al inicio"
         style={{
           position: "fixed",

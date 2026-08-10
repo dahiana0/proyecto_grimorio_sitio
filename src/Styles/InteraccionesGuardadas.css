@@ -14,7 +14,7 @@
             rgba(0, 10, 7, 0.78),
             rgba(0, 12, 8, 0.88)
         ),
-        url("/background.jpg");
+        url("/fondoOscuro.png");
 
     background-size: cover;
     background-position: center;
@@ -93,7 +93,7 @@
 
     box-shadow: none;
 
-    font-family: glacial;
+    font-family: glacia, sans-serif;
 
     max-height: none;
 
