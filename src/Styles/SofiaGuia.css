@@ -1,7 +1,3 @@
-/* =========================================================
-   FUENTES
-========================================================= */
-
 @font-face {
     font-family: rxx;
     src: url("/fonts/rxx.ttf");
@@ -13,9 +9,6 @@
 }
 
 
-/* =========================================================
-   BODY
-========================================================= */
 
 html,
 body {
@@ -28,14 +21,10 @@ body {
 
     font-family: Arial, sans-serif;
 
-    overflow: hidden;
 }
 
 
-/* =========================================================
-   ESCENARIO
-   SOLO DEGRADADO - SIN IMAGEN DE FONDO
-========================================================= */
+
 
 .container-sofia {
 
@@ -53,37 +42,29 @@ body {
 
     overflow: hidden;
 
-    /*
-       Fondo estilo Grimorio
-    */
+
 
     background:
 
         /* Luz verde central */
-        radial-gradient(
-            ellipse at 50% 45%,
+        radial-gradient(ellipse at 50% 45%,
             rgba(26, 105, 70, 0.45) 0%,
             rgba(12, 62, 42, 0.30) 25%,
             rgba(3, 25, 18, 0.55) 50%,
-            rgba(0, 7, 5, 0.95) 85%
-        ),
+            rgba(0, 7, 5, 0.95) 85%),
 
         /* Degradado general */
-        linear-gradient(
-            90deg,
+        linear-gradient(90deg,
             #010403 0%,
             #03140e 25%,
             #06251a 50%,
             #03140e 75%,
-            #010403 100%
-        );
+            #010403 100%);
 
 }
 
 
-/* =========================================================
-   ILUMINACIÓN VERDE SUAVE
-========================================================= */
+
 
 .container-sofia::before {
 
@@ -97,20 +78,16 @@ body {
 
     background:
 
-        radial-gradient(
-            circle at 50% 35%,
+        radial-gradient(circle at 50% 35%,
             rgba(77, 255, 153, 0.12),
-            transparent 38%
-        );
+            transparent 38%);
 
     z-index: 0;
 
 }
 
 
-/* =========================================================
-   OSCURECER LOS BORDES
-========================================================= */
+
 
 .container-sofia::after {
 
@@ -124,30 +101,23 @@ body {
 
     background:
 
-        linear-gradient(
-            90deg,
+        linear-gradient(90deg,
             rgba(0, 0, 0, 0.65),
             transparent 25%,
             transparent 75%,
-            rgba(0, 0, 0, 0.65)
-        ),
+            rgba(0, 0, 0, 0.65)),
 
-        linear-gradient(
-            0deg,
+        linear-gradient(0deg,
             rgba(0, 0, 0, 0.65),
             transparent 35%,
-            rgba(0, 0, 0, 0.30)
-        );
+            rgba(0, 0, 0, 0.30));
 
     z-index: 0;
 
 }
 
 
-/* =========================================================
-   PERSONAJE
-   MEDIDAS ORIGINALES
-========================================================= */
+
 
 .character {
 
@@ -170,10 +140,6 @@ body {
 }
 
 
-/* =========================================================
-   GUÍA
-   NO CAMBIAMOS LA MEDIDA ORIGINAL
-========================================================= */
 
 .guia-img {
 
@@ -198,11 +164,6 @@ body {
 }
 
 
-/* =========================================================
-   BASE
-   NO CAMBIAMOS LA MEDIDA ORIGINAL
-========================================================= */
-
 .base-guia {
 
     position: absolute;
@@ -220,55 +181,42 @@ body {
     pointer-events: none;
 
     filter:
-        drop-shadow(
-            0 8px 15px rgba(0, 0, 0, 0.55)
-        );
+        drop-shadow(0 8px 15px rgba(0, 0, 0, 0.55));
 
 }
 
-
-/* =========================================================
-   ANIMACIÓN GUÍA
-========================================================= */
 
 @keyframes rebote {
 
     0% {
         transform:
-            translateX(-50%)
-            translateY(0);
+            translateX(-50%) translateY(0);
     }
 
     25% {
         transform:
-            translateX(-50%)
-            translateY(-12px);
+            translateX(-50%) translateY(-12px);
     }
 
     50% {
         transform:
-            translateX(-50%)
-            translateY(0);
+            translateX(-50%) translateY(0);
     }
 
     75% {
         transform:
-            translateX(-50%)
-            translateY(-6px);
+            translateX(-50%) translateY(-6px);
     }
 
     100% {
         transform:
-            translateX(-50%)
-            translateY(0);
+            translateX(-50%) translateY(0);
     }
 
 }
 
 
-/* =========================================================
-   CONTENEDOR DE DIÁLOGOS
-========================================================= */
+
 
 .dialogues {
 
@@ -290,11 +238,6 @@ body {
 
 }
 
-
-/* =========================================================
-   PERGAMINO
-   AQUÍ TÚ PONES TU IMAGEN
-========================================================= */
 
 .speech-box {
 
@@ -335,9 +278,7 @@ body {
 }
 
 
-/* =========================================================
-   TEXTO DENTRO DEL PERGAMINO
-========================================================= */
+
 
 .speech-box p {
 
@@ -357,7 +298,7 @@ body {
 
     color: #4dff99;
 
-    font-family:rxx;
+    font-family: rxx;
 
     font-size: 19px;
 
@@ -374,9 +315,7 @@ body {
 }
 
 
-/* =========================================================
-   ANIMACIÓN DEL PERGAMINO
-========================================================= */
+
 
 @keyframes aparecer {
 
@@ -385,8 +324,7 @@ body {
         opacity: 0;
 
         transform:
-            translateY(20px)
-            scale(0.96);
+            translateY(20px) scale(0.96);
 
     }
 
@@ -395,17 +333,12 @@ body {
         opacity: 1;
 
         transform:
-            translateY(0)
-            scale(1);
+            translateY(0) scale(1);
 
     }
 
 }
 
-
-/* =========================================================
-   BOTÓN EXPLORAR MUSEO
-========================================================= */
 
 .start-btn {
 
@@ -458,9 +391,6 @@ body {
 }
 
 
-/* =========================================================
-   BOTÓN VISIBLE
-========================================================= */
 
 .start-btn.mostrar {
 
@@ -475,9 +405,6 @@ body {
 }
 
 
-/* =========================================================
-   HOVER BOTÓN
-========================================================= */
 
 .start-btn:hover {
 
@@ -497,9 +424,6 @@ body {
 }
 
 
-/* =========================================================
-   ACTIVE BOTÓN
-========================================================= */
 
 .start-btn:active {
 
@@ -508,15 +432,12 @@ body {
     color: #111111;
 
     transform:
-        translateY(2px)
-        scale(0.98);
+        translateY(2px) scale(0.98);
 
 }
 
 
-/* =========================================================
-   ANIMACIÓN BOTÓN
-========================================================= */
+
 
 @keyframes entradaBoton {
 
@@ -525,8 +446,7 @@ body {
         opacity: 0;
 
         transform:
-            translateY(35px)
-            scale(0.9);
+            translateY(35px) scale(0.9);
 
     }
 
@@ -535,17 +455,13 @@ body {
         opacity: 1;
 
         transform:
-            translateY(0)
-            scale(1);
+            translateY(0) scale(1);
 
     }
 
 }
 
 
-/* =========================================================
-   BOTÓN VOLVER AL INICIO
-========================================================= */
 
 .back-btn {
 
@@ -593,9 +509,7 @@ body {
 }
 
 
-/* =========================================================
-   HOVER VOLVER
-========================================================= */
+
 
 .back-btn:hover {
 
@@ -615,9 +529,6 @@ body {
 }
 
 
-/* =========================================================
-   ACTIVE VOLVER
-========================================================= */
 
 .back-btn:active {
 
@@ -626,15 +537,11 @@ body {
     color: #111111;
 
     transform:
-        translateY(1px)
-        scale(0.98);
+        translateY(1px) scale(0.98);
 
 }
 
 
-/* =========================================================
-   BOTÓN OMITIR INTRO
-========================================================= */
 
 .skip-btn {
 
@@ -682,9 +589,6 @@ body {
 }
 
 
-/* =========================================================
-   HOVER OMITIR
-========================================================= */
 
 .skip-btn:hover {
 
@@ -704,9 +608,6 @@ body {
 }
 
 
-/* =========================================================
-   ACTIVE OMITIR
-========================================================= */
 
 .skip-btn:active {
 
@@ -715,15 +616,11 @@ body {
     color: #111111;
 
     transform:
-        translateY(1px)
-        scale(0.98);
+        translateY(1px) scale(0.98);
 
 }
 
 
-/* =========================================================
-   RESPONSIVE
-========================================================= */
 
 @media (max-width: 1100px) {
 
@@ -749,9 +646,6 @@ body {
 }
 
 
-/* =========================================================
-   TABLET / CELULAR
-========================================================= */
 
 @media (max-width: 900px) {
 
