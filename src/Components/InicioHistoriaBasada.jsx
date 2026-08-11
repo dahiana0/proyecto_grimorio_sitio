@@ -19,7 +19,7 @@ export const InicioHistoriaBasada = () => {
     }, 2000);
 
     return () => clearInterval(intervalo);
-  }, []);
+  }, [imagenes.length]);
 
   return (
     <motion.div

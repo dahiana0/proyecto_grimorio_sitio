@@ -100,7 +100,7 @@ export const Header = () => {
             {/* RECOMENDACIONES */}
             <Link
               className="nav-link"
-              to="/recomendaciones"
+              to="/Recomendaciones"
               onClick={reproducirSonido}
               style={estiloNav}
             >
