@@ -27,9 +27,7 @@ const InteraccionesGuardadas = () => {
   const [interacciones, setInteracciones] = useState([]);
 
 
-  /* =====================================================
-     CARGAR INTERACCIONES GUARDADAS
-  ===================================================== */
+
 
   useEffect(() => {
 
@@ -68,9 +66,6 @@ const InteraccionesGuardadas = () => {
   }, []);
 
 
-  /* =====================================================
-     ELIMINAR UNA INTERACCIÓN
-  ===================================================== */
 
   const eliminarInteraccion = (id) => {
 
@@ -88,9 +83,6 @@ const InteraccionesGuardadas = () => {
   };
 
 
-  /* =====================================================
-     VACIAR TODO EL GRIMORIO
-  ===================================================== */
 
   const limpiarGrimorio = () => {
 
@@ -109,9 +101,7 @@ const InteraccionesGuardadas = () => {
   };
 
 
-  /* =====================================================
-     FORMATEAR FECHA
-  ===================================================== */
+
 
   const obtenerFecha = (fecha) => {
 
@@ -129,9 +119,7 @@ const InteraccionesGuardadas = () => {
   };
 
 
-  /* =====================================================
-     VOLVER AL INICIO
-  ===================================================== */
+
 
   const volverInicio = () => {
 
@@ -139,10 +127,8 @@ const InteraccionesGuardadas = () => {
 
   };
 
+  const volverComic = () => { navigate("/visor-1"); };
 
-  /* =====================================================
-     RENDER
-  ===================================================== */
 
   return (
 
@@ -153,9 +139,6 @@ const InteraccionesGuardadas = () => {
         <div className="pergamino">
 
 
-          {/* =================================================
-              BOTÓN VOLVER AL INICIO
-          ================================================= */}
 
           <div className="volverInicio">
 
@@ -164,16 +147,20 @@ const InteraccionesGuardadas = () => {
               onClick={volverInicio}
             >
 
-              ← Volver al inicio
+              Volver al inicio
 
             </button>
 
           </div>
 
+          <div className="volverComic">
+            <button className="btncomic"
+              onClick={volverComic} > Volver al cómic
+            </button>
+          </div>
 
-          {/* =================================================
-              ENCABEZADO
-          ================================================= */}
+
+
 
           <div className="encabezado">
 
@@ -188,9 +175,6 @@ const InteraccionesGuardadas = () => {
           </div>
 
 
-          {/* =================================================
-              INFORMACIÓN
-          ================================================= */}
 
           <div className="informacion">
 
@@ -222,10 +206,6 @@ const InteraccionesGuardadas = () => {
           </div>
 
 
-          {/* =================================================
-              GRIMORIO VACÍO
-          ================================================= */}
-
           {interacciones.length === 0 && (
 
             <div className="vacio">
@@ -243,9 +223,7 @@ const InteraccionesGuardadas = () => {
           )}
 
 
-          {/* =================================================
-              TARJETAS
-          ================================================= */}
+
 
           <div className="contenedorTarjetas">
 
@@ -257,7 +235,7 @@ const InteraccionesGuardadas = () => {
               >
 
 
-                {/* IMAGEN / LOTTIE */}
+
 
                 <div className="imagenTarjeta">
 
@@ -276,7 +254,7 @@ const InteraccionesGuardadas = () => {
                 </div>
 
 
-                {/* CONTENIDO */}
+
 
                 <div className="contenidoTarjeta">
 
@@ -290,7 +268,7 @@ const InteraccionesGuardadas = () => {
                   </span>
 
 
-                  {/* ELIMINAR */}
+
 
                   <button
                     className="btnEliminar"

@@ -372,8 +372,6 @@
 }
 
 
-/* Brillo interno */
-
 .tarjeta::before {
     content: "";
 
@@ -392,7 +390,6 @@
 }
 
 
-/* Línea superior */
 
 .tarjeta::after {
     content: "";
@@ -429,9 +426,7 @@
 }
 
 
-/* =========================================================
-   IMAGEN DE LA TARJETA
-========================================================= */
+
 
 .imagenTarjeta {
     width: 100%;
@@ -450,7 +445,6 @@
 }
 
 
-/* Resplandor detrás de la imagen */
 
 .imagenTarjeta::before {
     content: "";
@@ -496,10 +490,6 @@
 }
 
 
-/* =========================================================
-   CONTENIDO
-========================================================= */
-
 .contenidoTarjeta {
     text-align: center;
 
@@ -544,9 +534,7 @@
 }
 
 
-/* =========================================================
-   BOTÓN ELIMINAR
-========================================================= */
+
 
 .btnEliminar {
     width: 100%;
@@ -589,9 +577,7 @@
 }
 
 
-/* =========================================================
-   SCROLLBAR
-========================================================= */
+
 
 .pergamino::-webkit-scrollbar {
     width: 8px;
@@ -612,9 +598,7 @@
 }
 
 
-/* =========================================================
-   RESPONSIVE
-========================================================= */
+
 
 @media (max-width: 1100px) {
 
@@ -759,3 +743,58 @@
     transform: translateX(-3px);
 
 }
+
+.volverComic {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto 10px;
+    display: flex;
+    justify-content: flex-end;
+    margin-top:-60px ;
+}
+
+.btncomic {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 11px 20px;
+
+    background: rgba(0, 20, 13, 0.65);
+
+    border: 1px solid rgba(66, 255, 154, 0.55);
+
+    border-radius: 6px;
+
+    color: #54ff9c;
+
+    font-family: rxx;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+
+    box-shadow:
+        0 0 8px rgba(35, 255, 135, 0.12);
+}
+
+
+.btncomic:hover {
+
+    background: rgba(35, 255, 135, 0.12);
+
+    border-color: #54ff9c;
+
+    color: #ffffff;
+
+    box-shadow:
+        0 0 15px rgba(35, 255, 135, 0.35);
+
+    transform: translateX(-3px);
+
+}
+
