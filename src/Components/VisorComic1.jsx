@@ -26,7 +26,6 @@ export default function VisorCapitulo({
 
   const [subtituloActual, setSubtituloActual] = useState("");
 
-
   const subtitulosKarol = [
     {
       inicio: 0.44,
@@ -42,7 +41,8 @@ export default function VisorCapitulo({
     {
       inicio: 10.48,
       fin: 16.51,
-      texto: "para él los mitos no existen, hasta que encontró un informe,",
+      texto:
+        "para él los mitos no existen, hasta que encontró un informe,",
     },
     {
       inicio: 16.52,
@@ -58,7 +58,6 @@ export default function VisorCapitulo({
     },
   ];
 
-
   const subtitulosParte2 = [
     {
       inicio: 0.4,
@@ -69,7 +68,8 @@ export default function VisorCapitulo({
     {
       inicio: 7.48,
       fin: 13.55,
-      texto: "historias extrañas y sucesos que nadie ha podido explicar,",
+      texto:
+        "historias extrañas y sucesos que nadie ha podido explicar,",
     },
     {
       inicio: 13.56,
@@ -79,7 +79,8 @@ export default function VisorCapitulo({
     {
       inicio: 18.24,
       fin: 23.63,
-      texto: "Hoy, Stephen Jones llega decidido a descubrir la verdad,",
+      texto:
+        "Hoy, Stephen Jones llega decidido a descubrir la verdad,",
     },
     {
       inicio: 23.64,
@@ -89,9 +90,7 @@ export default function VisorCapitulo({
     },
   ];
 
-
   const subtitulosParte3 = [];
-
 
   const subtitulosPorEscena = {
     0: subtitulosKarol,
@@ -142,7 +141,10 @@ export default function VisorCapitulo({
     if (escenaActual.tipo === "lottie" && escenaActual.audio) {
       audioRef.current.src = escenaActual.audio;
       audioRef.current.currentTime = 0;
-      audioRef.current.play();
+
+      audioRef.current.play().catch((error) => {
+        console.log("El audio no pudo reproducirse automáticamente:", error);
+      });
     } else {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
@@ -200,15 +202,18 @@ export default function VisorCapitulo({
 
     setProgress(value);
 
-    videoRef.current.currentTime = (value / 100) * videoRef.current.duration;
+    videoRef.current.currentTime =
+      (value / 100) * videoRef.current.duration;
   };
 
   return (
     <div className="visor-container">
-      {/* ENCABEZADO */}
 
+     
       <div className="visor-top d-flex justify-content-between align-items-center">
+
         <div className="d-flex align-items-center gap-2">
+
           <button
             onClick={() => navigate("/explorar-museo")}
             className="visor-btn"
@@ -219,40 +224,78 @@ export default function VisorCapitulo({
           <div className="visor-line"></div>
 
           <div className="d-flex align-items-center gap-1">
-            <span className="visor-cap">CAPÍTULO {numeroCapitulo}</span>
+            <span className="visor-cap">
+              CAPÍTULO {numeroCapitulo}
+            </span>
 
-            <span className="visor-title">— {tituloCapitulo}</span>
+            <span className="visor-title">
+              — {tituloCapitulo}
+            </span>
           </div>
+
         </div>
 
-        <div className="d-flex gap-3">
+      
+        <div className="d-flex align-items-center gap-3">
+
+          {/* VOLUMEN */}
           <img
             onClick={() => setVolumen(!volumen)}
-            src={volumen ? "./volume-2 (2).svg" : "./volume-3.svg"}
+            src={
+              volumen
+                ? "./volume-2 (2).svg"
+                : "./volume-3.svg"
+            }
             alt="Volumen"
             className={`visor-icon ${!volumen ? "off" : ""}`}
           />
 
+        
           <img
-            onClick={() => setMostrarSubtitulo(!mostrarSubtitulo)}
+            onClick={() =>
+              setMostrarSubtitulo(!mostrarSubtitulo)
+            }
             src={
-              mostrarSubtitulo ? "./subtitles.svg" : "./subtitles-off.svg"
+              mostrarSubtitulo
+                ? "./subtitles.svg"
+                : "./subtitles-off.svg"
             }
             alt="Subtítulos"
-            className={`visor-icon ${!mostrarSubtitulo ? "off" : ""}`}
+            className={`visor-icon ${
+              !mostrarSubtitulo ? "off" : ""
+            }`}
           />
+
+         
+          <img
+            onClick={() =>
+              navigate("/archivo")
+            }
+            src="./Archivo.png"
+            alt="Interacciones guardadas"
+            className="visor-iconnn"
+          />
+
         </div>
       </div>
 
+   
       <div className="visor-scene">
+
         {escenas[index].tipo === "lottie" ? (
-          <div className="visor-lottie">{escenas[index].componente}</div>
+
+          <div className="visor-lottie">
+            {escenas[index].componente}
+          </div>
+
         ) : (
+
           <div
             className="visor-video-wrapper"
             onMouseEnter={() => setShowControls(true)}
             onMouseLeave={() => setShowControls(false)}
           >
+
             <video
               ref={videoRef}
               className="visor-video"
@@ -262,22 +305,40 @@ export default function VisorCapitulo({
               onPlay={() => setPlay(true)}
               onPause={() => setPlay(false)}
             >
-              <source src={escenas[index].video} type="video/mp4" />
+              <source
+                src={escenas[index].video}
+                type="video/mp4"
+              />
             </video>
 
-            <div className={`visor-controls ${showControls ? "show" : ""}`}>
+     
+            <div
+              className={`visor-controls ${
+                showControls ? "show" : ""
+              }`}
+            >
+
               <div className="visor-controls-bottom">
+
+          
                 <button
                   className="video-btn"
                   onClick={() => {
-                    if (videoRef.current)
+                    if (videoRef.current) {
                       videoRef.current.currentTime -= 10;
+                    }
                   }}
                 >
-                  <img src="/icons8-rewind-50.png" alt="Retroceder" />
+                  <img
+                    src="/icons8-rewind-50.png"
+                    alt="Retroceder"
+                  />
                 </button>
 
-                <button className="video-btn play-btn" onClick={handlePlayPause}>
+                <button
+                  className="video-btn play-btn"
+                  onClick={handlePlayPause}
+                >
                   <img
                     src={
                       play
@@ -288,49 +349,77 @@ export default function VisorCapitulo({
                   />
                 </button>
 
+           
                 <button
                   className="video-btn"
                   onClick={() => {
-                    if (videoRef.current)
+                    if (videoRef.current) {
                       videoRef.current.currentTime += 10;
+                    }
                   }}
                 >
-                  <img src="/icons8-fast-forward-50.png" alt="Avanzar" />
+                  <img
+                    src="/icons8-fast-forward-50.png"
+                    alt="Avanzar"
+                  />
                 </button>
+
               </div>
             </div>
           </div>
         )}
 
-        {mostrarSubtitulo && escenas[index].tipo === "lottie" && (
-          <div className="visor-sub">
-            <p>{subtituloActual}</p>
-          </div>
-        )}
+  
+        {mostrarSubtitulo &&
+          escenas[index].tipo === "lottie" && (
+            <div className="visor-sub">
+              <p>{subtituloActual}</p>
+            </div>
+          )}
 
         <img
           onClick={anterior}
           src="./circle-chevron-left.svg"
           alt="Anterior"
-          className={`visor-arrow left ${index === 0 ? "disabled" : ""}`}
+          className={`visor-arrow left ${
+            index === 0 ? "disabled" : ""
+          }`}
         />
 
+  
         <img
           onClick={siguiente}
           src="./circle-chevron-right.svg"
           alt="Siguiente"
-          className={`visor-arrow right ${index === escenas.length - 1 ? "disabled" : ""
-            }`}
+          className={`visor-arrow right ${
+            index === escenas.length - 1
+              ? "disabled"
+              : ""
+          }`}
         />
+
       </div>
 
+      {/* PUNTOS */}
       <div className="visor-dots">
+
         {escenas.map((_, i) => (
-          <div key={i} className={`dot ${index === i ? "active" : ""}`} />
+          <div
+            key={i}
+            className={`dot ${
+              index === i ? "active" : ""
+            }`}
+          />
         ))}
+
       </div>
 
-      <audio ref={audioRef} onTimeUpdate={actualizarSubtitulo} />
+      {/* AUDIO */}
+      <audio
+        ref={audioRef}
+        onTimeUpdate={actualizarSubtitulo}
+      />
+
     </div>
   );
 }
