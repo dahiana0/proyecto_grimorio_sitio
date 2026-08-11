@@ -21,7 +21,6 @@ export default function VisorCapitulo({
   const [volumen, setVolumen] = useState(true);
 
   const [play, setPlay] = useState(false);
-  const [progress, setProgress] = useState(0);
   const [showControls, setShowControls] = useState(true);
 
   const [subtituloActual, setSubtituloActual] = useState("");
@@ -188,22 +187,6 @@ export default function VisorCapitulo({
 
   const handleTimeUpdate = () => {
     if (!videoRef.current) return;
-
-    const value =
-      (videoRef.current.currentTime / videoRef.current.duration) * 100;
-
-    setProgress(value || 0);
-  };
-
-  const handleProgressChange = (e) => {
-    if (!videoRef.current) return;
-
-    const value = e.target.value;
-
-    setProgress(value);
-
-    videoRef.current.currentTime =
-      (value / 100) * videoRef.current.duration;
   };
 
   return (

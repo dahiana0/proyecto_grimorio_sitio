@@ -10,12 +10,10 @@ const datos = [
 
 export const IntroJuego = () => {
   const navigate = useNavigate();
-  const [selectedDoor, setSelectedDoor] = useState(null);
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState(() => getStoredComments());
+  const [referenceTime] = useState(() => Date.now());
 
   useEffect(() => {
-    setComments(getStoredComments());
-
     const handleCommentsUpdated = (event) => {
       if (Array.isArray(event.detail)) {
         setComments(event.detail);
@@ -27,7 +25,7 @@ export const IntroJuego = () => {
   }, []);
 
   const tenDaysMs = 10 * 24 * 60 * 60 * 1000;
-  const now = Date.now();
+  const now = referenceTime;
 
   const comentariosRecientes = comments.filter((comment) => {
     const fechaComentario = new Date(comment.createdAt).getTime();
@@ -39,8 +37,7 @@ export const IntroJuego = () => {
     return now - fechaComentario > tenDaysMs;
   });
 
-  const pickDoor = (door) => {
-    setSelectedDoor(door);
+  const pickDoor = () => {
     navigate("/juego");
   };
 
@@ -129,9 +126,9 @@ export const IntroJuego = () => {
           className="contenedor boton-comentario"
           role="button"
           tabIndex={0}
-          onClick={() => pickDoor(1)}
+          onClick={() => pickDoor()}
           onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") pickDoor(1);
+            if (e.key === "Enter" || e.key === " ") pickDoor();
           }}
         >
           HAZ TU COMENTARIO

@@ -7,13 +7,9 @@ export const Juego = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
-  const [comments, setComments] = useState([]);
-  const [commentsLoaded, setCommentsLoaded] = useState(false);
+  const [comments, setComments] = useState(() => getStoredComments());
 
   useEffect(() => {
-    setComments(getStoredComments());
-    setCommentsLoaded(true);
-
     const unsubscribe = subscribeToComments((nextComments) => {
       setComments(nextComments);
     });
@@ -22,9 +18,8 @@ export const Juego = () => {
   }, []);
 
   useEffect(() => {
-    if (!commentsLoaded) return;
     persistComments(comments);
-  }, [comments, commentsLoaded]);
+  }, [comments]);
 
   const handleSubmit = (event) => {
     event.preventDefault();

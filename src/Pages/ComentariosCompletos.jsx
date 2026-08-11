@@ -6,15 +6,12 @@ import { getStoredComments, persistComments, subscribeToComments } from "../util
 export const ComentariosCompletos = () => {
   const navigate = useNavigate();
   const { tipo } = useParams();
-  const [comments, setComments] = useState([]);
-  const [commentsLoaded, setCommentsLoaded] = useState(false);
+  const [comments, setComments] = useState(() => getStoredComments());
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [editText, setEditText] = useState("");
+  const [referenceTime] = useState(() => Date.now());
 
   useEffect(() => {
-    setComments(getStoredComments());
-    setCommentsLoaded(true);
-
     const unsubscribe = subscribeToComments((nextComments) => {
       setComments(nextComments);
     });
@@ -23,12 +20,11 @@ export const ComentariosCompletos = () => {
   }, []);
 
   useEffect(() => {
-    if (!commentsLoaded) return;
     persistComments(comments);
-  }, [comments, commentsLoaded]);
+  }, [comments]);
 
   const tenDaysMs = 10 * 24 * 60 * 60 * 1000;
-  const now = Date.now();
+  const now = referenceTime;
 
   const comentariosRecientes = comments
     .filter((comment) => now - new Date(comment.createdAt).getTime() <= tenDaysMs)
@@ -61,7 +57,13 @@ export const ComentariosCompletos = () => {
 
   const handleBackToIntro = (event) => {
     event?.preventDefault();
-    navigate("/intro-juego");
+
+    if (window.history.state && window.history.state.idx > 0) {
+      navigate(-1);
+      return;
+    }
+
+    navigate("/intro-juego", { replace: true });
   };
 
   const startEditing = (comment) => {
@@ -91,19 +93,6 @@ export const ComentariosCompletos = () => {
 
     setEditingCommentId(null);
     setEditText("");
-  };
-
-  const resendComment = (commentId) => {
-    setComments((currentComments) =>
-      currentComments.map((comment) =>
-        comment.id === commentId
-          ? {
-              ...comment,
-              createdAt: new Date().toISOString(),
-            }
-          : comment
-      )
-    );
   };
 
   const renderCommentCard = (comment) => (
