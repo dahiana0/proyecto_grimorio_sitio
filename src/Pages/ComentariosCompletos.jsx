@@ -13,15 +13,11 @@ export const ComentariosCompletos = () => {
 
   useEffect(() => {
     const unsubscribe = subscribeToComments((nextComments) => {
-      setComments(nextComments);
+      setComments(Array.isArray(nextComments) ? nextComments : []);
     });
 
     return unsubscribe;
   }, []);
-
-  useEffect(() => {
-    persistComments(comments);
-  }, [comments]);
 
   const tenDaysMs = 10 * 24 * 60 * 60 * 1000;
   const now = referenceTime;
@@ -49,8 +45,21 @@ export const ComentariosCompletos = () => {
     ? "Mira sólo los comentarios que tienen más de 10 días."
     : "Revisa todas las opiniones de los visitantes y navega entre comentarios nuevos y antiguos del museo Grimorio.";
 
+  const updateComments = (nextCommentsOrUpdater) => {
+    setComments((currentComments) => {
+      const resolvedComments =
+        typeof nextCommentsOrUpdater === "function"
+          ? nextCommentsOrUpdater(currentComments)
+          : nextCommentsOrUpdater;
+
+      const safeComments = Array.isArray(resolvedComments) ? resolvedComments : [];
+      persistComments(safeComments);
+      return safeComments;
+    });
+  };
+
   const handleDeleteComment = (commentId) => {
-    setComments((currentComments) =>
+    updateComments((currentComments) =>
       currentComments.filter((comment) => comment.id !== commentId)
     );
   };
@@ -79,7 +88,7 @@ export const ComentariosCompletos = () => {
   const saveEditedComment = (commentId) => {
     if (!editText.trim()) return;
 
-    setComments((currentComments) =>
+    updateComments((currentComments) =>
       currentComments.map((comment) =>
         comment.id === commentId
           ? {

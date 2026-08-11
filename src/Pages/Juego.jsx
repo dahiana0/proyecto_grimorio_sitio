@@ -11,15 +11,12 @@ export const Juego = () => {
 
   useEffect(() => {
     const unsubscribe = subscribeToComments((nextComments) => {
-      setComments(nextComments);
+
+      setComments(Array.isArray(nextComments) ? nextComments : []);
     });
 
     return unsubscribe;
   }, []);
-
-  useEffect(() => {
-    persistComments(comments);
-  }, [comments]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -32,7 +29,12 @@ export const Juego = () => {
       createdAt: new Date().toISOString(),
     };
 
-    setComments((currentComments) => [...currentComments, newComment]);
+    setComments((currentComments) => {
+      const nextComments = [...currentComments, newComment];
+      persistComments(nextComments);
+      return nextComments;
+    });
+
     setName("");
     setMessage("");
   };
