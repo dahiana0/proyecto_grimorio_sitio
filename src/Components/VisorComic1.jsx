@@ -221,7 +221,7 @@ export default function VisorCapitulo({
 
         <div className="d-flex align-items-center gap-3">
 
-          {/* VOLUMEN */}
+ 
           <img
             onClick={() => setVolumen(!volumen)}
             src={
@@ -379,7 +379,7 @@ export default function VisorCapitulo({
 
       </div>
 
-      {/* PUNTOS */}
+      
       <div className="visor-dots">
 
         {escenas.map((_, i) => (
@@ -392,7 +392,6 @@ export default function VisorCapitulo({
 
       </div>
 
-      {/* AUDIO */}
       <audio
         ref={audioRef}
         onTimeUpdate={actualizarSubtitulo}
