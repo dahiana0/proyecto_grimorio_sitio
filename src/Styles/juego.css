@@ -4,11 +4,6 @@
     box-sizing: border-box;
 }
 
-
-/* ================================
-   PÁGINA DE COMENTARIOS
-================================ */
-
 .comentarios-page {
     padding: 8rem 2rem 4rem;
 
@@ -45,16 +40,11 @@
 }
 
 
-/* ================================
-   TABLERO PRINCIPAL
-================================ */
-
 .tablero1 {
     width: 100%;
 
     max-width: 1000px;
 
-    /* MÁS ABAJO */
     margin: 80px auto 0;
 
     display: grid;
@@ -613,8 +603,8 @@
     background:
         linear-gradient(
             180deg,
-            #0c3d25,
-            #062416
+            #0c3d2500,
+            #06241600
         );
 
     color: #1ad96d;
