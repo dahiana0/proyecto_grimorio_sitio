@@ -192,7 +192,7 @@ export default function VisorCapitulo({
   return (
     <div className="visor-container">
 
-     
+
       <div className="visor-top d-flex justify-content-between align-items-center">
 
         <div className="d-flex align-items-center gap-2">
@@ -218,7 +218,7 @@ export default function VisorCapitulo({
 
         </div>
 
-      
+
         <div className="d-flex align-items-center gap-3">
 
           {/* VOLUMEN */}
@@ -233,7 +233,7 @@ export default function VisorCapitulo({
             className={`visor-icon ${!volumen ? "off" : ""}`}
           />
 
-        
+
           <img
             onClick={() =>
               setMostrarSubtitulo(!mostrarSubtitulo)
@@ -244,12 +244,11 @@ export default function VisorCapitulo({
                 : "./subtitles-off.svg"
             }
             alt="Subtítulos"
-            className={`visor-icon ${
-              !mostrarSubtitulo ? "off" : ""
-            }`}
+            className={`visor-icon ${!mostrarSubtitulo ? "off" : ""
+              }`}
           />
 
-         
+
           <img
             onClick={() =>
               navigate("/archivo")
@@ -262,7 +261,7 @@ export default function VisorCapitulo({
         </div>
       </div>
 
-   
+
       <div className="visor-scene">
 
         {escenas[index].tipo === "lottie" ? (
@@ -294,16 +293,15 @@ export default function VisorCapitulo({
               />
             </video>
 
-     
+
             <div
-              className={`visor-controls ${
-                showControls ? "show" : ""
-              }`}
+              className={`visor-controls ${showControls ? "show" : ""
+                }`}
             >
 
               <div className="visor-controls-bottom">
 
-          
+
                 <button
                   className="video-btn"
                   onClick={() => {
@@ -332,7 +330,7 @@ export default function VisorCapitulo({
                   />
                 </button>
 
-           
+
                 <button
                   className="video-btn"
                   onClick={() => {
@@ -352,7 +350,7 @@ export default function VisorCapitulo({
           </div>
         )}
 
-  
+
         {mostrarSubtitulo &&
           escenas[index].tipo === "lottie" && (
             <div className="visor-sub">
@@ -364,21 +362,19 @@ export default function VisorCapitulo({
           onClick={anterior}
           src="./circle-chevron-left.svg"
           alt="Anterior"
-          className={`visor-arrow left ${
-            index === 0 ? "disabled" : ""
-          }`}
+          className={`visor-arrow left ${index === 0 ? "disabled" : ""
+            }`}
         />
 
-  
+
         <img
           onClick={siguiente}
           src="./circle-chevron-right.svg"
           alt="Siguiente"
-          className={`visor-arrow right ${
-            index === escenas.length - 1
+          className={`visor-arrow right ${index === escenas.length - 1
               ? "disabled"
               : ""
-          }`}
+            }`}
         />
 
       </div>
@@ -389,9 +385,8 @@ export default function VisorCapitulo({
         {escenas.map((_, i) => (
           <div
             key={i}
-            className={`dot ${
-              index === i ? "active" : ""
-            }`}
+            className={`dot ${index === i ? "active" : ""
+              }`}
           />
         ))}
 

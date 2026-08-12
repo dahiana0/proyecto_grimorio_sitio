@@ -16,17 +16,13 @@
     gap: 2rem;
 
     background:
-        radial-gradient(
-            circle at 50% 35%,
+        radial-gradient(circle at 50% 35%,
             rgba(26, 217, 109, 0.16),
-            transparent 38%
-        ),
-        linear-gradient(
-            135deg,
+            transparent 38%),
+        linear-gradient(135deg,
             #020806 0%,
             #06170f 45%,
-            #020806 100%
-        );
+            #020806 100%);
 
     background-attachment: scroll;
 
@@ -34,7 +30,7 @@
 }
 
 
-.comentarios-page > * {
+.comentarios-page>* {
     width: min(1050px, 100%);
     max-width: 1050px;
 }
@@ -57,9 +53,6 @@
 }
 
 
-/* ================================
-   TARJETAS
-================================ */
 
 .contenedor {
     position: relative;
@@ -71,11 +64,9 @@
     padding: 12px;
 
     background:
-        linear-gradient(
-            145deg,
+        linear-gradient(145deg,
             rgba(8, 30, 20, 0.96),
-            rgba(2, 10, 7, 0.98)
-        );
+            rgba(2, 10, 7, 0.98));
 
     color: #ffffff;
 
@@ -97,9 +88,6 @@
 }
 
 
-/* ================================
-   BRILLO
-================================ */
 
 .contenedor:hover {
     transform: translateY(-4px);
@@ -113,9 +101,7 @@
 }
 
 
-/* ================================
-   ESQUINAS
-================================ */
+
 
 .contenedor::before,
 .contenedor::after {
@@ -147,9 +133,6 @@
 }
 
 
-/* ================================
-   TÍTULO PRINCIPAL
-================================ */
 
 .titulo {
     min-height: 190px;
@@ -196,9 +179,7 @@
 }
 
 
-/* ================================
-   OBJETIVO
-================================ */
+
 
 .objetivo {
     min-height: 190px;
@@ -239,9 +220,7 @@
 }
 
 
-/* ================================
-   IMÁGENES
-================================ */
+
 
 .foto {
     padding: 7px;
@@ -265,8 +244,7 @@
     border: 2px solid rgba(26, 217, 109, 0.35);
 
     filter:
-        brightness(0.8)
-        contrast(1.1);
+        brightness(0.8) contrast(1.1);
 
     transition:
         filter 0.3s ease,
@@ -275,26 +253,19 @@
 
 .foto:hover img {
     filter:
-        brightness(0.95)
-        contrast(1.1);
+        brightness(0.95) contrast(1.1);
 
     border-color: rgba(26, 217, 109, 0.7);
 }
 
 
-/* ================================
-   COMENTARIOS
-================================ */
-
 .comentarios {
     min-height: 190px;
 
     background:
-        radial-gradient(
-            circle at center,
+        radial-gradient(circle at center,
             rgba(26, 217, 109, 0.025),
-            transparent 70%
-        );
+            transparent 70%);
 }
 
 .comentarios h2 {
@@ -314,9 +285,6 @@
 }
 
 
-/* ================================
-   COMENTARIO INDIVIDUAL
-================================ */
 
 .comentario {
     padding: 10px 0;
@@ -364,9 +332,7 @@
 }
 
 
-/* ================================
-   NUEVOS / ANTIGUOS
-================================ */
+
 
 .nuevos h2,
 .antiguos h2 {
@@ -387,9 +353,6 @@
 }
 
 
-/* ================================
-   TARJETAS CLICKEABLES
-================================ */
 
 .contenedor.comentarios.nuevos,
 .contenedor.comentarios.antiguos {
@@ -413,9 +376,6 @@
 }
 
 
-/* ================================
-   BOTÓN HAZ TU COMENTARIO
-================================ */
 
 .boton-comentario {
     grid-column: 1 / 4;
@@ -425,11 +385,9 @@
     margin: 8px auto 0;
 
     background:
-        linear-gradient(
-            180deg,
+        linear-gradient(180deg,
             rgba(8, 30, 20, 0.98),
-            rgba(2, 12, 8, 0.98)
-        );
+            rgba(2, 12, 8, 0.98));
 
     color: #1ad96d;
 
@@ -474,11 +432,9 @@
     transform: translateY(-3px);
 
     background:
-        linear-gradient(
-            180deg,
+        linear-gradient(180deg,
             rgba(10, 45, 27, 0.98),
-            rgba(3, 18, 11, 0.98)
-        );
+            rgba(3, 18, 11, 0.98));
 
     box-shadow:
         0 10px 25px rgba(0, 0, 0, 0.5),
@@ -486,9 +442,7 @@
 }
 
 
-/* ================================
-   TÍTULOS
-================================ */
+
 
 .comentarios-titulo {
     font-family: rxx;
@@ -520,9 +474,6 @@
 }
 
 
-/* ================================
-   FORMULARIO
-================================ */
 
 .comentarios-form {
     display: grid;
@@ -591,9 +542,7 @@
 }
 
 
-/* ================================
-   BOTÓN FORMULARIO
-================================ */
+
 
 .comentarios-boton {
     width: fit-content;
@@ -601,11 +550,9 @@
     align-self: flex-end;
 
     background:
-        linear-gradient(
-            180deg,
+        linear-gradient(180deg,
             #0c3d2500,
-            #06241600
-        );
+            #06241600);
 
     color: #1ad96d;
 
@@ -639,9 +586,6 @@
 }
 
 
-/* ================================
-   LISTA DE COMENTARIOS
-================================ */
 
 .comentarios-lista {
     display: grid;
@@ -663,9 +607,6 @@
 }
 
 
-/* ================================
-   CONTENEDORES DE COMENTARIOS
-================================ */
 
 .contenedor-comentario,
 .contenedor-comentarios-completos {
@@ -690,9 +631,7 @@
 }
 
 
-/* ================================
-   COMENTARIOS INDIVIDUALES
-================================ */
+
 
 .comentario-item {
     background:
@@ -731,10 +670,6 @@
     color: #ffffff;
 }
 
-
-/* ================================
-   ACCIONES
-================================ */
 
 .comentario-actions,
 .comentario-editar-actions {
@@ -775,9 +710,6 @@
 }
 
 
-/* ================================
-   EDITAR COMENTARIO
-================================ */
 
 .comentario-editar {
     display: grid;
@@ -806,9 +738,7 @@
 }
 
 
-/* ================================
-   COMENTARIO FIJADO
-================================ */
+
 
 .comentario-item-pinned {
     border: 1px solid rgba(26, 217, 109, 0.5);
@@ -849,9 +779,7 @@
 }
 
 
-/* ================================
-   ELIMINAR
-================================ */
+
 
 .comentario-eliminar {
     border: 1px solid #67140e;
@@ -881,9 +809,6 @@
 }
 
 
-/* ================================
-   RESPONSIVE
-================================ */
 
 @media (max-width: 1000px) {
 
