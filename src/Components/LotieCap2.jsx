@@ -169,7 +169,7 @@ const LotieCap2 = () => {
             lottieRef={rataRef}
             animationData={rata}
             autoplay={false}
-            loop={false}
+            loop={true}
           />
         </div>
 

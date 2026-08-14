@@ -130,11 +130,11 @@
 }
 
 
-.rata1 {
-    left: 200px;
-    bottom: 35px;
+.rata {
+    left: 350px;
+    bottom: 48px;
 
-    width: 800px;
+    width: 250px;
 
     z-index: 3;
 }
