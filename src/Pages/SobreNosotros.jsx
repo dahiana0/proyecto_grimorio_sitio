@@ -21,7 +21,13 @@ export const SobreNosotros = () => {
       <div data-aos="fade-right">
         <CardInfoS
           titulo="Misión"
-          texto="Crear experiencias digitales interactivas que despierten el interés de los jóvenes por la lectura, integrando elementos visuales, sonoros y narrativos."
+          texto="Transformar la lectura en una
+experiencia interactiva, visual e
+inmersiva que conecte con los
+jóvenes a través de historias de terror,
+fantasía y misterio, fomentando el
+interés por la literatura de una
+manera innovadora y entretenida."
           imagen="./Libro.png"
         />
       </div>
@@ -30,7 +36,14 @@ export const SobreNosotros = () => {
       <div data-aos="fade-left">
         <CardInfoS
           titulo="Visión"
-          texto="Convertirnos en una plataforma referente de lectura alternativa en Latinoamérica, donde la literatura pueda reimaginarse en formatos inmersivos."
+          texto="Ser una marca reconocida por
+innovar la forma de leer en entornos
+digitales, creando experiencias
+narrativas que inspiren a nuevas
+generaciones a explorar la lectura
+desde la creatividad, la emoción y la
+
+participación."
           imagen="./Ojo.png"
           derecha={true}
         />
