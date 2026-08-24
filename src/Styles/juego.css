@@ -447,7 +447,7 @@
 .comentarios-titulo {
     font-family: rxx;
 
-    font-size: clamp(2rem, 2.5vw, 3rem);
+    font-size: clamp(1.5rem, 2vw, 2.5rem);
 
     text-shadow:
         0 0 8px #1ad96d;
