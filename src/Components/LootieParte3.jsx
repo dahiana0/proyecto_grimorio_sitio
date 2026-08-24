@@ -71,7 +71,7 @@ const LootieParte3 = () => {
   };
 
   return (
-    <div className="escena">
+    <div className="escena3">
 
       <img
         className="fondo3"

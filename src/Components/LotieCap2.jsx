@@ -74,7 +74,7 @@ const LotieCap2 = () => {
   return (
     <div className="contenedor-escena">
 
-      <div className="escena">
+      <div className="escenacap2">
 
 
 

@@ -119,7 +119,7 @@ const LotieCap3 = () => {
 
     <div className="contenedor-escena">
 
-      <div className="escena3">
+      <div className="escenacap3">
 
 
         <img

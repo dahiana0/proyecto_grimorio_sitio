@@ -74,7 +74,7 @@ const LootieParte2 = () => {
 
   return (
 
-    <div className="escena">
+    <div className="escena2">
 
       <div className="camara">
 

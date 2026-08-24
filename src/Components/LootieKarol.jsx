@@ -115,7 +115,7 @@ const LootieKarol = () => {
 
   return (
 
-    <div className="escena">
+    <div className="escena1">
 
       <div className="camara">
 
