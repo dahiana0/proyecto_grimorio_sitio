@@ -1,0 +1,430 @@
+.escena {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+
+}
+
+
+.fondo {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    z-index: 1;
+}
+
+
+
+
+.lampara {
+    position: absolute;
+
+    width: 100px;
+
+    z-index: 2;
+
+    cursor: pointer;
+    user-select: none;
+
+    transform-origin: top center;
+
+    transition:
+        transform .25s ease,
+        filter .25s ease;
+}
+
+.lampara:hover {
+    filter:
+        drop-shadow(0 0 8px rgba(255, 235, 160, .65)) drop-shadow(0 0 16px rgba(255, 235, 160, .35));
+}
+
+
+
+
+.lampara1C {
+    left: 85px;
+    top: -10px;
+}
+
+
+
+
+.lampara2C {
+    right: 90px;
+    top: -10px;
+}
+
+
+
+
+.lampara3C {
+    right: 600px;
+    top: -10px;
+}
+
+
+
+
+.moverLampara {
+    animation: balanceoLampara .6s ease;
+}
+
+@keyframes balanceoLampara {
+
+    0% {
+        transform: rotate(0deg);
+    }
+
+    15% {
+        transform: rotate(7deg);
+    }
+
+    30% {
+        transform: rotate(-6deg);
+    }
+
+    45% {
+        transform: rotate(5deg);
+    }
+
+    60% {
+        transform: rotate(-4deg);
+    }
+
+    75% {
+        transform: rotate(2deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+
+
+.rata {
+    position: absolute;
+
+    object-fit: contain;
+
+    cursor: pointer;
+
+    z-index: 3;
+
+    transition:
+        transform .25s ease,
+        filter .25s ease;
+}
+
+.rata:hover {
+    transform: scale(1.03);
+
+    filter:
+        drop-shadow(0 0 8px rgba(26, 217, 109, 0));
+}
+
+
+.rata {
+    left: 350px;
+    bottom: 48px;
+
+    width: 250px;
+
+    z-index: 3;
+}
+
+
+
+
+.estatua {
+    position: absolute;
+
+    object-fit: contain;
+
+    cursor: pointer;
+
+    z-index: 4;
+
+    transition:
+        transform .25s ease,
+        filter .25s ease;
+}
+
+
+
+.estatua:hover {
+    transform: scale(1.03);
+
+    filter:
+        drop-shadow(0 0 7px rgba(26, 217, 109, 0));
+}
+
+
+
+
+.estatua1 {
+    left: 700px;
+    bottom: 5px;
+
+    width: 710px;
+
+    z-index: 4;
+}
+
+
+
+.estatua3 {
+    right: 780px;
+    bottom: 20px; 
+    width: 250px;
+    z-index: 4;
+}
+
+
+.estatua4 {
+    right: 1050px;
+    bottom: -5px;
+
+    width: 250px;
+
+    z-index: 4;
+}
+
+
+
+
+.estatua5 {
+    left: 300px;
+    bottom: 110px;
+    width: 250px;
+    z-index: 3;
+}
+
+
+
+.estatua6 {
+    right: 50px;
+    bottom: 80px;
+
+    width: 260px;
+
+    z-index: 3;
+}
+
+
+
+
+.step {
+    position: absolute;
+
+    object-fit: contain;
+
+    cursor: pointer;
+
+    transition:
+        transform .25s ease,
+        filter .25s ease;
+}
+
+
+
+
+.step:hover {
+    transform: scale(1.03);
+
+    filter:
+        drop-shadow(0 0 8px rgba(26, 217, 109, .30));
+}
+
+
+
+
+.stepFrente {
+    left: 520px;
+    bottom: 60px;
+
+    width: 250px;
+
+    z-index: 5;
+}
+
+
+
+.stepEspaldas {
+    left: 720px;
+    bottom: 60px;
+
+    width: 250px;
+
+    z-index: 5;
+}
+
+
+
+
+.step video {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: contain;
+
+    pointer-events: none;
+}
+
+
+
+.escena video {
+    display: block;
+
+    object-fit: contain;
+
+    max-width: none;
+}
+
+
+
+.estatua.activa,
+.step.activo,
+.rata.activa {
+    filter:
+        drop-shadow(0 0 6px rgba(26, 217, 109, 0)) drop-shadow(0 0 14px rgba(26, 217, 109, 0));
+}
+
+
+
+@media (max-width: 1200px) {
+
+    .lampara {
+        width: 80px;
+    }
+
+    .rata1 {
+        width: 150px;
+        left: 35%;
+    }
+
+    .estatua1 {
+        width: 240px;
+        left: 0;
+    }
+
+    .estatua2 {
+        width: 230px;
+        left: 18%;
+    }
+
+    .estatua3 {
+        width: 400px;
+        right: 15%;
+    }
+
+    .estatua4 {
+        width: 320px;
+        right: 0;
+    }
+
+    .estatua5 {
+        width: 240px;
+        left: 30%;
+    }
+
+    .estatua6 {
+        width: 240px;
+        right: 30%;
+    }
+
+    .stepFrente {
+        width: 210px;
+        left: 42%;
+    }
+
+    .stepEspaldas {
+        width: 210px;
+        left: 58%;
+    }
+}
+
+
+@media (max-width: 768px) {
+
+    .lampara {
+        width: 65px;
+    }
+
+    .lampara1C {
+        left: 30px;
+    }
+
+    .lampara2C {
+        right: 30px;
+    }
+
+    .lampara3C {
+        right: 45%;
+    }
+
+
+    .rata1 {
+        width: 110px;
+        left: 40%;
+        bottom: 20px;
+    }
+
+
+    .estatua1 {
+        width: 170px;
+        left: -20px;
+        bottom: 40px;
+    }
+
+    .estatua2 {
+        width: 160px;
+        left: 15%;
+        bottom: 40px;
+    }
+
+    .estatua3 {
+        width: 280px;
+        right: 10%;
+        bottom: 50px;
+    }
+
+    .estatua4 {
+        width: 220px;
+        right: -20px;
+        bottom: 40px;
+    }
+
+    .estatua5 {
+        width: 170px;
+        left: 30%;
+        bottom: 40px;
+    }
+
+    .estatua6 {
+        width: 170px;
+        right: 25%;
+        bottom: 40px;
+    }
+
+
+    .stepFrente {
+        width: 150px;
+        left: 35%;
+        bottom: 30px;
+    }
+
+    .stepEspaldas {
+        width: 150px;
+        left: 55%;
+        bottom: 30px;
+    }
+}
