@@ -125,11 +125,36 @@ const InteraccionesGuardadas = () => {
                     {interacciones.length === 0 && (
                         <div className="vacio">
 
-                            <section className="seccionCapitulo">Capítulo 1</section>
-                            <section className="seccionCapitulo">Capítulo 2</section>
-                            <section className="seccionCapitulo">Capítulo 3</section>
-                            <section className="seccionCapitulo">Capítulo 4</section>
-                            <section className="seccionCapitulo">Capítulo 5</section>
+                            <button
+                                className="seccionCapitulo"
+                                onClick={() => navigate("/cap-uno")}
+                            >
+                                Capítulo 1
+                            </button>
+                            <button
+                                className="seccionCapitulo"
+                                onClick={() => navigate("/cap-dos")}
+                            >
+                                Capítulo 2
+                            </button>
+                            <button
+                                className="seccionCapitulo"
+                                onClick={() => navigate("/cap-tres")}
+                            >
+                                Capítulo 3
+                            </button>
+                            <button
+                                className="seccionCapitulo"
+                                onClick={() => navigate("/cap-cuatro")}
+                            >
+                                Capítulo 4
+                            </button>
+                            <button
+                                className="seccionCapitulo"
+                                onClick={() => navigate("/cap-cinco")}
+                            >
+                                Capítulo 5
+                            </button>
 
                         </div>
                     )}

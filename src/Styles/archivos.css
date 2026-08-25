@@ -1,15 +1,23 @@
 .seccionCapitulo {
 	display: block;
+	width: 100%;
 	min-height: 120px;
 	padding: 38px 20px;
 	box-sizing: border-box;
+	cursor: pointer;
 	color: #4dff99;
 	text-align: center;
 	border: 1px solid rgba(56, 233, 133, 0.5);
 	border-radius: 8px;
 	background: rgba(0, 15, 10, 0.75);
 	font-family: rxx;
+	font-size: inherit;
 	text-shadow: 0 0 10px rgba(40, 255, 130, 0.5);
+}
+
+.seccionCapitulo:hover {
+	background: rgba(35, 255, 135, 0.18);
+	box-shadow: 0 0 14px rgba(35, 255, 135, 0.35);
 }
 
 .vacio {
