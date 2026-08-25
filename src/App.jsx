@@ -29,7 +29,7 @@ import { Juego } from "./Pages/Juego";
 import { ComentariosCompletos } from "./Pages/ComentariosCompletos";
 import LootieKarol from "./Components/LootieKarol";
 import InteraccionesGuardadas from "./Components/InteraccionesGuardadas";
-
+import Archivos from "./Components/Archivos";
 
 
 
@@ -67,6 +67,7 @@ export const App = () => {
           <Route path="/juego" element={<Juego />} />
           <Route path="/lootkarol" element={<LootieKarol />} />
           <Route path="/archivo" element={<InteraccionesGuardadas />} />
+          <Route path="/archivo2" element={<Archivos />} />
 
         </Routes>
       </BrowserRouter>
