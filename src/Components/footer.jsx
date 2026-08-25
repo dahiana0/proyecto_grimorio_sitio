@@ -1,79 +1,66 @@
 import React from "react";
-import "../Styles/css.css";
+import "../Styles/Footer.css";
+
 
 export const Footer = () => {
   return (
-    <div
-      style={{
-        width: "100%",
-        backgroundColor: "#040f08",
-        padding: "30px 0",
-      }}
-    >
+    <div className="footer-wrapper">
       <div className="container">
-        <div
-          style={{
-            width: "100%",
-            height: "1px",
-            backgroundColor: "#1c2a28",
-            marginBottom: "20px",
-          }}
-        />
+        <div className="footer-divider" />
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            color: "#cfcfcf",
-            fontFamily: "monospace",
-            fontSize: "13px",
-          }}
-        >
-          <div
-            style={{
-              fontFamily: "haus",
-              color: "#fff",
-              fontSize: "30px",
-              textShadow: "0 0 6px #ffffff",
-            }}
-          >
+        <div className="footer-inner">
+          <div className="footer-logo">
             <img
               src="./Logo.svg"
               alt="Logo"
               style={{
                 width: "170px",
                 objectFit: "contain",
-                marginRight: "8px",
               }}
             />
           </div>
 
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "15px",
-              fontFamily: "glacia",
-              fontSize: "10px",
-            }}
-          >
-            <span style={{ letterSpacing: "2px" }}>
+          <div className="footer-right">
+            <span className="footer-copy">
               © 2025 · LECTURA INMERSIVA DIGITAL
             </span>
 
-            <div style={{ display: "flex", gap: "10px" }}>
-              <img
-                src="./brand-instagram.svg"
-                alt="Instagram"
-                style={{ width: "30px", cursor: "pointer" }}
-              />
+            <div className="footer-icons">
+              <a
+                href="https://www.instagram.com/tu_usuario"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  src="./instagram.png"
+                  alt="Instagram"
+                  className="footer-icon"
+                />
+              </a>
 
-              <img
-                src="./brand-tiktok.svg"
-                alt="TikTok"
-                style={{ width: "30px", cursor: "pointer" }}
-              />
+              <a
+                href="https://www.tiktok.com/@tu_usuario"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  src="./Tik tok.png"
+                  alt="TikTok"
+                  className="footer-icon"
+                />
+              </a>
+
+              <a
+                href="https://www.facebook.com/tu_usuario"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  src="./Facebook.png"
+                  alt="Facebook"
+                  className="footer-icon"
+                />
+              </a>
             </div>
           </div>
         </div>

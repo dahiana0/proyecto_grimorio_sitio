@@ -31,25 +31,25 @@
 
 
 .comentarios-page>* {
-    width: min(1050px, 100%);
-    max-width: 1050px;
+    width: min(1150px, 100%);
+    max-width: 1150px;
 }
 
 
 .tablero1 {
     width: 100%;
 
-    max-width: 1000px;
+    max-width: 1100px;
 
     margin: 80px auto 0;
 
     display: grid;
 
-    grid-template-columns: repeat(3, 300px);
+    grid-template-columns: repeat(3, 340px);
 
     justify-content: center;
 
-    gap: 16px;
+    gap: 20px;
 }
 
 
@@ -57,11 +57,11 @@
 .contenedor {
     position: relative;
 
-    width: 300px;
+    width: 340px;
 
-    min-height: 190px;
+    min-height: 220px;
 
-    padding: 12px;
+    padding: 16px;
 
     background:
         linear-gradient(145deg,
@@ -135,7 +135,7 @@
 
 
 .titulo {
-    min-height: 190px;
+    min-height: 220px;
 
     display: flex;
 
@@ -145,7 +145,7 @@
 }
 
 .titulo h1 {
-    font-size: clamp(2rem, 2.5vw, 3rem);
+    font-size: clamp(1.4rem, 1.6vw, 1.9rem);
 
     text-shadow:
         0 0 5px #1ad96d,
@@ -161,7 +161,7 @@
 
     font-family: rxx;
 
-    line-height: 1;
+    line-height: 1.15;
 }
 
 .titulo p {
@@ -171,7 +171,7 @@
 
     text-align: center;
 
-    font-size: 14px;
+    font-size: 15px;
 
     font-family: glacia;
 
@@ -182,7 +182,7 @@
 
 
 .objetivo {
-    min-height: 190px;
+    min-height: 220px;
 
     display: flex;
 
@@ -214,7 +214,7 @@
 
     color: #ffffff;
 
-    font-size: 14px;
+    font-size: 15px;
 
     font-family: glacia;
 }
@@ -235,7 +235,7 @@
 .foto img {
     width: 100%;
 
-    height: 175px;
+    height: 200px;
 
     object-fit: cover;
 
@@ -260,7 +260,7 @@
 
 
 .comentarios {
-    min-height: 190px;
+    min-height: 220px;
 
     background:
         radial-gradient(circle at center,
@@ -380,7 +380,7 @@
 .boton-comentario {
     grid-column: 1 / 4;
 
-    width: 260px;
+    width: 300px;
 
     margin: 8px auto 0;
 
@@ -409,7 +409,7 @@
 
     align-items: center;
 
-    min-height: 75px;
+    min-height: 80px;
 
     border: 1px solid #1ad96d;
 
@@ -810,10 +810,10 @@
 
 
 
-@media (max-width: 1000px) {
+@media (max-width: 1100px) {
 
     .tablero1 {
-        grid-template-columns: repeat(2, 300px);
+        grid-template-columns: repeat(2, 340px);
 
         margin-top: 60px;
     }
@@ -824,7 +824,7 @@
 }
 
 
-@media (max-width: 680px) {
+@media (max-width: 720px) {
 
     .comentarios-page {
         padding: 5rem 1rem 3rem;
@@ -841,7 +841,7 @@
     .contenedor {
         width: 100%;
 
-        max-width: 300px;
+        max-width: 340px;
 
         margin: auto;
     }
@@ -874,7 +874,7 @@
     }
 
     .titulo h1 {
-        font-size: 30px;
+        font-size: 22px;
     }
 
     .objetivo h2 {
@@ -886,7 +886,7 @@
 
         width: 100%;
 
-        max-width: 300px;
+        max-width: 340px;
 
         font-size: 20px;
 
