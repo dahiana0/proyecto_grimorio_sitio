@@ -280,7 +280,7 @@
 }
 
 
-.vacio {
+.mensajeVacio {
     width: 100%;
 
     padding: 70px 30px;
@@ -300,7 +300,7 @@
 }
 
 
-.vacio h2 {
+.mensajeVacio h2 {
     color: #4dff99;
 
     margin-bottom: 15px;
@@ -314,7 +314,7 @@
 }
 
 
-.vacio p {
+.mensajeVacio p {
     color: #9caea5;
 
     font-size: 18px;
@@ -322,6 +322,12 @@
     line-height: 1.6;
 
     font-family: glacia;
+}
+
+.mensajeVacio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 

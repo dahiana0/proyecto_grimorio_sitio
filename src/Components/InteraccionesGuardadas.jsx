@@ -208,7 +208,7 @@ const InteraccionesGuardadas = () => {
 
           {interacciones.length === 0 && (
 
-            <div className="vacio">
+            <div className="mensajeVacio">
 
               <h2>
                 El Grimorio está vacío
