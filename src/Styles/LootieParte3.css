@@ -120,7 +120,7 @@
 
 .telarana1 {
     left: 300px;
-    top: -20px;
+    top: -50px;
     width: 400px;
     z-index: 3;
 }
@@ -136,14 +136,14 @@
 .monstruo1 {
     left: 5px;
     bottom: 80px;
-    width: 300px;
+    width: 260px;
     z-index: 4;
 }
 
 .monstruo2 {
     left: 270px;
     bottom: 80px;
-    width: 280px;
+    width: 270px;
     z-index: 4;
 }
 

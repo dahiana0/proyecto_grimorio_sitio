@@ -1,3 +1,7 @@
+/* ==========================================================================
+   CONTENEDOR GENERAL
+   ========================================================================== */
+
 .visor-container {
     width: 100%;
     min-height: 100vh;
@@ -6,6 +10,9 @@
 }
 
 
+/* ==========================================================================
+   BARRA SUPERIOR (título, capítulo, íconos)
+   ========================================================================== */
 
 .visor-top {
     display: flex;
@@ -51,7 +58,6 @@
     font-size: 15px;
 }
 
-
 .visor-top > div:last-child {
     display: flex;
     align-items: center;
@@ -74,7 +80,6 @@
     opacity: .4;
 }
 
-
 .visor-iconnn {
     width: 29px;
     height: 29px;
@@ -83,14 +88,70 @@
     transition: .25s;
 }
 
-.visor-icon:hover {
+.visor-iconnn:hover {
     transform: scale(1.1);
 }
 
-.visor-icon.off {
-    opacity: .4;
+
+/* Ventanita de volumen manual (slider) */
+.visor-volume-wrapper {
+    position: relative;
+
+    display: flex;
+    align-items: center;
 }
 
+.visor-volume-panel {
+    position: absolute;
+
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+
+    margin-top: 12px;
+
+    background: rgba(18, 18, 18, .96);
+    border: 1px solid #333;
+    border-radius: 10px;
+
+    padding: 12px 9px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 30;
+}
+
+.visor-volume-panel::after {
+    content: "";
+
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+
+    border: 6px solid transparent;
+    border-bottom-color: rgba(18, 18, 18, .96);
+}
+
+.visor-volume-slider {
+    /* Slider vertical: gira el range de horizontal a vertical */
+    writing-mode: vertical-lr;
+    direction: rtl;
+
+    width: 4px;
+    height: 90px;
+
+    cursor: pointer;
+
+    accent-color: #56b366;
+}
+
+
+/* ==========================================================================
+   ESCENARIO (lottie / video)
+   ========================================================================== */
 
 .visor-scene {
     position: relative;
@@ -105,7 +166,29 @@
     align-items: center;
 }
 
+/* Envuelve el contenido de cada escena (lottie o video) para poder
+   animar la transición de oscurecido entre capítulos/escenas. */
+.visor-scene-content {
+    width: 100%;
+    height: 100%;
 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    opacity: 1;
+    transition: opacity .35s ease;
+}
+
+.visor-scene-content.fade-out {
+    opacity: 0;
+    transition: opacity .35s ease;
+}
+
+.visor-scene-content.fade-in {
+    opacity: 1;
+    transition: opacity .35s ease;
+}
 
 
 .visor-lottie {
@@ -117,14 +200,10 @@
     align-items: center;
 }
 
-/* Si el componente Lottie ocupa todo el espacio */
-
 .visor-lottie > div {
     width: 100%;
     height: 100%;
 }
-
-
 
 
 .visor-video-wrapper {
@@ -144,7 +223,6 @@
     object-fit: contain;
     background: #000;
 }
-
 
 
 .visor-sub {
@@ -179,71 +257,9 @@
 }
 
 
-
-.visor-arrow {
-    position: absolute;
-
-    top: 50%;
-
-    transform: translateY(-50%);
-
-    width: 46px;
-
-    cursor: pointer;
-
-    transition: .25s;
-
-    z-index: 20;
-}
-
-.visor-arrow.left {
-    left: 20px;
-}
-
-.visor-arrow.right {
-    right: 20px;
-}
-
-.visor-arrow:hover {
-    transform: translateY(-50%) scale(1.12);
-}
-
-.visor-arrow.disabled {
-    opacity: .25;
-    pointer-events: none;
-}
-
-
-.visor-dots {
-    display: flex;
-
-    justify-content: center;
-    align-items: center;
-
-    gap: 10px;
-
-    margin-top: 18px;
-}
-
-.dot {
-    width: 10px;
-    height: 10px;
-
-    border-radius: 50%;
-
-    background: #555;
-
-    transition: .3s;
-}
-
-.dot.active {
-    background: #bfa76a;
-
-    transform: scale(1.3);
-}
-
-
-
+/* ==========================================================================
+   CONTROLES DE VIDEO (play / rewind / forward, sobre el escenario)
+   ========================================================================== */
 
 .visor-controls {
     position: absolute;
@@ -269,9 +285,6 @@
     opacity: 1;
 }
 
-
-
-
 .visor-progress {
     width: 100%;
 
@@ -279,8 +292,6 @@
 
     margin-bottom: 18px;
 }
-
-
 
 .visor-controls-bottom {
     display: flex;
@@ -324,4 +335,130 @@
 .play-btn {
     width: 70px;
     height: 70px;
+}
+
+
+/* ==========================================================================
+   NAVEGACIÓN INFERIOR: flechas + barra de progreso de escenas
+   (reemplaza los puntos, todo queda debajo del escenario)
+   ========================================================================== */
+
+.visor-bottom-nav {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    margin-top: 18px;
+}
+
+.visor-arrow-btn {
+    flex-shrink: 0;
+
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: none;
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, .08);
+    border: 1px solid #3a3a3a;
+
+    cursor: pointer;
+    transition: .25s;
+}
+
+.visor-arrow-btn:hover {
+    background: #ffffff;
+}
+
+.visor-arrow-btn:hover img {
+    filter: invert(1);
+}
+
+.visor-arrow-btn img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+.visor-arrow-btn.disabled {
+    opacity: .25;
+    pointer-events: none;
+}
+
+/* Barra de progreso numerada: 01 —— 02 —— 03 —— 04, con líneas
+   conectoras entre cada número */
+.visor-progress-track {
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+}
+
+.visor-progress-step {
+    display: flex;
+    align-items: center;
+
+    flex: 1 1 auto;
+}
+
+/* El último paso no necesita línea después de su número */
+.visor-progress-step:last-child {
+    flex: 0 0 auto;
+}
+
+.visor-progress-number {
+    flex-shrink: 0;
+
+    color: #777;
+    font-family: glacia;
+    font-size: 13px;
+    letter-spacing: 1px;
+
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    line-height: normal;
+
+    cursor: pointer;
+    transition: .25s;
+}
+
+.visor-progress-number:hover {
+    color: #cfcfcf;
+}
+
+/* Escenas ya vistas */
+.visor-progress-number.completed {
+    color: #cfcfcf;
+}
+
+/* Escena activa: resaltada con iluminación en verde */
+.visor-progress-number.active {
+    color: #56b366;
+    font-weight: 600;
+    text-shadow: 0 0 8px rgba(86, 179, 102, .85), 0 0 16px rgba(86, 179, 102, .5);
+}
+
+.visor-progress-line {
+    flex: 1;
+    height: 1px;
+
+    margin: 0 10px;
+
+    background: #3a3a3a;
+
+    transition: background .3s ease, box-shadow .3s ease;
+}
+
+/* Línea recorrida hasta la escena activa, con brillo */
+.visor-progress-line.completed {
+    background: #56b366;
+    box-shadow: 0 0 6px rgba(86, 179, 102, .7);
 }
