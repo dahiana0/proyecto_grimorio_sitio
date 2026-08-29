@@ -72,7 +72,7 @@ export const IntroJuego = () => {
       </button>
       <div id="tablero1" className="tablero1">
         <div className="contenedor titulo">
-          <h1>Secion de comentarios</h1>
+          <h1>Sección de comentarios</h1>
           <p>
             En el museo de Grimorio, queremos leer tu opinión. Explora los
             testimonios de otros visitantes.
