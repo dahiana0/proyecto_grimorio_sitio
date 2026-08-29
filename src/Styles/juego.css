@@ -159,7 +159,7 @@
 
     text-align: center;
 
-    font-family: rxx;
+    font-family: pieces;
 
     line-height: 1.15;
 }
@@ -198,7 +198,7 @@
 
     font-size: 26px;
 
-    font-family: rxx;
+    font-family: pieces;
 
     text-shadow:
         0 0 5px #1ad96d,
@@ -277,7 +277,7 @@
 
     color: #1ad96d;
 
-    font-family: rxx;
+    font-family: pieces;
 
     text-shadow:
         0 0 6px #1ad96d,
@@ -306,7 +306,7 @@
 
     font-size: 18px;
 
-    font-family: rxx;
+    font-family: pieces;
 }
 
 .comentario span {
@@ -342,7 +342,7 @@
 
     color: #1ad96d;
 
-    font-family: rxx;
+    font-family: pieces;
 }
 
 .nuevos p,
@@ -401,7 +401,7 @@
 
     cursor: pointer;
 
-    font-family: rxx;
+    font-family: pieces;
 
     display: flex;
 
@@ -445,7 +445,7 @@
 
 
 .comentarios-titulo {
-    font-family: rxx;
+    font-family: pieces;
 
     font-size: clamp(1.5rem, 2vw, 2.5rem);
 
@@ -490,7 +490,7 @@
 
     text-align: left;
 
-    font-family: rxx;
+    font-family: pieces;
 }
 
 .form-field label {
@@ -572,7 +572,7 @@
         transform 0.2s ease,
         box-shadow 0.2s ease;
 
-    font-family: rxx;
+    font-family: pieces;
 
     text-shadow:
         0 0 5px #1ad96d;
@@ -693,7 +693,7 @@
 
     cursor: pointer;
 
-    font-family: rxx;
+    font-family: pieces;
 
     font-size: 0.75rem;
 
@@ -753,7 +753,7 @@
 .comentario-item-pinned .comentario-ancla {
     color: #1ad96d;
 
-    font-family: rxx;
+    font-family: pieces;
 
     font-size: 0.75rem;
 }
@@ -761,7 +761,7 @@
 .comentario-item-pinned strong {
     color: #1ad96d;
 
-    font-family: rxx;
+    font-family: pieces;
 }
 
 .comentario-item-pinned p {
@@ -794,7 +794,7 @@
 
     cursor: pointer;
 
-    font-family: rxx;
+    font-family: pieces;
 
     font-size: 0.75rem;
 

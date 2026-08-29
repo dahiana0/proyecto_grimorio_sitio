@@ -7,7 +7,7 @@ export const Header = () => {
 
   const reproducirSonido = () => {
     sonidoBoton.current.currentTime = 0;
-    sonidoBoton.current.play().catch(() => {});
+    sonidoBoton.current.play().catch(() => { });
   };
 
 
@@ -24,12 +24,12 @@ export const Header = () => {
         position: "absolute",
         width: "100%",
         zIndex: "10",
-        fontFamily: "rxx",
+        fontFamily: "pieces",
       }}
     >
       <div className="container">
 
-        {/* LOGO */}
+
         <Link
           className="navbar-brand"
           to="/"
@@ -52,7 +52,7 @@ export const Header = () => {
           />
         </Link>
 
-        {/* BOTÓN RESPONSIVE */}
+
         <button
           className="navbar-toggler"
           type="button"
@@ -63,11 +63,11 @@ export const Header = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        {/* MENÚ */}
+
         <div className="collapse navbar-collapse" id="navbarNav">
           <div className="ms-auto d-flex flex-column flex-lg-row align-items-center gap-3">
 
-            {/* INICIO */}
+
             <Link
               className="nav-link"
               to="/"
@@ -77,7 +77,7 @@ export const Header = () => {
               Inicio
             </Link>
 
-            {/* SOBRE NOSOTROS */}
+
             <Link
               className="nav-link"
               to="/sobrenosotros"
@@ -87,7 +87,7 @@ export const Header = () => {
               Sobre Nosotros
             </Link>
 
-            {/* PERSONAJES */}
+
             <Link
               className="nav-link"
               to="/personajes"
@@ -97,7 +97,7 @@ export const Header = () => {
               Personajes
             </Link>
 
-            {/* RECOMENDACIONES */}
+
             <Link
               className="nav-link"
               to="/Recomendaciones"
@@ -107,7 +107,7 @@ export const Header = () => {
               Recomendaciones
             </Link>
 
-            {/* COMENTARIOS */}
+
             <Link
               className="nav-link"
               to="/intro-juego"
@@ -118,11 +118,10 @@ export const Header = () => {
             </Link>
 
 
-             {/* DIARIO */}
+
             <Link
               to="/archivo"
               onClick={reproducirSonido}
-              style={estiloNav}
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -131,14 +130,14 @@ export const Header = () => {
                 textDecoration: "none",
                 letterSpacing: "1px",
                 fontSize: "16px",
-               
+
               }}
             >
 
               Diario
             </Link>
 
-            {/* EXPLORAR MUSEO */}
+
             <Link
               to="/guia"
               onClick={reproducirSonido}

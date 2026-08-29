@@ -1,6 +1,6 @@
 @font-face {
-    font-family: rxx;
-    src: url("../Styles/$RXXVOG2.TTF") format("truetype");
+    font-family: pieces;
+    src: url("../Styles/$piecesVOG2.TTF") format("truetype");
 }
 
 @font-face {
@@ -281,7 +281,7 @@
 
     color: #4dff99;
 
-    font-family: rxx;
+    font-family: pieces;
 
     font-size: 19px;
 
@@ -341,7 +341,7 @@
 
     font-size: 20px;
 
-    font-family: rxx, Georgia, serif;
+    font-family: pieces, Georgia, serif;
 
     letter-spacing: 1px;
 
@@ -466,7 +466,7 @@
 
     font-size: 18px;
 
-    font-family: rxx, Arial, sans-serif;
+    font-family: pieces, Arial, sans-serif;
 
     letter-spacing: 1px;
 
@@ -546,7 +546,7 @@
 
     font-size: 18px;
 
-    font-family: rxx, Arial, sans-serif;
+    font-family: pieces, Arial, sans-serif;
 
     letter-spacing: 1px;
 
