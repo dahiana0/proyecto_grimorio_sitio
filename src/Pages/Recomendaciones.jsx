@@ -14,7 +14,7 @@ export const Recomendaciones = () => {
 
       <div className="recomendaciones-section container">
 
-        {/* TÍTULO */}
+
         <div
           data-aos="fade-down"
           data-aos-duration="1000"
@@ -24,10 +24,10 @@ export const Recomendaciones = () => {
 
         <br />
 
-        {/* CARTAS */}
+
         <div className="recomendaciones-grid">
 
-          {/* LA LLAMADA DE CTHULHU */}
+
           <CardRecomendacion
             delay={100}
             imagen="./La-llama.jpg"
@@ -38,7 +38,7 @@ export const Recomendaciones = () => {
             pdf="./La llamada de Cthulhu - H. P. Lovecraft.pdf"
           />
 
-          {/* EL COLOR QUE CAYÓ DEL CIELO */}
+
           <CardRecomendacion
             delay={200}
             imagen="./El-color.jpg"
@@ -49,7 +49,6 @@ export const Recomendaciones = () => {
             pdf="./El color que cayo del cielo - H. P. Lovecraft.pdf"
           />
 
-          {/* EN LAS MONTAÑAS DE LA LOCURA */}
           <CardRecomendacion
             delay={300}
             imagen="./Las-Montañas.jpg"
@@ -60,7 +59,7 @@ export const Recomendaciones = () => {
             pdf="./En las montanas de la locura - H. P. Lovecraft.pdf"
           />
 
-          {/* EL CASO DE CHARLES DEXTER WARD */}
+
           <CardRecomendacion
             delay={400}
             imagen="./El-Caso.jpg"
@@ -71,7 +70,6 @@ export const Recomendaciones = () => {
             pdf="./El caso de Charles Dexter Ward - H. P. Lovecraft.pdf"
           />
 
-          {/* LA SOMBRA SOBRE INNSMOUTH */}
           <CardRecomendacion
             delay={500}
             imagen="./La-Sombra.jpg"
@@ -82,7 +80,7 @@ export const Recomendaciones = () => {
             pdf="./La sombra sobre Innsmouth - H. P. Lovecraft.pdf"
           />
 
-          {/* DAGON */}
+
           <CardRecomendacion
             delay={600}
             imagen="./Dagon.jpg"
