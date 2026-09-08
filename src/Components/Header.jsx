@@ -14,6 +14,7 @@ export const Header = () => {
   const estiloNav = {
     color: "#fff",
     textDecoration: "none",
+    fontSize: "25px",
   };
 
   return (
@@ -25,6 +26,7 @@ export const Header = () => {
         width: "100%",
         zIndex: "10",
         fontFamily: "pieces",
+        
       }}
     >
       <div className="container">
@@ -129,7 +131,7 @@ export const Header = () => {
                 color: "#ffffff",
                 textDecoration: "none",
                 letterSpacing: "1px",
-                fontSize: "16px",
+                fontSize: "20px",
 
               }}
             >
@@ -151,7 +153,7 @@ export const Header = () => {
                 color: "#ffffff",
                 textDecoration: "none",
                 letterSpacing: "1px",
-                fontSize: "16px",
+                fontSize: "20px",
                 textShadow: "0 0 6px #fff",
               }}
             >
