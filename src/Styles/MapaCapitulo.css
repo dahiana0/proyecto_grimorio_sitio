@@ -76,7 +76,7 @@
 .titulo-mapa {
     margin: 0;
 
-    font-size: 40px;
+    font-size: 70px;
     line-height: 48px;
 
     font-family: pieces;
@@ -88,7 +88,7 @@
 
     margin-top: 4px;
 
-    font-size: 15px;
+    font-size: 20px;
 
     color: #2f2117;
 
@@ -421,7 +421,7 @@
 
     text-align: center;
 
-    font-size: 22px;
+    font-size: 30px;
 
     color: #f4ddb2;
 
