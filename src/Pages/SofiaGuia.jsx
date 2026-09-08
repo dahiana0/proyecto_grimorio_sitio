@@ -143,6 +143,11 @@ export function SofiaGuia() {
         Omitir intro
       </button>
 
+      <div className="titulo-museo">
+        <h1>Conoce Al Guía</h1>
+        <p>Él Te Acompañará Durante El Recorrido…</p>
+      </div>
+
 
 
       <div

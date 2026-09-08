@@ -17,11 +17,14 @@
 
     background:
         radial-gradient(circle at 50% 35%,
-            rgba(26, 217, 109, 0.16),
+            rgba(86, 179, 102, 0.16),
             transparent 38%),
+        radial-gradient(circle at 85% 80%,
+            rgba(49, 36, 87, 0.35),
+            transparent 45%),
         linear-gradient(135deg,
             #020806 0%,
-            #06170f 45%,
+            #0a0f16 45%,
             #020806 100%);
 
     background-attachment: scroll;
@@ -65,19 +68,19 @@
 
     background:
         linear-gradient(145deg,
-            rgba(8, 30, 20, 0.96),
+            rgba(30, 22, 45, 0.9),
             rgba(2, 10, 7, 0.98));
 
     color: #ffffff;
 
-    border: 1px solid rgba(26, 217, 109, 0.35);
+    border: 1px solid rgba(86, 179, 102, 0.35);
 
     border-radius: 7px;
 
     box-shadow:
         0 5px 20px rgba(0, 0, 0, 0.55),
-        0 0 12px rgba(26, 217, 109, 0.07),
-        inset 0 0 25px rgba(0, 80, 45, 0.08);
+        0 0 12px rgba(86, 179, 102, 0.07),
+        inset 0 0 25px rgba(49, 36, 87, 0.18);
 
     overflow: hidden;
 
@@ -92,12 +95,12 @@
 .contenedor:hover {
     transform: translateY(-4px);
 
-    border-color: rgba(26, 217, 109, 0.75);
+    border-color: rgba(86, 179, 102, 0.75);
 
     box-shadow:
         0 10px 30px rgba(0, 0, 0, 0.6),
-        0 0 20px rgba(26, 217, 109, 0.16),
-        inset 0 0 25px rgba(26, 217, 109, 0.05);
+        0 0 20px rgba(86, 179, 102, 0.16),
+        inset 0 0 25px rgba(49, 36, 87, 0.15);
 }
 
 
@@ -116,12 +119,12 @@
 
     border-radius: 50%;
 
-    background: #1ad96d;
+    background: #56b366;
 
     border: 1px solid #79e9a7;
 
     box-shadow:
-        0 0 6px rgba(26, 217, 109, 0.6);
+        0 0 6px rgba(86, 179, 102, 0.6);
 }
 
 .contenedor::before {
@@ -130,6 +133,13 @@
 
 .contenedor::after {
     right: 7px;
+
+    background: #6a4fa3;
+
+    border: 1px solid #9d84cf;
+
+    box-shadow:
+        0 0 6px rgba(49, 36, 87, 0.7);
 }
 
 
@@ -148,10 +158,10 @@
     font-size: clamp(1.4rem, 1.6vw, 1.9rem);
 
     text-shadow:
-        0 0 5px #1ad96d,
-        0 0 12px rgba(26, 217, 109, 0.55);
+        0 0 5px #56b366,
+        0 0 14px rgba(49, 36, 87, 0.65);
 
-    color: #1ad96d;
+    color: #56b366;
 
     margin-bottom: 15px;
 
@@ -201,10 +211,10 @@
     font-family: pieces;
 
     text-shadow:
-        0 0 5px #1ad96d,
-        0 0 12px rgba(26, 217, 109, 0.5);
+        0 0 5px #56b366,
+        0 0 14px rgba(49, 36, 87, 0.6);
 
-    color: #1ad96d;
+    color: #56b366;
 }
 
 .objetivo p {
@@ -241,7 +251,7 @@
 
     display: block;
 
-    border: 2px solid rgba(26, 217, 109, 0.35);
+    border: 2px solid rgba(49, 36, 87, 0.55);
 
     filter:
         brightness(0.8) contrast(1.1);
@@ -255,7 +265,7 @@
     filter:
         brightness(0.95) contrast(1.1);
 
-    border-color: rgba(26, 217, 109, 0.7);
+    border-color: rgba(86, 179, 102, 0.7);
 }
 
 
@@ -264,7 +274,7 @@
 
     background:
         radial-gradient(circle at center,
-            rgba(26, 217, 109, 0.025),
+            rgba(49, 36, 87, 0.06),
             transparent 70%);
 }
 
@@ -275,13 +285,13 @@
 
     font-size: 24px;
 
-    color: #1ad96d;
+    color: #56b366;
 
     font-family: pieces;
 
     text-shadow:
-        0 0 6px #1ad96d,
-        0 0 12px rgba(26, 217, 109, 0.4);
+        0 0 6px #56b366,
+        0 0 12px rgba(49, 36, 87, 0.5);
 }
 
 
@@ -289,7 +299,7 @@
 .comentario {
     padding: 10px 0;
 
-    border-bottom: 1px solid rgba(26, 217, 109, 0.15);
+    border-bottom: 1px solid rgba(86, 179, 102, 0.15);
 }
 
 .comentario:last-child {
@@ -298,9 +308,9 @@
 
 .comentario h3 {
     text-shadow:
-        0 0 6px #1ad96d;
+        0 0 6px #56b366;
 
-    color: #1ad96d;
+    color: #56b366;
 
     margin-bottom: 5px;
 
@@ -337,10 +347,10 @@
 .nuevos h2,
 .antiguos h2 {
     text-shadow:
-        0 0 6px #1ad96d,
-        0 0 12px rgba(26, 217, 109, 0.45);
+        0 0 6px #56b366,
+        0 0 12px rgba(49, 36, 87, 0.55);
 
-    color: #1ad96d;
+    color: #56b366;
 
     font-family: pieces;
 }
@@ -368,11 +378,11 @@
 .contenedor.comentarios.antiguos:hover {
     transform: translateY(-4px);
 
-    border-color: rgba(26, 217, 109, 0.65);
+    border-color: rgba(86, 179, 102, 0.65);
 
     box-shadow:
         0 10px 30px rgba(0, 0, 0, 0.55),
-        0 0 15px rgba(26, 217, 109, 0.1);
+        0 0 15px rgba(49, 36, 87, 0.25);
 }
 
 
@@ -386,10 +396,10 @@
 
     background:
         linear-gradient(180deg,
-            rgba(8, 30, 20, 0.98),
+            rgba(49, 36, 87, 0.35),
             rgba(2, 12, 8, 0.98));
 
-    color: #1ad96d;
+    color: #56b366;
 
     text-align: center;
 
@@ -411,16 +421,16 @@
 
     min-height: 80px;
 
-    border: 1px solid #1ad96d;
+    border: 1px solid #56b366;
 
     border-radius: 5px;
 
     text-shadow:
-        0 0 7px #1ad96d;
+        0 0 7px #56b366;
 
     box-shadow:
-        0 0 10px rgba(26, 217, 109, 0.12),
-        inset 0 0 20px rgba(26, 217, 109, 0.04);
+        0 0 10px rgba(86, 179, 102, 0.12),
+        inset 0 0 20px rgba(49, 36, 87, 0.18);
 
     transition:
         transform 0.3s ease,
@@ -433,12 +443,12 @@
 
     background:
         linear-gradient(180deg,
-            rgba(10, 45, 27, 0.98),
+            rgba(49, 36, 87, 0.55),
             rgba(3, 18, 11, 0.98));
 
     box-shadow:
         0 10px 25px rgba(0, 0, 0, 0.5),
-        0 0 18px rgba(26, 217, 109, 0.25);
+        0 0 18px rgba(86, 179, 102, 0.25);
 }
 
 
@@ -450,9 +460,10 @@
     font-size: clamp(1.5rem, 2vw, 2.5rem);
 
     text-shadow:
-        0 0 8px #1ad96d;
+        0 0 8px #56b366,
+        0 0 16px rgba(49, 36, 87, 0.5);
 
-    color: #1ad96d;
+    color: #56b366;
 
     margin-bottom: 0.5rem;
 
@@ -495,9 +506,9 @@
 
 .form-field label {
     text-shadow:
-        0 0 8px #1ad96d;
+        0 0 8px #56b366;
 
-    color: #1ad96d;
+    color: #56b366;
 
     font-weight: 700;
 }
@@ -506,7 +517,7 @@
 .form-field textarea {
     width: 100%;
 
-    border: 1px solid rgba(26, 217, 109, 0.35);
+    border: 1px solid rgba(49, 36, 87, 0.55);
 
     border-radius: 8px;
 
@@ -516,7 +527,7 @@
 
     color: #ffffff;
 
-    background: #050b08;
+    background: #08070d;
 
     outline: none;
 
@@ -529,10 +540,10 @@
 
 .form-field input:focus,
 .form-field textarea:focus {
-    border-color: #1ad96d;
+    border-color: #56b366;
 
     box-shadow:
-        0 0 10px rgba(26, 217, 109, 0.15);
+        0 0 10px rgba(86, 179, 102, 0.2);
 }
 
 .form-field textarea {
@@ -551,12 +562,12 @@
 
     background:
         linear-gradient(180deg,
-            #0c3d2500,
-            #06241600);
+            rgba(49, 36, 87, 0.25),
+            rgba(6, 36, 22, 0));
 
-    color: #1ad96d;
+    color: #56b366;
 
-    border: 1px solid #1ad96d;
+    border: 1px solid #56b366;
 
     border-radius: 5px;
 
@@ -575,14 +586,14 @@
     font-family: pieces;
 
     text-shadow:
-        0 0 5px #1ad96d;
+        0 0 5px #56b366;
 }
 
 .comentarios-boton:hover {
     transform: translateY(-2px);
 
     box-shadow:
-        0 0 15px rgba(26, 217, 109, 0.2);
+        0 0 15px rgba(86, 179, 102, 0.25);
 }
 
 
@@ -596,14 +607,14 @@
 .comentarios-lista-titulo {
     font-size: 1.5rem;
 
-    color: #1ad96d;
+    color: #56b366;
 
     margin-bottom: 0.75rem;
 
     font-family: glacia;
 
     text-shadow:
-        0 0 6px rgba(26, 217, 109, 0.5);
+        0 0 6px rgba(86, 179, 102, 0.5);
 }
 
 
@@ -621,12 +632,12 @@
     background:
         rgba(3, 10, 8, 0.92);
 
-    border: 1px solid rgba(26, 217, 109, 0.3);
+    border: 1px solid rgba(49, 36, 87, 0.45);
 
     border-radius: 7px;
 
     box-shadow:
-        inset 0 0 25px rgba(26, 217, 109, 0.03),
+        inset 0 0 25px rgba(49, 36, 87, 0.06),
         0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
@@ -635,9 +646,9 @@
 
 .comentario-item {
     background:
-        rgba(5, 14, 10, 0.95);
+        rgba(14, 10, 20, 0.9);
 
-    border: 1px solid rgba(26, 217, 109, 0.2);
+    border: 1px solid rgba(86, 179, 102, 0.2);
 
     border-radius: 7px;
 
@@ -681,11 +692,11 @@
 }
 
 .comentario-accion {
-    border: 1px solid rgba(26, 217, 109, 0.5);
+    border: 1px solid rgba(86, 179, 102, 0.5);
 
-    background: #06130d;
+    background: #0d0a16;
 
-    color: #1ad96d;
+    color: #56b366;
 
     border-radius: 5px;
 
@@ -701,12 +712,12 @@
 }
 
 .comentario-accion:hover {
-    background: #0c2d1c;
+    background: #201738;
 
-    border-color: #1ad96d;
+    border-color: #56b366;
 
     box-shadow:
-        0 0 8px rgba(26, 217, 109, 0.15);
+        0 0 8px rgba(86, 179, 102, 0.2);
 }
 
 
@@ -724,9 +735,9 @@
 
     border-radius: 7px;
 
-    border: 1px solid rgba(26, 217, 109, 0.35);
+    border: 1px solid rgba(49, 36, 87, 0.55);
 
-    background: #050b08;
+    background: #08070d;
 
     color: #ffffff;
 
@@ -741,17 +752,19 @@
 
 
 .comentario-item-pinned {
-    border: 1px solid rgba(26, 217, 109, 0.5);
+    border: 1px solid rgba(86, 179, 102, 0.5);
 
     background:
-        rgba(5, 18, 11, 0.96);
+        linear-gradient(135deg,
+            rgba(49, 36, 87, 0.25),
+            rgba(5, 18, 11, 0.96));
 
     box-shadow:
-        0 0 12px rgba(26, 217, 109, 0.05);
+        0 0 12px rgba(49, 36, 87, 0.12);
 }
 
 .comentario-item-pinned .comentario-ancla {
-    color: #1ad96d;
+    color: #56b366;
 
     font-family: pieces;
 
@@ -759,7 +772,7 @@
 }
 
 .comentario-item-pinned strong {
-    color: #1ad96d;
+    color: #56b366;
 
     font-family: pieces;
 }
