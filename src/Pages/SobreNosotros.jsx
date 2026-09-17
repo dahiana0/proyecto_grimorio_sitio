@@ -5,7 +5,7 @@ import Footer from "../Components/footer";
 import CardInfoS from "../Components/CardInfoS";
 import CardEquipoFlip from "../Components/CardEquipoFlip";
 import TituloEquipo from "../Components/TituloEquipo";
-import "../Styles/css.css";
+import "../Styles/SobreNosotros.css";
 
 export const SobreNosotros = () => {
   return (

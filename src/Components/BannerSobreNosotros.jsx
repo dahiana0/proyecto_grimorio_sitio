@@ -1,5 +1,5 @@
 import React from "react";
-import "../Styles/css.css";
+import "../Styles/SobreNosotros.css";
 import Header from "./Header";
 
 export const BannerSobreNosotros = () => {
@@ -7,10 +7,6 @@ export const BannerSobreNosotros = () => {
     <div className="sobre-container d-flex justify-content-center align-items-center">
 
       <div className="sobre-content text-white">
-
-        <p className="sobre-subtitle">
-          Sobre Nosotros
-        </p>
 
         <h1 className="sobre-title">
           Donde Lo Oculto Se Revela

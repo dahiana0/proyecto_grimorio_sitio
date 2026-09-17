@@ -1,0 +1,388 @@
+/* ===== BannerSobreNosotros ===== */
+.sobre-container {
+  width: 100%;
+  padding: 100px 20px;
+  min-height: 60vh;
+}
+
+.sobre-content {
+  max-width: 900px;
+}
+
+.sobre-title {
+  font-size: 60px;
+  margin-bottom: 25px;
+  font-family: "pieces";
+  color: #1ad96d;
+  text-shadow: 0 0 20px #1ad96d;
+}
+
+.sobre-text {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #ffffff;
+  font-family: glacia;
+  max-width: 600px;
+}
+
+
+/* ===== CardInfoS (Misión, Visión, Propósito, Inspiración) ===== */
+.card-infos-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 80px;
+}
+
+.card-infos-content {
+  gap: 25px;
+  max-width: 600px;
+  width: 100%;
+}
+
+.card-infos-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 12px;
+  border: 1px solid #1ad96d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  background-color: rgba(83, 205, 105, 0.1);
+}
+
+.card-infos-img {
+  width: 35px;
+}
+
+.card-infos-text {
+  max-width: 420px;
+}
+
+.card-infos-title {
+  font-size: 40px;
+  color: #1ad96d;
+  font-family: "pieces";
+  margin-bottom: 10px;
+}
+
+.card-infos-desc {
+  color: #cfcfcf;
+  font-family: glacia;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+
+/* ===== TituloEquipo ===== */
+.titulo-equipo {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 60px;
+
+}
+
+
+.equipo-main {
+  color: #1ad96d;
+  font-family: "pieces";
+  font-size: 60px;
+  letter-spacing: 2px;
+  text-shadow: 0 0 6px #1ad96d;
+}
+
+
+/* ===== Contenedor del equipo ===== */
+.equipo-container {
+  width: 100%;
+  margin-top: 40px;
+  padding-bottom: 60px;
+  background-color: #040f08;
+}
+
+
+/* ===== CardEquipoFlip ===== */
+.card-flip-container {
+  width: 260px;
+  height: 380px;
+  perspective: 1000px;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+.card-flip {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+  transform-origin: center;
+}
+
+.card-flip.flip {
+  transform: rotateY(180deg);
+}
+
+.card-flip-front,
+.card-flip-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #2a3a38;
+  backface-visibility: hidden;
+  box-sizing: border-box;
+}
+
+.card-flip-front {
+  position: absolute;
+}
+
+.card-flip-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-flip-overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(to top,
+      rgba(0, 0, 0, 0.9),
+      transparent);
+}
+
+.card-flip-back {
+  background-color: #111817;
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
+}
+
+.card-flip-avatar {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.card-flip-iniciales {
+  font-family: "pieces";
+  font-size: 18px;
+}
+
+.card-flip-title {
+  color: #fff;
+  font-family: "pieces";
+  text-align: center;
+}
+
+.card-flip-rol {
+  color: #bfa76a;
+  font-family: glacia;
+  font-size: 14px;
+  text-align: center;
+}
+
+.card-flip-desc {
+  color: #cfcfcf;
+  font-family: glacia;
+  font-size: 14px;
+  line-height: 1.6;
+  text-align: center;
+  max-height: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 480px) {
+  .sobre-container {
+    padding: 100px 20px 60px;
+    min-height: auto;
+  }
+
+  .sobre-title {
+    font-size: 28px;
+  }
+
+  .sobre-text {
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .equipo-main {
+    font-size: 28px;
+  }
+
+  .equipo-sub {
+    font-size: 13px;
+    letter-spacing: 4px;
+  }
+
+  .card-flip-container {
+    width: 100%;
+    max-width: 280px;
+    height: 360px;
+  }
+
+  .card-infos-container {
+    margin-bottom: 40px;
+  }
+
+  .card-infos-content {
+    flex-direction: column !important;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+  }
+
+  .card-infos-text {
+    text-align: center !important;
+    max-width: 100%;
+  }
+
+  .card-infos-title {
+    font-size: 18px;
+  }
+
+  .card-infos-desc {
+    font-size: 13px;
+  }
+
+  .equipo-container {
+    padding: 0 16px 40px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 600px) {
+  .sobre-title {
+    font-size: 32px;
+  }
+
+  .sobre-container {
+    padding: 100px 24px 60px;
+  }
+
+  .equipo-main {
+    font-size: 32px;
+  }
+
+  .card-flip-container {
+    width: 240px;
+    height: 360px;
+  }
+
+  .card-infos-content {
+    flex-direction: column !important;
+    align-items: center;
+    text-align: center;
+  }
+
+  .card-infos-text {
+    text-align: center !important;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 767px) {
+  .sobre-title {
+    font-size: 36px;
+  }
+
+  .sobre-container {
+    padding: 100px 30px 60px;
+  }
+
+  .equipo-main {
+    font-size: 36px;
+  }
+
+  .card-flip-container {
+    width: 250px;
+    height: 370px;
+  }
+
+  .card-infos-content {
+    flex-direction: column !important;
+    align-items: center;
+    text-align: center;
+  }
+
+  .card-infos-text {
+    text-align: center !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 899px) {
+  .sobre-container {
+    padding: 100px 40px 60px;
+  }
+
+  .sobre-title {
+    font-size: 40px;
+  }
+
+  .equipo-main {
+    font-size: 38px;
+  }
+
+  .card-flip-container {
+    width: 220px;
+    height: 340px;
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1023px) {
+  .sobre-title {
+    font-size: 44px;
+  }
+
+  .equipo-main {
+    font-size: 42px;
+  }
+
+  .card-flip-container {
+    width: 240px;
+    height: 360px;
+  }
+}
+
+@media (min-width: 1024px) and (max-height: 800px) {
+  .sobre-container {
+    padding: 60px 40px;
+    min-height: auto;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 720px) and (max-height: 900px) {
+  .sobre-container {
+    padding: 80px 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  .equipo-container {
+    padding-bottom: 40px;
+  }
+
+  .card-infos-content {
+    flex-direction: column !important;
+    align-items: center;
+    text-align: center;
+  }
+
+  .card-infos-text {
+    text-align: center !important;
+  }
+}

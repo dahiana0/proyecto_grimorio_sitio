@@ -1,13 +1,10 @@
 import React from "react";
-import "../Styles/css.css";
+import "../Styles/Recomendaciones.css";
+
 
 const TituloRecomendaciones = () => {
   return (
     <div className="titulo-recomendaciones">
-
-      <p className="reco-sub">
-        Más Allá Del Grimorio
-      </p>
 
       <h1 className="reco-main">
         Lecturas Recomendadas

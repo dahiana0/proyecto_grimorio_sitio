@@ -15,13 +15,11 @@
 
 
 .mainmenu a:hover {
-
   text-shadow: 2px 2px 4px gray;
 }
 
 
 .mainmenu a:active {
-
   color: brown;
 }
 
@@ -102,45 +100,6 @@
   color: #111817;
   text-shadow: none;
 }
-
-.sobre-container {
-  width: 100%;
-  padding: 100px 20px;
-  min-height: 60vh;
-}
-
-
-.sobre-content {
-  max-width: 900px;
-}
-
-
-.sobre-subtitle {
-  letter-spacing: 6px;
-  color: #bfa76a;
-  font-size: 18px;
-  margin-bottom: 20px;
-  font-family: glacia;
-}
-
-
-.sobre-title {
-  font-size: 50px;
-  margin-bottom: 25px;
-  font-family: "pieces";
-  color: #1ad96d;
-  text-shadow: 0 0 20px #1ad96d;
-}
-
-
-.sobre-text {
-  font-size: 15px;
-  line-height: 1.8;
-  color: 312457;
-  font-family: glacia;
-  max-width: 600px;
-}
-
 
 
 .card-capitulo {
@@ -233,313 +192,6 @@
   border: 2px solid #bfa76a;
   color: #bfa76a;
 }
-
-
-.card-flip-container {
-  width: 260px;
-  height: 380px;
-  perspective: 1000px;
-  cursor: pointer;
-  flex: 0 0 auto;
-  /* evita que se deformen */
-}
-
-.card-flip {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  transform-style: preserve-3d;
-  transition: transform 0.6s;
-  transform-origin: center;
-  /* mejora el giro */
-}
-
-.card-flip.flip {
-  transform: rotateY(180deg);
-}
-
-.card-flip-front,
-.card-flip-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid #2a3a38;
-  backface-visibility: hidden;
-  box-sizing: border-box;
-}
-
-
-.card-flip-front {
-  position: absolute;
-}
-
-.card-flip-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.card-flip-overlay {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  padding: 15px;
-  background: linear-gradient(to top,
-      rgba(0, 0, 0, 0.9),
-      transparent);
-}
-
-
-.card-flip-back {
-  background-color: #111817;
-  transform: rotateY(180deg);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 25px;
-}
-
-
-.card-flip-avatar {
-  width: 55px;
-  height: 55px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-
-.card-flip-iniciales {
-  font-family: "pieces";
-  font-size: 18px;
-}
-
-.card-flip-title {
-  color: #fff;
-  font-family: "pieces";
-  text-align: center;
-}
-
-.card-flip-rol {
-  color: #bfa76a;
-  font-family: glacia;
-  font-size: 14px;
-  text-align: center;
-}
-
-.card-flip-desc {
-  color: #cfcfcf;
-  font-family: glacia;
-  font-size: 14px;
-  line-height: 1.6;
-  text-align: center;
-  max-height: 120px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-
-.card-grande {
-  width: 260px;
-  height: 350px;
-  border-radius: 12px;
-  overflow: hidden;
-  position: relative;
-  border: 1px solid #2a3a38;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-
-.card-grande:hover {
-  transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 0 25px #1ad96dc4(191, 167, 106, 0.5);
-  border: 1px solid #1ad96d;
-}
-
-
-.card-grande-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-
-.card-grande-overlay {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  padding: 15px;
-  background: linear-gradient(to top,
-      rgba(0, 0, 0, 0.95),
-      transparent);
-}
-
-
-.card-grande-rol {
-  color: #1ad96d;
-  font-size: 11px;
-  letter-spacing: 2px;
-  font-family: glacia;
-  margin-bottom: 5px;
-}
-
-
-.card-grande-nombre {
-  color: #fff;
-  font-size: 16px;
-  font-family: "pieces";
-  margin-bottom: 6px;
-}
-
-.card-grande-desc {
-  color: #ccc;
-  font-size: 12px;
-  line-height: 1.4;
-  font-family: glacia;
-  margin-bottom: 15px;
-}
-
-
-.card-grande-tag {
-  padding: 4px 10px;
-  border-radius: 20px;
-  border: 1px solid #1ad96d;
-  color: #1ad96d;
-  font-size: 12px;
-  font-family: glacia;
-}
-
-
-.card-grande-btn {
-  padding: 6px 12px;
-  border-radius: 6px;
-  border: 1px solid #1ad96d;
-  background: rgba(191, 167, 106, 0.1);
-  color: #1ad96d;
-  font-size: 11px;
-  cursor: pointer;
-  font-family: "pieces";
-  transition: all 0.3s ease;
-}
-
-.card-grande-btn:hover {
-  background: #1ad96d;
-  color: #000;
-}
-
-
-
-.card-infos-container {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 80px;
-}
-
-
-.card-infos-content {
-  gap: 25px;
-  max-width: 600px;
-  width: 100%;
-}
-
-
-.card-infos-icon {
-  width: 70px;
-  height: 70px;
-  border-radius: 12px;
-  border: 1px solid #1ad96d;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-shrink: 0;
-  background-color: rgba(83, 205, 105, 0.1);
-}
-
-
-.card-infos-img {
-  width: 35px;
-}
-
-
-.card-infos-text {
-  max-width: 420px;
-}
-
-
-.card-infos-title {
-  color: #1ad96d;
-  font-family: "pieces";
-  margin-bottom: 10px;
-}
-
-
-.card-infos-desc {
-  color: #cfcfcf;
-  font-family: glacia;
-  font-size: 14px;
-  line-height: 1.7;
-}
-
-
-
-.card-recomendacion {
-  gap: 15px;
-  padding: 15px;
-  border-radius: 12px;
-  border: 1px solid #2a3a38;
-  background-color: #0f1716;
-  width: 100%;
-  max-width: 360px;
-  transition: all 0.3s ease;
-}
-
-
-.card-recomendacion:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 0 20px rgba(64, 152, 63, 0.4);
-  border: 1px solid #1ad96d;
-}
-
-
-.card-recomendacion-img {
-  width: 80px;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 6px;
-}
-
-
-.card-recomendacion-title {
-  color: #1ad96d;
-  font-family: "pieces";
-  font-size: 16px;
-  margin-bottom: 5px;
-  text-shadow: 0 0 8px #1ad96d;
-}
-
-
-.card-recomendacion-meta {
-  color: #bfa76a;
-  font-size: 11px;
-  font-family: glacia;
-  margin-bottom: 8px;
-}
-
-
-.card-recomendacion-desc {
-  color: #ccc;
-  font-size: 12px;
-  font-family: glacia;
-  line-height: 1.4;
-}
-
 
 
 .cthulhu-container {
@@ -704,7 +356,6 @@
   margin-bottom: 20px;
   font-family: "pieces";
   color: #1ad96d;
-  ;
   text-shadow: 0 0 6px #1ad96d;
 }
 
@@ -734,84 +385,6 @@
   font-size: 80px;
   letter-spacing: 3px;
   text-shadow: 0 0 6px #fff;
-}
-
-.titulo-equipo {
-  width: 100%;
-  text-align: center;
-  margin-bottom: 60px;
-}
-
-.equipo-sub {
-  color: #bfa76a;
-  letter-spacing: 6px;
-  font-size: 18px;
-  font-family: glacia;
-  margin-bottom: 15px;
-}
-
-.equipo-main {
-  color: #1ad96d;
-  font-family: "pieces";
-  font-size: 50px;
-  letter-spacing: 2px;
-  text-shadow: 0 0 6p x#1ad96d;
-}
-
-.titulo-personajes {
-  text-align: center;
-  margin-bottom: 50px;
-}
-
-.personajes-sub {
-  color: #bfa76a;
-  letter-spacing: 4px;
-  font-size: 12px;
-  font-family: glacia;
-}
-
-.personajes-main {
-  color: #1ad96d;
-  font-family: "pieces";
-  font-size: 48px;
-  margin: 10px 0;
-  text-shadow: 0 0 8px #1ad96d;
-}
-
-.personajes-desc {
-  color: #aaa;
-  font-family: glacia;
-  font-size: 14px;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.titulo-recomendaciones {
-  margin-bottom: 40px;
-  text-align: center;
-}
-
-.reco-sub {
-  color: #bfa76a;
-  letter-spacing: 4px;
-  font-size: 12px;
-  font-family: glacia;
-}
-
-.reco-main {
-  color: #1ad96d;
-  font-family: "pieces";
-  font-size: 42px;
-  margin: 10px 0;
-  text-shadow: 0 0 6px #1ad96d;
-}
-
-.reco-desc {
-  color: #aaa;
-  font-family: glacia;
-  font-size: 14px;
-  max-width: 500px;
-  margin: 0 auto;
 }
 
 .video-title {
@@ -982,43 +555,6 @@
   background-color: #040f08;
 }
 
-.personajes-titulo {
-  padding-top: 100px;
-}
-
-.personajes-container {
-  width: 100%;
-  padding-top: 120px;
-  padding-bottom: 60px;
-  background-color: #040f08;
-}
-
-.personajes-grid {
-  max-width: 1200px;
-}
-
-.recomendaciones-section {
-  padding: 120px 40px 60px;
-  background-color: #040f08;
-  min-height: 100vh;
-}
-
-.recomendaciones-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 25px;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-
-.equipo-container {
-  width: 100%;
-  margin-top: 40px;
-  padding-bottom: 60px;
-  background-color: #040f08;
-}
-
 
 .navbar-toggler {
   border: 1px solid #fff;
@@ -1094,7 +630,6 @@ body:has(.cthulhu-container) {
 
 @media (max-width: 480px) {
 
-
   .navbar-collapse {
     background-color: rgba(0, 0, 0, 0.96);
     padding: 20px;
@@ -1137,26 +672,6 @@ body:has(.cthulhu-container) {
     font-size: 12px;
     padding: 8px 18px;
     letter-spacing: 1px;
-  }
-
-
-  .sobre-container {
-    padding: 100px 20px 60px;
-    min-height: auto;
-  }
-
-  .sobre-subtitle {
-    font-size: 11px;
-    letter-spacing: 4px;
-  }
-
-  .sobre-title {
-    font-size: 28px;
-  }
-
-  .sobre-text {
-    font-size: 13px;
-    line-height: 1.7;
   }
 
 
@@ -1206,41 +721,6 @@ body:has(.cthulhu-container) {
     margin-bottom: 30px;
   }
 
-  .equipo-main {
-    font-size: 28px;
-  }
-
-  .equipo-sub {
-    font-size: 13px;
-    letter-spacing: 4px;
-  }
-
-  .personajes-main {
-    font-size: 28px;
-  }
-
-  .personajes-sub {
-    font-size: 11px;
-  }
-
-  .personajes-desc {
-    font-size: 13px;
-    padding: 0 10px;
-  }
-
-  .reco-main {
-    font-size: 26px;
-  }
-
-  .reco-sub {
-    font-size: 11px;
-  }
-
-  .reco-desc {
-    font-size: 13px;
-    padding: 0 10px;
-  }
-
 
   .card-capitulo {
     width: 100%;
@@ -1259,74 +739,6 @@ body:has(.cthulhu-container) {
   .card-btn {
     font-size: 13px;
     padding: 10px;
-  }
-
-
-  .card-flip-container {
-    width: 100%;
-    max-width: 280px;
-    height: 360px;
-  }
-
-
-  .card-grande {
-    width: 100%;
-    max-width: 280px;
-    height: 320px;
-  }
-
-  .card-grande-nombre {
-    font-size: 15px;
-  }
-
-  .card-grande-desc {
-    font-size: 11px;
-  }
-
-
-  .card-recomendacion {
-    max-width: 100%;
-    flex-direction: row;
-    padding: 12px;
-  }
-
-  .card-recomendacion-img {
-    width: 65px;
-    height: 100px;
-    flex-shrink: 0;
-  }
-
-  .card-recomendacion-title {
-    font-size: 14px;
-  }
-
-  .card-recomendacion-desc {
-    font-size: 11px;
-  }
-
-
-  .card-infos-container {
-    margin-bottom: 40px;
-  }
-
-  .card-infos-content {
-    flex-direction: column !important;
-    align-items: center;
-    text-align: center;
-    gap: 15px;
-  }
-
-  .card-infos-text {
-    text-align: center !important;
-    max-width: 100%;
-  }
-
-  .card-infos-title {
-    font-size: 18px;
-  }
-
-  .card-infos-desc {
-    font-size: 13px;
   }
 
 
@@ -1437,35 +849,6 @@ body:has(.cthulhu-container) {
   }
 
 
-  .recomendaciones-section {
-    padding: 100px 16px 40px;
-  }
-
-  .recomendaciones-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
-
-  .personajes-container {
-    padding: 100px 16px 40px;
-  }
-
-  .personajes-grid {
-    flex-direction: column !important;
-    align-items: center;
-  }
-
-  .personajes-titulo {
-    padding-top: 80px;
-  }
-
-
-  .equipo-container {
-    padding: 0 16px 40px;
-  }
-
-
   .volver-btn {
     font-size: 11px !important;
     padding: 6px 12px !important;
@@ -1490,14 +873,6 @@ body:has(.cthulhu-container) {
     font-size: 14px;
   }
 
-  .sobre-title {
-    font-size: 32px;
-  }
-
-  .sobre-container {
-    padding: 100px 24px 60px;
-  }
-
   .historia-content {
     flex-direction: column !important;
     align-items: center;
@@ -1516,18 +891,6 @@ body:has(.cthulhu-container) {
 
   .titulo-main {
     font-size: 55px;
-  }
-
-  .equipo-main {
-    font-size: 32px;
-  }
-
-  .personajes-main {
-    font-size: 32px;
-  }
-
-  .reco-main {
-    font-size: 30px;
   }
 
   .video-box {
@@ -1558,38 +921,6 @@ body:has(.cthulhu-container) {
   .cthulhu-title {
     font-size: 30px;
   }
-
-  .recomendaciones-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .recomendaciones-section {
-    padding: 100px 20px 40px;
-  }
-
-  .card-flip-container {
-    width: 240px;
-    height: 360px;
-  }
-
-  .card-grande {
-    width: 240px;
-    height: 330px;
-  }
-
-  .personajes-container {
-    padding: 100px 20px 40px;
-  }
-
-  .card-infos-content {
-    flex-direction: column !important;
-    align-items: center;
-    text-align: center;
-  }
-
-  .card-infos-text {
-    text-align: center !important;
-  }
 }
 
 
@@ -1597,14 +928,6 @@ body:has(.cthulhu-container) {
 
   .banner-title {
     font-size: 80px;
-  }
-
-  .sobre-title {
-    font-size: 36px;
-  }
-
-  .sobre-container {
-    padding: 100px 30px 60px;
   }
 
   .historia-content {
@@ -1625,15 +948,6 @@ body:has(.cthulhu-container) {
 
   .titulo-main {
     font-size: 62px;
-  }
-
-  .equipo-main {
-    font-size: 36px;
-  }
-
-  .personajes-main,
-  .reco-main {
-    font-size: 34px;
   }
 
   .video-box {
@@ -1664,34 +978,6 @@ body:has(.cthulhu-container) {
   .cthulhu-title {
     font-size: 32px;
   }
-
-  .recomendaciones-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .recomendaciones-section {
-    padding: 100px 24px 50px;
-  }
-
-  .card-flip-container {
-    width: 250px;
-    height: 370px;
-  }
-
-  .card-grande {
-    width: 250px;
-    height: 340px;
-  }
-
-  .card-infos-content {
-    flex-direction: column !important;
-    align-items: center;
-    text-align: center;
-  }
-
-  .card-infos-text {
-    text-align: center !important;
-  }
 }
 
 
@@ -1703,14 +989,6 @@ body:has(.cthulhu-container) {
 
   .banner-text {
     font-size: 15px;
-  }
-
-  .sobre-container {
-    padding: 100px 40px 60px;
-  }
-
-  .sobre-title {
-    font-size: 40px;
   }
 
   .historia-content {
@@ -1732,15 +1010,6 @@ body:has(.cthulhu-container) {
 
   .titulo-main {
     font-size: 66px;
-  }
-
-  .equipo-main {
-    font-size: 38px;
-  }
-
-  .personajes-main,
-  .reco-main {
-    font-size: 36px;
   }
 
   .video-box {
@@ -1765,26 +1034,6 @@ body:has(.cthulhu-container) {
   .cthulhu-title {
     font-size: 36px;
   }
-
-  .recomendaciones-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .card-flip-container {
-    width: 220px;
-    height: 340px;
-  }
-
-  .card-grande {
-    width: 230px;
-    height: 340px;
-  }
-
-  .personajes-grid {
-    flex-wrap: wrap !important;
-    justify-content: center;
-    gap: 20px;
-  }
 }
 
 
@@ -1792,10 +1041,6 @@ body:has(.cthulhu-container) {
 
   .banner-title {
     font-size: 100px;
-  }
-
-  .sobre-title {
-    font-size: 44px;
   }
 
   .historia-img {
@@ -1808,15 +1053,6 @@ body:has(.cthulhu-container) {
 
   .titulo-main {
     font-size: 72px;
-  }
-
-  .equipo-main {
-    font-size: 42px;
-  }
-
-  .personajes-main,
-  .reco-main {
-    font-size: 38px;
   }
 
   .video-box {
@@ -1841,20 +1077,6 @@ body:has(.cthulhu-container) {
   .cthulhu-title {
     font-size: 38px;
   }
-
-  .recomendaciones-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .card-flip-container {
-    width: 240px;
-    height: 360px;
-  }
-
-  .card-grande {
-    width: 245px;
-    height: 345px;
-  }
 }
 
 
@@ -1866,10 +1088,6 @@ body:has(.cthulhu-container) {
 
   .titulo-main {
     font-size: 76px;
-  }
-
-  .recomendaciones-grid {
-    grid-template-columns: repeat(3, 1fr);
   }
 
   .historia-img {
@@ -1892,10 +1110,6 @@ body:has(.cthulhu-container) {
 
 
 @media (min-width: 1200px) {
-
-  .recomendaciones-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
 
   .historia-img {
     width: 300px;
@@ -1924,11 +1138,6 @@ body:has(.cthulhu-container) {
     margin-bottom: 20px;
   }
 
-  .sobre-container {
-    padding: 60px 40px;
-    min-height: auto;
-  }
-
   .historia-container {
     padding: 50px 40px;
   }
@@ -1949,10 +1158,6 @@ body:has(.cthulhu-container) {
     font-size: 64px;
   }
 
-  .sobre-container {
-    padding: 80px 20px;
-  }
-
   .historia-content {
     flex-direction: column !important;
     text-align: center;
@@ -1962,10 +1167,6 @@ body:has(.cthulhu-container) {
   .historia-img {
     max-width: 280px;
     width: 100%;
-  }
-
-  .recomendaciones-grid {
-    grid-template-columns: 1fr;
   }
 
   .cthulhu-content {
@@ -2022,35 +1223,7 @@ body:has(.cthulhu-container) {
     padding-left: 16px;
     padding-right: 16px;
   }
-
-  .personajes-grid {
-    justify-content: center;
-  }
 }
-
-@media (max-width: 767px) {
-
-  .equipo-container {
-    padding-bottom: 40px;
-  }
-
-  .recomendaciones-section {
-    padding-top: 100px;
-    padding-bottom: 40px;
-  }
-
-  .card-infos-content {
-    flex-direction: column !important;
-    align-items: center;
-    text-align: center;
-  }
-
-  .card-infos-text {
-    text-align: center !important;
-  }
-}
-
-
 
 
 .historia-img {
@@ -2087,7 +1260,6 @@ body:has(.cthulhu-container) {
 }
 
 .video-wrapper:hover {
-
   transform: scale(1.02);
 
   box-shadow:
@@ -2117,60 +1289,42 @@ body:has(.cthulhu-container) {
 }
 
 .banner-overlay {
-
   animation: overlayFade 2s ease;
-
 }
 
 .banner-content {
-
   z-index: 5;
-
 }
 
 .banner-title {
-
   transition: .35s;
-
 }
 
 .banner-title:hover {
-
   transform: scale(1.04);
 
   text-shadow:
     0 0 12px #1ad96d,
     0 0 30px #1ad96d;
-
 }
 
 .banner-btn {
-
   transition: .35s;
-
 }
 
 .banner-btn:hover {
-
   transform: translateY(-3px);
 
   box-shadow:
     0 0 20px rgba(26, 217, 109, .45);
-
 }
 
 @keyframes overlayFade {
-
   from {
-
     opacity: 0;
-
   }
 
   to {
-
     opacity: 1;
-
   }
-
 }

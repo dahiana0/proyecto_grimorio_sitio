@@ -3,14 +3,13 @@ import Header from "../Components/Header";
 import TituloPersonajes from "../Components/TituloPersonajes";
 import CardGrande from "../Components/CardGrande";
 import Footer from "../Components/footer";
-import "../Styles/css.css";
+import "../Styles/Personajes.css";
 
 export const Personajes = () => {
   return (
     <>
       <Header />
 
-      {/* Título */}
       <div
         className="personajes-titulo"
         data-aos="fade-down"
@@ -19,7 +18,6 @@ export const Personajes = () => {
         <TituloPersonajes />
       </div>
 
-      {/* Tarjetas */}
       <div className="personajes-container d-flex justify-content-center py-2">
         <div className="personajes-grid d-flex flex-wrap justify-content-center gap-4">
 
@@ -29,7 +27,7 @@ export const Personajes = () => {
             data-aos-duration="900"
           >
             <CardGrande
-              nombre="STEPHEN JONES"
+              nombre="Stephen Jones"
               rol="EL ESCÉPTICO"
               descripcion="Un hombre racional que no cree en lo sobrenatural..."
               imagen="./stephen.jpeg"
@@ -45,7 +43,7 @@ export const Personajes = () => {
             data-aos-duration="900"
           >
             <CardGrande
-              nombre="GEORGE ROGERS"
+              nombre="George Rogers"
               rol="EL CURADOR"
               descripcion="Dueño del museo de cera..."
               imagen="./rogers.jpeg"
@@ -61,7 +59,7 @@ export const Personajes = () => {
             data-aos-duration="900"
           >
             <CardGrande
-              nombre="ORABONA"
+              nombre="Orabona"
               rol="EL ENIGMA"
               descripcion="El socio silencioso de Rogers. Misterioso y raro..."
               imagen="./orabona.png"
@@ -77,7 +75,7 @@ export const Personajes = () => {
             data-aos-duration="900"
           >
             <CardGrande
-              nombre="CTHULHU"
+              nombre="Cthulhu"
               rol="EL HORROR"
               descripcion="Un ser informe y tentacular. El verdadero secreto del museo…"
               imagen="./monstruo.png"

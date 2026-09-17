@@ -3,7 +3,7 @@ import CardRecomendacion from "../Components/CardRecomendacion";
 import TituloRecomendaciones from "../Components/TituloRecomendaciones";
 import Header from "../Components/Header";
 import Footer from "../Components/footer";
-import "../Styles/css.css";
+import "../Styles/Recomendaciones.css";
 
 export const Recomendaciones = () => {
   return (

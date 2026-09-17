@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import "../Styles/css.css";
+import "../Styles/Personajes.css";
 import { useNavigate } from "react-router-dom";
 
 export const CardGrande = ({
@@ -57,7 +57,7 @@ export const CardGrande = ({
           onClick={irAPagina}
           className="card-grande-btn"
         >
-          VER MÁS
+          Ver Más
         </button>
 
       </div>

@@ -1,14 +1,10 @@
 import React from "react";
-import "../Styles/css.css";
+import "../Styles/Personajes.css";
 
 const TituloPersonajes = () => {
   return (
     <div className="titulo-personajes">
-
-      <p className="personajes-sub">
-        Archivo De Personajes
-      </p>
-
+      
       <h1 className="personajes-main">
         Conoce A Los Personajes
       </h1>
