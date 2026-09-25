@@ -9,6 +9,7 @@ import libroMesa from "../assets/libro mesa.json";
 import libroCae from "../assets/libro cae.json";
 
 import "../Styles/InteraccionesGuardadas.css";
+import "../Styles/css.css";
 
 const Lottie = LottieModule.default;
 

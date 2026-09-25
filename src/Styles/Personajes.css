@@ -1,4 +1,4 @@
-/* ===== TituloPersonajes ===== */
+
 .titulo-personajes {
   text-align: center;
   margin-bottom: 50px;
@@ -20,8 +20,6 @@
   margin: 0 auto;
 }
 
-
-/* ===== Contenedor de la página Personajes ===== */
 .personajes-titulo {
   padding-top: 100px;
 }
@@ -30,7 +28,7 @@
   width: 100%;
   padding-top: 120px;
   padding-bottom: 60px;
-  background-color: #040f08;
+
 }
 
 .personajes-grid {
@@ -38,7 +36,6 @@
 }
 
 
-/* ===== CardGrande ===== */
 .card-grande {
   width: 260px;
   height: 350px;
@@ -122,7 +119,7 @@
 }
 
 
-/* ===== RESPONSIVE ===== */
+
 @media (max-width: 480px) {
   .personajes-main {
     font-size: 28px;

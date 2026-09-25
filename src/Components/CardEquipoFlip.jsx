@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../Styles/SobreNosotros.css";
+import "../Styles/css.css";
 
 export const CardEquipoFlip = ({
   nombre,

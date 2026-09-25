@@ -1,6 +1,7 @@
 import React from "react";
 import "../Styles/SobreNosotros.css";
 import Header from "./Header";
+import "../Styles/css.css";
 
 export const BannerSobreNosotros = () => {
   return (

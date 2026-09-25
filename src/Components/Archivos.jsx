@@ -10,6 +10,7 @@ import libroCae from "../assets/libro cae.json";
 
 import "../Styles/InteraccionesGuardadas.css";
 import "../Styles/archivos.css";
+import "../Styles/css.css";
 
 const Lottie = LottieModule.default;
 

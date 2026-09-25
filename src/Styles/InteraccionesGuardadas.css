@@ -2,20 +2,9 @@
 .grimorio {
     width: 100%;
     min-height: 100vh;
-
     padding: 35px 7% 40px;
-
     box-sizing: border-box;
-
     position: relative;
-
-    background-image:
-        linear-gradient(
-            rgba(0, 10, 7, 0.78),
-            rgba(0, 12, 8, 0.88)
-        ),
-        url("/fondoOscuro.png");
-
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -24,7 +13,7 @@
 }
 
 
-/* Capa oscura sobre el fondo */
+
 .grimorio::before {
     content: "";
 
@@ -254,7 +243,7 @@
 
     color: #54ff9c;
 
-    font-size: 16px;
+    font-size: 25px;
 
     font-family: pieces;
 
@@ -558,7 +547,7 @@
 
     color: #4bf795;
 
-    font-size: 14px;
+    font-size: 18px;
 
     font-family: pieces;
 
@@ -724,7 +713,7 @@
 
     font-family: pieces;
 
-    font-size: 15px;
+    font-size: 25px;
 
     cursor: pointer;
 
@@ -778,7 +767,7 @@
 
     font-family: pieces;
 
-    font-size: 15px;
+    font-size: 25px;
 
     cursor: pointer;
 

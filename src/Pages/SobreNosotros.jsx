@@ -79,7 +79,7 @@ participación."
             nombre="Sofía Amaya Reyes"
             rol="DISEÑADORA PRINCIPAL"
             descripcion="Experta en arte gótico y diseño UI/UX. Crea la identidad visual y la experiencia inmersiva."
-            imagen="./Sofia.jpeg"
+            imagen="./Sofia.png"
             iniciales="SA"
           />
         </div>
@@ -89,7 +89,7 @@ participación."
             nombre="Yamile Arias Pérez"
             rol="ARTISTA CONCEPTUAL"
             descripcion="Creadora del estilo visual oscuro de Grimorio."
-            imagen="./Yamile.jpeg"
+            imagen="./Yamile.png"
             iniciales="YA"
           />
         </div>
@@ -99,7 +99,7 @@ participación."
             nombre="Karol Dahiana Usuga"
             rol="DESARROLLADORA LÍDER"
             descripcion="Encargada del desarrollo técnico del proyecto."
-            imagen="./Karol.jpeg"
+            imagen="./Karol.png"
             iniciales="KU"
           />
         </div>

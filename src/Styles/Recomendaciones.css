@@ -23,7 +23,7 @@
 
 .recomendaciones-section {
   padding: 120px 40px 60px;
-  background-color: #040f08;
+ 
   min-height: 100vh;
 }
 
@@ -41,7 +41,7 @@
   padding: 15px;
   border-radius: 12px;
   border: 1px solid #2a3a38;
-  background-color: #0f1716;
+  background-color: #0f171651;
   width: 100%;
   max-width: 360px;
   transition: all 0.3s ease;

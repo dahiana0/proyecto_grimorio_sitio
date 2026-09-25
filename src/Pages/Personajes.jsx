@@ -28,11 +28,8 @@ export const Personajes = () => {
           >
             <CardGrande
               nombre="Stephen Jones"
-              rol="EL ESCÉPTICO"
               descripcion="Un hombre racional que no cree en lo sobrenatural..."
               imagen="./stephen.jpeg"
-              tipo="Protagonista"
-              rasgo="Racional"
               ruta="/step"
             />
           </div>
@@ -44,11 +41,8 @@ export const Personajes = () => {
           >
             <CardGrande
               nombre="George Rogers"
-              rol="EL CURADOR"
               descripcion="Dueño del museo de cera..."
               imagen="./rogers.jpeg"
-              tipo="Antagonista"
-              rasgo="Obsesivo"
               ruta="/rogers"
             />
           </div>
@@ -60,11 +54,8 @@ export const Personajes = () => {
           >
             <CardGrande
               nombre="Orabona"
-              rol="EL ENIGMA"
               descripcion="El socio silencioso de Rogers. Misterioso y raro..."
               imagen="./orabona.png"
-              tipo="Misterioso"
-              rasgo="Aliado"
               ruta="/orabona"
             />
           </div>
@@ -76,17 +67,14 @@ export const Personajes = () => {
           >
             <CardGrande
               nombre="Cthulhu"
-              rol="EL HORROR"
               descripcion="Un ser informe y tentacular. El verdadero secreto del museo…"
               imagen="./monstruo.png"
-              tipo="Cósmico"
-              rasgo="Entidad"
               ruta="/cthulhu"
             />
           </div>
 
         </div>
-      </div>
+      </div>m
 
       <Footer />
     </>

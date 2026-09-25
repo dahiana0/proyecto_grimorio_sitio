@@ -1,5 +1,6 @@
 import React from "react";
 import "../Styles/Recomendaciones.css";
+import "../Styles/css.css";
 
 
 const CardRecomendacion = ({

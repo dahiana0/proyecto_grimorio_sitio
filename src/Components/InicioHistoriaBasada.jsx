@@ -72,10 +72,7 @@ export const InicioHistoriaBasada = () => {
           }}
           viewport={{ once: false }}
         >
-          <p className="historia-subtitle">
-            Historia Basada En
-          </p>
-
+        
           <h1 className="historia-title">
             "El Horror En El Museo" 1933
           </h1>

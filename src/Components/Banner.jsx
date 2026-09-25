@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import "../Styles/css.css";
+import "../Styles/css.css";
 
 export const Banner = () => {
   const navigate = useNavigate();
@@ -66,7 +67,7 @@ export const Banner = () => {
             duration: 0.8,
           }}
         >
-          GRIMORIO
+          Grimorio
         </motion.h1>
 
         <motion.p
@@ -112,7 +113,7 @@ export const Banner = () => {
             scale: 0.95,
           }}
         >
-          EXPLORAR MUSEO
+          Explorar Museo 
         </motion.button>
 
       </motion.div>

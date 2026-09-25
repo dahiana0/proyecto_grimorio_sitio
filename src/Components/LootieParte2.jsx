@@ -5,6 +5,7 @@ import edificio from "../assets/edificio.json";
 import rejas from "../assets/rejas.json";
 import "../Styles/LootieParte2.css";
 
+
 const Lottie = LottieModule.default;
 
 const LootieParte2 = () => {

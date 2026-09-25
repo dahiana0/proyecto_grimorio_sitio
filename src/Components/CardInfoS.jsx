@@ -1,5 +1,6 @@
 import React from "react";
 import "../Styles/SobreNosotros.css";
+import "../Styles/css.css";
 
 export const CardInfoS = ({ titulo, texto, imagen, derecha = false }) => {
   return (

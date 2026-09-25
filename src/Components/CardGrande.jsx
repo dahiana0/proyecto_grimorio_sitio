@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import "../Styles/Personajes.css";
 import { useNavigate } from "react-router-dom";
+import "../Styles/css.css";
 
 export const CardGrande = ({
   nombre,
@@ -47,11 +48,6 @@ export const CardGrande = ({
         <p className="card-grande-desc">
           {descripcion}
         </p>
-
-        <div className="d-flex gap-2 mb-2">
-          <span className="card-grande-tag">{tipo}</span>
-          <span className="card-grande-tag">{rasgo}</span>
-        </div>
 
         <button
           onClick={irAPagina}

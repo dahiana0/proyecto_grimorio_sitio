@@ -8,6 +8,7 @@ import step from "../assets/step1.json";
 import libroM from "../assets/libro mesa.json";
 import libroc from "../assets/libro cae.json";
 
+
 import "../Styles/LootieKarol.css";
 
 const Lottie = LottieModule.default;

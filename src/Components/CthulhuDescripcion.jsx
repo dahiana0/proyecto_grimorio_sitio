@@ -1,6 +1,7 @@
 import React from "react";
 import "../Styles/css.css";
 import { useNavigate } from "react-router-dom";
+import "../Styles/css.css";
 
 export const CthulhuDescripcion = () => {
   const navigate = useNavigate();
