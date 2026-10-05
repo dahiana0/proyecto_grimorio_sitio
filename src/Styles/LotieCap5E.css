@@ -1,0 +1,124 @@
+/* ---------------------------------------------------------------------
+   Escena y cámara
+--------------------------------------------------------------------- */
+.escena5e {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1473 / 647;
+    overflow: hidden;
+    background: #000;
+}
+
+.camara5e {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-origin: center center;
+    animation: zoomInicial5e 3s ease-in-out forwards;
+}
+
+@keyframes zoomInicial5e {
+    0% {
+        transform: scale(2.2) translate(-10px, 170px);
+    }
+
+    35% {
+        transform: scale(2.2) translate(-10px, 170px);
+    }
+
+    100% {
+        transform: scale(1) translate(0, 0);
+    }
+}
+
+/* ---------------------------------------------------------------------
+   Fondo (imagen)
+--------------------------------------------------------------------- */
+.fondo5e {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+/* ---------------------------------------------------------------------
+   Lámpara (imagen, sin interacción)
+--------------------------------------------------------------------- */
+.lampara5e {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 200px; /* ajusta tamaño y posición */
+    z-index: 5;
+    pointer-events: none;
+}
+
+/* ---------------------------------------------------------------------
+   Lotties interactivos (base compartida)
+   Cada uno define abajo su z-index y, si hace falta, su posición/tamaño.
+--------------------------------------------------------------------- */
+.pintura1-5e,
+.pintura2-5e,
+.huesos5e {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 1100px;
+    cursor: pointer;
+    transition: transform .25s ease;
+}
+
+.pintura1-5e:hover,
+.pintura2-5e:hover,
+.huesos5e:hover {
+    transform: translateX(-50%) scale(1.03);
+}
+
+/* ---------------------------------------------------------------------
+   Orden de capas: de atrás hacia adelante
+--------------------------------------------------------------------- */
+.pintura1-5e { z-index: 2; }
+.pintura2-5e { z-index: 2; }
+
+.huesos5e { z-index: 4; }
+
+/* ---------------------------------------------------------------------
+   Personajes (videos): Step, Roges y monstruo
+--------------------------------------------------------------------- */
+.step5e,
+.roges5e,
+.monstruo5e {
+    position: absolute;
+    bottom: 1px;
+    transform: translateX(-50%);
+    cursor: pointer;
+    transition: transform .25s ease;
+}
+
+.step5e {
+    left: 30%;
+    width: 200px; /* ajusta tamaño y posición */
+    z-index: 10;
+}
+
+.roges5e {
+    left: 50%;
+    width: 200px;
+    z-index: 10;
+}
+
+.monstruo5e {
+    left: 70%;
+    width: 350px;
+    z-index: 9;
+}
+
+.step5e:hover,
+.roges5e:hover,
+.monstruo5e:hover {
+    transform: translateX(-50%) scale(1.05);
+}

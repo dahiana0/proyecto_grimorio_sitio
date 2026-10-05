@@ -1,0 +1,112 @@
+
+.escena5b {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1473 / 647;
+    overflow: hidden;
+    background: #000;
+}
+
+.camara5b {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-origin: center center;
+    animation: zoomInicial5b 3s ease-in-out forwards;
+}
+
+@keyframes zoomInicial5b {
+    0% {
+        transform: scale(2.2) translate(-10px, 170px);
+    }
+
+    35% {
+        transform: scale(2.2) translate(-10px, 170px);
+    }
+
+    100% {
+        transform: scale(1) translate(0, 0);
+    }
+}
+
+/* ---------------------------------------------------------------------
+   Fondo (imagen)
+--------------------------------------------------------------------- */
+.fondo5b {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+/* ---------------------------------------------------------------------
+   Lotties interactivos (base compartida)
+   Cada uno define abajo su z-index y, si hace falta, su posición/tamaño.
+--------------------------------------------------------------------- */
+.estatua1-5b,
+.estatua2-5b,
+.estatua3-5b,
+.estatua4-5b,
+.estatua5-5b,
+.estatua6-5b,
+.telarana1-5b,
+.telarana2-5b,
+.telarana3-5b,
+.lampara5b {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 1100px;
+    cursor: pointer;
+    transition: transform .25s ease;
+}
+
+.estatua1-5b:hover,
+.estatua2-5b:hover,
+.estatua3-5b:hover,
+.estatua4-5b:hover,
+.estatua5-5b:hover,
+.estatua6-5b:hover,
+.telarana1-5b:hover,
+.telarana2-5b:hover,
+.telarana3-5b:hover,
+.lampara5b:hover {
+    transform: translateX(-50%) scale(1.03);
+}
+
+/* ---------------------------------------------------------------------
+   Orden de capas: de atrás hacia adelante
+--------------------------------------------------------------------- */
+.estatua1-5b { z-index: 2; }
+.estatua2-5b { z-index: 3; }
+.estatua3-5b { z-index: 4; }
+.estatua4-5b { z-index: 5; }
+.estatua5-5b { z-index: 6; }
+.estatua6-5b { z-index: 7; }
+
+.telarana1-5b { z-index: 8; }
+.telarana2-5b { z-index: 8; }
+.telarana3-5b { z-index: 8; }
+
+.lampara5b { z-index: 9; }
+
+/* ---------------------------------------------------------------------
+   Step (video)
+--------------------------------------------------------------------- */
+.step5b {
+    position: absolute;
+    left: 50%;
+    bottom: 1px;
+    transform: translateX(-50%);
+    width: 200px;
+    z-index: 10;
+    cursor: pointer;
+    transition: transform .25s ease;
+}
+
+.step5b:hover {
+    transform: translateX(-50%) scale(1.05);
+}
