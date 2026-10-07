@@ -11,7 +11,7 @@ const DURACION_TRANSICION = 350;
 
 export default function VisorComic2({
   numeroCapitulo = "II",
-  tituloCapitulo = "RELIQUIAS",
+  tituloCapitulo = "Reliquias",
 }) {
   const navigate = useNavigate();
 

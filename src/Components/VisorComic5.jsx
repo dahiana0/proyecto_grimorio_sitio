@@ -9,7 +9,7 @@ import LotieCap5D from "./LotieCap5D";
 import LotieCap5E from "./LotieCap5E";
 import "../Styles/visorCap1.css";
 
-// Debe coincidir con el "transition" de .visor-scene-content en el CSS.
+
 const DURACION_TRANSICION = 350;
 
 export default function VisorComic5({
@@ -32,9 +32,7 @@ export default function VisorComic5({
 
   const [transicionando, setTransicionando] = useState(false);
 
-  // ---------------------------------------------------------------------
-  // Datos: subtítulos por escena (llena inicio/fin según tu audio)
-  // ---------------------------------------------------------------------
+  
   const subtitulosPorEscena = {
     0: [
       { inicio: 0.5, fin: 5.0, texto: "Texto del subtítulo 1 de la escena 1." },
@@ -54,9 +52,7 @@ export default function VisorComic5({
     ],
   };
 
-  // ---------------------------------------------------------------------
-  // Datos: 5 escenas Lottie, cada una con su audio
-  // ---------------------------------------------------------------------
+ 
   const escenas = [
     { tipo: "lottie", componente: <LotieCap5A />, audio: "/audios/cap5-1.wav" },
     { tipo: "lottie", componente: <LotieCap5B />, audio: "/audios/cap5-2.wav" },
@@ -65,9 +61,7 @@ export default function VisorComic5({
     { tipo: "lottie", componente: <LotieCap5E />, audio: "/audios/cap5-5.wav" },
   ];
 
-  // ---------------------------------------------------------------------
-  // Subtítulos: sincronización con el audio
-  // ---------------------------------------------------------------------
+ 
   const actualizarSubtitulo = () => {
     if (!audioRef.current) return;
 

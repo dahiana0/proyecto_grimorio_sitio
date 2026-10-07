@@ -11,14 +11,74 @@ import "../Styles/visorCap1.css";
 // Debe coincidir con el "transition" definido en .visor-scene-content en el CSS.
 const DURACION_TRANSICION = 350;
 
+// Audio del segundo tramo del narrador en la parte 3
+// (suena cuando terminan los diálogos de Step y Rogers).
+// Guárdalo en public/audios/ o cambia la ruta si se llama distinto.
+const AUDIO_PARTE3_TRAMO_B = "./audios/Narrador_2.mp3";
+
 export default function VisorCapitulo({
   numeroCapitulo = "I",
-  tituloCapitulo = "UMBRAL",
+  tituloCapitulo = "Umbral",
 }) {
   const navigate = useNavigate();
 
   const videoRef = useRef(null);
   const audioRef = useRef(null);
+
+  // Tramo del narrador en la parte 3: "A" (antes de los diálogos)
+  // o "B" (después de que Step dice "Acepto.").
+  // Es un ref para que siempre tenga el valor actual al sincronizar subtítulos.
+  const tramoNarradorRef = useRef("A");
+
+  // Temporizadores del subtítulo de respaldo (cuando no existe el audio del tramo B)
+  const respaldoTimersRef = useRef([]);
+  const limpiarRespaldo = () => {
+    respaldoTimersRef.current.forEach(clearTimeout);
+    respaldoTimersRef.current = [];
+  };
+
+  // ---------------------------------------------------------------------
+  // Autoplay: si el navegador bloquea el audio, se reintenta con el
+  // primer clic o tecla del usuario
+  // ---------------------------------------------------------------------
+  const reintentoRef = useRef(null);
+
+  const cancelarReintento = () => {
+    if (reintentoRef.current) {
+      window.removeEventListener("pointerdown", reintentoRef.current);
+      window.removeEventListener("keydown", reintentoRef.current);
+      reintentoRef.current = null;
+    }
+  };
+
+  // Reproduce el audio actual. Si el navegador lo bloquea por política de
+  // autoplay (NotAllowedError), espera la primera interacción y lo reintenta.
+  // Cualquier otro error se pasa a "alFallar" (si existe).
+  const reproducirConReintento = (alFallar) => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    cancelarReintento();
+
+    audio.play().catch((error) => {
+      // Cambiar de src mientras carga provoca AbortError: es normal, se ignora
+      if (error && error.name === "AbortError") return;
+
+      if (error && error.name === "NotAllowedError") {
+        const reintentar = () => {
+          cancelarReintento();
+          if (audioRef.current) audioRef.current.play().catch(() => {});
+        };
+        reintentoRef.current = reintentar;
+        window.addEventListener("pointerdown", reintentar, { once: true });
+        window.addEventListener("keydown", reintentar, { once: true });
+        return;
+      }
+
+      console.error("No se pudo reproducir el audio:", error);
+      if (alFallar) alFallar(error);
+    });
+  };
 
   // ---------------------------------------------------------------------
   // Estado
@@ -34,7 +94,9 @@ export default function VisorCapitulo({
   const [play, setPlay] = useState(false);
   const [showControls, setShowControls] = useState(true);
 
+  // Subtítulo del narrador y subtítulo de los diálogos (Step y Rogers)
   const [subtituloActual, setSubtituloActual] = useState("");
+  const [subtituloDialogo, setSubtituloDialogo] = useState("");
 
   // Controla el fundido a oscuro al cambiar de escena/capítulo
   const [transicionando, setTransicionando] = useState(false);
@@ -97,7 +159,31 @@ export default function VisorCapitulo({
     },
   ];
 
-  const subtitulosParte3 = [];
+  // Narrador de la parte 3, tramo A (antes de que hablen Step y Rogers).
+  // Los diálogos de Step y Rogers van dentro de LootieParte3.
+  const subtitulosParte3 = [
+    {
+      inicio: 0.4,
+      fin: 7.03,
+      texto: "En el corazón del museo donde lo extraño toma forma,",
+    },
+    {
+      inicio: 7.04,
+      fin: 12.87,
+      texto: "Stephen Jones, finalmente se enfrenta al hombre detrás de todo.",
+    },
+  ];
+
+  // Narrador de la parte 3, tramo B (después de "Acepto.").
+  // Es otro audio, así que sus tiempos empiezan en 0.
+  const subtitulosParte3B = [
+    {
+      inicio: 0.68,
+      fin: 8.55,
+      texto:
+        "George Rogers, el guardián de secretos que muchos han intentado revelar sin éxito.",
+    },
+  ];
 
   const subtitulosPorEscena = {
     0: subtitulosKarol,
@@ -106,23 +192,73 @@ export default function VisorCapitulo({
   };
 
   // ---------------------------------------------------------------------
+  // Narrador: pausa mientras hablan Step y Rogers, y luego sigue
+  // ---------------------------------------------------------------------
+  const pausarNarrador = () => {
+    cancelarReintento();
+    if (audioRef.current) audioRef.current.pause();
+    setSubtituloActual("");
+  };
+
+  // Cuando terminan los diálogos, suena el segundo tramo del narrador
+  const reanudarNarrador = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    tramoNarradorRef.current = "B";
+    audio.src = AUDIO_PARTE3_TRAMO_B;
+    audio.currentTime = 0;
+
+    // Si el audio no existe o falla (no por autoplay), el subtítulo
+    // se muestra igual, con los mismos tiempos
+    reproducirConReintento(mostrarSubtituloSinAudio);
+  };
+
+  // Subtítulo del tramo B sin audio (usa los tiempos de subtitulosParte3B)
+  const mostrarSubtituloSinAudio = () => {
+    limpiarRespaldo();
+    subtitulosParte3B.forEach((s) => {
+      respaldoTimersRef.current.push(
+        setTimeout(() => setSubtituloActual(s.texto), s.inicio * 1000),
+        setTimeout(() => setSubtituloActual(""), s.fin * 1000)
+      );
+    });
+  };
+
+  // ---------------------------------------------------------------------
   // Datos: escenas del capítulo
   // ---------------------------------------------------------------------
   const escenas = [
     { tipo: "lottie", componente: <LootieKarol />, audio: "/audios/Cap1P1.wav" },
     { tipo: "lottie", componente: <LootieParte2 />, audio: "/audios/Cap1P2.wav" },
-    { tipo: "lottie", componente: <LootieParte3 />, audio: "/audios/Cap1P3.wav" },
+    {
+      tipo: "lottie",
+      componente: (
+        <LootieParte3
+          volumen={nivelVolumen}
+          onDialogoInicio={pausarNarrador}
+          onDialogoFin={reanudarNarrador}
+          onSubtitulo={setSubtituloDialogo}
+        />
+      ),
+      audio: "/audios/Narrador_1.mp3",
+    },
     { tipo: "video", video: "/Capitulo1V.mp4" },
   ];
 
   // ---------------------------------------------------------------------
-  // Subtítulos: sincronización con el audio
+  // Subtítulos: sincronización con el audio del narrador
   // ---------------------------------------------------------------------
   const actualizarSubtitulo = () => {
     if (!audioRef.current) return;
 
     const tiempo = audioRef.current.currentTime;
-    const subtitulos = subtitulosPorEscena[index] || [];
+
+    // En la parte 3 se usa la lista del tramo que esté sonando
+    let subtitulos = subtitulosPorEscena[index] || [];
+    if (index === 2 && tramoNarradorRef.current === "B") {
+      subtitulos = subtitulosParte3B;
+    }
 
     const subtitulo = subtitulos.find(
       (s) => tiempo >= s.inicio && tiempo <= s.fin
@@ -134,15 +270,22 @@ export default function VisorCapitulo({
   useEffect(() => {
     if (!audioRef.current) return;
 
+    // Al cambiar de escena se limpia el subtítulo de diálogos,
+    // se reinicia el tramo del narrador y se cancela cualquier reintento pendiente
+    setSubtituloDialogo("");
+    tramoNarradorRef.current = "A";
+    limpiarRespaldo();
+    cancelarReintento();
+
     const escenaActual = escenas[index];
 
     if (escenaActual.tipo === "lottie" && escenaActual.audio) {
       audioRef.current.src = escenaActual.audio;
       audioRef.current.currentTime = 0;
 
-      audioRef.current.play().catch((error) => {
-        console.log("El audio no pudo reproducirse automáticamente:", error);
-      });
+      // Si el navegador bloquea el autoplay (p. ej. al recargar),
+      // el audio arranca con el primer clic o tecla
+      reproducirConReintento();
     } else {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
@@ -150,6 +293,15 @@ export default function VisorCapitulo({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index]);
+
+  // Al salir del visor se cancelan temporizadores y reintentos pendientes
+  useEffect(() => {
+    return () => {
+      limpiarRespaldo();
+      cancelarReintento();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (audioRef.current) audioRef.current.volume = nivelVolumen;
@@ -344,9 +496,10 @@ export default function VisorCapitulo({
             </div>
           )}
 
+          {/* Subtítulo: primero el del diálogo (Step/Rogers), si no el del narrador */}
           {mostrarSubtitulo && escenas[index].tipo === "lottie" && (
             <div className="visor-sub">
-              <p>{subtituloActual}</p>
+              <p>{subtituloDialogo || subtituloActual}</p>
             </div>
           )}
         </div>
