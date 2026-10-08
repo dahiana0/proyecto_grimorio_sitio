@@ -28,8 +28,9 @@ import { IntroJuego } from "./Pages/IntroJuego";
 import { Juego } from "./Pages/Juego";
 import { ComentariosCompletos } from "./Pages/ComentariosCompletos";
 import LootieKarol from "./Components/LootieKarol";
-import InteraccionesGuardadas from "./Components/InteraccionesGuardadas";
+import InteraccionesGuardadas from "./Components/InteraccionesGuardadas.jsx";
 import Archivos from "./Components/Archivos";
+import Diario from "./Components/InteraccionesGuardadas.jsx";
 
 
 
@@ -66,7 +67,7 @@ export const App = () => {
           <Route path="/intro-juego" element={<IntroJuego />} />
           <Route path="/juego" element={<Juego />} />
           <Route path="/lootkarol" element={<LootieKarol />} />
-          <Route path="/archivo" element={<InteraccionesGuardadas />} />
+          <Route path="/archivo" element={<Diario />} />
           <Route path="/archivo2" element={<Archivos />} />
 
         </Routes>

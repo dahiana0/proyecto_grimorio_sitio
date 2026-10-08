@@ -14,6 +14,7 @@
     "aos": "^2.3.4",
     "bootstrap": "^5.3.8",
     "framer-motion": "^12.42.2",
+    "gsap": "^3.15.0",
     "lottie-react": "^2.4.1",
     "motion": "^12.40.0",
     "react": "^19.2.4",

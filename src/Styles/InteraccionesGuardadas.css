@@ -1,4 +1,3 @@
-
 .grimorio {
     width: 100%;
     min-height: 100vh;
@@ -11,8 +10,6 @@
 
     color: #ffffff;
 }
-
-
 
 .grimorio::before {
     content: "";
@@ -30,9 +27,6 @@
     pointer-events: none;
     z-index: 0;
 }
-
-
-
 
 .madera {
     width: 100%;
@@ -55,13 +49,9 @@
     z-index: 1;
 }
 
-
 .madera::before {
     display: none;
 }
-
-
-
 
 .pergamino {
     position: relative;
@@ -89,8 +79,6 @@
     overflow: visible;
 }
 
-
-
 .encabezado {
     text-align: center;
 
@@ -98,9 +86,6 @@
 
     position: relative;
 }
-
-
-
 
 .encabezado::before {
     content: "✦  ARCHIVO DEL GRIMORIO  ✦";
@@ -122,7 +107,6 @@
     text-shadow:
         0 0 8px rgba(55, 255, 145, 0.7);
 }
-
 
 .encabezado h1 {
     font-size: clamp(42px, 5vw, 70px);
@@ -147,9 +131,6 @@
         0 0 35px rgba(30, 255, 133, 0.4);
 }
 
-
-
-
 .encabezado h1::after {
     content: "────── ◉ ──────";
 
@@ -167,7 +148,6 @@
         0 0 10px rgba(30, 255, 133, 0.7);
 }
 
-
 .encabezado p {
     color: #c8d5cf;
 
@@ -177,9 +157,6 @@
 
     margin-top: 20px;
 }
-
-
-
 
 .informacion {
     display: flex;
@@ -197,7 +174,6 @@
     max-width: 1400px;
 }
 
-
 .informacion span {
     font-size: 14px;
 
@@ -209,7 +185,6 @@
 
     letter-spacing: 1px;
 }
-
 
 .informacion strong {
     display: block;
@@ -228,6 +203,11 @@
         0 0 10px rgba(45, 255, 140, 0.7);
 }
 
+.accionesInfo {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
 
 .btnLimpiar {
     border: 1px solid #38e985;
@@ -257,7 +237,6 @@
     backdrop-filter: blur(5px);
 }
 
-
 .btnLimpiar:hover {
     background: rgba(35, 255, 135, 0.12);
 
@@ -267,7 +246,6 @@
 
     transform: translateY(-2px);
 }
-
 
 .mensajeVacio {
     width: 100%;
@@ -286,8 +264,11 @@
         rgba(0, 15, 10, 0.55);
 
     box-sizing: border-box;
-}
 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 .mensajeVacio h2 {
     color: #4dff99;
@@ -302,7 +283,6 @@
         0 0 10px rgba(40, 255, 130, 0.5);
 }
 
-
 .mensajeVacio p {
     color: #9caea5;
 
@@ -313,14 +293,74 @@
     font-family: glacia;
 }
 
-.mensajeVacio {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+/* ===== TARJETAS DE CAPÍTULOS ===== */
+
+.contenedorCapitulos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 22px;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
+.tarjetaCapitulo {
+    position: relative;
+    cursor: pointer;
+    text-align: center;
+    padding: 40px 20px 30px;
+    border-radius: 12px;
+    border: 1px solid rgba(66, 255, 154, 0.35);
+    background: linear-gradient(145deg, rgba(3, 25, 18, 0.82), rgba(0, 10, 7, 0.92));
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(8px);
+    overflow: hidden;
+    transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+}
 
+.tarjetaCapitulo::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 12%;
+    right: 12%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #4aff9a, transparent);
+    box-shadow: 0 0 8px rgba(40, 255, 140, 0.8);
+}
 
+.tarjetaCapitulo:hover {
+    transform: translateY(-8px);
+    border-color: rgba(66, 255, 154, 0.8);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 20px rgba(35, 255, 135, 0.15);
+}
+
+.numeroCapitulo {
+    display: block;
+    font-family: pieces;
+    font-size: 80px;
+    line-height: 1;
+    color: #54ff9c;
+    text-shadow: 0 0 10px rgba(45, 255, 140, 0.7), 0 0 30px rgba(45, 255, 140, 0.4);
+    margin-bottom: 15px;
+}
+
+.tarjetaCapitulo h3 {
+    margin: 0 0 10px;
+    font-family: pieces;
+    font-weight: normal;
+    font-size: 26px;
+    text-transform: uppercase;
+    color: #f1f5f2;
+}
+
+.contadorCapitulo {
+    margin: 0;
+    font-family: glacia, sans-serif;
+    font-size: 15px;
+    color: #9caea5;
+}
+
+/* ===== TARJETAS DE INTERACCIONES ===== */
 
 .contenedorTarjetas {
     display: grid;
@@ -334,8 +374,6 @@
 
     margin: 0 auto;
 }
-
-
 
 .tarjeta {
     position: relative;
@@ -366,7 +404,6 @@
     overflow: hidden;
 }
 
-
 .tarjeta::before {
     content: "";
 
@@ -383,8 +420,6 @@
 
     pointer-events: none;
 }
-
-
 
 .tarjeta::after {
     content: "";
@@ -409,7 +444,6 @@
         0 0 8px rgba(40, 255, 140, 0.8);
 }
 
-
 .tarjeta:hover {
     transform: translateY(-8px);
 
@@ -419,9 +453,6 @@
         0 15px 35px rgba(0, 0, 0, 0.6),
         0 0 20px rgba(35, 255, 135, 0.15);
 }
-
-
-
 
 .imagenTarjeta {
     width: 100%;
@@ -438,8 +469,6 @@
 
     position: relative;
 }
-
-
 
 .imagenTarjeta::before {
     content: "";
@@ -462,7 +491,6 @@
     filter: blur(8px);
 }
 
-
 .imagenTarjeta svg {
     width: 150px !important;
 
@@ -472,7 +500,6 @@
 
     z-index: 1;
 }
-
 
 .imagenTarjeta canvas {
     width: 150px !important;
@@ -484,7 +511,6 @@
     z-index: 1;
 }
 
-
 .contenidoTarjeta {
     text-align: center;
 
@@ -492,7 +518,6 @@
 
     z-index: 2;
 }
-
 
 .contenidoTarjeta h3 {
     color: #f1f5f2;
@@ -513,7 +538,6 @@
         0 0 5px rgba(255, 255, 255, 0.25);
 }
 
-
 .contenidoTarjeta span {
     display: block;
 
@@ -527,9 +551,6 @@
 
     letter-spacing: .3px;
 }
-
-
-
 
 .btnEliminar {
     width: 100%;
@@ -556,7 +577,6 @@
     transition: all .3s ease;
 }
 
-
 .btnEliminar:hover {
     background:
         rgba(45, 255, 140, 0.12);
@@ -570,9 +590,6 @@
 
     transform: translateY(-2px);
 }
-
-
-
 
 .pergamino::-webkit-scrollbar {
     width: 8px;
@@ -592,99 +609,7 @@
     background: #43f593;
 }
 
-
-
-
-@media (max-width: 1100px) {
-
-    .grimorio {
-        padding: 100px 4% 35px;
-    }
-
-    .contenedorTarjetas {
-        grid-template-columns:
-            repeat(3, 1fr);
-    }
-}
-
-
-@media (max-width: 768px) {
-
-    .grimorio {
-        padding: 90px 20px 30px;
-
-        background-attachment: scroll;
-    }
-
-    .encabezado h1 {
-        font-size: 38px;
-    }
-
-    .encabezado::before {
-        font-size: 11px;
-
-        letter-spacing: 3px;
-    }
-
-    .encabezado p {
-        font-size: 15px;
-    }
-
-    .informacion {
-        flex-direction: column;
-
-        align-items: flex-start;
-    }
-
-    .btnLimpiar {
-        width: 100%;
-    }
-
-    .contenedorTarjetas {
-        grid-template-columns:
-            repeat(2, 1fr);
-
-        gap: 15px;
-    }
-
-    .imagenTarjeta {
-        height: 150px;
-    }
-
-    .imagenTarjeta svg,
-    .imagenTarjeta canvas {
-        width: 120px !important;
-        height: 120px !important;
-    }
-
-    .contenidoTarjeta h3 {
-        font-size: 19px;
-    }
-}
-
-
-@media (max-width: 500px) {
-
-    .grimorio {
-        padding: 85px 15px 25px;
-    }
-
-    .encabezado h1 {
-        font-size: 30px;
-    }
-
-    .contenedorTarjetas {
-        grid-template-columns: 1fr;
-    }
-
-    .tarjeta {
-        padding: 15px;
-    }
-
-    .imagenTarjeta {
-        height: 170px;
-    }
-}
+/* ===== BOTONES DE NAVEGACIÓN ===== */
 
 .volverInicio {
     width: 100%;
@@ -723,9 +648,7 @@
         0 0 8px rgba(35, 255, 135, 0.12);
 }
 
-
 .btnVolver:hover {
-
     background: rgba(35, 255, 135, 0.12);
 
     border-color: #54ff9c;
@@ -736,7 +659,6 @@
         0 0 15px rgba(35, 255, 135, 0.35);
 
     transform: translateX(-3px);
-
 }
 
 .volverComic {
@@ -745,7 +667,7 @@
     margin: 0 auto 10px;
     display: flex;
     justify-content: flex-end;
-    margin-top:-60px ;
+    margin-top: -60px;
 }
 
 .btncomic {
@@ -777,9 +699,7 @@
         0 0 8px rgba(35, 255, 135, 0.12);
 }
 
-
 .btncomic:hover {
-
     background: rgba(35, 255, 135, 0.12);
 
     border-color: #54ff9c;
@@ -790,6 +710,109 @@
         0 0 15px rgba(35, 255, 135, 0.35);
 
     transform: translateX(-3px);
-
 }
 
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 1100px) {
+
+    .grimorio {
+        padding: 100px 4% 35px;
+    }
+
+    .contenedorTarjetas {
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+
+    .grimorio {
+        padding: 90px 20px 30px;
+
+        background-attachment: scroll;
+    }
+
+    .encabezado h1 {
+        font-size: 38px;
+    }
+
+    .encabezado::before {
+        font-size: 11px;
+
+        letter-spacing: 3px;
+    }
+
+    .encabezado p {
+        font-size: 15px;
+    }
+
+    .informacion {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .accionesInfo {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .btnLimpiar {
+        width: 100%;
+    }
+
+    .contenedorCapitulos {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .contenedorTarjetas {
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 15px;
+    }
+
+    .imagenTarjeta {
+        height: 150px;
+    }
+
+    .imagenTarjeta svg,
+    .imagenTarjeta canvas {
+        width: 120px !important;
+        height: 120px !important;
+    }
+
+    .contenidoTarjeta h3 {
+        font-size: 19px;
+    }
+}
+
+@media (max-width: 500px) {
+
+    .grimorio {
+        padding: 85px 15px 25px;
+    }
+
+    .encabezado h1 {
+        font-size: 30px;
+    }
+
+    .contenedorCapitulos {
+        grid-template-columns: 1fr;
+    }
+
+    .contenedorTarjetas {
+        grid-template-columns: 1fr;
+    }
+
+    .tarjeta {
+        padding: 15px;
+    }
+
+    .imagenTarjeta {
+        height: 170px;
+    }
+}

@@ -1,11 +1,108 @@
+/* ==========================================================
+   ESCENA CAPITULO 2
+   ========================================================== */
+
 .escenacap2 {
     position: relative;
     width: 100%;
     height: 100%;
 
-
+    /* Con la cámara en su posición normal no recorta nada y la escena
+       se ve como siempre. Solo recorta mientras la cámara hace zoom. */
+    clip-path: inset(-200px);
+    animation: escenaCapitulo2Recorte 25s forwards;
 }
 
+@keyframes escenaCapitulo2Recorte {
+    0%    { clip-path: inset(-200px); }
+    40%   { clip-path: inset(-200px); }   /* 10 s: empieza el zoom */
+    40.5% { clip-path: inset(0); }
+    99.5% { clip-path: inset(0); }
+    100%  { clip-path: inset(-200px); }   /* 25 s: cámara normal */
+}
+
+
+/* ==========================================================
+   CÁMARA CAPÍTULO 2   (exclusiva del capítulo 2)
+
+   Duración total: 25 s
+     0 s    - 10 s     cámara en su posición normal, sin movimiento
+     10 s   - 12.5 s   stepCap2Espalda ya desapareció: zoom suave
+                       hasta el primer plano de la cara de stepCap2Frente
+     12.5 s - 22.5 s   encuadre fijo en la cara mientras stepCap2Frente
+                       realiza su animación
+     22.5 s - 25 s     zoom out: vuelve exactamente a la posición normal
+     25 s   -          cámara normal: aparece stepCap2Frente2
+
+   Porcentajes del keyframe: 40% = 10 s, 50% = 12.5 s,
+   90% = 22.5 s, 100% = 25 s.
+
+   Ajuste del primer plano (close-up):
+     --cara-zoom    qué tanto se acerca (más alto = más cerca)
+     --cara-x / -y  punto (en px, dentro de la cámara) donde está la
+                    cara de stepCap2Frente. LotieCap2.jsx los calcula
+                    y los reemplaza; estos valores son solo de respaldo.
+   ========================================================== */
+
+.camaraCapitulo2 {
+    --cara-zoom: 3.4;
+    --cara-x: 1165px;
+    --cara-y: 300px;
+
+    position: absolute;
+    inset: 0;
+
+    transform-origin: 0 0;
+
+    animation: camaraCapitulo2Mov 25s forwards;
+}
+
+@keyframes camaraCapitulo2Mov {
+
+    /* 0 s: cámara normal */
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    /* 10 s: desaparece stepCap2Espalda y empieza el zoom a la cara.
+       Curva suave (ease in-out sinusoidal) para un acercamiento
+       progresivo, sin arranque ni frenada bruscos. */
+    40% {
+        transform: translate(0, 0) scale(1);
+        animation-timing-function: cubic-bezier(0.37, 0, 0.63, 1);
+    }
+
+    /* 12.5 s: primer plano de la cara de stepCap2Frente */
+    50% {
+        transform:
+            translate(
+                calc(50% - var(--cara-zoom) * var(--cara-x)),
+                calc(50% - var(--cara-zoom) * var(--cara-y))
+            )
+            scale(var(--cara-zoom));
+    }
+
+    /* 22.5 s: termina stepCap2Frente, empieza el zoom out */
+    90% {
+        transform:
+            translate(
+                calc(50% - var(--cara-zoom) * var(--cara-x)),
+                calc(50% - var(--cara-zoom) * var(--cara-y))
+            )
+            scale(var(--cara-zoom));
+        animation-timing-function: cubic-bezier(0.37, 0, 0.63, 1);
+    }
+
+    /* 25 s: posición normal inicial */
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+}
+
+
+/* ==========================================================
+   FONDO
+   ========================================================== */
 
 .fondo {
     position: absolute;
@@ -20,7 +117,9 @@
 }
 
 
-
+/* ==========================================================
+   LAMPARAS
+   ========================================================== */
 
 .lampara {
     position: absolute;
@@ -41,75 +140,51 @@
 
 .lampara:hover {
     filter:
-        drop-shadow(0 0 8px rgba(255, 235, 160, .65)) drop-shadow(0 0 16px rgba(255, 235, 160, .35));
+        drop-shadow(0 0 8px rgba(255, 235, 160, .65))
+        drop-shadow(0 0 16px rgba(255, 235, 160, .35));
 }
-
-
-
 
 .lampara1C {
     left: 85px;
     top: -10px;
 }
 
-
-
-
 .lampara2C {
     right: 90px;
     top: -10px;
 }
-
-
-
 
 .lampara3C {
     right: 600px;
     top: -10px;
 }
 
-
-
-
 .moverLampara {
     animation: balanceoLampara .6s ease;
 }
 
 @keyframes balanceoLampara {
-
-    0% {
-        transform: rotate(0deg);
-    }
-
-    15% {
-        transform: rotate(7deg);
-    }
-
-    30% {
-        transform: rotate(-6deg);
-    }
-
-    45% {
-        transform: rotate(5deg);
-    }
-
-    60% {
-        transform: rotate(-4deg);
-    }
-
-    75% {
-        transform: rotate(2deg);
-    }
-
-    100% {
-        transform: rotate(0deg);
-    }
+    0%   { transform: rotate(0deg); }
+    15%  { transform: rotate(7deg); }
+    30%  { transform: rotate(-6deg); }
+    45%  { transform: rotate(5deg); }
+    60%  { transform: rotate(-4deg); }
+    75%  { transform: rotate(2deg); }
+    100% { transform: rotate(0deg); }
 }
 
 
+/* ==========================================================
+   RATA
+   ========================================================== */
 
 .rata {
     position: absolute;
+
+    left: 350px;
+    bottom: 48px;
+
+    width: 250px;
 
     object-fit: contain;
 
@@ -125,22 +200,13 @@
 .rata:hover {
     transform: scale(1.03);
 
-    filter:
-        drop-shadow(0 0 8px rgba(26, 217, 109, 0));
+    filter: drop-shadow(0 0 8px rgba(26, 217, 109, 0));
 }
 
 
-.rata {
-    left: 350px;
-    bottom: 48px;
-
-    width: 250px;
-
-    z-index: 3;
-}
-
-
-
+/* ==========================================================
+   ESTATUAS
+   ========================================================== */
 
 .estatua {
     position: absolute;
@@ -156,57 +222,47 @@
         filter .25s ease;
 }
 
-
-
 .estatua:hover {
     transform: scale(1.03);
 
-    filter:
-        drop-shadow(0 0 7px rgba(26, 217, 109, 0));
+    filter: drop-shadow(0 0 7px rgba(26, 217, 109, 0));
 }
-
-
-
 
 .estatua1 {
     left: 700px;
-    bottom: 5px;
+    bottom: 20px;
 
     width: 710px;
 
     z-index: 4;
 }
 
-
-
 .estatua3 {
-    right: 780px;
-    bottom: 20px; 
+    right: 750px;
+    bottom: 80px;
+
     width: 250px;
+
     z-index: 4;
 }
-
 
 .estatua4 {
-    right: 1050px;
-    bottom: -5px;
+    right: 1080px;
+    bottom: 30px;
 
     width: 250px;
 
     z-index: 4;
 }
-
-
-
 
 .estatua5 {
     left: 300px;
     bottom: 110px;
+
     width: 250px;
+
     z-index: 3;
 }
-
-
 
 .estatua6 {
     right: 50px;
@@ -218,87 +274,107 @@
 }
 
 
+/* ==========================================================
+   VIDEOS (regla compartida)
+   Los controla la Cámara Capítulo 2, no se pulsan.
+   ========================================================== */
 
-
-.step {
+.stepCap2Espalda,
+.stepCap2Frente,
+.stepCap2Frente2 {
     position: absolute;
-
     object-fit: contain;
-
-    cursor: pointer;
-
-    transition:
-        transform .25s ease,
-        filter .25s ease;
-}
-
-
-
-
-.step:hover {
-    transform: scale(1.03);
-
-    filter:
-        drop-shadow(0 0 8px rgba(26, 217, 109, .30));
-}
-
-
-
-
-.stepFrente2 {
-    left: 520px;
-    bottom: 60px;
-
-    width: 250px;
-
-    z-index: 5;
-}
-
-
-
-.stepEspaldas {
-    left: 720px;
-    bottom: 60px;
-
-    width: 250px;
-
-    z-index: 5;
-}
-
-
-
-
-.step video {
-    width: 100%;
-    height: 100%;
-
-    display: block;
-
-    object-fit: contain;
-
     pointer-events: none;
 }
 
 
+/* ==========================================================
+   STEPS
+   ========================================================== */
 
-.escena video {
-    display: block;
+/* Muñeco caminando de espaldas: visible 0 s - 10 s, luego desaparece */
+.stepCap2Espalda {
+    left: 400px;
+    bottom: 1px;
+    width: 700px;
+    z-index: 5;
 
-    object-fit: contain;
+    animation: stepCap2EspaldaVisibilidad 25s linear forwards;
+}
 
-    max-width: none;
+@keyframes stepCap2EspaldaVisibilidad {
+    0%      { opacity: 1; visibility: visible; }
+    39.99%  { opacity: 1; visibility: visible; }
+    40%     { opacity: 0; visibility: hidden; }
+    100%    { opacity: 0; visibility: hidden; }
+}
+
+/* Primer stepCap2Frente: opacity 0 -> 100 % (10 s - 12.5 s),
+   visible hasta los 22.5 s, y 100 % -> 0 (22.5 s - 25 s) */
+.stepCap2Frente {
+    left: 990px;
+    bottom: 55px;
+    width: 390px;
+    z-index: 5;
+
+    opacity: 0;
+
+    animation: stepCap2FrenteVisibilidad 25s linear forwards;
+}
+
+@keyframes stepCap2FrenteVisibilidad {
+    0%   { opacity: 0; }
+    40%  { opacity: 0; animation-timing-function: ease-in-out; }
+    50%  { opacity: 1; }
+    90%  { opacity: 1; animation-timing-function: ease-in-out; }
+    100% { opacity: 0; }
+}
+
+/* Segundo clip (otro video): invisible hasta que la cámara vuelve
+   por completo a su posición normal (25 s). Entonces aparece
+   (opacity 0 -> 100 % en .5 s) y se queda visible.
+   Al terminar su reproducción se desvanece solo. */
+.stepCap2Frente2 {
+    left: 850px;
+    bottom: 40px;
+    width: 350px;
+    z-index: 5;
+
+    opacity: 0;
+
+    animation: stepCap2Frente2Aparece .5s ease 25s forwards;
+}
+
+@keyframes stepCap2Frente2Aparece {
+    0%   { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.stepCap2Frente2Fin {
+    animation: stepCap2Frente2Fin .6s ease forwards;
+}
+
+@keyframes stepCap2Frente2Fin {
+    0%   { opacity: 1; }
+    100% { opacity: 0; }
 }
 
 
+/* ==========================================================
+   ESTADOS ACTIVOS
+   ========================================================== */
 
 .estatua.activa,
-.step.activo,
 .rata.activa {
     filter:
-        drop-shadow(0 0 6px rgba(26, 217, 109, 0)) drop-shadow(0 0 14px rgba(26, 217, 109, 0));
+        drop-shadow(0 0 6px rgba(26, 217, 109, 0))
+        drop-shadow(0 0 14px rgba(26, 217, 109, 0));
 }
 
 
+/* ==========================================================
+   RESPONSIVE: hasta 1200px
+   ========================================================== */
 
 @media (max-width: 1200px) {
 
@@ -306,7 +382,7 @@
         width: 80px;
     }
 
-    .rata1 {
+    .rata {
         width: 150px;
         left: 35%;
     }
@@ -314,11 +390,6 @@
     .estatua1 {
         width: 240px;
         left: 0;
-    }
-
-    .estatua2 {
-        width: 230px;
-        left: 18%;
     }
 
     .estatua3 {
@@ -341,17 +412,26 @@
         right: 30%;
     }
 
-    .stepFrente {
+    .stepCap2Frente {
         width: 210px;
         left: 42%;
     }
 
-    .stepEspaldas {
-        width: 210px;
+    .stepCap2Espalda {
+        width: 500px;
         left: 58%;
+    }
+
+    .stepCap2Frente2 {
+        width: 210px;
+        left: 74%;
     }
 }
 
+
+/* ==========================================================
+   RESPONSIVE: hasta 768px
+   ========================================================== */
 
 @media (max-width: 768px) {
 
@@ -371,23 +451,15 @@
         right: 45%;
     }
 
-
-    .rata1 {
+    .rata {
         width: 110px;
         left: 40%;
         bottom: 20px;
     }
 
-
     .estatua1 {
         width: 170px;
         left: -20px;
-        bottom: 40px;
-    }
-
-    .estatua2 {
-        width: 160px;
-        left: 15%;
         bottom: 40px;
     }
 
@@ -415,16 +487,21 @@
         bottom: 40px;
     }
 
-
-    .stepFrente {
+    .stepCap2Frente {
         width: 150px;
         left: 35%;
         bottom: 30px;
     }
 
-    .stepEspaldas {
-        width: 150px;
+    .stepCap2Espalda {
+        width: 500px;
         left: 55%;
+        bottom: 30px;
+    }
+
+    .stepCap2Frente2 {
+        width: 150px;
+        left: 75%;
         bottom: 30px;
     }
 }
