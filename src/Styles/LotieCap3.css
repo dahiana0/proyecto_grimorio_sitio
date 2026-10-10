@@ -1,8 +1,3 @@
-* {
-    box-sizing: border-box;
-}
-
-
 /* =========================================
    ESCENA PRINCIPAL
 ========================================= */
@@ -12,8 +7,6 @@
 
     width: 100%;
     height: 100%;
-
-   
 
     max-width: 1920px;
     max-height: 1080px;
@@ -25,10 +18,24 @@
 
 
 /* =========================================
+   CÁMARA CAP 3 (envuelve toda la escena)
+   El JS le aplica translate + scale
+========================================= */
+
+.camara-cap-3 {
+    position: absolute;
+    inset: 0;
+
+    transform-origin: 0 0;
+    will-change: transform;
+}
+
+
+/* =========================================
    FONDO
 ========================================= */
 
-.fondo {
+.fondo3 {
     position: absolute;
 
     inset: 0;
@@ -49,133 +56,195 @@
 
 
 /* =========================================
-   ELEMENTOS LOTTIE
+   ELEMENTOS (Lottie, videos e imágenes)
 ========================================= */
 
 .moustro,
 .telarana,
-.puerta,
 .antorcha,
+.puerta,
 .step-cap-3 {
     position: absolute;
-
-    cursor: pointer;
 
     user-select: none;
 
     transition:
         transform 0.25s ease,
+        scale 0.25s ease,
         filter 0.25s ease;
 }
 
 
 /* =========================================
-   ANTORCHAS
+   VIDEOS
 ========================================= */
 
-.antorcha {
-    width: 130px;
-    height: 180px;
-
-    z-index: 3;
-
-    overflow: visible;
-}
-
-
-/* Antorcha 1 */
-
-.antorcha1 {
-    left: 7%;
-    top: 8%;
-}
-
-
-/* Antorcha 2 */
-
-.antorcha2 {
-    left: 29%;
-    top: 8%;
-}
-
-
-/* Antorcha 3 */
-
-.antorcha3 {
-    right: 29%;
-    top: 8%;
-}
-
-
-/* Antorcha 4 */
-
-.antorcha4 {
-    right: 7%;
-    top: 8%;
-}
-
-
-/* Hover antorchas */
-
-.antorcha:hover {
-    transform: scale(1.05);
-
-    filter:
-        drop-shadow(0 0 8px rgba(255, 180, 50, 0.6))
-        drop-shadow(0 0 16px rgba(255, 150, 30, 0.3));
+.telarana,
+.puerta,
+.step-cap-3 {
+    object-fit: contain;
 }
 
 
 /* =========================================
-   MONSTRUOS
+   PUERTA (video, se pulsa)
+========================================= */
+
+.puerta {
+    left: 725px;
+    top: 405px;
+
+    width: 85px;
+    height: auto;
+
+    transform: translate(-50%, -50%);
+
+    z-index: 2;
+
+    cursor: pointer;
+}
+
+.puerta:hover {
+    scale: 1.02;
+
+    filter:
+        drop-shadow(0 0 8px rgba(255, 255, 255, 0.25));
+}
+
+
+/* =========================================
+   ANTORCHAS (imagen, se pulsan)
+========================================= */
+
+.antorcha {
+    height: auto;
+
+    transform: translate(-50%, -50%);
+
+    transform-origin: 50% 65%;
+
+    cursor: pointer;
+}
+
+.antorcha-fondo {
+    width: 16%;
+    z-index: 3;
+}
+
+.antorcha-frente {
+    width: 30%;
+    z-index: 3;
+}
+
+.antorcha1 {
+    left: 29.8%;
+    top: 35%;
+}
+
+.antorcha2 {
+    left: 68.6%;
+    top: 35%;
+}
+
+.antorcha3 {
+    left: 14%;
+    top: 31%;
+}
+
+.antorcha4 {
+    left: 88%;
+    top: 33%;
+}
+
+.antorcha:hover {
+    filter:
+        brightness(1.15)
+        drop-shadow(0 0 10px rgba(255, 180, 50, 0.6));
+}
+
+.antorcha-mover {
+    animation: balanceoAntorcha 0.9s ease-in-out;
+}
+
+@keyframes balanceoAntorcha {
+    0% {
+        rotate: 0deg;
+        filter: brightness(1);
+    }
+
+    20% {
+        rotate: 14deg;
+        filter:
+            brightness(1.5)
+            drop-shadow(0 0 14px rgba(255, 170, 40, 0.9));
+    }
+
+    40% {
+        rotate: -11deg;
+        filter:
+            brightness(1.3)
+            drop-shadow(0 0 10px rgba(255, 170, 40, 0.7));
+    }
+
+    60% {
+        rotate: 7deg;
+        filter: brightness(1.2);
+    }
+
+    80% {
+        rotate: -3deg;
+        filter: brightness(1.1);
+    }
+
+    100% {
+        rotate: 0deg;
+        filter: brightness(1);
+    }
+}
+
+
+/* =========================================
+   MONSTRUOS (Lottie)
 ========================================= */
 
 .moustro {
     z-index: 4;
+
+    cursor: pointer;
 }
 
-
-/* Monstruo 1 */
+.moustro > div {
+    width: 100%;
+    height: 100%;
+}
 
 .moustro1c {
-    left: 900px;
-    bottom: 10%;
+    left: 815px;
+    bottom: 22%;
 
-    width: 180px;
+    width: 128px;
 }
-
-
-/* Monstruo 2 */
 
 .moustro2c {
-    left: 400px;
-    bottom: 10%;
+    left: 475px;
+    bottom: 22%;
 
-    width: 180px;
+    width: 128px;
 }
-
-
-/* Monstruo 3 */
 
 .moustro3c {
-    right: 150px;
-    bottom: -4%;
+    right: 250px;
+    bottom: 4%;
 
-    width: 250px;
+    width: 215px;
 }
-
-
-/* Monstruo 4 */
 
 .moustro4c {
-    right: 1100px;
-    bottom: -5%;
+    right: 1030px;
+    bottom: 3%;
 
-    width: 320px;
+    width: 270px;
 }
-
-
-/* Hover monstruos */
 
 .moustro:hover {
     transform: scale(1.03);
@@ -186,58 +255,49 @@
 
 
 /* =========================================
-   TELARAÑAS
+   TELARAÑAS (video, se pulsan)
 ========================================= */
 
 .telarana {
+    height: auto;
+
+    transform: translate(-50%, -50%);
+
     z-index: 2;
+
+    cursor: pointer;
 }
 
+.telarana-fondo {
+    width: 200px;
+}
 
-/* Telaraña 1 */
+.telarana-frente {
+    width: 1050px;
+}
 
 .telarana1c {
-    left: 2%;
-    top: 4%;
-
-    width: 18%;
+    left: 500px;
+    top: 37.6%;
 }
-
-
-/* Telaraña 2 */
 
 .telarana2c {
-    left: 27%;
-    top: 3%;
-
-    width: 16%;
+    left: 900px;
+    top: 45.5%;
 }
-
-
-/* Telaraña 3 */
 
 .telarana3c {
-    right: 27%;
-    top: 3%;
-
-    width: 16%;
+    left: 500px;
+    top: 240px;
 }
-
-
-/* Telaraña 4 */
 
 .telarana4c {
-    right: 2%;
-    top: 4%;
-
-    width: 18%;
+    left: 900px;
+    top: 240px;
 }
 
-
-/* Hover telarañas */
-
 .telarana:hover {
-    transform: scale(1.03);
+    scale: 1.03;
 
     filter:
         drop-shadow(0 0 7px rgba(255, 255, 255, 0.25));
@@ -245,104 +305,21 @@
 
 
 /* =========================================
-   PUERTA
-========================================= */
-
-.puerta {
-    left: 50%;
-    bottom: 0;
-
-    width: 20%;
-
-    transform: translateX(-50%);
-
-    z-index: 2;
-}
-
-
-/* Mantener centrada la puerta */
-
-.puerta:hover {
-    transform: translateX(-50%) scale(1.03);
-
-    filter:
-        drop-shadow(0 0 10px rgba(255, 0, 0, 0.3));
-}
-
-
-/* =========================================
-   STEP CAPÍTULO 3
+   STEP CAPÍTULO 3 (video, arranca solo)
+   El JS sobrescribe el transform para caminar
 ========================================= */
 
 .step-cap-3 {
     left: 50%;
-    bottom: 5%;
+    bottom: 1px;
 
-    width: 15%;
+    width: 200px;
 
     transform: translateX(-50%);
 
     z-index: 6;
-}
 
-
-/* Mantener centrado el step */
-
-.step-cap-3:hover {
-    transform: translateX(-50%) scale(1.03);
-
-    filter:
-        drop-shadow(0 0 8px rgba(26, 217, 109, 0.3));
-}
-
-
-/* =========================================
-   CONTENEDORES LOTTIE
-========================================= */
-
-.moustro > div,
-.telarana > div,
-.puerta > div,
-.antorcha > div,
-.step-cap-3 > div {
-    width: 100%;
-    height: 100%;
-}
-
-
-/* =========================================
-   ESTADOS ACTIVOS
-========================================= */
-
-.moustro.activo {
-    filter:
-        drop-shadow(0 0 6px rgba(26, 217, 109, 0.25))
-        drop-shadow(0 0 14px rgba(26, 217, 109, 0.15));
-}
-
-
-.telarana.activa {
-    filter:
-        drop-shadow(0 0 6px rgba(255, 255, 255, 0.2));
-}
-
-
-.antorcha.activa {
-    filter:
-        drop-shadow(0 0 10px rgba(255, 180, 50, 0.7))
-        drop-shadow(0 0 20px rgba(255, 120, 20, 0.4));
-}
-
-
-.puerta.activa {
-    filter:
-        drop-shadow(0 0 10px rgba(255, 0, 0, 0.4));
-}
-
-
-.step-cap-3.activo {
-    filter:
-        drop-shadow(0 0 8px rgba(26, 217, 109, 0.25));
+    pointer-events: none;
 }
 
 
@@ -391,50 +368,12 @@
 
 @media (max-width: 1200px) {
 
-    .antorcha {
-        width: 100px;
-        height: 140px;
-    }
-
-
-    .moustro1c {
-        width: 19%;
-    }
-
-    .moustro2c {
-        width: 19%;
-    }
-
-    .moustro3c {
-        width: 19%;
-    }
-
+    .moustro1c,
+    .moustro2c,
+    .moustro3c,
     .moustro4c {
         width: 19%;
     }
-
-
-    .telarana1c {
-        width: 16%;
-    }
-
-    .telarana2c {
-        width: 15%;
-    }
-
-    .telarana3c {
-        width: 15%;
-    }
-
-    .telarana4c {
-        width: 16%;
-    }
-
-
-    .puerta {
-        width: 19%;
-    }
-
 
     .step-cap-3 {
         width: 14%;
@@ -452,34 +391,6 @@
     .visor-scene {
         height: calc(100vh - 90px);
     }
-
-
-    .antorcha {
-        width: 70px;
-        height: 100px;
-    }
-
-
-    .antorcha1 {
-        left: 5%;
-        top: 7%;
-    }
-
-    .antorcha2 {
-        left: 27%;
-        top: 7%;
-    }
-
-    .antorcha3 {
-        right: 27%;
-        top: 7%;
-    }
-
-    .antorcha4 {
-        right: 5%;
-        top: 7%;
-    }
-
 
     .moustro1c {
         width: 22%;
@@ -505,37 +416,6 @@
         bottom: 4%;
     }
 
-
-    .telarana1c {
-        width: 17%;
-        left: 1%;
-        top: 3%;
-    }
-
-    .telarana2c {
-        width: 16%;
-        left: 26%;
-        top: 3%;
-    }
-
-    .telarana3c {
-        width: 16%;
-        right: 26%;
-        top: 3%;
-    }
-
-    .telarana4c {
-        width: 17%;
-        right: 1%;
-        top: 3%;
-    }
-
-
-    .puerta {
-        width: 24%;
-    }
-
-
     .step-cap-3 {
         width: 18%;
         bottom: 4%;
@@ -549,24 +429,12 @@
 
 @media (max-width: 480px) {
 
-    .antorcha {
-        width: 55px;
-        height: 80px;
-    }
-
-
     .moustro1c,
     .moustro2c,
     .moustro3c,
     .moustro4c {
         width: 23%;
     }
-
-
-    .puerta {
-        width: 27%;
-    }
-
 
     .step-cap-3 {
         width: 20%;

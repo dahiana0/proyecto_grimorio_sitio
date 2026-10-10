@@ -11,7 +11,7 @@ const DURACION_TRANSICION = 350;
 
 export default function VisorComic3({
   numeroCapitulo = "III",
-  tituloCapitulo = "CAPÍTULO 3",
+  tituloCapitulo = "PRESAGIO",
 }) {
   const navigate = useNavigate();
 
@@ -42,36 +42,46 @@ export default function VisorComic3({
   // ---------------------------------------------------------------------
   const subtitulosCap3 = [
     {
-      inicio: 0.48,
-      fin: 6.71,
+      inicio: 0.36,
+      fin: 6.15,
+      texto: "Algunos secretos no desaparecen, solo cambian de guardián.",
+    },
+    {
+      inicio: 6.16,
+      fin: 12.39,
       texto:
-        "Steven continúa adentrándose en un lugar donde nada parece ser lo que aparenta.",
+        "Stephen creyó haber dejado todo atrás, pero hay lugares que no olvidan,",
     },
     {
-      inicio: 6.72,
-      fin: 11.99,
+      inicio: 12.4,
+      fin: 16.07,
+      texto: "y presencias que nunca se van.",
+    },
+    {
+      inicio: 16.08,
+      fin: 22.71,
       texto:
-        "Las sombras esconden secretos que comienzan a revelar una verdad inquietante.",
+        "Ha regresado, no por valentía, sino por esa inquietud que no lo deja en paz,",
     },
     {
-      inicio: 12.0,
-      fin: 16.75,
-      texto: "Cada paso lo acerca más al origen de aquello que lo persigue.",
+      inicio: 22.72,
+      fin: 26.75,
+      texto: "esa sensación de que algo quedó incompleto.",
     },
     {
-      inicio: 16.76,
-      fin: 22.19,
-      texto: "El silencio se rompe y una presencia desconocida vuelve a aparecer.",
-    },
-    {
-      inicio: 22.2,
+      inicio: 26.76,
       fin: 29.91,
-      texto: "Steven comprende que escapar ya no será tan sencillo como pensaba.",
+      texto: "Busca respuestas, pero en este lugar.",
     },
     {
       inicio: 30.36,
-      fin: 33.63,
-      texto: "Ahora debe enfrentarse a lo que ha estado buscando.",
+      fin: 34.47,
+      texto: "Las respuestas siempre tienen un precio,",
+    },
+    {
+      inicio: 34.48,
+      fin: 39.95,
+      texto: "no está solo, hay alguien más, una presencia que observa.",
     },
   ];
 
