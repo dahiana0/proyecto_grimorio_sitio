@@ -11,7 +11,7 @@ const DURACION_TRANSICION = 350;
 
 export default function VisorComic3({
   numeroCapitulo = "III",
-  tituloCapitulo = "PRESAGIO",
+  tituloCapitulo = "Presagio",
 }) {
   const navigate = useNavigate();
 

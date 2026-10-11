@@ -1,0 +1,543 @@
+/* =========================================
+   ESCENA PRINCIPAL
+========================================= */
+
+.escenacap4 {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    max-width: 1920px;
+    max-height: 1080px;
+
+    margin: auto;
+
+    overflow: hidden;
+}
+
+
+/* =========================================
+   CONTENEDOR INTERNO (sin cámara ni zoom)
+========================================= */
+
+.escena-interna-cap4 {
+    position: absolute;
+    inset: 0;
+}
+
+
+/* =========================================
+   FONDO
+========================================= */
+
+.fondo4 {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: fill;
+    object-position: center;
+
+    display: block;
+
+    z-index: 1;
+
+    user-select: none;
+    pointer-events: none;
+}
+
+
+/* =========================================
+   ELEMENTOS (Lottie, videos e imágenes)
+========================================= */
+
+.moustro-cap4,
+.telarana-cap4,
+.antorcha-cap4,
+.puerta-cap4,
+.step-cap4 {
+    position: absolute;
+
+    user-select: none;
+
+    transition:
+        transform 0.25s ease,
+        scale 0.25s ease,
+        filter 0.25s ease;
+}
+
+
+/* =========================================
+   VIDEOS
+========================================= */
+
+.telarana-cap4,
+.puerta-cap4,
+.step-cap4 {
+    object-fit: contain;
+}
+
+
+/* =========================================
+   PUERTA (video, se pulsa)
+========================================= */
+
+.puerta-cap4 {
+    left: 725px;
+    top: 405px;
+
+    width: 85px;
+    height: auto;
+
+    transform: translate(-50%, -50%);
+
+    z-index: 2;
+
+    cursor: pointer;
+}
+
+.puerta-cap4:hover {
+    scale: 1.02;
+
+    filter:
+        drop-shadow(0 0 8px rgba(255, 255, 255, 0.25));
+}
+
+
+/* =========================================
+   ANTORCHAS (imagen, se pulsan)
+========================================= */
+
+.antorcha-cap4 {
+    height: auto;
+
+    transform: translate(-50%, -50%);
+
+    transform-origin: 50% 65%;
+
+    cursor: pointer;
+}
+
+.antorcha-fondo-cap4 {
+    width: 16%;
+    z-index: 3;
+}
+
+.antorcha-frente-cap4 {
+    width: 30%;
+    z-index: 3;
+}
+
+.antorcha1-cap4 {
+    left: 29.8%;
+    top: 35%;
+}
+
+.antorcha2-cap4 {
+    left: 68.6%;
+    top: 35%;
+}
+
+.antorcha3-cap4 {
+    left: 14%;
+    top: 31%;
+}
+
+.antorcha4-cap4 {
+    left: 88%;
+    top: 33%;
+}
+
+.antorcha-cap4:hover {
+    filter:
+        brightness(1.15)
+        drop-shadow(0 0 10px rgba(255, 180, 50, 0.6));
+}
+
+.antorcha-mover-cap4 {
+    animation: balanceoAntorchaCap4 0.9s ease-in-out;
+}
+
+@keyframes balanceoAntorchaCap4 {
+    0% {
+        rotate: 0deg;
+        filter: brightness(1);
+    }
+
+    20% {
+        rotate: 14deg;
+        filter:
+            brightness(1.5)
+            drop-shadow(0 0 14px rgba(255, 170, 40, 0.9));
+    }
+
+    40% {
+        rotate: -11deg;
+        filter:
+            brightness(1.3)
+            drop-shadow(0 0 10px rgba(255, 170, 40, 0.7));
+    }
+
+    60% {
+        rotate: 7deg;
+        filter: brightness(1.2);
+    }
+
+    80% {
+        rotate: -3deg;
+        filter: brightness(1.1);
+    }
+
+    100% {
+        rotate: 0deg;
+        filter: brightness(1);
+    }
+}
+
+
+/* =========================================
+   MONSTRUOS (Lottie)
+========================================= */
+
+.moustro-cap4 {
+    z-index: 4;
+
+    cursor: pointer;
+}
+
+.moustro-cap4 > div {
+    width: 100%;
+    height: 100%;
+}
+
+.moustro1c-cap4 {
+    left: 815px;
+    bottom: 22%;
+
+    width: 128px;
+}
+
+.moustro2c-cap4 {
+    left: 475px;
+    bottom: 22%;
+
+    width: 128px;
+}
+
+.moustro3c-cap4 {
+    right: 250px;
+    bottom: 4%;
+
+    width: 215px;
+}
+
+.moustro4c-cap4 {
+    right: 1030px;
+    bottom: 3%;
+
+    width: 270px;
+}
+
+.moustro-cap4:hover {
+    transform: scale(1.03);
+
+    filter:
+        drop-shadow(0 0 8px rgba(26, 217, 109, 0.25));
+}
+
+
+/* =========================================
+   TELARAÑAS (video, se pulsan)
+========================================= */
+
+.telarana-cap4 {
+    height: auto;
+
+    transform: translate(-50%, -50%);
+
+    z-index: 2;
+
+    cursor: pointer;
+}
+
+.telarana-fondo-cap4 {
+    width: 200px;
+}
+
+.telarana-frente-cap4 {
+    width: 1050px;
+}
+
+.telarana1c-cap4 {
+    left: 500px;
+    top: 37.6%;
+}
+
+.telarana2c-cap4 {
+    left: 900px;
+    top: 45.5%;
+}
+
+.telarana3c-cap4 {
+    left: 500px;
+    top: 240px;
+}
+
+.telarana4c-cap4 {
+    left: 900px;
+    top: 240px;
+}
+
+.telarana-cap4:hover {
+    scale: 1.03;
+
+    filter:
+        drop-shadow(0 0 7px rgba(255, 255, 255, 0.25));
+}
+
+
+/* =========================================
+   PERSONAJES (videos en secuencia)
+   Ocultos por defecto: se ve el activo
+   y los que tienen "persistir"
+========================================= */
+
+.step-cap4 {
+    left: 50%;
+    bottom: 1px;
+
+    width: 200px;
+    height: auto;
+
+    transform: translateX(-50%);
+
+    z-index: 6;
+
+    pointer-events: none;
+
+    opacity: 0;
+    transition: none;
+}
+
+.step-cap4.visible-cap4 {
+    opacity: 1;
+}
+
+/* Posición y tamaño de cada personaje por separado */
+
+/* Stephen (de espalda): a la izquierda del centro, más atrás en el pasillo */
+.stepespalda-cap4 {
+    left: 42%;
+    bottom: 1px;
+    width: 250px;
+}
+
+/* Rogers (de frente): a la derecha de Stephen, ligeramente más atrás */
+.rogersfrente-cap4 {
+    left: 48%;
+    bottom: 100px;
+    width: 170px;
+}
+
+.pelea-cap4 {
+    left: 48%;
+    bottom: 60px;
+    width: 650px;
+}
+
+.stepamarrado-cap4 {
+    left: 43%;
+    bottom: 45px;
+    width: 200px;
+    z-index: 5;
+}
+
+.rogerscamina-cap4 {
+    left: 50%;
+    bottom: 70px;
+    width: 290px;
+    z-index: 4;
+}
+
+.silla-cap4 {
+    left: 43%;
+    bottom: 45px;
+    width: 95px;
+    z-index: 5;
+}
+
+.rogerscorre-cap4 {
+    left: 45%;
+    bottom: 1px;
+    width: 230px;
+}
+
+
+/* =========================================
+   VISOR
+========================================= */
+
+.visor-scene-cap4 {
+    position: relative;
+
+    width: 100%;
+    height: calc(100vh - 120px);
+
+    min-height: 0;
+
+    overflow: hidden;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* =========================================
+   CONTENEDOR DE LA ESCENA
+========================================= */
+
+.contenedor-escena-cap4 {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+}
+
+
+/* =========================================
+   RESPONSIVE
+   TABLET
+========================================= */
+
+@media (max-width: 1200px) {
+
+    .moustro1c-cap4,
+    .moustro2c-cap4,
+    .moustro3c-cap4,
+    .moustro4c-cap4 {
+        width: 19%;
+    }
+
+    .step-cap4 {
+        width: 14%;
+    }
+
+    .stepespalda-cap4,
+    .rogersfrente-cap4 {
+        width: 16%;
+    }
+
+    .pelea-cap4 {
+        width: 26%;
+    }
+
+    .silla-cap4 {
+        width: 16%;
+    }
+}
+
+
+/* =========================================
+   RESPONSIVE
+   CELULAR
+========================================= */
+
+@media (max-width: 768px) {
+
+    .visor-scene-cap4 {
+        height: calc(100vh - 90px);
+    }
+
+    .moustro1c-cap4 {
+        width: 22%;
+        left: 2%;
+        bottom: 4%;
+    }
+
+    .moustro2c-cap4 {
+        width: 22%;
+        left: 25%;
+        bottom: 3%;
+    }
+
+    .moustro3c-cap4 {
+        width: 22%;
+        right: 25%;
+        bottom: 3%;
+    }
+
+    .moustro4c-cap4 {
+        width: 22%;
+        right: 2%;
+        bottom: 4%;
+    }
+
+    .step-cap4 {
+        width: 18%;
+        bottom: 4%;
+    }
+
+    .stepespalda-cap4,
+    .rogersfrente-cap4 {
+        width: 20%;
+    }
+
+    .stepespalda-cap4 {
+        bottom: 14%;
+    }
+
+    .rogersfrente-cap4 {
+        bottom: 15%;
+    }
+
+    .pelea-cap4 {
+        width: 32%;
+    }
+
+    .silla-cap4 {
+        width: 20%;
+    }
+}
+
+
+/* =========================================
+   PANTALLAS MUY PEQUEÑAS
+========================================= */
+
+@media (max-width: 480px) {
+
+    .moustro1c-cap4,
+    .moustro2c-cap4,
+    .moustro3c-cap4,
+    .moustro4c-cap4 {
+        width: 23%;
+    }
+
+    .step-cap4 {
+        width: 20%;
+    }
+
+    .stepespalda-cap4,
+    .rogersfrente-cap4 {
+        width: 22%;
+    }
+
+    .pelea-cap4 {
+        width: 36%;
+    }
+
+    .silla-cap4 {
+        width: 22%;
+    }
+}
