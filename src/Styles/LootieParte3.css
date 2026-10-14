@@ -5,7 +5,7 @@
     overflow: hidden;
 }
 
-/* CÁMARA EXCLUSIVA DE LA ESCENA 3 */
+
 .camaraEscena3 {
     /* Punto al que enfoca la cámara (donde está Step frente) */
     --foco-x: 58%;
@@ -37,7 +37,7 @@
     z-index: 1;
 }
 
-/* LÁMPARAS */
+
 .lampara1,
 .lampara2,
 .lampara3 {
@@ -87,7 +87,7 @@
     100% { transform: rotate(0deg); }
 }
 
-/* VIDEOS (regla compartida) */
+
 .telarana1,
 .telarana2,
 .monstruo1,
@@ -115,7 +115,7 @@
     transform: scale(1.03);
 }
 
-/* TELARAÑAS */
+
 .telarana1 {
     left: 300px;
     top: -50px;
@@ -130,7 +130,7 @@
     z-index: 3;
 }
 
-/* MONSTRUOS */
+
 .monstruo1 {
     left: 5px;
     bottom: 80px;
@@ -159,7 +159,6 @@
     z-index: 4;
 }
 
-/* STEP */
 .stepFrente {
     left: 600px;
     bottom: 2px;

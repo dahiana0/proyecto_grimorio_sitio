@@ -1,48 +1,25 @@
-/* ==========================================================
-   ESCENA CAPITULO 2
-   ========================================================== */
+
 
 .escenacap2 {
     position: relative;
     width: 100%;
     height: 100%;
 
-    /* Con la cámara en su posición normal no recorta nada y la escena
-       se ve como siempre. Solo recorta mientras la cámara hace zoom. */
+   
     clip-path: inset(-200px);
     animation: escenaCapitulo2Recorte 25s forwards;
 }
 
 @keyframes escenaCapitulo2Recorte {
     0%    { clip-path: inset(-200px); }
-    40%   { clip-path: inset(-200px); }   /* 10 s: empieza el zoom */
+    40%   { clip-path: inset(-200px); }   
     40.5% { clip-path: inset(0); }
     99.5% { clip-path: inset(0); }
-    100%  { clip-path: inset(-200px); }   /* 25 s: cámara normal */
+    100%  { clip-path: inset(-200px); }  
 }
 
 
-/* ==========================================================
-   CÁMARA CAPÍTULO 2   (exclusiva del capítulo 2)
 
-   Duración total: 25 s
-     0 s    - 10 s     cámara en su posición normal, sin movimiento
-     10 s   - 12.5 s   stepCap2Espalda ya desapareció: zoom suave
-                       hasta el primer plano de la cara de stepCap2Frente
-     12.5 s - 22.5 s   encuadre fijo en la cara mientras stepCap2Frente
-                       realiza su animación
-     22.5 s - 25 s     zoom out: vuelve exactamente a la posición normal
-     25 s   -          cámara normal: aparece stepCap2Frente2
-
-   Porcentajes del keyframe: 40% = 10 s, 50% = 12.5 s,
-   90% = 22.5 s, 100% = 25 s.
-
-   Ajuste del primer plano (close-up):
-     --cara-zoom    qué tanto se acerca (más alto = más cerca)
-     --cara-x / -y  punto (en px, dentro de la cámara) donde está la
-                    cara de stepCap2Frente. LotieCap2.jsx los calcula
-                    y los reemplaza; estos valores son solo de respaldo.
-   ========================================================== */
 
 .camaraCapitulo2 {
     --cara-zoom: 3.4;
@@ -59,20 +36,18 @@
 
 @keyframes camaraCapitulo2Mov {
 
-    /* 0 s: cámara normal */
+    
     0% {
         transform: translate(0, 0) scale(1);
     }
 
-    /* 10 s: desaparece stepCap2Espalda y empieza el zoom a la cara.
-       Curva suave (ease in-out sinusoidal) para un acercamiento
-       progresivo, sin arranque ni frenada bruscos. */
+    
     40% {
         transform: translate(0, 0) scale(1);
         animation-timing-function: cubic-bezier(0.37, 0, 0.63, 1);
     }
 
-    /* 12.5 s: primer plano de la cara de stepCap2Frente */
+   
     50% {
         transform:
             translate(
@@ -82,7 +57,7 @@
             scale(var(--cara-zoom));
     }
 
-    /* 22.5 s: termina stepCap2Frente, empieza el zoom out */
+   
     90% {
         transform:
             translate(
@@ -93,16 +68,13 @@
         animation-timing-function: cubic-bezier(0.37, 0, 0.63, 1);
     }
 
-    /* 25 s: posición normal inicial */
+   
     100% {
         transform: translate(0, 0) scale(1);
     }
 }
 
 
-/* ==========================================================
-   FONDO
-   ========================================================== */
 
 .fondo {
     position: absolute;
@@ -117,9 +89,7 @@
 }
 
 
-/* ==========================================================
-   LAMPARAS
-   ========================================================== */
+
 
 .lampara {
     position: absolute;
@@ -174,9 +144,7 @@
 }
 
 
-/* ==========================================================
-   RATA
-   ========================================================== */
+
 
 .rata {
     position: absolute;
@@ -204,9 +172,6 @@
 }
 
 
-/* ==========================================================
-   ESTATUAS
-   ========================================================== */
 
 .estatua {
     position: absolute;
@@ -274,10 +239,7 @@
 }
 
 
-/* ==========================================================
-   VIDEOS (regla compartida)
-   Los controla la Cámara Capítulo 2, no se pulsan.
-   ========================================================== */
+
 
 .stepCap2Espalda,
 .stepCap2Frente,
@@ -288,11 +250,7 @@
 }
 
 
-/* ==========================================================
-   STEPS
-   ========================================================== */
 
-/* Muñeco caminando de espaldas: visible 0 s - 10 s, luego desaparece */
 .stepCap2Espalda {
     left: 400px;
     bottom: 1px;
@@ -309,8 +267,7 @@
     100%    { opacity: 0; visibility: hidden; }
 }
 
-/* Primer stepCap2Frente: opacity 0 -> 100 % (10 s - 12.5 s),
-   visible hasta los 22.5 s, y 100 % -> 0 (22.5 s - 25 s) */
+
 .stepCap2Frente {
     left: 990px;
     bottom: 55px;
@@ -330,10 +287,7 @@
     100% { opacity: 0; }
 }
 
-/* Segundo clip (otro video): invisible hasta que la cámara vuelve
-   por completo a su posición normal (25 s). Entonces aparece
-   (opacity 0 -> 100 % en .5 s) y se queda visible.
-   Al terminar su reproducción se desvanece solo. */
+
 .stepCap2Frente2 {
     left: 850px;
     bottom: 40px;
@@ -360,9 +314,7 @@
 }
 
 
-/* ==========================================================
-   ESTADOS ACTIVOS
-   ========================================================== */
+
 
 .estatua.activa,
 .rata.activa {
@@ -372,9 +324,7 @@
 }
 
 
-/* ==========================================================
-   RESPONSIVE: hasta 1200px
-   ========================================================== */
+
 
 @media (max-width: 1200px) {
 
@@ -429,9 +379,7 @@
 }
 
 
-/* ==========================================================
-   RESPONSIVE: hasta 768px
-   ========================================================== */
+
 
 @media (max-width: 768px) {
 

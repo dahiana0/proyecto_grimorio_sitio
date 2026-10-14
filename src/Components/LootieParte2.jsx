@@ -5,127 +5,136 @@ import edificio from "../assets/edificio.json";
 import rejas from "../assets/rejas.json";
 import "../Styles/LootieParte2.css";
 
-
 const Lottie = LottieModule.default;
 
-const LootieParte2 = () => {
+// 👇 Frame de la reja en el que Step empieza a caminar.
+// Pon null para que arranque cuando la reja termine de abrirse.
+// (24 fps: 4 s ≈ frame 96. Revisa "fr" en rejas.json si exportaste con otro fps)
+const FRAME_INICIO = 60;
 
+const LootieParte2 = () => {
   const edificioRef = useRef(null);
   const rejasRef = useRef(null);
   const videoRef = useRef(null);
+
+  const abriendo = useRef(false); // evita reiniciar mientras la reja se abre
+  const yaCamino = useRef(false); // evita lanzar la caminata varias veces
 
   const sonidoAmbiente = useRef(new Audio("/audios/ambiente.mp3"));
   const sonidoRejas = useRef(new Audio("/audios/rejas.mp3"));
   const sonidoPasos = useRef(new Audio("/audios/pasos.mp3"));
 
   useEffect(() => {
+    const ambiente = sonidoAmbiente.current;
 
-
-    sonidoAmbiente.current.volume = 0.15;
+    ambiente.volume = 0.15;
     sonidoRejas.current.volume = 0.35;
-    sonidoPasos.current.volume = 0.40;
-
-    sonidoAmbiente.current.loop = true;
+    sonidoPasos.current.volume = 0.4;
+    ambiente.loop = true;
 
     const iniciarAmbiente = () => {
-      sonidoAmbiente.current.play().catch(() => { });
+      ambiente.play().catch(() => {});
       window.removeEventListener("click", iniciarAmbiente);
     };
 
     window.addEventListener("click", iniciarAmbiente);
 
     return () => {
-      sonidoAmbiente.current.pause();
-      sonidoAmbiente.current.currentTime = 0;
+      ambiente.pause();
+      ambiente.currentTime = 0;
       window.removeEventListener("click", iniciarAmbiente);
     };
-
   }, []);
-
 
   const animarEdificio = () => {
     edificioRef.current?.stop();
     edificioRef.current?.play();
   };
 
-
-  const animarRejas = () => {
-
-    sonidoRejas.current.currentTime = 0;
-    sonidoRejas.current.play();
-
-    rejasRef.current?.stop();
-    rejasRef.current?.play();
-
-  };
-
-
-
   const animarVideo = () => {
+    if (yaCamino.current) return;
+    yaCamino.current = true;
 
     sonidoPasos.current.currentTime = 0;
-    sonidoPasos.current.play();
+    sonidoPasos.current.play().catch(() => {});
 
     if (videoRef.current) {
       videoRef.current.currentTime = 0;
-      videoRef.current.play();
+      videoRef.current.play().catch(() => {});
     }
+  };
 
+  const animarRejas = () => {
+    if (abriendo.current) return; // ya se está abriendo, ignora el clic
+    abriendo.current = true;
+    yaCamino.current = false;
+
+    // Deja a Step quieto en el primer frame
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+    sonidoPasos.current.pause();
+    sonidoPasos.current.currentTime = 0;
+
+    sonidoRejas.current.currentTime = 0;
+    sonidoRejas.current.play().catch(() => {});
+
+    rejasRef.current?.stop();
+    rejasRef.current?.play();
+  };
+
+  // Se ejecuta en cada frame de la reja
+  const revisarFrame = ({ currentTime }) => {
+    if (FRAME_INICIO !== null && currentTime >= FRAME_INICIO) {
+      animarVideo();
+    }
+  };
+
+  // Se ejecuta cuando la reja termina de abrirse
+  const alTerminarRejas = () => {
+    animarVideo(); // por si no se llegó a FRAME_INICIO (o si es null)
+    abriendo.current = false;
   };
 
   return (
-
     <div className="escena2">
-
       <div className="camara">
-
-        <img className="fondo2" src="/fondo2.png" alt="" />
+        <img className="fondo2" src="./Fondo5a.png" alt="" />
 
         <img className="nube1" src="/nube1.png" alt="" />
         <img className="nube2" src="/nube2.png" alt="" />
         <img className="nube3" src="/nube3.png" alt="" />
         <img className="nube4" src="/nube4.png" alt="" />
 
-        <video
-          ref={videoRef}
-          className="step2"
-          muted
-          playsInline
-          onClick={animarVideo}
-        >
-          <source src="/CompRecorte.webm" type="video/webm" />
+        <video ref={videoRef} className="step2" muted playsInline>
+          <source src="./caminado2.webm" type="video/webm" />
         </video>
 
-        <div
-          className="edificio"
-          onClick={animarEdificio}
-        >
+        <div className="edificio" onClick={animarEdificio}>
           <Lottie
             lottieRef={edificioRef}
             animationData={edificio}
             autoplay={false}
             loop={false}
+            rendererSettings={{ preserveAspectRatio: "none" }}
           />
         </div>
 
-        <div
-          className="rejas"
-          onClick={animarRejas}
-        >
+        <div className="rejas" onClick={animarRejas}>
           <Lottie
             lottieRef={rejasRef}
             animationData={rejas}
             autoplay={false}
             loop={false}
+            onEnterFrame={revisarFrame}
+            onComplete={alTerminarRejas}
+            rendererSettings={{ preserveAspectRatio: "none" }}
           />
         </div>
-
       </div>
-
     </div>
-
   );
-
 };
 
 export default LootieParte2;

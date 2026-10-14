@@ -10,41 +10,35 @@ import "../Styles/LotieCap4.css";
 
 const Lottie = LottieModule.default;
 
-// ====== ORDEN DE PERSONAJES ======
-// persistir: true -> se queda visible en su último fotograma
-// junto: true     -> arranca al mismo tiempo que el clip anterior
-// (silla y corre NO van aquí: entran por el evento del segundo T_CORTE de "camina")
+
 const SECUENCIA = [
-  { id: "espalda",  persistir: false },
-  { id: "frente",   persistir: false, junto: true }, // entra a la vez que espalda
-  { id: "pelea",    persistir: false },
+  { id: "espalda", persistir: false },
+  { id: "frente", persistir: false, junto: true }, // entra a la vez que espalda
+  { id: "pelea", persistir: false },
   { id: "amarrado", persistir: false },
-  { id: "camina",   persistir: false, junto: true }, // entra a la vez que amarrado
+  { id: "camina", persistir: false, junto: true }, // entra a la vez que amarrado
 ];
 
-// Segundo del video "camina" en el que aparece la silla,
-// desaparece amarrado y entra corre
+
 const T_CORTE = 13;
 
-// Último índice del grupo que arranca en "inicio" (incluye los "junto")
+
 const finDeGrupo = (inicio) => {
   let fin = inicio;
   while (SECUENCIA[fin + 1]?.junto) fin++;
   return fin;
 };
 
-// ====== AUDIOS DE PERSONAJES (pon tus archivos en /public) ======
-// Cada audio suena mientras dura la animación de su personaje.
-// espalda y frente comparten UN solo audio de pasos (va en "espalda").
+
 const AUDIOS_PERSONAJES = {
-  espalda:  { src: "./Pasos Normales  Normal Steps Sound Effect (HD).mp3", volumen: 0.6, loop: true  }, // pasos (espalda + frente)
-  pelea:    { src: "./Sonidos de golpes y peleas.mp3",           volumen: 0.8, loop: false }, // sonido de la pelea
-  amarrado: { src: "./respiracion.mp3",     volumen: 0.7, loop: true  }, // respiración agitada
-  camina:   { src: "./Sonido de Susurro Tenebroso - Efecto de Sonido.mp3",        volumen: 0.6, loop: true  }, // susurros
-  corre:    { src: "./freesound_community-pasos-rapidos-loseta-29459.mp3",   volumen: 0.7, loop: true  }, // pasos rápidos
+  espalda: { src: "./Pasos Normales  Normal Steps Sound Effect (HD).mp3", volumen: 0.6, loop: true }, // pasos (espalda + frente)
+  pelea: { src: "./Sonidos de golpes y peleas.mp3", volumen: 0.8, loop: false }, // sonido de la pelea
+  amarrado: { src: "./respiracion.mp3", volumen: 0.7, loop: true }, // respiración agitada
+  camina: { src: "./Sonido de Susurro Tenebroso - Efecto de Sonido.mp3", volumen: 0.6, loop: true }, // susurros
+  corre: { src: "./freesound_community-pasos-rapidos-loseta-29459.mp3", volumen: 0.7, loop: true }, // pasos rápidos
 };
 
-// ====== AUDIOS DE INTERACCIÓN ======
+
 const AUDIO_ANTORCHA = "./anto.mp3";
 const AUDIO_PUERTA = "./Puerta.mp3";
 const VOLUMEN_ANTORCHA = 0.8;
@@ -64,7 +58,7 @@ const LotieCap4 = () => {
   const puertaRef = useRef(null);
   const puertaAbiertaRef = useRef(false);
 
-  // Personajes (un ref por video)
+
   const stepEspaldaRef = useRef(null);
   const stepFrenteRef = useRef(null);
   const stepPeleaRef = useRef(null);
@@ -91,26 +85,26 @@ const LotieCap4 = () => {
   const [caminaFin, setCaminaFin] = useState(false);
   const [correFin, setCorreFin] = useState(false);
 
-  // Audios de los personajes (uno por id)
+
   const audiosRef = useRef({});
 
-  // Reproduce un efecto de sonido (uno nuevo cada vez: permite clics seguidos)
+
   const sonar = (src, volumen = 1) => {
     const a = new Audio(src);
     a.volume = volumen;
-    a.play().catch(() => {});
+    a.play().catch(() => { });
   };
 
-  // Inicia el audio de un personaje desde el principio
+
   const sonarClip = (id) => {
     const a = audiosRef.current[id];
     if (!a) return;
 
     a.currentTime = 0;
-    a.play().catch(() => {});
+    a.play().catch(() => { });
   };
 
-  // Detiene el audio de un personaje
+
   const pararClip = (id) => {
     const a = audiosRef.current[id];
     if (!a) return;
@@ -130,7 +124,7 @@ const LotieCap4 = () => {
     if (ref.current) {
       ref.current.pause();
       ref.current.currentTime = 0;
-      ref.current.play().catch(() => {});
+      ref.current.play().catch(() => { });
     }
   };
 
@@ -155,29 +149,29 @@ const LotieCap4 = () => {
 
     puertaAbiertaRef.current = true;
 
-    sonar(AUDIO_PUERTA, VOLUMEN_PUERTA); // 🔊 sonido de la puerta
+    sonar(AUDIO_PUERTA, VOLUMEN_PUERTA);
 
     v.currentTime = 0;
-    v.play().catch(() => {});
+    v.play().catch(() => { });
   };
 
-  // Balanceo de antorcha: reinicia la animación CSS en cada clic
+
   const moverAntorcha = (e) => {
     const el = e.currentTarget;
 
-    sonar(AUDIO_ANTORCHA, VOLUMEN_ANTORCHA); // 🔊 sonido de la antorcha
+    sonar(AUDIO_ANTORCHA, VOLUMEN_ANTORCHA);
 
     el.classList.remove("antorcha-mover-cap4");
     void el.offsetWidth;
     el.classList.add("antorcha-mover-cap4");
   };
 
-  // Al terminar un clip: si todo el grupo actual terminó, apaga sus audios y avanza
+
   const alTerminarClip = (i) => {
     const fin = finDeGrupo(actual);
     if (i < actual || i > fin) return;
 
-    // Los videos que no existen cuentan como terminados
+
     const todosTerminaron = clipRefs
       .slice(actual, fin + 1)
       .every((r) => !r.current || r.current.ended);
@@ -193,7 +187,7 @@ const LotieCap4 = () => {
     }
   };
 
-  // En el segundo T_CORTE de "camina": aparece silla, se va amarrado, entra corre
+
   const alActualizarCamina = (e) => {
     if (corteRef.current) return;
     if (e.currentTarget.currentTime < T_CORTE) return;
@@ -204,14 +198,13 @@ const LotieCap4 = () => {
     reproducirVideo(stepSillaRef);
     reproducirVideo(stepCorreRef);
 
-    pararClip("amarrado"); // amarrado desaparece: se corta su respiración
-    sonarClip("corre");    // entra corre: pasos rápidos
+    pararClip("amarrado");
+    sonarClip("corre");
   };
 
   const grupoActivo = (i) => i >= actual && i <= finDeGrupo(actual);
 
-  // Visibilidad de cada personaje
-  // 3 = amarrado, 4 = camina, 5 = silla, 6 = corre
+
   const clipVisible = (i) => {
     if (i === 3) return grupoActivo(3) && !corte;
     if (i === 4) return grupoActivo(4) && !caminaFin;
@@ -221,7 +214,7 @@ const LotieCap4 = () => {
     return grupoActivo(i) || (SECUENCIA[i].persistir && i < actual);
   };
 
-  // Crea los audios de los personajes una sola vez
+
   useEffect(() => {
     const audios = {};
 
@@ -239,7 +232,7 @@ const LotieCap4 = () => {
     };
   }, []);
 
-  // Cada vez que cambia el grupo actual: reproduce sus videos y sus audios a la vez
+
   useEffect(() => {
     const fin = finDeGrupo(actual);
 
@@ -247,7 +240,7 @@ const LotieCap4 = () => {
       reproducirVideo(clipRefs[j]);
       sonarClip(SECUENCIA[j].id);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [actual]);
 
   return (
@@ -260,7 +253,7 @@ const LotieCap4 = () => {
             alt="Escenario capítulo 4"
           />
 
-          {/* ANTORCHAS */}
+
           <img
             className="antorcha-cap4 antorcha-fondo-cap4 antorcha1-cap4"
             src="/antorcha1.png"
@@ -293,7 +286,7 @@ const LotieCap4 = () => {
             onAnimationEnd={(e) => e.currentTarget.classList.remove("antorcha-mover-cap4")}
           />
 
-          {/* PUERTA */}
+
           <video
             ref={puertaRef}
             className="puerta-cap4"
@@ -306,7 +299,7 @@ const LotieCap4 = () => {
             <source src="/Puerta.webm" type="video/webm" />
           </video>
 
-          {/* TELARAÑAS */}
+
           <video
             ref={telarana1Ref}
             className="telarana-cap4 telarana-fondo-cap4 telarana1c-cap4"
@@ -355,7 +348,7 @@ const LotieCap4 = () => {
             <source src="/telaraña4c .webm" type="video/webm" />
           </video>
 
-          {/* MONSTRUOS (Lottie) */}
+
           <div
             className="moustro-cap4 moustro1c-cap4"
             onClick={() => animarLottie(moustro1Ref)}
@@ -404,7 +397,7 @@ const LotieCap4 = () => {
             />
           </div>
 
-          {/* PERSONAJES */}
+
           <video
             ref={stepEspaldaRef}
             className={`step-cap4 stepespalda-cap4 ${clipVisible(0) ? "visible-cap4" : ""}`}
@@ -438,7 +431,7 @@ const LotieCap4 = () => {
             <source src="./peleastep-rogers.webm" type="video/webm" />
           </video>
 
-          {/* Amarrado: entra con camina y desaparece en el segundo 13 de camina */}
+
           <video
             ref={stepAmarradoRef}
             className={`step-cap4 stepamarrado-cap4 ${clipVisible(3) ? "visible-cap4" : ""}`}
@@ -450,7 +443,7 @@ const LotieCap4 = () => {
             <source src="./stepamarrado.webm" type="video/webm" />
           </video>
 
-          {/* Camina (17 s): marca el evento del segundo 13 */}
+
           <video
             ref={stepCaminaRef}
             className={`step-cap4 rogerscamina-cap4 ${clipVisible(4) ? "visible-cap4" : ""}`}
@@ -467,7 +460,7 @@ const LotieCap4 = () => {
             <source src="./rogerscamina.webm" type="video/webm" />
           </video>
 
-          {/* Silla: aparece en el segundo 13 y se queda */}
+
           <video
             ref={stepSillaRef}
             className={`step-cap4 silla-cap4 ${clipVisible(5) ? "visible-cap4" : ""}`}
@@ -478,7 +471,7 @@ const LotieCap4 = () => {
             <source src="./sillaycuerda.webm" type="video/webm" />
           </video>
 
-          {/* Corre: entra en el segundo 13 junto con la silla */}
+
           <video
             ref={stepCorreRef}
             className={`step-cap4 rogerscorre-cap4 ${clipVisible(6) ? "visible-cap4" : ""}`}

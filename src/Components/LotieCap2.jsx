@@ -12,61 +12,20 @@ import rata from "../assets/rata.json";
 import "../Styles/LotieCap2.css";
 const Lottie = LottieModule.default;
 
-/* ==========================================================
-   Cámara Capítulo 2  (exclusiva de este capítulo)
 
-   Línea de tiempo. Debe coincidir con los @keyframes de
-   LotieCap2.css, que duran 25 s en total:
-
-     0 s    - 10 s     stepCap2Espalda (cámara normal, sin movimiento)
-     10 s              stepCap2Espalda desaparece y la cámara empieza
-                       el zoom hacia stepCap2Frente
-     10 s   - 12.5 s   zoom suave a plano medio corto + stepCap2Frente
-                       aparece (opacity 0 -> 100 %)
-     12.5 s - 22.5 s   stepCap2Frente se reproduce (10 s) con la
-                       cámara fija en su encuadre
-     22.5 s - 25 s     zoom out hasta la posición normal inicial +
-                       stepCap2Frente se desvanece (100 -> 0 %)
-     25 s   -          la cámara ya está normal: aparece
-                       stepCap2Frente2 (otro clip) y se reproduce;
-                       se oculta solo al terminar
-   ========================================================== */
 const ESPALDA_FIN_MS = 10000;
 const FRENTE_INICIO_MS = 12500;
 const FRENTE2_INICIO_MS = 25000;
 
-/* ----------------------------------------------------------
-   ENCUADRE de stepCap2Frente (plano medio corto, pecho hacia arriba)
-   Todo se mide como fracción de la altura del video:
 
-   MARGEN_CABEZA  espacio libre sobre la cabeza
-                  (más alto = más aire arriba de la cabeza)
-   PECHO_FRAC     hasta dónde llega el encuadre por abajo
-                  (0 = tope del video, 1 = base del video)
-                  más bajo  = más cerca de la cara
-                  más alto  = se ve más cuerpo
-   ANCHO_MAX      máximo del ancho de pantalla que puede ocupar el
-                  video (evita cortar los hombros)
-   ---------------------------------------------------------- */
 const MARGEN_CABEZA = 0.06;
 const PECHO_FRAC = 0.6;
 const ANCHO_MAX = 0.85;
 
-/* ==========================================================
-   SONIDOS
-   Aquí van las rutas de los archivos (carpeta /public).
-   Ejemplo: src: "/sonidos/rata.mp3"
-   Mientras src esté vacío ("") el sonido simplemente no suena.
 
-   loop: true  -> se repite mientras la animación esté activa (pasos)
-   loop: false -> suena una vez por activación (clics)
-
-   Para agregar otro sonido: añade una entrada aquí y llama a
-   reproducirSonido("miClave") donde se active su animación.
-   ========================================================== */
 const SONIDOS = {
-  rata:         { src: "./Rat - Sound Effect  ProSounds.mp3", volumen: 1, loop: false }, // clic en la rata
-  estatua1:     { src: "./Arrastrar silla_ efecto de sonido.mp3", volumen: 1, loop: false }, // clic en la estatua 1
+  rata: { src: "./Rat - Sound Effect  ProSounds.mp3", volumen: 1, loop: false }, // clic en la rata
+  estatua1: { src: "./Arrastrar silla_ efecto de sonido.mp3", volumen: 1, loop: false }, // clic en la estatua 1
   pasosEspalda: { src: "./Pasos Normales  Normal Steps Sound Effect (HD).mp3", volumen: 1, loop: true },  // stepCap2Espalda
   pasosFrente2: { src: "./Pasos Normales  Normal Steps Sound Effect (HD).mp3", volumen: 1, loop: true },  // stepCap2Frente2
 };
@@ -86,10 +45,10 @@ const LotieCap2 = () => {
   const stepCap2FrenteRef = useRef(null);
   const stepCap2Frente2Ref = useRef(null);
 
-  // true cuando el segundo clip terminó y debe desvanecerse
+
   const [frente2Termino, setFrente2Termino] = useState(false);
 
-  // Un solo objeto Audio por sonido, creado una vez y reutilizado
+
   const audiosRef = useRef({});
 
   const obtenerAudio = (clave) => {
@@ -106,8 +65,7 @@ const LotieCap2 = () => {
     return audiosRef.current[clave];
   };
 
-  // reiniciar = true  -> clics: vuelve a empezar (no se apila)
-  // reiniciar = false -> eventos de video: si ya suena, no hace nada
+
   const reproducirSonido = (clave, reiniciar = true) => {
     const audio = obtenerAudio(clave);
     if (!audio) return;
@@ -116,7 +74,7 @@ const LotieCap2 = () => {
 
     audio.pause();
     audio.currentTime = 0;
-    audio.play().catch(() => {});
+    audio.play().catch(() => { });
   };
 
   const detenerSonido = (clave) => {
@@ -127,7 +85,7 @@ const LotieCap2 = () => {
     audio.currentTime = 0;
   };
 
-  // Al salir de la escena, todo se silencia
+
   useEffect(() => {
     const audios = audiosRef.current;
     return () => Object.keys(audios).forEach(detenerSonido);
@@ -144,12 +102,11 @@ const LotieCap2 = () => {
     if (ref.current) {
       ref.current.pause();
       ref.current.currentTime = 0;
-      ref.current.play().catch(() => {});
+      ref.current.play().catch(() => { });
     }
   };
 
-  // Calcula el encuadre (zoom + punto de enfoque) a partir del
-  // tamaño y la posición reales de stepCap2Frente
+
   const calcularEncuadre = () => {
     const cam = camaraRef.current;
     const v = stepCap2FrenteRef.current;
@@ -165,18 +122,17 @@ const LotieCap2 = () => {
 
     if (!camW || !camH || !vW || !vH) return;
 
-    // Zona a mostrar: un poco sobre la cabeza hasta la mitad del pecho
+
     const zonaArriba = vTop - vH * MARGEN_CABEZA;
     const zonaAbajo = vTop + vH * PECHO_FRAC;
     const zonaAlto = zonaAbajo - zonaArriba;
 
-    // Zoom para que esa zona llene la altura, sin pasar del ancho máximo
+
     const zoomPorAlto = camH / zonaAlto;
     const zoomPorAncho = (camW * ANCHO_MAX) / vW;
     const zoom = Math.max(1.2, Math.min(zoomPorAlto, zoomPorAncho, 6));
 
-    // Centro de la cámara: horizontal al centro del personaje,
-    // vertical anclado para respetar el margen sobre la cabeza
+
     const x = vLeft + vW / 2;
     const y = zonaArriba + camH / (2 * zoom);
 
@@ -191,7 +147,7 @@ const LotieCap2 = () => {
     return () => window.removeEventListener("resize", calcularEncuadre);
   }, []);
 
-  // Secuencia de la Cámara Capítulo 2: arranca al montar la escena
+
   useEffect(() => {
     const timers = [];
 
@@ -210,7 +166,7 @@ const LotieCap2 = () => {
       }, FRENTE_INICIO_MS)
     );
 
-    // La cámara ya volvió a su posición normal: aparece stepCap2Frente2
+
     timers.push(
       setTimeout(() => {
         stepCap2FrenteRef.current?.pause();
@@ -337,7 +293,7 @@ const LotieCap2 = () => {
             alt="Lámpara 3"
           />
 
-          {/* 1. Muñeco caminando de espaldas (0 s - 10 s) */}
+
           <video
             ref={stepCap2EspaldaRef}
             className="stepCap2Espalda"
@@ -351,7 +307,7 @@ const LotieCap2 = () => {
             <source src="/Comp 2.webm" type="video/webm" />
           </video>
 
-          {/* 2. Primer stepCap2Frente (aparece a los 10 s, se reproduce de 12.5 s a 22.5 s) */}
+
           <video
             ref={stepCap2FrenteRef}
             className="stepCap2Frente"
@@ -363,7 +319,7 @@ const LotieCap2 = () => {
             <source src="./De Frente.webm" type="video/webm" />
           </video>
 
-          {/* 3. Segundo clip, distinto del anterior (aparece a los 25 s, con la cámara ya normal) */}
+
           <video
             ref={stepCap2Frente2Ref}
             className={claseFrente2}

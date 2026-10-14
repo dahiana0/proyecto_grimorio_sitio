@@ -1,14 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-
 import LotieCap5A from "./LotieCap5A";
 import LotieCap5B from "./LotieCap5B";
 import LotieCap5C from "./LotieCap5C";
 import LotieCap5D from "./LotieCap5D";
 import LotieCap5E from "./LotieCap5E";
 import "../Styles/visorCap1.css";
-
 
 const DURACION_TRANSICION = 350;
 
@@ -18,9 +16,9 @@ export default function VisorComic5({
 }) {
   const navigate = useNavigate();
 
+  // Audio del narrador
   const audioRef = useRef(null);
 
-  
   const [index, setIndex] = useState(0);
 
   const [nivelVolumen, setNivelVolumen] = useState(1);
@@ -32,11 +30,43 @@ export default function VisorComic5({
 
   const [transicionando, setTransicionando] = useState(false);
 
-  
+  // true si el navegador bloqueó la reproducción automática
+  const [audioBloqueado, setAudioBloqueado] = useState(false);
+
   const subtitulosPorEscena = {
     0: [
-      { inicio: 0.5, fin: 5.0, texto: "Texto del subtítulo 1 de la escena 1." },
-      { inicio: 5.1, fin: 10.0, texto: "Texto del subtítulo 2 de la escena 1." },
+      {
+        inicio: 0.48,
+        fin: 7.27,
+        texto:
+          "Algunos lugares no se olvidan y algunas verdades no se pueden dejar atrás,",
+      },
+      {
+        inicio: 7.28,
+        fin: 12.59,
+        texto: "a pesar de todo lo ocurrido, Stephen ha regresado,",
+      },
+      {
+        inicio: 12.6,
+        fin: 20.15,
+        texto:
+          "no por respuestas, sino porque hay algo que aún lo llama, algo que no ha terminado",
+      },
+      {
+        inicio: 20.16,
+        fin: 25.23,
+        texto: "cada paso que da lo acerca más a aquello que intentó enterrar,",
+      },
+      {
+        inicio: 25.24,
+        fin: 28.31,
+        texto: "y que nunca debió sobrevivir.",
+      },
+      {
+        inicio: 28.32,
+        fin: 32.91,
+        texto: "Esta vez, no hay dudas, no hay escapatoria.",
+      },
     ],
     1: [
       { inicio: 0.5, fin: 5.0, texto: "Texto del subtítulo 1 de la escena 2." },
@@ -52,16 +82,17 @@ export default function VisorComic5({
     ],
   };
 
- 
+  // Cada escena tiene su animación y su audio de narrador
+  // Los archivos van en: public/audios/
   const escenas = [
-    { tipo: "lottie", componente: <LotieCap5A />, audio: "/audios/cap5-1.wav" },
+    { tipo: "lottie", componente: <LotieCap5A />, audio: "/audios/NarradorCP1.wav" },
     { tipo: "lottie", componente: <LotieCap5B />, audio: "/audios/cap5-2.wav" },
     { tipo: "lottie", componente: <LotieCap5C />, audio: "/audios/cap5-3.wav" },
     { tipo: "lottie", componente: <LotieCap5D />, audio: "/audios/cap5-4.wav" },
     { tipo: "lottie", componente: <LotieCap5E />, audio: "/audios/cap5-5.wav" },
   ];
 
- 
+  // Sincroniza el subtítulo con el tiempo actual del audio
   const actualizarSubtitulo = () => {
     if (!audioRef.current) return;
 
@@ -73,6 +104,19 @@ export default function VisorComic5({
     );
 
     setSubtituloActual(subtitulo ? subtitulo.texto : "");
+  };
+
+  // Intenta reproducir el audio; si el navegador lo bloquea, muestra el botón
+  const reproducirAudio = () => {
+    if (!audioRef.current) return;
+
+    audioRef.current
+      .play()
+      .then(() => setAudioBloqueado(false))
+      .catch((error) => {
+        console.log("El audio no pudo reproducirse automáticamente:", error);
+        setAudioBloqueado(true);
+      });
   };
 
   // Al cambiar de escena: reinicia y reproduce el audio de la nueva
@@ -90,10 +134,7 @@ export default function VisorComic5({
       audioRef.current.src = escenaActual.audio;
       audioRef.current.currentTime = 0;
       audioRef.current.volume = nivelVolumen;
-
-      audioRef.current.play().catch((error) => {
-        console.log("El audio no pudo reproducirse automáticamente:", error);
-      });
+      reproducirAudio();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index]);
@@ -102,9 +143,7 @@ export default function VisorComic5({
     if (audioRef.current) audioRef.current.volume = nivelVolumen;
   }, [nivelVolumen]);
 
-  // ---------------------------------------------------------------------
   // Navegación entre escenas, con transición a oscuro
-  // ---------------------------------------------------------------------
   const cambiarEscena = (nuevoIndex) => {
     if (nuevoIndex < 0 || nuevoIndex > escenas.length - 1) return;
     if (nuevoIndex === index) return;
@@ -121,9 +160,7 @@ export default function VisorComic5({
   const siguiente = () => cambiarEscena(index + 1);
   const anterior = () => cambiarEscena(index - 1);
 
-  // ---------------------------------------------------------------------
   // Volumen: slider manual + mute con el ícono
-  // ---------------------------------------------------------------------
   const cambiarNivelVolumen = (evento) => {
     setNivelVolumen(parseFloat(evento.target.value));
   };
@@ -141,9 +178,7 @@ export default function VisorComic5({
     setMostrarSubtitulo((prev) => !prev);
   };
 
-  // ---------------------------------------------------------------------
   // Render
-  // ---------------------------------------------------------------------
   return (
     <div className="visor-container">
       {/* Barra superior */}
@@ -224,6 +259,23 @@ export default function VisorComic5({
             </div>
           )}
         </div>
+
+        {/* Respaldo si el navegador bloquea el autoplay */}
+        {audioBloqueado && (
+          <button
+            onClick={reproducirAudio}
+            className="visor-btn"
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              zIndex: 10,
+            }}
+          >
+            ▶ ACTIVAR NARRACIÓN
+          </button>
+        )}
       </div>
 
       {/* Navegación inferior */}
@@ -270,7 +322,12 @@ export default function VisorComic5({
         </button>
       </div>
 
-      <audio ref={audioRef} onTimeUpdate={actualizarSubtitulo} />
+      {/* Audio del narrador */}
+      <audio
+        ref={audioRef}
+        onTimeUpdate={actualizarSubtitulo}
+        onEnded={() => setSubtituloActual("")}
+      />
     </div>
   );
 }

@@ -1,6 +1,4 @@
-/* =========================================
-   ESCENA PRINCIPAL
-========================================= */
+
 
 .escenacap4 {
     position: relative;
@@ -17,9 +15,7 @@
 }
 
 
-/* =========================================
-   CONTENEDOR INTERNO (sin cámara ni zoom)
-========================================= */
+
 
 .escena-interna-cap4 {
     position: absolute;
@@ -27,9 +23,7 @@
 }
 
 
-/* =========================================
-   FONDO
-========================================= */
+
 
 .fondo4 {
     position: absolute;
@@ -51,9 +45,6 @@
 }
 
 
-/* =========================================
-   ELEMENTOS (Lottie, videos e imágenes)
-========================================= */
 
 .moustro-cap4,
 .telarana-cap4,
@@ -71,9 +62,6 @@
 }
 
 
-/* =========================================
-   VIDEOS
-========================================= */
 
 .telarana-cap4,
 .puerta-cap4,
@@ -82,9 +70,7 @@
 }
 
 
-/* =========================================
-   PUERTA (video, se pulsa)
-========================================= */
+
 
 .puerta-cap4 {
     left: 725px;
@@ -108,9 +94,7 @@
 }
 
 
-/* =========================================
-   ANTORCHAS (imagen, se pulsan)
-========================================= */
+
 
 .antorcha-cap4 {
     height: auto;
@@ -199,9 +183,7 @@
 }
 
 
-/* =========================================
-   MONSTRUOS (Lottie)
-========================================= */
+
 
 .moustro-cap4 {
     z-index: 4;
@@ -250,9 +232,6 @@
 }
 
 
-/* =========================================
-   TELARAÑAS (video, se pulsan)
-========================================= */
 
 .telarana-cap4 {
     height: auto;
@@ -300,11 +279,7 @@
 }
 
 
-/* =========================================
-   PERSONAJES (videos en secuencia)
-   Ocultos por defecto: se ve el activo
-   y los que tienen "persistir"
-========================================= */
+
 
 .step-cap4 {
     left: 50%;
@@ -327,16 +302,16 @@
     opacity: 1;
 }
 
-/* Posición y tamaño de cada personaje por separado */
 
-/* Stephen (de espalda): a la izquierda del centro, más atrás en el pasillo */
+
+
 .stepespalda-cap4 {
     left: 42%;
     bottom: 1px;
     width: 250px;
 }
 
-/* Rogers (de frente): a la derecha de Stephen, ligeramente más atrás */
+
 .rogersfrente-cap4 {
     left: 48%;
     bottom: 100px;
@@ -377,9 +352,7 @@
 }
 
 
-/* =========================================
-   VISOR
-========================================= */
+
 
 .visor-scene-cap4 {
     position: relative;
@@ -397,9 +370,7 @@
 }
 
 
-/* =========================================
-   CONTENEDOR DE LA ESCENA
-========================================= */
+
 
 .contenedor-escena-cap4 {
     position: relative;
@@ -415,10 +386,6 @@
 }
 
 
-/* =========================================
-   RESPONSIVE
-   TABLET
-========================================= */
 
 @media (max-width: 1200px) {
 
@@ -448,10 +415,6 @@
 }
 
 
-/* =========================================
-   RESPONSIVE
-   CELULAR
-========================================= */
 
 @media (max-width: 768px) {
 
@@ -511,9 +474,7 @@
 }
 
 
-/* =========================================
-   PANTALLAS MUY PEQUEÑAS
-========================================= */
+
 
 @media (max-width: 480px) {
 

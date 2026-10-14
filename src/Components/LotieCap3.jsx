@@ -10,23 +10,23 @@ import "../Styles/LotieCap3.css";
 
 const Lottie = LottieModule.default;
 
-// ====== TIEMPOS (segundos) ======
-const T_LLEGA = 14.21;      // llega a moustro1c y empieza el zoom
-const T_ZOOM_IN = 1.0;      // cuánto tarda en acercarse
-const T_ZOOM_OUT = 21.18;   // empieza a alejarse
-const T_FIN = 22.02;        // duración total del step
 
-// ====== AJUSTES ======
-const ZOOM = 1.8;           // nivel de zoom (más bajo = personaje se ve más pequeño)
-const CINTURA = 0.55;       // 0 = cabeza, 1 = pies: el encuadre se corta a esta altura del personaje
-const CAMINAR = true;       // false si el video ya trae el movimiento
-const SEPARACION_X = 45;    // px a la izquierda del monstruo donde se detiene (menos = más cerca)
-const AJUSTE_Y = 80;        // px que baja el punto final (más alto = más abajo)
+const T_LLEGA = 14.21;
+const T_ZOOM_IN = 1.0;
+const T_ZOOM_OUT = 21.18;
+const T_FIN = 22.02;
 
-// ====== AUDIOS (pon aquí tus archivos, en la carpeta public/audios/) ======
-const AUDIO_PASOS = "./Sonido de pasos.mp3";       // se repite mientras camina
-const AUDIO_ANTORCHA = "./anto.mp3"; // al hacer clic en una antorcha
-const AUDIO_PUERTA = "./Puerta.mp3";     // al tocar la puerta
+
+const ZOOM = 1.8;
+const CINTURA = 0.55;
+const CAMINAR = true;
+const SEPARACION_X = 45;
+const AJUSTE_Y = 80;
+
+
+const AUDIO_PASOS = "./Sonido de pasos.mp3";
+const AUDIO_ANTORCHA = "./anto.mp3";
+const AUDIO_PUERTA = "./Puerta.mp3";
 const VOLUMEN_PASOS = 0.6;
 const VOLUMEN_ANTORCHA = 0.8;
 const VOLUMEN_PUERTA = 1;
@@ -51,19 +51,19 @@ const LotieCap3 = () => {
 
   const stepCap3Ref = useRef(null);
 
-  // Audio de pasos
+
   const pasosAudioRef = useRef(null);
 
-  // Cámara
+
   const escenaRef = useRef(null);
   const camaraCap3Ref = useRef(null);
   const moustro1WrapRef = useRef(null);
 
-  // Reproduce un efecto de sonido (uno nuevo cada vez: permite clics seguidos)
+
   const sonar = (src, volumen = 1) => {
     const a = new Audio(src);
     a.volume = volumen;
-    a.play().catch(() => {});
+    a.play().catch(() => { });
   };
 
   const animarLottie = (ref) => {
@@ -77,7 +77,7 @@ const LotieCap3 = () => {
     if (ref.current) {
       ref.current.pause();
       ref.current.currentTime = 0;
-      ref.current.play().catch(() => {});
+      ref.current.play().catch(() => { });
     }
   };
 
@@ -102,24 +102,24 @@ const LotieCap3 = () => {
 
     puertaAbiertaRef.current = true;
 
-    sonar(AUDIO_PUERTA, VOLUMEN_PUERTA); // 🔊 sonido de la puerta
+    sonar(AUDIO_PUERTA, VOLUMEN_PUERTA);
 
     v.currentTime = 0;
-    v.play().catch(() => {});
+    v.play().catch(() => { });
   };
 
-  // Balanceo de antorcha: reinicia la animación CSS en cada clic
+
   const moverAntorcha = (e) => {
     const el = e.currentTarget;
 
-    sonar(AUDIO_ANTORCHA, VOLUMEN_ANTORCHA); // 🔊 sonido de la antorcha
+    sonar(AUDIO_ANTORCHA, VOLUMEN_ANTORCHA);
 
     el.classList.remove("antorcha-mover");
     void el.offsetWidth;
     el.classList.add("antorcha-mover");
   };
 
-  // Al montar: el step se reproduce solo + cámara/caminata sincronizadas
+
   useEffect(() => {
     reproducirVideo(stepCap3Ref);
 
@@ -142,20 +142,20 @@ const LotieCap3 = () => {
         const W = escena.clientWidth;
         const H = escena.clientHeight;
 
-        // ---------- PASOS: suenan solo mientras camina ----------
+
         const caminando = t < T_LLEGA && !step.paused && !step.ended;
 
         if (caminando && pasos.paused) {
-          pasos.play().catch(() => {});
+          pasos.play().catch(() => { });
         } else if (!caminando && !pasos.paused) {
           pasos.pause();
           pasos.currentTime = 0;
         }
 
-        // centro del monstruo 1 (offset* no se afecta por transform)
+
         const mx = m.offsetLeft + m.offsetWidth / 2;
 
-        // ---------- CAMINATA (0 → 14.21) ----------
+
         const stopX = mx - SEPARACION_X;
         const dy = Math.min(0, -(H - (m.offsetTop + m.offsetHeight) - 1) + AJUSTE_Y);
 
@@ -166,7 +166,7 @@ const LotieCap3 = () => {
           step.style.transform = `translate(calc(-50% + ${dx * w}px), ${dy * w}px)`;
         }
 
-        // ---------- CÁMARA CAP 3 ----------
+
         let p = 0;
 
         if (t >= T_ZOOM_OUT) {
@@ -175,13 +175,12 @@ const LotieCap3 = () => {
           p = ease(clamp01((t - T_LLEGA) / T_ZOOM_IN));
         }
 
-        // Posición final del personaje (donde se detiene)
+
         const stepH = step.offsetHeight;
         const piesY = H - 1 + dy;
         const cinturaY = piesY - stepH * (1 - CINTURA);
 
-        // Encuadre final: horizontal entre personaje y monstruo,
-        // vertical con el borde de abajo a la altura de la cintura
+
         const fx = (stopX + mx) / 2;
         const fy = cinturaY - H / (2 * ZOOM);
 
@@ -310,7 +309,7 @@ const LotieCap3 = () => {
             <source src="/telaraña4c .webm" type="video/webm" />
           </video>
 
-          {/* MONSTRUOS (Lottie) */}
+
           <div
             ref={moustro1WrapRef}
             className="moustro moustro1c"
@@ -360,7 +359,7 @@ const LotieCap3 = () => {
             />
           </div>
 
-          {/* STEP (personaje) */}
+
           <video
             ref={stepCap3Ref}
             className="step-cap-3"
