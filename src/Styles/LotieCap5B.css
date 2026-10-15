@@ -1,4 +1,3 @@
-
 .escena5b {
     position: relative;
     width: 100%;
@@ -7,31 +6,15 @@
     background: #000;
 }
 
+/* Cámara: la mueve y hace zoom el JSX (animate) */
 .camara5b {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transform-origin: center center;
-    animation: zoomInicial5b 3s ease-in-out forwards;
+    position: absolute;
+    inset: 0;
+    transform-origin: 0 0;
+    will-change: transform;
 }
 
-@keyframes zoomInicial5b {
-    0% {
-        transform: scale(2.2) translate(-10px, 170px);
-    }
-
-    35% {
-        transform: scale(2.2) translate(-10px, 170px);
-    }
-
-    100% {
-        transform: scale(1) translate(0, 0);
-    }
-}
-
-/* ---------------------------------------------------------------------
-   Fondo (imagen)
---------------------------------------------------------------------- */
+/* Fondo */
 .fondo5b {
     position: absolute;
     inset: 0;
@@ -42,19 +25,11 @@
 }
 
 /* ---------------------------------------------------------------------
-   Lotties interactivos (base compartida)
-   Cada uno define abajo su z-index y, si hace falta, su posición/tamaño.
+   Telarañas (videos)
 --------------------------------------------------------------------- */
-.estatua1-5b,
-.estatua2-5b,
-.estatua3-5b,
-.estatua4-5b,
-.estatua5-5b,
-.estatua6-5b,
 .telarana1-5b,
 .telarana2-5b,
-.telarana3-5b,
-.lampara5b {
+.telarana3-5b {
     position: absolute;
     left: 50%;
     bottom: 0;
@@ -64,49 +39,119 @@
     transition: transform .25s ease;
 }
 
-.estatua1-5b:hover,
-.estatua2-5b:hover,
-.estatua3-5b:hover,
-.estatua4-5b:hover,
-.estatua5-5b:hover,
-.estatua6-5b:hover,
 .telarana1-5b:hover,
 .telarana2-5b:hover,
-.telarana3-5b:hover,
+.telarana3-5b:hover {
+    transform: translateX(-50%) scale(1.03);
+}
+
+.telarana1-5b,
+.telarana2-5b,
+.telarana3-5b { z-index: 8; }
+
+/* ---------------------------------------------------------------------
+   Candelabro (video), colgando del techo al centro
+--------------------------------------------------------------------- */
+.lampara5b {
+    position: absolute;
+    left: 50%;
+    bottom: 455px;
+    width: 15%;
+    transform: translateX(-50%);
+    transform-origin: top center;
+    z-index: 9;
+    cursor: pointer;
+    transition: transform .25s ease;
+}
+
 .lampara5b:hover {
     transform: translateX(-50%) scale(1.03);
 }
 
 /* ---------------------------------------------------------------------
-   Orden de capas: de atrás hacia adelante
+   Ceras (imágenes)
 --------------------------------------------------------------------- */
-.estatua1-5b { z-index: 2; }
-.estatua2-5b { z-index: 3; }
-.estatua3-5b { z-index: 4; }
-.estatua4-5b { z-index: 5; }
-.estatua5-5b { z-index: 6; }
-.estatua6-5b { z-index: 7; }
+.cera1-5b,
+.cera2-5b,
+.cera3-5b,
+.cera4-5b,
+.cera5-5b,
+.cera6-5b {
+    position: absolute;
+    width: auto;
+    transform: translateX(-50%);
+    transform-origin: bottom center;
+    cursor: pointer;
+    transition: transform .25s ease;
+    filter: drop-shadow(0 4px 4px rgba(0, 0, 0, .5));
+}
 
-.telarana1-5b { z-index: 8; }
-.telarana2-5b { z-index: 8; }
-.telarana3-5b { z-index: 8; }
+.cera1-5b:hover,
+.cera2-5b:hover,
+.cera3-5b:hover,
+.cera4-5b:hover,
+.cera5-5b:hover,
+.cera6-5b:hover {
+    transform: translateX(-50%) scale(1.03);
+}
 
-.lampara5b { z-index: 9; }
+/* Fondo (1 y 2) */
+.cera1-5b { left: 32.7%; bottom: 17%; height: 20%;   z-index: 2; }
+.cera2-5b { left: 67.7%; bottom: 17%; height: 20%;   z-index: 2; }
+
+/* Mitad (3 y 4) */
+.cera3-5b { left: 25.2%; bottom: 10%; height: 26%;   z-index: 3; }
+.cera4-5b { left: 75%;   bottom: 10%; height: 26%;   z-index: 3; }
+
+/* Frente (5 y 6) */
+.cera5-5b { left: 15.5%; bottom: 1%;  height: 42.5%; z-index: 4; }
+.cera6-5b { left: 84%;   bottom: 1%;  height: 42.5%; z-index: 4; }
+
+/* Animación al tocar */
+.cera1-5b.animar,
+.cera2-5b.animar,
+.cera3-5b.animar,
+.cera4-5b.animar,
+.cera5-5b.animar,
+.cera6-5b.animar {
+    animation: ceraTocada5b .9s ease-in-out;
+}
+
+@keyframes ceraTocada5b {
+    0%   { transform: translateX(-50%) scale(1, 1) rotate(0deg);        filter: brightness(1)    drop-shadow(0 4px 4px rgba(0,0,0,.5)); }
+    20%  { transform: translateX(-50%) scale(1.06, 0.92) rotate(-2deg); filter: brightness(1.25) drop-shadow(0 4px 4px rgba(0,0,0,.5)); }
+    40%  { transform: translateX(-50%) scale(0.96, 1.06) rotate(2deg);  filter: brightness(1.15) drop-shadow(0 4px 4px rgba(0,0,0,.5)); }
+    60%  { transform: translateX(-50%) scale(1.03, 0.97) rotate(-1deg); filter: brightness(1.1)  drop-shadow(0 4px 4px rgba(0,0,0,.5)); }
+    80%  { transform: translateX(-50%) scale(0.99, 1.01) rotate(1deg);  filter: brightness(1.05) drop-shadow(0 4px 4px rgba(0,0,0,.5)); }
+    100% { transform: translateX(-50%) scale(1, 1) rotate(0deg);        filter: brightness(1)    drop-shadow(0 4px 4px rgba(0,0,0,.5)); }
+}
+
+/* ---------------------------------------------------------------------
+   Cinta policial (video de 24 s), al pie de la escalera
+--------------------------------------------------------------------- */
+.cinta5b {
+    position: absolute;
+    left: 51%;
+    bottom: 5%;
+    width: 35%;
+    transform: translateX(-50%);
+    z-index: 5;
+    pointer-events: none;
+}
 
 /* ---------------------------------------------------------------------
    Step (video)
+   left, top y width los anima el JSX; aquí solo el punto de partida.
+   Los pies de Step quedan en (left, top). El alto se ajusta solo.
 --------------------------------------------------------------------- */
 .step5b {
     position: absolute;
-    left: 50%;
-    bottom: 1px;
-    transform: translateX(-50%);
-    width: 200px;
+    left: 50.5%;
+    top: 66%;
+    width: 8.3%;   /* punto de partida (15% / zoom 1.8); el JSX lo anima */
+    height: auto;
+    transform: translate(-50%, -100%);
+    transform-origin: bottom center;
     z-index: 10;
-    cursor: pointer;
-    transition: transform .25s ease;
-}
-
-.step5b:hover {
-    transform: translateX(-50%) scale(1.05);
+    pointer-events: none;
 }

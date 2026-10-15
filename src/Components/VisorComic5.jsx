@@ -69,7 +69,43 @@ export default function VisorComic5({
       },
     ],
     1: [
-      { inicio: 0.5, fin: 5.0, texto: "Texto del subtítulo 1 de la escena 2." },
+      {
+        inicio: 0.36,
+        fin: 6.63,
+        texto: "Algunos secretos no desaparecen, solo cambian de guardián.",
+      },
+      {
+        inicio: 6.64,
+        fin: 13.15,
+        texto:
+          "Steven ha regresado, guiado por preguntas que nunca tuvieron respuesta,",
+      },
+      {
+        inicio: 13.16,
+        fin: 17.87,
+        texto: "pero este lugar ya no es el mismo, hay algo más,",
+      },
+      {
+        inicio: 17.88,
+        fin: 25.75,
+        texto:
+          "una presencia que observa, que espera, que parece conocer cada paso que da.",
+      },
+      {
+        inicio: 25.76,
+        fin: 29.91,
+        texto: "No es casualidad que esté aquí, nunca lo fue.",
+      },
+      {
+        inicio: 30.36,
+        fin: 33.19,
+        texto: "Cada puerta, cada susurro,",
+      },
+      {
+        inicio: 33.2,
+        fin: 38.39,
+        texto: "cada sombra lo ha estado guiando hacia este momento.",
+      },
     ],
     2: [
       { inicio: 0.5, fin: 5.0, texto: "Texto del subtítulo 1 de la escena 3." },
@@ -86,7 +122,7 @@ export default function VisorComic5({
   // Los archivos van en: public/audios/
   const escenas = [
     { tipo: "lottie", componente: <LotieCap5A />, audio: "/audios/NarradorCP1.wav" },
-    { tipo: "lottie", componente: <LotieCap5B />, audio: "/audios/cap5-2.wav" },
+    { tipo: "lottie", componente: <LotieCap5B />, audio: "/audios/Narrador 5-2.wav" },
     { tipo: "lottie", componente: <LotieCap5C />, audio: "/audios/cap5-3.wav" },
     { tipo: "lottie", componente: <LotieCap5D />, audio: "/audios/cap5-4.wav" },
     { tipo: "lottie", componente: <LotieCap5E />, audio: "/audios/cap5-5.wav" },
