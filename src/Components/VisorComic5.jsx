@@ -3,12 +3,19 @@ import { useNavigate } from "react-router-dom";
 
 import LotieCap5A from "./LotieCap5A";
 import LotieCap5B from "./LotieCap5B";
+import LotieCap5F from "./LotieCap5F.jsx"; // Orabona (escena 3)
 import LotieCap5C from "./LotieCap5C";
 import LotieCap5D from "./LotieCap5D";
 import LotieCap5E from "./LotieCap5E";
 import "../Styles/visorCap1.css";
 
 const DURACION_TRANSICION = 350;
+
+// Orabona (escena 3): el audio 1 suena al entrar a la escena y el audio 2
+// entra INICIO_ORABONA_2 segundos después de que arranca el audio 1.
+const AUDIO_ORABONA_1 = "/audios/ora1.wav";
+const AUDIO_ORABONA_2 = "/audios/ora2.wav";
+const INICIO_ORABONA_2 = 19.18;
 
 export default function VisorComic5({
   numeroCapitulo = "V",
@@ -18,6 +25,19 @@ export default function VisorComic5({
 
   // Audio del narrador
   const audioRef = useRef(null);
+
+  // Tramo del narrador: "A" (primer audio de la escena) o "B" (segundo audio).
+  // Es un ref para que siempre tenga el valor actual al sincronizar subtítulos.
+  const tramoRef = useRef("A");
+
+  // Temporizador que lanza el audio 2 de Orabona
+  const timerTramoBRef = useRef(null);
+  const limpiarTimerTramoB = () => {
+    if (timerTramoBRef.current) {
+      clearTimeout(timerTramoBRef.current);
+      timerTramoBRef.current = null;
+    }
+  };
 
   const [index, setIndex] = useState(0);
 
@@ -33,6 +53,8 @@ export default function VisorComic5({
   // true si el navegador bloqueó la reproducción automática
   const [audioBloqueado, setAudioBloqueado] = useState(false);
 
+  // La clave es el índice de la escena (empieza en 0).
+  // Son los subtítulos del PRIMER audio de cada escena.
   const subtitulosPorEscena = {
     0: [
       {
@@ -107,22 +129,74 @@ export default function VisorComic5({
         texto: "cada sombra lo ha estado guiando hacia este momento.",
       },
     ],
+    // Escena 3: Orabona, audio 1 (tiempos relativos al inicio de ora1.wav)
     2: [
-      { inicio: 0.5, fin: 5.0, texto: "Texto del subtítulo 1 de la escena 3." },
+      {
+        inicio: 0.32,
+        fin: 5.99,
+        texto: "Es una pena, no cree, tanta belleza acumulando polvo.",
+      },
+      {
+        inicio: 6.0,
+        fin: 10.99,
+        texto: "Rogers no está, se ha ido de viaje, Jones,",
+      },
+      {
+        inicio: 11.0,
+        fin: 17.51,
+        texto: "pero sabía que vendría, sabía que esa estatua no le dejaría dormir.",
+      },
     ],
+    // Antes era 2 (ahora escena 4)
     3: [
       { inicio: 0.5, fin: 5.0, texto: "Texto del subtítulo 1 de la escena 4." },
     ],
+    // Antes era 3 (ahora escena 5)
     4: [
       { inicio: 0.5, fin: 5.0, texto: "Texto del subtítulo 1 de la escena 5." },
+    ],
+    // Antes era 4 (ahora escena 6)
+    5: [
+      { inicio: 0.5, fin: 5.0, texto: "Texto del subtítulo 1 de la escena 6." },
+    ],
+  };
+
+  // Subtítulos del SEGUNDO audio (tramo B) de las escenas que lo tienen.
+  // Sus tiempos son relativos al inicio de ese audio.
+  const subtitulosTramoB = {
+    // Escena 3: Orabona, audio 2 (ora2.wav)
+    2: [
+      {
+        inicio: 0.48,
+        fin: 8.27,
+        texto: "Dicen que está maldita, una palabra tonta para algo tan poderoso.",
+      },
+      {
+        inicio: 8.28,
+        fin: 14.51,
+        texto: "Rogers la entiende, él me autorizó mostrarle el camino.",
+      },
+      {
+        inicio: 14.52,
+        fin: 18.51,
+        texto: "Acompáñeme. Ella lo está esperando.",
+      },
     ],
   };
 
   // Cada escena tiene su animación y su audio de narrador
   // Los archivos van en: public/audios/
+  // "tramoB": segundo audio que entra N segundos después de arrancar el primero
   const escenas = [
     { tipo: "lottie", componente: <LotieCap5A />, audio: "/audios/NarradorCP1.wav" },
     { tipo: "lottie", componente: <LotieCap5B />, audio: "/audios/Narrador 5-2.wav" },
+    {
+      // Orabona
+      tipo: "lottie",
+      componente: <LotieCap5F />,
+      audio: AUDIO_ORABONA_1,
+      tramoB: { audio: AUDIO_ORABONA_2, inicio: INICIO_ORABONA_2 },
+    },
     { tipo: "lottie", componente: <LotieCap5C />, audio: "/audios/cap5-3.wav" },
     { tipo: "lottie", componente: <LotieCap5D />, audio: "/audios/cap5-4.wav" },
     { tipo: "lottie", componente: <LotieCap5E />, audio: "/audios/cap5-5.wav" },
@@ -133,7 +207,12 @@ export default function VisorComic5({
     if (!audioRef.current) return;
 
     const tiempo = audioRef.current.currentTime;
-    const subtitulos = subtitulosPorEscena[index] || [];
+
+    // Si está sonando el tramo B se usa su lista; si no, la del primer audio
+    let subtitulos = subtitulosPorEscena[index] || [];
+    if (tramoRef.current === "B" && subtitulosTramoB[index]) {
+      subtitulos = subtitulosTramoB[index];
+    }
 
     const subtitulo = subtitulos.find(
       (s) => tiempo >= s.inicio && tiempo <= s.fin
@@ -142,13 +221,44 @@ export default function VisorComic5({
     setSubtituloActual(subtitulo ? subtitulo.texto : "");
   };
 
+  // Programa el segundo audio de la escena (si lo tiene).
+  // Se cuenta desde que el primer audio realmente arranca.
+  const programarTramoB = (escena) => {
+    if (!escena || !escena.tramoB || timerTramoBRef.current) return;
+
+    const { audio: srcB, inicio } = escena.tramoB;
+
+    timerTramoBRef.current = setTimeout(() => {
+      timerTramoBRef.current = null;
+      const audio = audioRef.current;
+      if (!audio) return;
+
+      tramoRef.current = "B";
+      audio.src = srcB;
+      audio.currentTime = 0;
+      audio.volume = volumenActualRef.current;
+      audio.play().catch((error) => {
+        console.log("No se pudo reproducir el segundo audio:", error);
+        setAudioBloqueado(true);
+      });
+    }, inicio * 1000);
+  };
+
+  // Volumen siempre actualizado para usarlo dentro de temporizadores
+  const volumenActualRef = useRef(1);
+  volumenActualRef.current = nivelVolumen;
+
   // Intenta reproducir el audio; si el navegador lo bloquea, muestra el botón
   const reproducirAudio = () => {
     if (!audioRef.current) return;
 
     audioRef.current
       .play()
-      .then(() => setAudioBloqueado(false))
+      .then(() => {
+        setAudioBloqueado(false);
+        // Al arrancar el primer audio se empieza a contar el segundo
+        if (tramoRef.current === "A") programarTramoB(escenas[index]);
+      })
       .catch((error) => {
         console.log("El audio no pudo reproducirse automáticamente:", error);
         setAudioBloqueado(true);
@@ -158,6 +268,9 @@ export default function VisorComic5({
   // Al cambiar de escena: reinicia y reproduce el audio de la nueva
   useEffect(() => {
     const escenaActual = escenas[index];
+
+    limpiarTimerTramoB();
+    tramoRef.current = "A";
 
     if (audioRef.current) {
       audioRef.current.pause();
@@ -174,6 +287,12 @@ export default function VisorComic5({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index]);
+
+  // Al salir del visor se cancela el temporizador pendiente
+  useEffect(() => {
+    return () => limpiarTimerTramoB();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (audioRef.current) audioRef.current.volume = nivelVolumen;
