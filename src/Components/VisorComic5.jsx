@@ -17,6 +17,10 @@ const AUDIO_ORABONA_1 = "/audios/ora1.wav";
 const AUDIO_ORABONA_2 = "/audios/ora2.wav";
 const INICIO_ORABONA_2 = 19.18;
 
+// Audio de la puerta (LotieCap5C, escena 4).
+// Copia tu archivo a public/audios/ y cambia solo el nombre aquí.
+const AUDIO_5C = "/audios/AUDIO_5C.wav";
+
 export default function VisorComic5({
   numeroCapitulo = "V",
   tituloCapitulo = "La Abominación",
@@ -147,15 +151,44 @@ export default function VisorComic5({
         texto: "pero sabía que vendría, sabía que esa estatua no le dejaría dormir.",
       },
     ],
-    // Antes era 2 (ahora escena 4)
+    // Escena 4: puerta (LotieCap5C)
     3: [
-      { inicio: 0.5, fin: 5.0, texto: "Texto del subtítulo 1 de la escena 4." },
+      {
+        inicio: 0.48,
+        fin: 5.31,
+        texto: "Al final de cada camino siempre hay una puerta,",
+      },
+      {
+        inicio: 5.32,
+        fin: 9.15,
+        texto: "y algunas nunca debieron abrirse.",
+      },
+      {
+        inicio: 9.16,
+        fin: 12.35,
+        texto: "Stephen ha llegado hasta aquí siguiendo la verdad,",
+      },
+      {
+        inicio: 12.36,
+        fin: 17.27,
+        texto: "guiado por respuestas que parecían estar al alcance de su mano,",
+      },
+      {
+        inicio: 17.28,
+        fin: 22.63,
+        texto: "pero lo que está a punto de encontrar no es una simple explicación,",
+      },
+      {
+        inicio: 22.64,
+        fin: 29.91,
+        texto: "es el origen de todo aquello que intentó negar, la raíz de un misterio que nunca",
+      },
     ],
-    // Antes era 3 (ahora escena 5)
+    // Escena 5
     4: [
       { inicio: 0.5, fin: 5.0, texto: "Texto del subtítulo 1 de la escena 5." },
     ],
-    // Antes era 4 (ahora escena 6)
+    // Escena 6
     5: [
       { inicio: 0.5, fin: 5.0, texto: "Texto del subtítulo 1 de la escena 6." },
     ],
@@ -197,7 +230,8 @@ export default function VisorComic5({
       audio: AUDIO_ORABONA_1,
       tramoB: { audio: AUDIO_ORABONA_2, inicio: INICIO_ORABONA_2 },
     },
-    { tipo: "lottie", componente: <LotieCap5C />, audio: "/audios/cap5-3.wav" },
+    // Puerta (5C): subtítulos en la clave 3 de subtitulosPorEscena
+    { tipo: "lottie", componente: <LotieCap5C />, audio:  "/audios/Narrador5c.wav" },
     { tipo: "lottie", componente: <LotieCap5D />, audio: "/audios/cap5-4.wav" },
     { tipo: "lottie", componente: <LotieCap5E />, audio: "/audios/cap5-5.wav" },
   ];

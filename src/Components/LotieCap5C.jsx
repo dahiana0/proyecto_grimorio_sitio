@@ -1,293 +1,391 @@
-import LottieModule from "lottie-react";
 import { useRef, useEffect } from "react";
-
-/* import cuadro1 from "../assets/cuadro1.json"; // TODO: ajusta los nombres de tus JSON
-import cuadro2 from "../assets/cuadro2.json";
-import cuadro3 from "../assets/cuadro3.json";
-import cuadro4 from "../assets/cuadro4.json";
-import cuadro5 from "../assets/cuadro5.json";
-import cuadro6 from "../assets/cuadro6.json";
-import cuadro7 from "../assets/cuadro7.json";
-import cuadro8 from "../assets/cuadro8.json";
-import huesos from "../assets/huesos.json";
-import manchas from "../assets/manchas.json";
-import puerta from "../assets/puerta.json"; */
 import "../Styles/LotieCap5C.css";
 
-const Lottie = LottieModule.default;
+/* ---------------------------------------------------------------------
+   AUDIO (ruta dentro de public/)
+   Pon tus archivos de sonido con estos nombres o cambia las rutas.
+--------------------------------------------------------------------- */
+const AUDIO_PASOS = "/audios/pasos.mp3";   // pasos mientras camina
+const VOLUMEN_PASOS = 0.4;
 
-const LotieCap5C = () => {
+const AUDIO_CINTA = "/audios/cinta.mp3";   // cuando caen las cintas
+const VOLUMEN_CINTA = 0.8;
 
- /*  const cuadro1Ref = useRef(null);
-  const cuadro2Ref = useRef(null);
-  const cuadro3Ref = useRef(null);
-  const cuadro4Ref = useRef(null);
-  const cuadro5Ref = useRef(null);
-  const cuadro6Ref = useRef(null);
-  const cuadro7Ref = useRef(null);
-  const cuadro8Ref = useRef(null);
-  const huesosRef = useRef(null);
-  const manchasRef = useRef(null);
-  const puertaRef = useRef(null);
+const AUDIO_ANTORCHA = "./anto.mp3";
+const VOLUMEN_ANTORCHA = 0.8;
 
-  const stepEspalda1Ref = useRef(null);
-  const orabonaRef = useRef(null);
-  const stepEspalda2Ref = useRef(null);
+/* ---------------------------------------------------------------------
+   LÍNEA DE TIEMPO (segundos desde el inicio de la secuencia)
+   Todo lo que ocurre en la escena se calcula a partir de este reloj.
+--------------------------------------------------------------------- */
+const T = {
+  CAMINA_FIN: 21,        // fin del paseo; Orabona empieza a desaparecer
+  ORABONA_FADE_FIN: 22.5,
+  ZOOM_IN_FIN: 26,       // el zoom hacia Step y la puerta empieza en 21
+  PUERTA: 26.8,          // arranca la apertura de la puerta y caen las cintas
+  ENTRA_INI: 28,         // Step camina hacia el interior
+  ENTRA_FIN: 34,
+  STEP_FADE_INI: 31.5,   // Step se desvanece mientras entra
+  STEP_FADE_FIN: 33.5,
+  ZOOM_OUT_INI: 35,      // pausa con la puerta abierta y se retira el zoom
+  ZOOM_OUT_FIN: 39.5,
+  FIN: 40,
+};
 
-  const sonidoAmbiente = useRef(new Audio("/audios/ambiente.mp3"));
-  const sonidoPasos = useRef(new Audio("/audios/pasos.mp3")); */
+/* Segundo del video puerta5c2.webm en el que la puerta empieza a abrirse */
+const PUERTA_VIDEO_ABRE = 21;
 
- /*  useEffect(() => {
+/* ---------------------------------------------------------------------
+   POSICIONES (fracciones de la escena)
+   x = centro horizontal (0.5 = mitad)
+   y = desplazamiento vertical (negativo = sube, en fracción del alto)
+   s = escala | o = opacidad
+   Cada punto es [segundo, valor, "s"]; "s" = movimiento suave, sin "s" = lineal.
+--------------------------------------------------------------------- */
+const BASE_X = { orabona: 0.45, step: 0.55 };
 
-    sonidoAmbiente.current.volume = 0.15;
-    sonidoPasos.current.volume = 0.40;
+const PISTAS = {
+  orabona: {
+    x: [[0, 0.45], [7.46, 0.4536], [13.75, 0.4571], [19.92, 0.4597], [21, 0.46]],
+    y: [[0, 0], [7.46, -0.139], [13.75, -0.271], [19.92, -0.372], [21, -0.385]],
+    s: [[0, 1], [7.46, 0.838], [13.75, 0.683], [19.92, 0.566], [21, 0.55]],
+    o: [[21, 1], [22.5, 0, "s"]],
+  },
+  step: {
+    // 0–21 s: camina hasta quedar justo frente a la puerta
+    // 21–28 s: quieto frente a la puerta
+    // 28–34 s: entra por la puerta
+    x: [[0, 0.55], [7.46, 0.5338], [13.75, 0.5183], [19.92, 0.5066], [21, 0.505],
+        [28, 0.505], [34, 0.5]],
+    y: [[0, 0], [7.46, -0.139], [13.75, -0.271], [19.92, -0.372], [21, -0.385],
+        [28, -0.385], [34, -0.444]],
+    s: [[0, 1], [7.46, 0.838], [13.75, 0.683], [19.92, 0.566], [21, 0.55],
+        [28, 0.55], [34, 0.42]],
+    o: [[31.5, 1], [33.5, 0, "s"]],
+  },
+  // Zoom: se acerca a Step y a la puerta
+  camara: [[0, 1], [21, 1.05], [26, 2.2, "s"], [35, 2.2], [39.5, 1, "s"]],
+};
 
-    sonidoAmbiente.current.loop = true;
+/* Interpolación entre puntos clave */
+const suave = (k) => k * k * (3 - 2 * k);
 
-    const iniciarAmbiente = () => {
-      sonidoAmbiente.current.play().catch(() => { });
-      window.removeEventListener("click", iniciarAmbiente);
+const valor = (t, pts) => {
+  if (t <= pts[0][0]) return pts[0][1];
+  for (let i = 1; i < pts.length; i++) {
+    const [t1, v1, tipo] = pts[i];
+    const [t0, v0] = pts[i - 1];
+    if (t <= t1) {
+      let k = (t - t0) / (t1 - t0);
+      if (tipo === "s") k = suave(k);
+      return v0 + (v1 - v0) * k;
+    }
+  }
+  return pts[pts.length - 1][1];
+};
+
+/* Caída de las cintas por gravedad (tau = segundos desde que se sueltan) */
+const caidaCinta = (t) => {
+  const tau = Math.max(0, t - T.PUERTA);
+  const k = Math.min(tau / 1.5, 1);
+  const g = k * k; // acelera como al caer
+  return {
+    dx: 0.012 * k,
+    dy: 0.2 * g,
+    rot: 28 * g,
+    sy: 1 - 0.35 * g, // se "aplasta" al quedar sobre el suelo
+    o: tau < 1.5 ? 1 : 1 - Math.min((tau - 1.5) / 1, 1),
+  };
+};
+
+/* ---------------------------------------------------------------------
+   VIDEOS DE LA ESCENA
+   nombre = identificador | clase = clase CSS | src = archivo en public/
+   auto = true si lo controla la secuencia (no responde al clic)
+--------------------------------------------------------------------- */
+const VIDEOS = [
+  // Fondo y decorado (de atrás hacia adelante)
+  { nombre: "manchas", clase: "manchas5c", src: "/Manchas .webm" },
+  { nombre: "cuadro1", clase: "cuadro1-5c", src: "/Cuadro1.webm" },
+  { nombre: "cuadro2", clase: "cuadro2-5c", src: "/Cuadro2.webm" },
+  { nombre: "cuadro3", clase: "cuadro3-5c", src: "/Cuadro3.webm" },
+  { nombre: "cuadro4", clase: "cuadro4-5c", src: "/Cuadro4.webm" },
+  { nombre: "cuadro5", clase: "cuadro5-5c", src: "/Cuadro5.webm" },
+  { nombre: "cuadro6", clase: "cuadro6-5c", src: "/Cuadro6.webm" },
+  { nombre: "cuadro7", clase: "cuadro7-5c", src: "/Cuadro7.webm" },
+  { nombre: "cuadro8", clase: "cuadro8-5c", src: "/Cuadro8.webm" },
+  { nombre: "puerta", clase: "puerta5c", src: "/puerta5c2.webm", auto: true },
+  { nombre: "cinta", clase: "cinta5c", src: "/cintaspolicia.webm", auto: true },
+  // Personajes
+  { nombre: "stepEspalda1", clase: "step-espalda1-5c", src: "/step5c.webm", auto: true },
+  { nombre: "orabona", clase: "orabona5c", src: "/orabona5c.webm", auto: true },
+];
+
+/* ---------------------------------------------------------------------
+   HUESOS (imágenes PNG con fondo transparente, en public/)
+   Al tocarlos saltan, giran y rebotan (animación en el CSS).
+--------------------------------------------------------------------- */
+const HUESOS = [
+  { nombre: "hueso1", clase: "hueso1-5c", src: "/Hueso1.png" },
+  { nombre: "hueso2", clase: "hueso2-5c", src: "/Hueso2.png" },
+  { nombre: "hueso3", clase: "hueso3-5c", src: "/Hueso3.png" },
+  { nombre: "hueso4", clase: "hueso4-5c", src: "/Hueso4.png" },
+  { nombre: "hueso5", clase: "hueso5-5c", src: "/Hueso5.png" },
+  { nombre: "hueso6", clase: "hueso6-5c", src: "/Hueso6.png" },
+];
+
+/* ---------------------------------------------------------------------
+   ANTORCHAS (mismas imágenes que el capítulo 3, clases propias del 5C)
+   Se acomodan con posición y tamaño en el CSS (.antorcha1-5c ... .antorcha4-5c)
+--------------------------------------------------------------------- */
+const ANTORCHAS = [
+  { nombre: "antorcha1", clase: "antorcha5c antorcha5c-fondo antorcha1-5c", src: "/antorcha1.png" },
+  { nombre: "antorcha2", clase: "antorcha5c antorcha5c-fondo antorcha2-5c", src: "/antorcha2.png" },
+  { nombre: "antorcha3", clase: "antorcha5c antorcha5c-frente antorcha3-5c", src: "/antorcha3.png" },
+  { nombre: "antorcha4", clase: "antorcha5c antorcha5c-frente antorcha4-5c", src: "/antorcha4.png" },
+];
+
+/* activo = true cuando debe poder empezar la secuencia.
+   Si la ligas a tu botón "Activar narración", pásale ese estado:
+   <LotieCap5C activo={narracionActiva} /> */
+const LotieCap5C = ({ activo = true }) => {
+
+  const escenaRef = useRef(null);
+  const camaraRef = useRef(null);
+  const videoRefs = useRef({});
+
+  /* ---------------- Secuencia cinematográfica ---------------- */
+  useEffect(() => {
+    if (!activo) return;
+
+    const escena = escenaRef.current;
+    const camara = camaraRef.current;
+    const v = videoRefs.current;
+
+    // Sonidos de la secuencia
+    const pasos = new Audio(AUDIO_PASOS);
+    pasos.volume = VOLUMEN_PASOS;
+    pasos.loop = true;
+
+    const sonidoCinta = new Audio(AUDIO_CINTA);
+    sonidoCinta.volume = VOLUMEN_CINTA;
+
+    let raf = 0;
+    let cancelado = false;
+    let iniciada = false;
+    let puertaIniciada = false;
+    let cintaSonada = false;
+    let t0 = 0;
+
+    // Pasos: suenan mientras caminan (0–21 s) y cuando Step entra (28–33.5 s).
+    // Si el navegador bloquea el primer intento, se reintenta en el siguiente frame.
+    const actualizarPasos = (t) => {
+      const debe = t < T.CAMINA_FIN || (t >= T.ENTRA_INI && t < T.STEP_FADE_FIN);
+      if (debe && pasos.paused) {
+        pasos.play().catch(() => {});
+      }
+      if (!debe && !pasos.paused) {
+        pasos.pause();
+        pasos.currentTime = 0;
+      }
     };
 
-    window.addEventListener("click", iniciarAmbiente);
+    // Mueve un personaje: posición, escala y opacidad
+    const mover = (el, baseX, p, t, W, H) => {
+      if (!el) return;
+      const dx = (valor(t, p.x) - baseX) * W;
+      const dy = valor(t, p.y) * H;
+      const s = valor(t, p.s);
+      el.style.transform = `translateX(-50%) translate(${dx}px, ${dy}px) scale(${s})`;
+      el.style.opacity = valor(t, p.o);
+    };
+
+    const aplicar = (t) => {
+      const W = escena.clientWidth;
+      const H = escena.clientHeight;
+
+      // Cámara
+      camara.style.transform = `scale(${valor(t, PISTAS.camara)})`;
+
+      // Personajes
+      mover(v.orabona, BASE_X.orabona, PISTAS.orabona, t, W, H);
+      mover(v.stepEspalda1, BASE_X.step, PISTAS.step, t, W, H);
+
+      // Mantener los videos de los personajes alineados con el reloj
+      ["stepEspalda1", "orabona"].forEach((n) => {
+        const vid = v[n];
+        if (vid && !vid.paused && !vid.ended && Math.abs(vid.currentTime - t) > 0.4) {
+          vid.currentTime = t;
+        }
+      });
+
+      // Puerta: salta al momento de apertura de su video (seg. 21) cuando caen las cintas
+      if (t >= T.PUERTA && !puertaIniciada && v.puerta) {
+        puertaIniciada = true;
+        v.puerta.currentTime = PUERTA_VIDEO_ABRE;
+        v.puerta.play().catch(() => {});
+      }
+
+      // Sonido de la cinta: una sola vez cuando empieza a caer
+      if (t >= T.PUERTA && !cintaSonada) {
+        cintaSonada = true;
+        sonidoCinta.currentTime = 0;
+        sonidoCinta.play().catch(() => {});
+      }
+
+      // Cintas: caen por gravedad
+      if (v.cinta) {
+        const c = caidaCinta(t);
+        v.cinta.style.transform =
+          `translateX(-50%) translate(${c.dx * W}px, ${c.dy * H}px) rotate(${c.rot}deg) scaleY(${c.sy})`;
+        v.cinta.style.opacity = c.o;
+      }
+
+      actualizarPasos(t);
+    };
+
+    const frame = (ahora) => {
+      if (cancelado) return;
+      const t = (ahora - t0) / 1000;
+      if (t >= T.FIN) {
+        aplicar(T.FIN);
+        pasos.pause();
+        return;
+      }
+      aplicar(t);
+      raf = requestAnimationFrame(frame);
+    };
+
+    const arrancar = async () => {
+      ["stepEspalda1", "orabona"].forEach((n) => {
+        if (v[n]) v[n].currentTime = 0;
+      });
+      await Promise.allSettled(
+        ["stepEspalda1", "orabona"].map((n) => v[n] && v[n].play())
+      );
+      if (cancelado) return;
+      t0 = performance.now(); // el reloj empieza cuando los videos ya corren
+      raf = requestAnimationFrame(frame);
+    };
+
+    // Empieza cuando la escena está visible
+    let observer;
+    if ("IntersectionObserver" in window) {
+      observer = new IntersectionObserver(
+        ([e]) => {
+          if (e.isIntersecting && !iniciada) {
+            iniciada = true;
+            observer.disconnect();
+            arrancar();
+          }
+        },
+        { threshold: 0.5 }
+      );
+      observer.observe(escena);
+    } else {
+      iniciada = true;
+      arrancar();
+    }
 
     return () => {
-      sonidoAmbiente.current.pause();
-      sonidoAmbiente.current.currentTime = 0;
-      sonidoPasos.current.pause();
-      window.removeEventListener("click", iniciarAmbiente);
+      cancelado = true;
+      cancelAnimationFrame(raf);
+      if (observer) observer.disconnect();
+      pasos.pause();
+      pasos.currentTime = 0;
+      sonidoCinta.pause();
+      sonidoCinta.currentTime = 0;
     };
+  }, [activo]);
 
-  }, []); */
-
- 
- /*  const animarCuadro1 = () => {
-    cuadro1Ref.current?.stop();
-    cuadro1Ref.current?.play();
-  };
-
-  const animarCuadro2 = () => {
-    cuadro2Ref.current?.stop();
-    cuadro2Ref.current?.play();
-  };
-
-  const animarCuadro3 = () => {
-    cuadro3Ref.current?.stop();
-    cuadro3Ref.current?.play();
-  };
-
-  const animarCuadro4 = () => {
-    cuadro4Ref.current?.stop();
-    cuadro4Ref.current?.play();
-  };
-
-  const animarCuadro5 = () => {
-    cuadro5Ref.current?.stop();
-    cuadro5Ref.current?.play();
-  };
-
-  const animarCuadro6 = () => {
-    cuadro6Ref.current?.stop();
-    cuadro6Ref.current?.play();
-  };
-
-  const animarCuadro7 = () => {
-    cuadro7Ref.current?.stop();
-    cuadro7Ref.current?.play();
-  };
-
-  const animarCuadro8 = () => {
-    cuadro8Ref.current?.stop();
-    cuadro8Ref.current?.play();
-  }; */
-
- 
- /*  const animarHuesos = () => {
-    huesosRef.current?.stop();
-    huesosRef.current?.play();
-  };
-
-  const animarManchas = () => {
-    manchasRef.current?.stop();
-    manchasRef.current?.play();
-  };
-
-  const animarPuerta = () => {
-    puertaRef.current?.stop();
-    puertaRef.current?.play();
-  }; */
-
-
-  /* const reproducirVideo = (videoRef, conPasos) => {
-    if (conPasos) {
-      sonidoPasos.current.currentTime = 0;
-      sonidoPasos.current.play().catch(() => { });
-    }
-
-    if (videoRef.current) {
-      videoRef.current.currentTime = 0;
-      videoRef.current.play();
+  // Reproducir un video decorativo desde el inicio (clic)
+  const reproducirVideo = (nombre) => {
+    const video = videoRefs.current[nombre];
+    if (video) {
+      video.currentTime = 0;
+      video.play().catch(() => {});
     }
   };
 
-  const animarStepEspalda1 = () => reproducirVideo(stepEspalda1Ref, true);
-  const animarOrabona = () => reproducirVideo(orabonaRef, false);
-  const animarStepEspalda2 = () => reproducirVideo(stepEspalda2Ref, true);
- */
+  // Animar un hueso (se puede repetir en cada clic)
+  const animarHueso = (e) => {
+    const img = e.currentTarget;
+    img.classList.remove("hueso-animando");
+    void img.offsetWidth; // reinicia la animación
+    img.classList.add("hueso-animando");
+  };
+
+  const terminarAnimacion = (e) => {
+    e.currentTarget.classList.remove("hueso-animando");
+  };
+
+  // Sonido de la antorcha (igual que en el capítulo 3)
+  const sonar = (src, volumen = 1) => {
+    const a = new Audio(src);
+    a.volume = volumen;
+    a.play().catch(() => {});
+  };
+
+  // Mover una antorcha (se puede repetir en cada clic)
+  const moverAntorcha = (e) => {
+    const el = e.currentTarget;
+    sonar(AUDIO_ANTORCHA, VOLUMEN_ANTORCHA);
+    el.classList.remove("antorcha5c-mover");
+    void el.offsetWidth; // reinicia la animación
+    el.classList.add("antorcha5c-mover");
+  };
+
+  const terminarAntorcha = (e) => {
+    e.currentTarget.classList.remove("antorcha5c-mover");
+  };
+
   return (
+    <div className="escena5c" ref={escenaRef}>
+      <div className="camara5c" ref={camaraRef}>
 
-    <div className="escena5c">
-
-      <div className="camara5c">
-
-  
         <img className="fondo5c" src="./Fondo5c.png" alt="" />
 
-     
-       {/*  <img className="antorcha1-5c" src="/antorcha1.png" alt="" />
-        <img className="antorcha2-5c" src="/antorcha2.png" alt="" />
- */}
-      
-       {/*  <div className="manchas5c" onClick={animarManchas}>
-          <Lottie
-            lottieRef={manchasRef}
-            animationData={manchas}
-            autoplay={false}
-            loop={false}
+        {ANTORCHAS.map((a) => (
+          <img
+            key={a.nombre}
+            className={a.clase}
+            src={a.src}
+            alt=""
+            draggable={false}
+            onClick={moverAntorcha}
+            onAnimationEnd={terminarAntorcha}
           />
-        </div>
+        ))}
 
-  
-        <div className="cuadro1-5c" onClick={animarCuadro1}>
-          <Lottie
-            lottieRef={cuadro1Ref}
-            animationData={cuadro1}
-            autoplay={false}
-            loop={false}
+        {VIDEOS.map((vd) => (
+          <video
+            key={vd.nombre}
+            ref={(el) => (videoRefs.current[vd.nombre] = el)}
+            className={vd.clase}
+            muted
+            playsInline
+            preload="auto"
+            onClick={vd.auto ? undefined : () => reproducirVideo(vd.nombre)}
+          >
+            <source src={vd.src} type="video/webm" />
+          </video>
+        ))}
+
+        {HUESOS.map((h) => (
+          <img
+            key={h.nombre}
+            className={h.clase}
+            src={h.src}
+            alt=""
+            draggable={false}
+            onClick={animarHueso}
+            onAnimationEnd={terminarAnimacion}
           />
-        </div>
-
-        <div className="cuadro2-5c" onClick={animarCuadro2}>
-          <Lottie
-            lottieRef={cuadro2Ref}
-            animationData={cuadro2}
-            autoplay={false}
-            loop={false}
-          />
-        </div>
-
-        <div className="cuadro3-5c" onClick={animarCuadro3}>
-          <Lottie
-            lottieRef={cuadro3Ref}
-            animationData={cuadro3}
-            autoplay={false}
-            loop={false}
-          />
-        </div>
-
-        <div className="cuadro4-5c" onClick={animarCuadro4}>
-          <Lottie
-            lottieRef={cuadro4Ref}
-            animationData={cuadro4}
-            autoplay={false}
-            loop={false}
-          />
-        </div>
-
-        <div className="cuadro5-5c" onClick={animarCuadro5}>
-          <Lottie
-            lottieRef={cuadro5Ref}
-            animationData={cuadro5}
-            autoplay={false}
-            loop={false}
-          />
-        </div>
-
-        <div className="cuadro6-5c" onClick={animarCuadro6}>
-          <Lottie
-            lottieRef={cuadro6Ref}
-            animationData={cuadro6}
-            autoplay={false}
-            loop={false}
-          />
-        </div>
-
-        <div className="cuadro7-5c" onClick={animarCuadro7}>
-          <Lottie
-            lottieRef={cuadro7Ref}
-            animationData={cuadro7}
-            autoplay={false}
-            loop={false}
-          />
-        </div>
-
-        <div className="cuadro8-5c" onClick={animarCuadro8}>
-          <Lottie
-            lottieRef={cuadro8Ref}
-            animationData={cuadro8}
-            autoplay={false}
-            loop={false}
-          />
-        </div>
-
-      
-        <div className="huesos5c" onClick={animarHuesos}>
-          <Lottie
-            lottieRef={huesosRef}
-            animationData={huesos}
-            autoplay={false}
-            loop={false}
-          />
-        </div>
-
-       
-        <div className="puerta5c" onClick={animarPuerta}>
-          <Lottie
-            lottieRef={puertaRef}
-            animationData={puerta}
-            autoplay={false}
-            loop={false}
-          />
-        </div>
-
-        <video
-          ref={stepEspalda1Ref}
-          className="step-espalda1-5c"
-          muted
-          playsInline
-          onClick={animarStepEspalda1}
-        >
-          <source src="/StepEspalda1-5c.webm" type="video/webm" />
-        </video>
-
-      
-        <video
-          ref={orabonaRef}
-          className="orabona5c"
-          muted
-          playsInline
-          onClick={animarOrabona}
-        >
-          <source src="/OrabonaEspalda5c.webm" type="video/webm" />
-        </video>
-
-  
-        <video
-          ref={stepEspalda2Ref}
-          className="step-espalda2-5c"
-          muted
-          playsInline
-          onClick={animarStepEspalda2}
-        >
-          <source src="/StepEspalda2-5c.webm" type="video/webm" />
-        </video> */}
+        ))}
 
       </div>
-
     </div>
-
   );
-
 };
 
 export default LotieCap5C;
