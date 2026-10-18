@@ -184,9 +184,43 @@ export default function VisorComic5({
         texto: "es el origen de todo aquello que intentó negar, la raíz de un misterio que nunca",
       },
     ],
-    // Escena 5
+    // Escena 5: LotieCap5D
     4: [
-      { inicio: 0.5, fin: 5.0, texto: "Texto del subtítulo 1 de la escena 5." },
+      {
+        inicio: 0.52,
+        fin: 5.15,
+        texto: "No todo lo que parece muerto lo está,",
+      },
+      {
+        inicio: 5.16,
+        fin: 10.51,
+        texto: "en el corazón del museo, el silencio pesa más que nunca,",
+      },
+      {
+        inicio: 10.52,
+        fin: 16.39,
+        texto: "como si las paredes guardaran recuerdos que se resisten desaparecer,",
+      },
+      {
+        inicio: 16.4,
+        fin: 19.79,
+        texto: "la verdad finalmente se revela,",
+      },
+      {
+        inicio: 19.8,
+        fin: 25.27,
+        texto: "pero no es una explicación, es una advertencia.",
+      },
+      {
+        inicio: 25.28,
+        fin: 29.91,
+        texto: "Steven ha llegado demasiado lejos, siguiendo pistas que lo...",
+      },
+      {
+        inicio: 30.2,
+        fin: 33.11,
+        texto: "empujaron hasta este punto sin retorno.",
+      },
     ],
     // Escena 6
     5: [
@@ -231,8 +265,8 @@ export default function VisorComic5({
       tramoB: { audio: AUDIO_ORABONA_2, inicio: INICIO_ORABONA_2 },
     },
     // Puerta (5C): subtítulos en la clave 3 de subtitulosPorEscena
-    { tipo: "lottie", componente: <LotieCap5C />, audio:  "/audios/Narrador5c.wav" },
-    { tipo: "lottie", componente: <LotieCap5D />, audio: "/audios/cap5-4.wav" },
+    { tipo: "lottie", componente: <LotieCap5C />, audio: "/audios/Narrador5c.wav" },
+    { tipo: "lottie", componente: <LotieCap5D />, audio: "/audios/narrador5D.wav" },
     { tipo: "lottie", componente: <LotieCap5E />, audio: "/audios/cap5-5.wav" },
   ];
 

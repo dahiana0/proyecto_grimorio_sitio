@@ -1,180 +1,156 @@
-import LottieModule from "lottie-react";
-import { useRef, useEffect } from "react";
-
-/* import estatua1 from "../assets/estatua1d.json"; // TODO: ajusta los nombres de tus JSON
-import estatua2 from "../assets/estatua2d.json";
-import estatua3 from "../assets/estatua3d.json";
-import estatua4 from "../assets/estatua4d.json";
-import rata from "../assets/rata.json"; */
+import { useRef, useEffect, useState } from "react";
 import "../Styles/LotieCap5D.css";
 
-const Lottie = LottieModule.default;
+/* ---------------------------------------------------------------------
+   VIDEOS DE LA ESCENA (de atrás hacia adelante)
+   nombre   = identificador
+   clase    = clase CSS
+   src      = archivo de video en public/
+   sonido   = audio que suena junto con el video (ruta en public/)
+   volumen  = volumen del sonido (0 a 1)
+   auto     = true si se reproduce solo al aparecer la escena
+   cortar   = true si el sonido se detiene cuando termina el video
+--------------------------------------------------------------------- */
+const VIDEOS = [
+  { nombre: "estatua1", clase: "estatua1-5d", src: "/cera1c.webm" },
+  { nombre: "estatua2", clase: "estatua2-5d", src: "/cera2c.webm" },
+  { nombre: "estatua3", clase: "estatua3-5d", src: "/cera3c.webm" },
+  { nombre: "estatua4", clase: "estatua4-5d", src: "/cera4c.webm" },
+  {
+    nombre: "rata",
+    clase: "rata5d",
+    src: "/Rata5c.webm",
+    sonido: "/Rat - Sound Effect  ProSounds.mp3",
+    volumen: 0.5,
+  },
+  {
+    nombre: "monstruo",
+    clase: "monstruo5d",
+    src: "/chull.webm",
+    sonido: "/audios/RUGIDO CRIATURA.mp3",
+    volumen: 0.6,
+    auto: true,
+  },
+  {
+    nombre: "step",
+    clase: "step5d",
+    src: "/step5D.webm",
+    sonido: "/audios/pasos.mp3",
+    volumen: 0.4,
+    auto: true,
+    cortar: true,
+  },
+];
 
 const LotieCap5D = () => {
 
-  /* const estatua1Ref = useRef(null);
-  const estatua2Ref = useRef(null);
-  const estatua3Ref = useRef(null);
-  const estatua4Ref = useRef(null);
-  const rataRef = useRef(null);
+  const escenaRef = useRef(null);
 
-  const monstruoRef = useRef(null);
-  const stepRef = useRef(null);
+  // Referencias a todos los videos
+  const videoRefs = useRef({});
 
-  const sonidoAmbiente = useRef(new Audio("/audios/ambiente.mp3"));
-  const sonidoPasos = useRef(new Audio("/audios/pasos.mp3")); */
+  // Audios (uno por video que tenga sonido)
+  const audioRefs = useRef({});
 
-  /* useEffect(() => {
+  // Lámpara: se activa al hacer clic (balanceo + resplandor)
+  const [lamparaActiva, setLamparaActiva] = useState(false);
 
-    sonidoAmbiente.current.volume = 0.15;
-    sonidoPasos.current.volume = 0.40;
-
-    sonidoAmbiente.current.loop = true;
-
-    const iniciarAmbiente = () => {
-      sonidoAmbiente.current.play().catch(() => { });
-      window.removeEventListener("click", iniciarAmbiente);
-    };
-
-    window.addEventListener("click", iniciarAmbiente);
+  // Crear los audios una sola vez
+  useEffect(() => {
+    VIDEOS.forEach((v) => {
+      if (v.sonido) {
+        const audio = new Audio(v.sonido);
+        audio.volume = v.volumen ?? 1;
+        audioRefs.current[v.nombre] = audio;
+      }
+    });
 
     return () => {
-      sonidoAmbiente.current.pause();
-      sonidoAmbiente.current.currentTime = 0;
-      sonidoPasos.current.pause();
-      window.removeEventListener("click", iniciarAmbiente);
+      Object.values(audioRefs.current).forEach((audio) => {
+        audio.pause();
+        audio.currentTime = 0;
+      });
     };
+  }, []);
 
-  }, []); */
+  // Reproducir un video desde el inicio junto con su sonido
+  const reproducirVideo = (nombre) => {
+    const video = videoRefs.current[nombre];
+    if (!video) return;
 
-  
- /*  const animarEstatua1 = () => {
-    estatua1Ref.current?.stop();
-    estatua1Ref.current?.play();
+    video.currentTime = 0;
+    video
+      .play()
+      .then(() => {
+        const audio = audioRefs.current[nombre];
+        if (audio) {
+          audio.currentTime = 0;
+          audio.play().catch(() => {});
+        }
+      })
+      .catch(() => {});
   };
 
-  const animarEstatua2 = () => {
-    estatua2Ref.current?.stop();
-    estatua2Ref.current?.play();
-  };
-
-  const animarEstatua3 = () => {
-    estatua3Ref.current?.stop();
-    estatua3Ref.current?.play();
-  };
-
-  const animarEstatua4 = () => {
-    estatua4Ref.current?.stop();
-    estatua4Ref.current?.play();
-  };
- */
-
- /*  const animarRata = () => {
-    rataRef.current?.stop();
-    rataRef.current?.play();
-  };
- */
-
-  /* const reproducirVideo = (videoRef, conPasos) => {
-    if (conPasos) {
-      sonidoPasos.current.currentTime = 0;
-      sonidoPasos.current.play().catch(() => { });
-    }
-
-    if (videoRef.current) {
-      videoRef.current.currentTime = 0;
-      videoRef.current.play();
+  // Detener el sonido cuando termina el video (solo si "cortar" es true)
+  const alTerminar = (v) => {
+    if (!v.cortar) return;
+    const audio = audioRefs.current[v.nombre];
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
     }
   };
- */
- /*  const animarMonstruo = () => reproducirVideo(monstruoRef, false);
-  const animarStep = () => reproducirVideo(stepRef, true);
- */
+
+  // Reproducir solos los videos "auto" cuando la escena se ve en pantalla
+  useEffect(() => {
+    const escena = escenaRef.current;
+    if (!escena) return;
+
+    const observador = new IntersectionObserver(
+      ([entrada]) => {
+        if (entrada.isIntersecting) {
+          VIDEOS.filter((v) => v.auto).forEach((v) => reproducirVideo(v.nombre));
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    observador.observe(escena);
+    return () => observador.disconnect();
+  }, []);
+
   return (
+    <div className="escena5d" ref={escenaRef}>
 
-    <div className="escena5d">
+      {/* Fondo: imagen */}
+      <img className="fondo5d" src="./Fondo5d.png" alt="" />
 
-      <div className="camara5d">
+      {/* Lámpara: clic = se mueve y resplandece */}
+      <img
+        className={`lampara5d ${lamparaActiva ? "lampara5d--activa" : ""}`}
+        src="./lampara1.png"
+        alt=""
+        onClick={() => setLamparaActiva(true)}
+        onAnimationEnd={() => setLamparaActiva(false)}
+      />
 
-        {/* Fondo: imagen */}
-        <img className="fondo5d" src="./Fondo5d.png" alt="" />
-
-      {/*   <img className="lampara5d" src="/lampara5d.png" alt="" /> */}
-
-   
-       {/*  <div className="estatua1-5d" onClick={animarEstatua1}>
-          <Lottie
-            lottieRef={estatua1Ref}
-            animationData={estatua1}
-            autoplay={false}
-            loop={false}
-          />
-        </div>
-
-        <div className="estatua2-5d" onClick={animarEstatua2}>
-          <Lottie
-            lottieRef={estatua2Ref}
-            animationData={estatua2}
-            autoplay={false}
-            loop={false}
-          />
-        </div>
-
-        <div className="estatua3-5d" onClick={animarEstatua3}>
-          <Lottie
-            lottieRef={estatua3Ref}
-            animationData={estatua3}
-            autoplay={false}
-            loop={false}
-          />
-        </div>
-
-        <div className="estatua4-5d" onClick={animarEstatua4}>
-          <Lottie
-            lottieRef={estatua4Ref}
-            animationData={estatua4}
-            autoplay={false}
-            loop={false}
-          />
-        </div>
-
-       
-        <div className="rata5d" onClick={animarRata}>
-          <Lottie
-            lottieRef={rataRef}
-            animationData={rata}
-            autoplay={false}
-            loop={false}
-          />
-        </div>
-
-      
+      {VIDEOS.map((v) => (
         <video
-          ref={monstruoRef}
-          className="monstruo5d"
+          key={v.nombre}
+          ref={(el) => (videoRefs.current[v.nombre] = el)}
+          className={v.clase}
           muted
           playsInline
-          onClick={animarMonstruo}
+          preload="auto"
+          onClick={() => reproducirVideo(v.nombre)}
+          onEnded={() => alTerminar(v)}
         >
-          <source src="/Monstruo5d.webm" type="video/webm" />
+          <source src={v.src} type="video/webm" />
         </video>
-
-        <video
-          ref={stepRef}
-          className="step5d"
-          muted
-          playsInline
-          onClick={animarStep}
-        >
-          <source src="/StepCap5d.webm" type="video/webm" />
-        </video>
- */}
-      </div>
+      ))}
 
     </div>
-
   );
-
 };
 
 export default LotieCap5D;
