@@ -222,9 +222,38 @@ export default function VisorComic5({
         texto: "empujaron hasta este punto sin retorno.",
       },
     ],
-    // Escena 6
+    // Escena 6: LotieCap5E
     5: [
-      { inicio: 0.5, fin: 5.0, texto: "Texto del subtítulo 1 de la escena 6." },
+      {
+        inicio: 0.28,
+        fin: 4.27,
+        texto: "Hay verdades que la mente no puede soportar,",
+      },
+      {
+        inicio: 4.28,
+        fin: 9.59,
+        texto: "y horrores que no necesitan moverse para destruirlo todo.",
+      },
+      {
+        inicio: 9.6,
+        fin: 17.03,
+        texto: "Stephen buscó respuestas durante tanto tiempo, convencido de que podría",
+      },
+      {
+        inicio: 17.04,
+        fin: 22.51,
+        texto: "pero lo único que encontró fue el final de su propia razón.",
+      },
+      {
+        inicio: 22.52,
+        fin: 26.21,
+        texto: "Cada paso lo acercó más a algo que no debía ve",
+      },
+      {
+        inicio: 26.22,
+        fin: 29.91,
+        texto: "r, a una realidad que rompe cualquier lógica.",
+      },
     ],
   };
 
@@ -267,7 +296,7 @@ export default function VisorComic5({
     // Puerta (5C): subtítulos en la clave 3 de subtitulosPorEscena
     { tipo: "lottie", componente: <LotieCap5C />, audio: "/audios/Narrador5c.wav" },
     { tipo: "lottie", componente: <LotieCap5D />, audio: "/audios/narrador5D.wav" },
-    { tipo: "lottie", componente: <LotieCap5E />, audio: "/audios/cap5-5.wav" },
+    { tipo: "lottie", componente: <LotieCap5E />, audio: "/audios/Narrador5E.wav" },
   ];
 
   // Sincroniza el subtítulo con el tiempo actual del audio

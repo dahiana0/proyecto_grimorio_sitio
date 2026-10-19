@@ -1,5 +1,5 @@
 /* ---------------------------------------------------------------------
-   Escena y cámara
+   Escena
 --------------------------------------------------------------------- */
 .escena5e {
     position: relative;
@@ -9,30 +9,46 @@
     background: #000;
 }
 
-.camara5e {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transform-origin: center center;
-    animation: zoomInicial5e 3s ease-in-out forwards;
+.escena5e video {
+    display: block;
+    background: transparent;
 }
 
-@keyframes zoomInicial5e {
+/* ---------------------------------------------------------------------
+   Cámara
+   transform-origin = punto donde se hace el zoom (la cara de Step)
+   Ajusta el 79% 26% si el zoom no cae justo en su cara.
+--------------------------------------------------------------------- */
+.camara5e {
+    position: absolute;
+    inset: 0;
+    transform-origin: 79% 26%;
+}
+
+.camara5e--zoom {
+    animation: zoomCara5e 6s ease-in-out forwards;
+}
+
+@keyframes zoomCara5e {
     0% {
-        transform: scale(2.2) translate(-10px, 170px);
+        transform: scale(1);
     }
 
-    35% {
-        transform: scale(2.2) translate(-10px, 170px);
+    30% {
+        transform: scale(2.6);
+    }
+
+    65% {
+        transform: scale(2.6);
     }
 
     100% {
-        transform: scale(1) translate(0, 0);
+        transform: scale(1);
     }
 }
 
 /* ---------------------------------------------------------------------
-   Fondo (imagen)
+   Fondo
 --------------------------------------------------------------------- */
 .fondo5e {
     position: absolute;
@@ -44,81 +60,175 @@
 }
 
 /* ---------------------------------------------------------------------
-   Lámpara (imagen, sin interacción)
+   Lámpara (al frente, interactiva)
+   transform-origin arriba: se balancea colgando de la cadena
 --------------------------------------------------------------------- */
 .lampara5e {
     position: absolute;
     left: 50%;
-    top: 0;
+    top: -20px;
     transform: translateX(-50%);
-    width: 200px; /* ajusta tamaño y posición */
-    z-index: 5;
-    pointer-events: none;
+    transform-origin: 50% 0;
+    width: 100px;
+    z-index: 20;
+    cursor: pointer;
+}
+
+.lampara5e--activa {
+    animation:
+        lamparaBalanceo5e 2.4s ease-in-out,
+        lamparaResplandor5e 2.4s ease-in-out;
+}
+
+@keyframes lamparaBalanceo5e {
+    0%   { transform: translateX(-50%) rotate(0deg); }
+    15%  { transform: translateX(-50%) rotate(14deg); }
+    35%  { transform: translateX(-50%) rotate(-10deg); }
+    55%  { transform: translateX(-50%) rotate(6deg); }
+    75%  { transform: translateX(-50%) rotate(-3deg); }
+    100% { transform: translateX(-50%) rotate(0deg); }
+}
+
+@keyframes lamparaResplandor5e {
+    0% {
+        filter: brightness(1) drop-shadow(0 0 0 rgba(255, 220, 120, 0));
+    }
+
+    30% {
+        filter: brightness(1.6) drop-shadow(0 0 28px rgba(255, 220, 120, 0.95));
+    }
+
+    60% {
+        filter: brightness(1.3) drop-shadow(0 0 18px rgba(255, 220, 120, 0.7));
+    }
+
+    100% {
+        filter: brightness(1) drop-shadow(0 0 0 rgba(255, 220, 120, 0));
+    }
 }
 
 /* ---------------------------------------------------------------------
-   Lotties interactivos (base compartida)
-   Cada uno define abajo su z-index y, si hace falta, su posición/tamaño.
+   Pintura 1
 --------------------------------------------------------------------- */
-.pintura1-5e,
-.pintura2-5e,
-.huesos5e {
+.pintura1-5e {
     position: absolute;
-    left: 50%;
-    bottom: 0;
+    left: 25%;
+    bottom: 250px;
     transform: translateX(-50%);
-    width: 1100px;
+    width: 300px;
+    z-index: 2;
     cursor: pointer;
     transition: transform .25s ease;
 }
 
-.pintura1-5e:hover,
-.pintura2-5e:hover,
-.huesos5e:hover {
+.pintura1-5e:hover {
     transform: translateX(-50%) scale(1.03);
 }
 
 /* ---------------------------------------------------------------------
-   Orden de capas: de atrás hacia adelante
+   Pintura 2
 --------------------------------------------------------------------- */
-.pintura1-5e { z-index: 2; }
-.pintura2-5e { z-index: 2; }
-
-.huesos5e { z-index: 4; }
-
-/* ---------------------------------------------------------------------
-   Personajes (videos): Step, Roges y monstruo
---------------------------------------------------------------------- */
-.step5e,
-.roges5e,
-.monstruo5e {
+.pintura2-5e {
     position: absolute;
-    bottom: 1px;
+    left: 75%;
+    bottom: 250px;
     transform: translateX(-50%);
+    width: 300px;
+    z-index: 2;
     cursor: pointer;
     transition: transform .25s ease;
 }
 
+.pintura2-5e:hover {
+    transform: translateX(-50%) scale(1.03);
+}
+
+/* ---------------------------------------------------------------------
+   Paso
+--------------------------------------------------------------------- */
+.paso5e {
+    position: absolute;
+    left: 45%;
+    bottom: -25px;
+    transform: translateX(-50%);
+    width: 300px;
+    z-index: 4;
+    cursor: pointer;
+    transition: transform .25s ease;
+}
+
+.paso5e:hover {
+    transform: translateX(-50%) scale(1.03);
+}
+
+/* ---------------------------------------------------------------------
+   Huesos
+--------------------------------------------------------------------- */
+.huesos5e {
+    position: absolute;
+    left: 32%;
+    bottom: 40px;
+    transform: translateX(-50%);
+    width: 250px;
+    z-index: 8;
+    cursor: pointer;
+    transition: transform .25s ease;
+}
+
+.huesos5e:hover {
+    transform: translateX(-50%) scale(1.05);
+}
+
+/* ---------------------------------------------------------------------
+   Step
+--------------------------------------------------------------------- */
 .step5e {
-    left: 30%;
-    width: 200px; /* ajusta tamaño y posición */
-    z-index: 10;
-}
-
-.roges5e {
-    left: 50%;
-    width: 200px;
-    z-index: 10;
-}
-
-.monstruo5e {
-    left: 70%;
+    position: absolute;
+    left: 80%;
+    bottom: 1px;
+    transform: translateX(-50%);
     width: 350px;
-    z-index: 9;
+    z-index: 10;
+    cursor: pointer;
+    transition: transform .25s ease;
 }
 
-.step5e:hover,
-.roges5e:hover,
+.step5e:hover {
+    transform: translateX(-50%) scale(1.05);
+}
+
+/* ---------------------------------------------------------------------
+   Roges
+--------------------------------------------------------------------- */
+.roges5e {
+    position: absolute;
+    left: 20%;
+    bottom: 1px;
+    transform: translateX(-50%);
+    width: 490px;
+    z-index: 10;
+    cursor: pointer;
+    transition: transform .25s ease;
+}
+
+.roges5e:hover {
+    transform: translateX(-50%) scale(1.05);
+}
+
+/* ---------------------------------------------------------------------
+   Monstruo
+--------------------------------------------------------------------- */
+.monstruo5e {
+    position: absolute;
+    left: 50%;
+    bottom: 1px;
+    transform: translateX(-50%);
+    width: 460px;
+    z-index: 9;
+    cursor: pointer;
+    transition: transform .25s ease;
+}
+
 .monstruo5e:hover {
     transform: translateX(-50%) scale(1.05);
 }

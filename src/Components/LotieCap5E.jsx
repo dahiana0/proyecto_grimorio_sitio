@@ -1,163 +1,213 @@
-import LottieModule from "lottie-react";
-import { useRef, useEffect } from "react";
-
-/* import pintura1 from "../assets/pintura1e.json"; // TODO: ajusta los nombres de tus JSON
-import pintura2 from "../assets/pintura2e.json";
-import huesos from "../assets/huesos5e.json"; */
+import { useRef, useEffect, useState } from "react";
 import "../Styles/LotieCap5E.css";
 
-const Lottie = LottieModule.default;
+/* ---------------------------------------------------------------------
+   CÁMARA
+   TIEMPO_ZOOM = segundo del video de Step en que voltea:
+                 se cortan los pasos y arranca el zoom a la cara
+--------------------------------------------------------------------- */
+const TIEMPO_ZOOM = 15.13;
+
+/* ---------------------------------------------------------------------
+   VIDEOS DE LA ESCENA (de atrás hacia adelante)
+   nombre   = identificador
+   clase    = clase CSS
+   src      = archivo de video en public/
+   sonido   = audio que suena junto con el video (ruta en public/)
+   volumen  = volumen del sonido (0 a 1)
+   loop     = true si el sonido se repite mientras dura el video
+   auto     = true si se reproduce solo al aparecer la escena
+   cortar   = true si el sonido se detiene cuando termina el video
+--------------------------------------------------------------------- */
+const VIDEOS = [
+  { nombre: "pintura1", clase: "pintura1-5e", src: "/pintura 1 .webm" },
+  { nombre: "pintura2", clase: "pintura2-5e", src: "/pintura 2 .webm" },
+  { nombre: "paso", clase: "paso5e", src: "/pisadas.webm" },
+  { nombre: "huesos", clase: "huesos5e", src: "/Huesos5E.webm" },
+  {
+    nombre: "monstruo",
+    clase: "monstruo5e",
+    src: "/monstruo 2.webm",
+    sonido: "/audios/RUGIDO CRIATURA.mp3",
+    volumen: 0.6,
+  },
+  { nombre: "roges", clase: "roges5e", src: "/muerto.webm" },
+  {
+    nombre: "step",
+    clase: "step5e",
+    src: "/step5E.webm",
+    sonido: "/audios/pasos.mp3",
+    volumen: 0.4,
+    loop: true,
+    auto: true,
+    cortar: true,
+  },
+];
 
 const LotieCap5E = () => {
 
-  /* const pintura1Ref = useRef(null);
-  const pintura2Ref = useRef(null);
-  const huesosRef = useRef(null);
+  const escenaRef = useRef(null);
 
-  // Personajes (videos)
-  const step5eRef = useRef(null);
-  const roges5eRef = useRef(null);
-  const monstruo5eRef = useRef(null);
+  // Referencias a todos los videos
+  const videoRefs = useRef({});
 
-  const sonidoAmbiente = useRef(new Audio("/audios/ambiente.mp3"));
-  const sonidoPasos = useRef(new Audio("/audios/pasos.mp3"));
- */
-  /* useEffect(() => {
+  // Audios (uno por video que tenga sonido)
+  const audioRefs = useRef({});
 
-    sonidoAmbiente.current.volume = 0.15;
-    sonidoPasos.current.volume = 0.40;
+  // Cámara: true mientras corre la animación de zoom
+  const [zoom, setZoom] = useState(false);
+  const zoomHecho = useRef(false);
+  const rafRef = useRef(null);
 
-    sonidoAmbiente.current.loop = true;
+  // Lámpara: se activa al hacer clic (balanceo + resplandor)
+  const [lamparaActiva, setLamparaActiva] = useState(false);
 
-    const iniciarAmbiente = () => {
-      sonidoAmbiente.current.play().catch(() => { });
-      window.removeEventListener("click", iniciarAmbiente);
-    };
-
-    window.addEventListener("click", iniciarAmbiente);
+  // Crear los audios una sola vez
+  useEffect(() => {
+    VIDEOS.forEach((v) => {
+      if (v.sonido) {
+        const audio = new Audio(v.sonido);
+        audio.volume = v.volumen ?? 1;
+        audio.loop = v.loop ?? false;
+        audioRefs.current[v.nombre] = audio;
+      }
+    });
 
     return () => {
-      sonidoAmbiente.current.pause();
-      sonidoAmbiente.current.currentTime = 0;
-      sonidoPasos.current.pause();
-      window.removeEventListener("click", iniciarAmbiente);
+      cancelAnimationFrame(rafRef.current);
+      Object.values(audioRefs.current).forEach((audio) => {
+        audio.pause();
+        audio.currentTime = 0;
+      });
     };
+  }, []);
 
-  }, []); */
+  // Reproducir un video desde el inicio junto con su sonido
+  const reproducirVideo = (nombre) => {
+    const video = videoRefs.current[nombre];
+    if (!video) return;
 
- 
-  /* const animarPintura1 = () => {
-    pintura1Ref.current?.stop();
-    pintura1Ref.current?.play();
+    video.currentTime = 0;
+    video
+      .play()
+      .then(() => {
+        const audio = audioRefs.current[nombre];
+        if (audio) {
+          audio.currentTime = 0;
+          audio.play().catch(() => {});
+        }
+      })
+      .catch(() => {});
   };
 
-  const animarPintura2 = () => {
-    pintura2Ref.current?.stop();
-    pintura2Ref.current?.play();
+  // Detener el sonido cuando termina el video (solo si "cortar" es true)
+  const alTerminar = (v) => {
+    if (!v.cortar) return;
+    const audio = audioRefs.current[v.nombre];
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
+    }
   };
 
-  // Huesos
-  const animarHuesos = () => {
-    huesosRef.current?.stop();
-    huesosRef.current?.play();
-  };
+  // Vigila el video de Step. En TIEMPO_ZOOM corta los pasos y dispara
+  // el zoom. El video NO se pausa: sigue reproduciéndose normal.
+  const vigilarStep = () => {
+    const video = videoRefs.current.step;
+    if (!video || video.paused || video.ended) return;
 
-  const reproducirVideo = (videoRef, conPasos) => {
-    if (conPasos) {
-      sonidoPasos.current.currentTime = 0;
-      sonidoPasos.current.play().catch(() => { });
+    if (video.currentTime >= TIEMPO_ZOOM) {
+      zoomHecho.current = true;
+
+      // Los pasos dejan de sonar
+      const audio = audioRefs.current.step;
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+
+      // Zoom a la cara
+      setZoom(true);
+      return; // ya no hace falta seguir vigilando
     }
 
-    if (videoRef.current) {
-      videoRef.current.currentTime = 0;
-      videoRef.current.play();
-    }
-  }; */
+    rafRef.current = requestAnimationFrame(vigilarStep);
+  };
 
- /*  const animarStep5e = () => reproducirVideo(step5eRef, true);
-  const animarRoges5e = () => reproducirVideo(roges5eRef, false);
-  const animarMonstruo5e = () => reproducirVideo(monstruo5eRef, false); */
+  // Cada vez que Step empieza (o se repite), se reinicia la cámara
+  const alIniciar = (v) => {
+    if (v.nombre !== "step") return;
+    zoomHecho.current = false;
+    setZoom(false);
+    cancelAnimationFrame(rafRef.current);
+    rafRef.current = requestAnimationFrame(vigilarStep);
+  };
+
+  // Reproducir solos los videos "auto" cuando la escena se ve en pantalla
+  useEffect(() => {
+    const escena = escenaRef.current;
+    if (!escena) return;
+
+    const observador = new IntersectionObserver(
+      ([entrada]) => {
+        if (entrada.isIntersecting) {
+          VIDEOS.filter((v) => v.auto).forEach((v) => reproducirVideo(v.nombre));
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    observador.observe(escena);
+    return () => observador.disconnect();
+  }, []);
 
   return (
+    <div className="escena5e" ref={escenaRef}>
 
-    <div className="escena5e">
+      {/* Cámara: todo lo que está dentro se mueve junto */}
+      <div
+        className={`camara5e ${zoom ? "camara5e--zoom" : ""}`}
+        onAnimationEnd={(e) => {
+          // Solo reacciona a la animación de la propia cámara
+          if (e.target === e.currentTarget) setZoom(false);
+        }}
+      >
 
-      <div className="camara5e">
-
-      
+        {/* Fondo: imagen */}
         <img className="fondo5e" src="./Fondo5e.png" alt="" />
 
-   
-        {/* <img className="lampara5e" src="/lampara5e.png" alt="" /> */}
+        {VIDEOS.map((v) => (
+          <video
+            key={v.nombre}
+            ref={(el) => (videoRefs.current[v.nombre] = el)}
+            className={v.clase}
+            muted
+            playsInline
+            preload="auto"
+            onClick={() => reproducirVideo(v.nombre)}
+            onPlay={() => alIniciar(v)}
+            onEnded={() => alTerminar(v)}
+          >
+            <source src={v.src} type="video/webm" />
+          </video>
+        ))}
 
-       
-        {/* <div className="pintura1-5e" onClick={animarPintura1}>
-          <Lottie
-            lottieRef={pintura1Ref}
-            animationData={pintura1}
-            autoplay={false}
-            loop={false}
-          />
-        </div>
+        {/* Lámpara: al frente. Clic = se balancea y resplandece */}
+        <img
+          className={`lampara5e ${lamparaActiva ? "lampara5e--activa" : ""}`}
+          src="./lampara1.png"
+          alt=""
+          onClick={() => setLamparaActiva(true)}
+          onAnimationEnd={(e) => {
+            e.stopPropagation();
+            setLamparaActiva(false);
+          }}
+        />
 
-        <div className="pintura2-5e" onClick={animarPintura2}>
-          <Lottie
-            lottieRef={pintura2Ref}
-            animationData={pintura2}
-            autoplay={false}
-            loop={false}
-          />
-        </div>
-
-       
-        <div className="huesos5e" onClick={animarHuesos}>
-          <Lottie
-            lottieRef={huesosRef}
-            animationData={huesos}
-            autoplay={false}
-            loop={false}
-          />
-        </div>
-
-  
-        <video
-          ref={step5eRef}
-          className="step5e"
-          muted
-          playsInline
-          onClick={animarStep5e}
-        >
-          <source src="/Step5e.webm" type="video/webm" />
-        </video>
-
-       
-        <video
-          ref={roges5eRef}
-          className="roges5e"
-          muted
-          playsInline
-          onClick={animarRoges5e}
-        >
-          <source src="/Roges5e.webm" type="video/webm" />
-        </video>
-
-       
-        <video
-          ref={monstruo5eRef}
-          className="monstruo5e"
-          muted
-          playsInline
-          onClick={animarMonstruo5e}
-        >
-          <source src="/Monstruo5e.webm" type="video/webm" />
-        </video>
- */}
       </div>
 
     </div>
-
   );
-
 };
 
 export default LotieCap5E;
