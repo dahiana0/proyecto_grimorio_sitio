@@ -33,6 +33,9 @@ const CardRecomendacion = ({
 
   const angulo = (360 / total) * indice;
 
+  // Colores intercalados: libros pares (1.º, 3.º, 5.º) en verde, impares (2.º, 4.º, 6.º) en morado
+  const morado = indice % 2 === 1;
+
   return (
     <>
       {/* Posición fija en el anillo */}
@@ -55,7 +58,10 @@ const CardRecomendacion = ({
       {/* Modal en portal para que no le afecten los transform 3D */}
       {abierto &&
         createPortal(
-          <div className="reco-overlay" onClick={() => setAbierto(false)}>
+          <div
+            className={`reco-overlay ${morado ? "reco-morado" : ""}`}
+            onClick={() => setAbierto(false)}
+          >
             <div
               className="reco-modal"
               onClick={(e) => e.stopPropagation()}

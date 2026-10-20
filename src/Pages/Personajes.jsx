@@ -1,9 +1,40 @@
 import React from "react";
 import Header from "../Components/Header";
 import TituloPersonajes from "../Components/TituloPersonajes";
-import CardGrande from "../Components/CardGrande";
+import CarruselPersonajes from "../Components/Carruselpersonajes";
 import Footer from "../Components/footer";
-import "../Styles/Personajes.css";
+import "../Styles/Carruselpersonajes.css";
+
+const personajes = [
+  {
+    nombre: "Stephen Jones",
+    imagen: "./stephen.jpeg",
+    svg: "./stephen.svg",
+    rig: "stephen",
+    ruta: "/step",
+  },
+  {
+    nombre: "George Rogers",
+    imagen: "./rogers.jpeg",
+    svg: "./rogers (1).svg",
+    rig: "rogers",
+    ruta: "/rogers",
+  },
+  {
+    nombre: "Orabona",
+    imagen: "./orabona.png",
+    svg: "./orabona.svg",
+    rig: "orabona",
+    ruta: "/orabona",
+  },
+  {
+    nombre: "Cthulhu",
+    imagen: "./monstruo.png",
+    svg: "./cthulhu.svg",
+    rig: "cthulhu",
+    ruta: "/cthulhu",
+  },
+];
 
 export const Personajes = () => {
   return (
@@ -18,65 +49,17 @@ export const Personajes = () => {
         <TituloPersonajes />
       </div>
 
-      <div className="personajes-container d-flex justify-content-center py-2">
-        <div className="personajes-grid d-flex flex-wrap justify-content-center gap-4">
-
-          <div
-            data-aos="fade-up"
-            data-aos-delay="100"
-            data-aos-duration="900"
-          >
-            <CardGrande
-              nombre="Stephen Jones"
-              descripcion="Un hombre racional que no cree en lo sobrenatural..."
-              imagen="./stephen.jpeg"
-              ruta="/step"
-            />
-          </div>
-
-          <div
-            data-aos="fade-up"
-            data-aos-delay="250"
-            data-aos-duration="900"
-          >
-            <CardGrande
-              nombre="George Rogers"
-              descripcion="Dueño del museo de cera..."
-              imagen="./rogers.jpeg"
-              ruta="/rogers"
-            />
-          </div>
-
-          <div
-            data-aos="fade-up"
-            data-aos-delay="400"
-            data-aos-duration="900"
-          >
-            <CardGrande
-              nombre="Orabona"
-              descripcion="El socio silencioso de Rogers. Misterioso y raro..."
-              imagen="./orabona.png"
-              ruta="/orabona"
-            />
-          </div>
-
-          <div
-            data-aos="fade-up"
-            data-aos-delay="550"
-            data-aos-duration="900"
-          >
-            <CardGrande
-              nombre="Cthulhu"
-              descripcion="Un ser informe y tentacular. El verdadero secreto del museo…"
-              imagen="./monstruo.png"
-              ruta="/cthulhu"
-            />
-          </div>
-
-        </div>
-      </div>m
+      <div
+        className="personajes-galeria"
+        data-aos="fade-up"
+        data-aos-duration="900"
+      >
+        <CarruselPersonajes personajes={personajes} />
+      </div>
 
       <Footer />
     </>
   );
 };
+
+export default Personajes;

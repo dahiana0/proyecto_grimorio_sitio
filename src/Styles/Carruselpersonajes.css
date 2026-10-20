@@ -1,0 +1,292 @@
+/* ===== Galería de personajes ===== */
+
+.personajes-galeria {
+  width: 100%;
+}
+
+.carrusel {
+  --accent: #1ad96d;          /* color por defecto (cada tarjeta pone el suyo: verde o morado) */
+  --accent-rgb: 26, 217, 109; /* mismo color en RGB para los brillos */
+  /* Alto de la tarjeta: hasta 520px, pero siempre cabe en la pantalla */
+  --card-h: clamp(300px, calc(100svh - 380px), 520px);
+  --card-w: calc(var(--card-h) * 0.6); /* proporción 240 x 400 */
+  --gap: 28px;
+
+  display: grid !important;
+  grid-auto-flow: column !important; /* siempre en una sola fila */
+  grid-auto-columns: minmax(0, var(--card-w));
+  justify-content: center;
+  align-items: center;
+  gap: var(--gap);
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 36px 16px 120px; /* espacio para el nombre debajo de las tarjetas */
+}
+
+/* ---------- Aparición lenta de cada tarjeta (sin scroll) ---------- */
+.carrusel-slot {
+  position: relative;
+  min-width: 0;
+  opacity: 0;
+  transform: translateY(90px) scale(0.88) rotate(var(--rot-in, 0deg));
+  filter: blur(10px);
+  transition:
+    opacity var(--dur, 1.5s) ease,
+    transform var(--dur, 1.5s) cubic-bezier(0.2, 0.8, 0.2, 1),
+    filter var(--dur, 1.5s) ease;
+  transition-delay: var(--delay, 0s);
+}
+
+.carrusel.is-visible .carrusel-slot {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+/* Hasta que no terminan de aparecer no se puede hacer clic */
+.carrusel:not(.is-open) .carrusel-slot {
+  pointer-events: none;
+}
+
+/* Mientras aparecen, todas se ven con color completo */
+.carrusel:not(.is-open) .carrusel-card {
+  opacity: 1;
+  filter: none;
+  --s: 0.95;
+  --y: 0px;
+}
+
+.carrusel:not(.is-open) .carrusel-card-marco {
+  border-color: rgba(var(--accent-rgb), 0.35);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+}
+
+/* ---------- Tarjeta ---------- */
+.carrusel-card {
+  --s: 0.9;
+  --y: 0px;
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  aspect-ratio: 240 / 400;
+  cursor: pointer;
+  outline: none;
+  transform: translateY(var(--y)) scale(var(--s));
+  opacity: 0.55;
+  filter: saturate(0.6) brightness(0.7);
+  transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.7s, filter 0.7s;
+}
+
+.carrusel-card.is-active {
+  --s: 1.06;
+  --y: -8px; /* leve elevación */
+  opacity: 1;
+  filter: none;
+  z-index: 2;
+}
+
+/* ---------- Marco ---------- */
+.carrusel-card-marco {
+  --rx: 0deg;
+  --ry: 0deg;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid rgba(var(--accent-rgb), 0.35);
+  /* capa negra encima del color verde/morado para oscurecerlo (sube o baja el 0.78) */
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0.78)),
+    var(--card-bg, #000);
+  transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry));
+  transition: transform 0.2s ease-out, box-shadow 0.4s, border-color 0.4s;
+}
+
+/* El resplandor tiene el mismo color que el fondo de la tarjeta */
+.carrusel-card.is-active .carrusel-card-marco {
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 22px rgba(var(--accent-rgb), 0.6),
+    0 0 60px rgba(var(--accent-rgb), 0.35);
+}
+
+/* Sin inclinación 3D en las tarjetas animadas (la inclinación deformaba el dibujo) */
+.carrusel-card:has(.personaje-animado) .carrusel-card-marco {
+  transform: none;
+}
+
+.carrusel-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+  transition: transform 0.7s cubic-bezier(0.22, 0.8, 0.26, 1);
+}
+
+.carrusel-card.is-active .carrusel-card-img {
+  transform: scale(1.06);
+}
+
+/* Destello que sigue al mouse */
+.carrusel-card-brillo {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    circle at var(--mx, 50%) var(--my, 50%),
+    rgba(255, 255, 255, 0.2),
+    transparent 55%
+  );
+  transition: opacity 0.3s;
+}
+
+.carrusel-card.is-active .carrusel-card-brillo {
+  opacity: 1;
+}
+
+/* ---------- Fondo de humo en movimiento (verde / morado según la tarjeta) ---------- */
+
+/* El personaje no pinta su propio fondo: se ve el humo de la tarjeta */
+.personaje-animado {
+  background: transparent !important;
+}
+
+/* El personaje queda por encima del humo */
+.carrusel-card-marco > .personaje-animado,
+.carrusel-card-marco > img.carrusel-card-img {
+  position: relative;
+  z-index: 1;
+}
+
+.carrusel-card-marco::before,
+.carrusel-card-marco::after {
+  content: "";
+  position: absolute;
+  inset: -35%;
+  z-index: 0;
+  pointer-events: none;
+  filter: blur(22px);
+  will-change: transform;
+}
+
+.carrusel-card-marco::before {
+  opacity: 0.3;
+  background:
+    radial-gradient(42% 30% at 28% 72%, rgba(var(--accent-rgb), 0.6), transparent 70%),
+    radial-gradient(36% 28% at 72% 42%, rgba(var(--accent-rgb), 0.42), transparent 70%),
+    radial-gradient(32% 26% at 50% 92%, rgba(var(--accent-rgb), 0.5), transparent 70%);
+  animation: humoA 14s ease-in-out infinite alternate;
+}
+
+.carrusel-card-marco::after {
+  opacity: 0.25;
+  mix-blend-mode: screen;
+  background:
+    radial-gradient(36% 30% at 66% 76%, rgba(var(--accent-rgb), 0.5), transparent 70%),
+    radial-gradient(30% 24% at 24% 34%, rgba(var(--accent-rgb), 0.38), transparent 70%),
+    radial-gradient(26% 20% at 58% 12%, rgba(var(--accent-rgb), 0.3), transparent 70%);
+  animation: humoB 19s ease-in-out infinite alternate;
+}
+
+@keyframes humoA {
+  0%   { transform: translate(-7%, 5%) rotate(0deg) scale(1); }
+  50%  { transform: translate(6%, -7%) rotate(14deg) scale(1.14); }
+  100% { transform: translate(-3%, 8%) rotate(-9deg) scale(1.06); }
+}
+
+@keyframes humoB {
+  0%   { transform: translate(6%, -4%) rotate(0deg) scale(1.1); }
+  50%  { transform: translate(-7%, 6%) rotate(-16deg) scale(1); }
+  100% { transform: translate(4%, 7%) rotate(10deg) scale(1.15); }
+}
+
+/* ---------- Nombre debajo de la tarjeta ---------- */
+.carrusel-nombre {
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 22px);
+  transform: translateX(-50%) translateY(10px);
+  width: max-content;
+  max-width: 150%;
+  text-align: center;
+  font-family: "pieces";
+  font-size: 30px;
+  line-height: 1.1;
+  color: var(--accent);
+  text-shadow: 0 0 8px rgba(var(--accent-rgb), 0.9),
+    0 0 22px rgba(var(--accent-rgb), 0.55);
+  opacity: 0;
+  cursor: pointer;
+  user-select: none;
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+
+/* El nombre aparece un poco después que su tarjeta */
+.carrusel.is-visible .carrusel-nombre {
+  opacity: 0.75;
+  transform: translateX(-50%) translateY(0);
+  transition-delay: calc(var(--delay, 0s) + 1s);
+}
+
+.carrusel.is-open .carrusel-nombre {
+  transition-delay: 0s;
+  transition-duration: 0.4s;
+}
+
+.carrusel.is-open .carrusel-nombre.is-active {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-2px);
+}
+
+.carrusel-nombre-hint {
+  display: block;
+  margin-top: 6px;
+  font-family: glacia;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.75);
+  text-shadow: none;
+  animation: hintIn 0.4s both;
+}
+
+@keyframes hintIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Responsive (siempre en una sola fila) ---------- */
+@media (max-width: 1100px) {
+  .carrusel { --gap: 18px; }
+}
+
+@media (max-width: 600px) {
+  .carrusel { --gap: 8px; padding: 24px 12px 90px; }
+  .carrusel-card-marco { border-radius: 5px; }
+  .carrusel-card.is-active .carrusel-card-marco { border-width: 1.5px; }
+  .carrusel-card.is-active { --s: 1.08; --y: -5px; }
+  .carrusel-nombre { font-size: 14px; top: calc(100% + 16px); }
+  .carrusel-nombre-hint { font-size: 10px; }
+}
+
+/* Respeta a quien desactiva las animaciones */
+@media (prefers-reduced-motion: reduce) {
+  .carrusel-slot,
+  .carrusel-nombre {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+  .carrusel-nombre { transform: translateX(-50%); }
+  .carrusel *,
+  .carrusel-card,
+  .carrusel-card-marco::before,
+  .carrusel-card-marco::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}

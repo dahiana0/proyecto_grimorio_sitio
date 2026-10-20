@@ -1,0 +1,293 @@
+/* ===== Overlay (fondo que deja ver la página detrás) ===== */
+.pj-overlay {
+  --accent: #1ad96d;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(12px, 3vw, 40px);
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  animation: pjFade 0.25s ease-out;
+}
+
+/* ===== Ficha flotante ===== */
+.pj-card {
+  position: relative;
+  width: min(1050px, 100%);
+  max-height: 100%;
+  overflow-y: auto;
+  box-sizing: border-box;
+  color: #fff;
+  border: 1px solid color-mix(in srgb, var(--accent) 70%, transparent);
+  border-radius: 14px;
+  background:
+    radial-gradient(ellipse at 25% 40%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 60%),
+    rgba(8, 10, 12, 0.92);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.6),
+    0 0 40px color-mix(in srgb, var(--accent) 30%, transparent),
+    0 30px 80px rgba(0, 0, 0, 0.7);
+  animation: pjPop 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) transparent;
+}
+
+/* Esquinas tipo expediente */
+.pj-card::before,
+.pj-card::after {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  pointer-events: none;
+  border: 2px solid var(--accent);
+}
+.pj-card::before {
+  top: 8px;
+  left: 8px;
+  border-right: 0;
+  border-bottom: 0;
+  border-top-left-radius: 8px;
+}
+.pj-card::after {
+  bottom: 8px;
+  right: 8px;
+  border-left: 0;
+  border-top: 0;
+  border-bottom-right-radius: 8px;
+}
+
+/* ===== Botón cerrar ===== */
+.pj-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 2;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  transition: transform 0.25s;
+}
+
+.pj-close-btn:hover {
+  transform: rotate(90deg);
+}
+
+.pj-close-btn img {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+
+/* ===== Layout ===== */
+.pj-content {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) 1.2fr;
+  align-items: center;
+  gap: clamp(20px, 4vw, 50px);
+  padding: clamp(40px, 5vw, 56px) clamp(18px, 3vw, 36px) clamp(18px, 3vw, 36px);
+}
+
+/* ===== Escenario 3D ===== */
+.pj-stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 8px 8px 12px;
+  overflow: hidden;
+}
+
+.pj-glow {
+  position: absolute;
+  inset: 15% 10% 20%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--accent) 40%, transparent),
+    transparent 70%
+  );
+  filter: blur(36px);
+  animation: pjPulse 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* El modelo "flota" */
+.pj-float {
+  position: relative;
+  width: 100%;
+  animation: pjFloat 5s ease-in-out infinite;
+}
+
+.pj-stage model-viewer {
+  width: 100%;
+  height: clamp(300px, 52vh, 520px);
+  background: transparent;
+  --poster-color: transparent;
+  --progress-bar-color: transparent;
+  --progress-mask: transparent;
+  outline: none;
+  cursor: grab;
+}
+
+.pj-stage model-viewer:active {
+  cursor: grabbing;
+}
+
+.pj-hint {
+  position: relative;
+  margin: 4px 0 0;
+  font-family: glacia;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* ===== Datos ===== */
+.pj-title {
+  font-family: "pieces";
+  font-size: clamp(28px, 4.5vw, 52px);
+  letter-spacing: 2px;
+  line-height: 1.05;
+  margin: 0 0 18px;
+  color: var(--accent);
+  text-shadow: 0 0 14px color-mix(in srgb, var(--accent) 60%, transparent);
+}
+
+/* Tabla de datos tipo ficha */
+.pj-specs {
+  margin: 0 0 20px;
+  border-top: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+}
+
+.pj-specs > div {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.pj-specs dt {
+  font-family: glacia;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.pj-specs dd {
+  margin: 0;
+  font-family: glacia;
+  font-size: 14px;
+  color: #eee;
+}
+
+.pj-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pj-tag {
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  padding: 3px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-family: glacia;
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+.pj-quote {
+  margin: 0 0 20px;
+  padding-left: 16px;
+  border-left: 3px solid var(--accent);
+  font-style: italic;
+  font-family: glacia;
+  line-height: 1.6;
+  color: #d6d6d6;
+}
+
+.pj-section {
+  margin: 0 0 8px;
+  font-family: glacia;
+  font-size: 11px;
+  font-weight: normal;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.pj-desc {
+  font-family: glacia;
+  font-size: 15px;
+  line-height: 1.8;
+  color: #ddd;
+  margin: 0;
+}
+
+/* ===== Animaciones ===== */
+@keyframes pjFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pjPop {
+  from { opacity: 0; transform: translateY(24px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes pjFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pjPulse {
+  0%, 100% { opacity: 0.6; transform: scale(0.95); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 800px) {
+  .pj-content {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .pj-stage model-viewer {
+    height: clamp(240px, 38vh, 360px);
+  }
+
+  .pj-specs > div {
+    grid-template-columns: 105px 1fr;
+  }
+
+  .pj-desc {
+    font-size: 14px;
+    line-height: 1.7;
+  }
+}
+
+/* Móvil horizontal */
+@media (max-width: 900px) and (orientation: landscape) {
+  .pj-content {
+    grid-template-columns: 1fr 1.3fr;
+  }
+
+  .pj-stage model-viewer {
+    height: 60vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pj-card, .pj-overlay, .pj-float, .pj-glow { animation: none; }
+}
