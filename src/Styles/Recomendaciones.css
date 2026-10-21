@@ -36,17 +36,32 @@
 }
 
 /* ===== CARRUSEL 3D ===== */
+/* Un solo valor animado (--giro): el anillo gira con él y cada portada
+   se contra-gira con el mismo valor, así siempre miran al frente. */
+@property --giro {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 0deg;
+}
+
+@property --radio {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 380px;
+}
+
 .escena-3d {
   --ancho: 200px;
   --alto: 300px;
   --radio: 380px;
 
-  perspective: 1400px;
-  height: 480px;
+  perspective: 2000px;
+  height: 580px;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
 .anillo {
@@ -54,40 +69,39 @@
   width: var(--ancho);
   height: var(--alto);
   transform-style: preserve-3d;
-  animation: girar 30s linear infinite;
+  transform: rotateY(var(--giro));
+  animation: recoGirar 30s linear infinite;
 }
 
 /* Pausar al pasar el mouse */
-.escena-3d:hover .anillo,
-.escena-3d:hover .contra {
+.escena-3d:hover .anillo {
   animation-play-state: paused;
 }
 
 .item-orbita {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   transform-style: preserve-3d;
-  transform: rotateY(var(--angulo)) translateZ(var(--radio));
+  transform:
+    rotateY(var(--angulo))
+    translateZ(var(--radio))
+    rotateY(calc((var(--angulo) + var(--giro)) * -1));
 }
 
-/* Anula el giro del anillo para que la portada mire siempre al frente */
 .contra {
   width: 100%;
   height: 100%;
-  animation: contragirar 30s linear infinite;
 }
 
-@keyframes girar {
-  from { transform: rotateY(0deg); }
-  to   { transform: rotateY(360deg); }
+/* Solo el botón recibe clics; las cajas 3D no estorban */
+.item-orbita,
+.contra {
+  pointer-events: none;
 }
 
-@keyframes contragirar {
-  from { transform: rotateY(calc(var(--angulo) * -1)); }
-  to   { transform: rotateY(calc(var(--angulo) * -1 - 360deg)); }
+@keyframes recoGirar {
+  from { --giro: 0deg; }
+  to   { --giro: 360deg; }
 }
 
 /* ===== PORTADAS ===== */
@@ -96,7 +110,13 @@
   border: none;
   padding: 0;
   cursor: pointer;
-  animation: flotar 5s ease-in-out infinite;
+  pointer-events: auto;
+  animation: recoFlotar 5s ease-in-out infinite;
+}
+
+/* Al pasar el mouse, también se detiene la flotación */
+.escena-3d:hover .portada-flotante {
+  animation-play-state: paused;
 }
 
 .portada-img {
@@ -124,7 +144,7 @@
   box-shadow: 0 0 25px rgba(163, 92, 255, 0.55);
 }
 
-@keyframes flotar {
+@keyframes recoFlotar {
   0%, 100% { transform: translateY(0); }
   50%      { transform: translateY(-12px); }
 }
@@ -170,7 +190,7 @@
   justify-content: center;
   padding: 20px;
   z-index: 9999;
-  animation: fadeIn 0.25s ease;
+  animation: recoFadeIn 0.25s ease;
 }
 
 .reco-modal {
@@ -186,7 +206,7 @@
   border: 1px solid var(--reco-c, #1ad96d);
   background-color: #0f1716;
   box-shadow: 0 0 30px rgba(var(--reco-rgb, 26, 217, 109), 0.35);
-  animation: aparecer 0.3s ease;
+  animation: recoAparecer 0.3s ease;
 }
 
 .reco-modal-img {
@@ -237,16 +257,10 @@
   box-shadow: 0 0 15px rgba(var(--reco-rgb, 26, 217, 109), 0.6);
 }
 
-@keyframes fadeIn   { from { opacity: 0; } to { opacity: 1; } }
-@keyframes aparecer { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+@keyframes recoFadeIn   { from { opacity: 0; } to { opacity: 1; } }
+@keyframes recoAparecer { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
 
 /* ===== TRANSICIÓN DE ENTRADA (solo animaciones, no cambia el diseño) ===== */
-@property --radio {
-  syntax: "<length>";
-  inherits: true;
-  initial-value: 380px;
-}
-
 @media (prefers-reduced-motion: no-preference) {
   /* El título se enfoca y se junta */
   .reco-main {
@@ -260,7 +274,7 @@
   /* Los libros salen desde el centro hasta su órbita */
   .anillo {
     animation:
-      girar 30s linear infinite,
+      recoGirar 30s linear infinite,
       recoAbrir 2.4s cubic-bezier(0.2, 0.9, 0.25, 1.1) 0.8s backwards;
   }
 
@@ -289,7 +303,6 @@
 /* ===== ACCESIBILIDAD ===== */
 @media (prefers-reduced-motion: reduce) {
   .anillo,
-  .contra,
   .portada-flotante {
     animation: none;
   }
@@ -310,7 +323,7 @@
     --ancho: 120px;
     --alto: 180px;
     --radio: 200px;
-    height: 330px;
+    height: 400px;
   }
 
   .reco-modal {
@@ -343,7 +356,7 @@
     --ancho: 140px;
     --alto: 210px;
     --radio: 240px;
-    height: 370px;
+    height: 450px;
   }
 
   .reco-modal {
@@ -370,6 +383,6 @@
     --ancho: 170px;
     --alto: 255px;
     --radio: 310px;
-    height: 430px;
+    height: 500px;
   }
 }

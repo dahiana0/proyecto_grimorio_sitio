@@ -1,8 +1,13 @@
 /* =========================================================
-   CONTENEDOR PRINCIPAL
+   VARIABLES
 ========================================================= */
 
 .Container-mapa {
+    --verde: #1ad96d;
+    --verde-suave: rgba(26, 217, 109, .75);
+    --texto: #e6fff0;
+    --texto-suave: #a9d8bc;
+
     width: 100%;
     min-height: 100vh;
 
@@ -11,43 +16,13 @@
     align-items: flex-start;
 
     padding: 20px;
+    box-sizing: border-box;
+    color: var(--texto);
 }
 
-
-/* =========================================================
-   MARCO / PERGAMINO
-========================================================= */
-
-.marco-pergamino {
-    width: 1200px;
-    height: 700px;
-
-    background: url("/Mapa-Cap-.png");
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-
-    padding: 30px 35px;
-
-    overflow: hidden;
-
-    animation: aparecer .7s ease;
-}
-
-
-/* =========================================================
-   ANIMACIÓN DE ENTRADA
-========================================================= */
-
-@keyframes aparecer {
-    from {
-        opacity: 0;
-        transform: scale(.98);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+.contenedor-mapa-pagina {
+    width: 100%;
+    max-width: 1400px;
 }
 
 
@@ -57,89 +32,121 @@
 
 .header-mapa {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    justify-content: center;
 }
 
-
-/* =========================================================
-   TÍTULO
-========================================================= */
-
 .titulo-lado {
-    width: 240px;
+    margin: 8px 0 6px;
 
-    margin-top: 50px;
-    margin-left: 100px;
+    text-align: center;
 }
 
 .titulo-mapa {
     margin: 0;
 
-    font-size: 70px;
-    line-height: 48px;
+    display: flex;
+    justify-content: center;
+
+    font-size: 72px;
+    line-height: 66px;
 
     font-family: pieces;
-    color: #20160d;
+    color: var(--verde);
+
+    text-shadow: 0 0 14px var(--verde-suave);
+
+    /* respira suave cuando ya entró */
+    animation: titulo-brillo 4s ease-in-out 1.6s infinite;
 }
 
-.titulo-lado span {
-    display: block;
+/* Cada letra entra desde abajo, borrosa, con un pequeño rebote */
+.letra {
+    display: inline-block;
 
-    margin-top: 4px;
+    opacity: 0;
+    transform: translateY(22px) scale(.5);
+    filter: blur(8px);
 
-    font-size: 20px;
+    animation: letra-entra .8s cubic-bezier(.2, 1.4, .4, 1) forwards;
+}
 
-    color: #2f2117;
+@keyframes letra-entra {
+    55% {
+        opacity: 1;
+        filter: blur(0);
+    }
 
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+}
+
+@keyframes titulo-brillo {
+    0%,
+    100% {
+        text-shadow: 0 0 14px var(--verde-suave);
+    }
+
+    50% {
+        text-shadow:
+            0 0 22px var(--verde),
+            0 0 40px var(--verde-suave);
+    }
+}
+
+/* Subtítulo: líneas que se abren desde el centro y texto que se asienta */
+.subtitulo-mapa {
+    margin-top: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+.texto-sub {
     font-family: pieces;
+    font-size: 30px;
+    letter-spacing: 6px;
+
+    color: var(--texto-suave);
+
+    opacity: 0;
+
+    animation: sub-entra 1s ease 1.1s forwards;
+}
+
+@keyframes sub-entra {
+    from {
+        opacity: 0;
+        letter-spacing: 16px;
+    }
+
+    to {
+        opacity: 1;
+        letter-spacing: 6px;
+    }
 }
 
 
 /* =========================================================
-   FRASE
-========================================================= */
-
-.frase-mapa {
-    margin-top: 22px;
-
-    text-align: center;
-}
-
-.frase-mapa p {
-    margin: 0;
-
-    font-size: 17px;
-    line-height: 27px;
-
-    color: #2b2118;
-}
-
-.ojo {
-    margin-top: 8px;
-
-    font-size: 20px;
-}
-
-
-/* =========================================================
-   CONTENIDO PRINCIPAL
+   LAYOUT
 ========================================================= */
 
 .contenido-principal {
     display: flex;
-
-    justify-content: space-between;
+    /* stretch: la barra y la tarjeta miden lo mismo que el mapa de alto */
     align-items: stretch;
+    gap: 26px;
+
+    margin-top: 10px;
 }
-
-
-/* =========================================================
-   ZONA DEL MAPA
-========================================================= */
 
 .zona-mapa {
     flex: 1;
+    min-width: 0;
 }
 
 
@@ -150,329 +157,450 @@
 .mapa {
     position: relative;
 
-    width: 700px;
+    width: 100%;
+    max-width: 900px;
 
-    margin-left: 70px;
-    margin-top: 10px;
+    margin: 0 auto;
 }
 
-.img-mapa {
-    width: 100%;
+.mapa-svg {
+    position: absolute;
+    inset: 0;
+}
 
+.svg-dibujo svg {
     display: block;
+
+    width: 100%;
+    height: 100%;
+
+    /* Por defecto un <svg> incrustado recorta lo que se sale de su caja
+       (halos, brillos, trazos en el borde). Así no se corta. */
+    overflow: visible;
+}
+
+.svg-dibujo {
+    overflow: visible;
+}
+
+/* El glow pesado del SVG se quita mientras se dibuja (va muy lento
+   animando un filtro enorme) y se aplica ligero al terminar. */
+.mapa-svg svg g {
+    filter: none !important;
+}
+
+.mapa-svg svg {
+    transition: filter 1s ease;
+}
+
+.mapa-svg.completo svg {
+    filter: drop-shadow(0 0 6px rgba(26, 217, 109, .75));
+}
+
+
+/* =========================================================
+   ANIMACIÓN DE TRAZO (se dibuja)
+========================================================= */
+
+.svg-dibujo .trazo {
+    /* --len lo pone el JS con el largo real del trazo */
+    stroke-dasharray: var(--len, 1);
+    stroke-dashoffset: var(--len, 1);
+    opacity: 0;
+}
+
+.svg-dibujo.dibujando .trazo {
+    animation-name: dibujar;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+@keyframes dibujar {
+    0% {
+        stroke-dashoffset: var(--len, 1);
+        opacity: 1;
+    }
+
+    100% {
+        stroke-dashoffset: 0;
+        opacity: 1;
+    }
+}
+
+/* Mientras no se activa, que no se vea nada */
+.svg-fallback {
+    opacity: 0;
+    transition: opacity .6s ease;
+}
+
+.svg-fallback.dibujando {
+    opacity: 1;
+}
+
+
+/* =========================================================
+   MARCO DE BORDE QUE SE DIBUJA (tarjeta y barra)
+========================================================= */
+
+.marco-trazo {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: visible;
+    pointer-events: none;
+}
+
+.marco-trazo rect {
+    fill: none;
+    stroke: var(--verde);
+    stroke-width: 2;
+
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+
+    opacity: 0;
+
+    filter: drop-shadow(0 0 5px rgba(26, 217, 109, .75));
+}
+
+.marco-trazo.dibujando rect {
+    animation-name: dibujar;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
 }
 
 
 /* =========================================================
    BOTONES DEL MAPA
+   --escala la pone el JSX por capítulo (prop "tamano")
 ========================================================= */
 
-.contenedor-btn {
-    position: absolute;
-}
-
 .btn-mapa {
-    width: 75px;
+    position: absolute;
 
-    display: block;
+    width: calc(6% * var(--escala, 1));
+    aspect-ratio: 1;
+
+    padding: 0;
+
+    background: none;
+    border: none;
 
     cursor: pointer;
 
-    border: none;
+    transform: translate(-50%, -50%) scale(.4);
+    opacity: 0;
+    pointer-events: none;
 
-    transition: .35s;
+    transition:
+        transform .5s cubic-bezier(.2, 1.4, .4, 1) var(--retraso, 0s),
+        opacity .4s ease var(--retraso, 0s),
+        filter .3s ease;
 }
 
-.btn-mapa:hover {
-    transform: scale(1.08);
+.btn-mapa.visible {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    pointer-events: auto;
 }
 
-
-/* =========================================================
-   COLORES DE LOS BOTONES ACTIVOS
-========================================================= */
-
-.btn-mapa.activo1 {
-    transform: scale(1.15);
-
-    filter:
-        drop-shadow(0 0 12px #eb482f);
+.btn-mapa .svg-dibujo,
+.btn-mapa .svg-fallback {
+    width: 100%;
+    height: 100%;
+    display: block;
 }
 
-.btn-mapa.activo2 {
-    transform: scale(1.15);
-
-    filter:
-        drop-shadow(0 0 12px #c6d767);
+.btn-mapa.visible:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+    transition-delay: 0s;
 }
 
-.btn-mapa.activo3 {
-    transform: scale(1.15);
+.btn-mapa.visible.activo {
+    transform: translate(-50%, -50%) scale(1.2);
+    transition-delay: 0s;
 
-    filter:
-        drop-shadow(0 0 12px #738ab3);
-}
-
-.btn-mapa.activo4 {
-    transform: scale(1.15);
-
-    filter:
-        drop-shadow(0 0 12px #b58305);
-}
-
-.btn-mapa.activo5 {
-    transform: scale(1.15);
-
-    filter:
-        drop-shadow(0 0 12px #b257ae);
+    filter: drop-shadow(0 0 10px var(--verde));
 }
 
 
 /* =========================================================
-   POSICIONES DE LOS BOTONES
-========================================================= */
-
-.btn1 {
-    top: 70px;
-    left: 150px;
-}
-
-.btn1 img {
-    width: 50px;
-}
-
-
-.btn2 {
-    top: 70px;
-    left: 323px;
-}
-
-.btn2 img {
-    width: 65px;
-}
-
-
-.btn3 {
-    top: 85px;
-    right: 150px;
-}
-
-.btn3 img {
-    width: 60px;
-}
-
-
-.btn4 {
-    bottom: 80px;
-    left: 350px;
-}
-
-.btn4 img {
-    width: 60px;
-}
-
-
-.btn5 {
-    bottom: 75px;
-    left: 155px;
-}
-
-.btn5 img {
-    width: 60px;
-}
-
-
-/* =========================================================
-   PANEL DEL CAPÍTULO
+   TARJETA / PANEL DEL CAPÍTULO (solo borde)
 ========================================================= */
 
 .panel-capitulo {
-    width: 260px;
-
-    margin-right: 35px;
-
-    display: flex;
-
-    transform: translateY(-26px);
+    width: 340px;
+    flex-shrink: 0;
 }
 
-
-/* =========================================================
-   CONTENIDO DEL PANEL
-========================================================= */
-
 .panel-contenido {
-    width: 100%;
+    position: relative;
+    isolation: isolate;
+
     height: 100%;
-
     box-sizing: border-box;
-
-    padding: 14px 16px;
 
     display: flex;
     flex-direction: column;
 
-    overflow-y: auto;
+    padding: 28px 26px;
 
-    border-radius: 12px;
+    border-radius: 14px;
+}
+
+/* El fondo vive aparte y solo aparece cuando sale la tarjeta */
+.panel-contenido::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+
+    border-radius: 14px;
+    pointer-events: none;
 
     background: linear-gradient(
-        #1d1712,
-        #0f0b08
+        180deg,
+        rgba(26, 217, 109, .07),
+        rgba(26, 217, 109, 0) 45%
     );
 
-    border: 2px solid #3b2a1b;
-
-    box-shadow:
-        0 0 20px rgba(0, 0, 0, .45);
-
-    animation: panel .45s ease;
+    opacity: 0;
+    transition: opacity .8s ease;
 }
 
-
-/* =========================================================
-   COLORES DE CADA PANEL
-========================================================= */
-
-.panel1 {
-    border: 2px solid #992f1e;
-
-    box-shadow:
-        0 0 12px #992f1e,
-        0 0 25px rgba(255, 64, 64, .45);
+.panel-contenido.visible::before {
+    opacity: 1;
 }
 
+.panel-interior {
+    /* espera antes de entrar: larga la primera vez, corta al cambiar */
+    --base: .6s;
 
-.panel2 {
-    border: 2px solid #6d7737;
+    flex: 1;
 
-    box-shadow:
-        0 0 12px #6d7737,
-        0 0 25px rgba(15, 34, 17, .45);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    visibility: hidden;
 }
 
-
-.panel3 {
-    border: 2px solid #3f4b62;
-
-    box-shadow:
-        0 0 12px #3f4b62,
-        0 0 25px rgba(69, 184, 255, .45);
+.panel-interior.cambio {
+    --base: .05s;
 }
 
-
-.panel4 {
-    border: 2px solid #c1a96c;
-
-    box-shadow:
-        0 0 12px #c1a96c,
-        0 0 25px rgba(255, 211, 77, .45);
+.panel-contenido.visible .panel-interior {
+    visibility: visible;
 }
 
+/* Cada bloque de la tarjeta entra escalonado, deslizándose y desenfocado.
+   --dir invierte el sentido si vas hacia atrás. */
+.panel-interior > :nth-child(1) { --i: 0; }
+.panel-interior > :nth-child(2) { --i: 1; }
+.panel-interior > :nth-child(3) { --i: 2; }
+.panel-interior > :nth-child(4) { --i: 3; }
+.panel-interior > :nth-child(5) { --i: 4; }
+.panel-interior > :nth-child(6) { --i: 5; }
+.panel-interior > :nth-child(7) { --i: 6; }
 
-.panel5 {
-    border: 2px solid #673364;
-
-    box-shadow:
-        0 0 12px #673364,
-        0 0 25px rgba(211, 77, 255, .45);
+.panel-interior > * {
+    animation: hijo-entra .6s cubic-bezier(.2, .9, .3, 1)
+        calc(var(--base) + var(--i, 0) * .09s) backwards;
 }
 
-
-/* =========================================================
-   ICONOS DEL PANEL
-========================================================= */
-
-.icono-panel {
-    width: 38px;
-
-    display: block;
-
-    margin: 0 auto 8px;
+.panel-interior.saliendo > * {
+    animation: hijo-sale .3s ease calc(var(--i, 0) * .03s) forwards;
 }
 
+@keyframes hijo-entra {
+    from {
+        opacity: 0;
+        transform: translateX(calc(34px * var(--dir, 1)));
+        filter: blur(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+        filter: blur(0);
+    }
+}
+
+@keyframes hijo-sale {
+    to {
+        opacity: 0;
+        transform: translateX(calc(-34px * var(--dir, 1)));
+        filter: blur(5px);
+    }
+}
+
+/* Barrido de luz que cruza la tarjeta al cambiar de capítulo */
+.panel-scan {
+    position: absolute;
+    inset: 2px;
+    z-index: 3;
+
+    border-radius: 12px;
+    overflow: hidden;
+    pointer-events: none;
+
+    animation: panel-destello .9s ease-out both;
+}
+
+.panel-scan::before {
+    content: "";
+
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -90px;
+
+    height: 90px;
+
+    background: linear-gradient(
+        180deg,
+        transparent,
+        rgba(26, 217, 109, .16) 65%,
+        rgba(26, 217, 109, .5) 96%,
+        rgba(200, 255, 225, .95) 100%
+    );
+
+    filter: drop-shadow(0 4px 6px rgba(26, 217, 109, .7));
+
+    animation: panel-barrido .85s cubic-bezier(.5, 0, .3, 1) both;
+}
+
+@keyframes panel-barrido {
+    to {
+        top: 100%;
+    }
+}
+
+@keyframes panel-destello {
+    0% {
+        box-shadow: inset 0 0 0 rgba(26, 217, 109, 0);
+    }
+
+    40% {
+        box-shadow: inset 0 0 34px rgba(26, 217, 109, .32);
+    }
+
+    100% {
+        box-shadow: inset 0 0 0 rgba(26, 217, 109, 0);
+    }
+}
+
+/* (la barra de capítulos también usa esta animación) */
+@keyframes aparecer-texto {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
 .imagen-panel {
     display: flex;
-
     justify-content: center;
 
-    margin: 0 0 8px;
+    margin-bottom: 10px;
 }
-
 
 .icono-capitulo-panel {
-    width: 56px;
+    width: 84px;
+    height: 84px;
 
-    transition: .3s;
+    /* --escala viene del capítulo (prop "tamanoPanel") */
+    transform: scale(var(--escala, 1));
+    transform-origin: center;
 }
 
-.icono-capitulo-panel:hover {
-    transform: scale(1.08);
-}
-
-
-/* =========================================================
-   TÍTULO DEL PANEL
-========================================================= */
-
-.panel-contenido h2 {
-    margin-bottom: 6px;
+.titulo-panel {
+    margin: 4px 0 6px;
 
     text-align: center;
 
-    font-size: 30px;
+    font-size: 38px;
 
-    color: #f4ddb2;
-
+    color: var(--verde);
     font-family: pieces;
+
+    text-shadow: 0 0 10px var(--verde-suave);
 }
 
-
-/* =========================================================
-   LÍNEA DECORATIVA
-========================================================= */
-
+/* línea con rombo al centro */
 .linea {
-    width: 70px;
-    height: 2px;
+    position: relative;
 
-    margin: 10px auto;
+    width: 150px;
+    height: 1px;
 
-    background: #c89c53;
+    margin: 12px auto 16px;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--verde),
+        transparent
+    );
 }
 
+.linea::after {
+    content: "";
 
-/* =========================================================
-   DESCRIPCIÓN
-========================================================= */
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+    width: 7px;
+    height: 7px;
+
+    background: var(--verde);
+    box-shadow: 0 0 8px var(--verde);
+
+    transform: translate(-50%, -50%) rotate(45deg);
+}
 
 .descripcion-panel {
-    margin-bottom: 8px;
+    margin: 0 0 18px;
 
     text-align: center;
 
-    font-size: 12px;
-    line-height: 17px;
+    font-size: 14px;
+    line-height: 21px;
+    font-family: glacia;
+    
 
-    color: #e8e8e8;
+    color: var(--texto);
 }
 
 
 /* =========================================================
    MISIÓN DEL CAPÍTULO
-   (progreso de objetos interactivos guardados en el Grimorio)
 ========================================================= */
 
 .mision-capitulo {
-    margin-bottom: 12px;
+    margin-bottom: 18px;
 
-    padding: 10px 12px;
+    padding: 12px 14px 14px;
 
-    border-radius: 8px;
+    border-radius: 10px;
 
-    background: rgba(0, 0, 0, .28);
-    border: 1px solid #3b2a1b;
+    border: 1px solid rgba(26, 217, 109, .4);
+
+    background: linear-gradient(
+        180deg,
+        rgba(26, 217, 109, .08),
+        rgba(26, 217, 109, .02)
+    );
 }
 
 .mision-titulo {
@@ -484,10 +612,10 @@
 
     text-align: center;
 
-    font-size: 12px;
+    font-size: 20px;
     letter-spacing: 1.5px;
 
-    color: #f4ddb2;
+    color: var(--verde);
 
     font-family: pieces;
 }
@@ -506,39 +634,302 @@
 
     font-size: 12px;
     line-height: 15px;
+    font-family: glacia;
 
-    color: #cfcfcf;
-}
-
-.mision-barra {
-    width: 100%;
-    height: 6px;
-
-    border-radius: 3px;
-
-    background: #2a1d12;
-
-    overflow: hidden;
-}
-
-.mision-barra-fill {
-    height: 100%;
-
-    background: linear-gradient(90deg, #c89c53, #f4ddb2);
-
-    transition: width .4s ease;
+    color: var(--texto-suave);
 }
 
 .mision-contador {
     display: block;
 
-    margin-top: 4px;
-
     text-align: center;
 
-    font-size: 11px;
+    font-family: pieces;
+    font-size: 20px;
+    letter-spacing: 2px;
 
-    color: #ddb97d;
+    color: var(--texto-suave);
+}
+
+.mision-contador b {
+    font-size: 20px;
+
+    color: var(--verde);
+    text-shadow: 0 0 8px var(--verde-suave);
+}
+
+/* ---- medidor: emblema + barra con punta (estilo barra de habilidad) ---- */
+
+.mision-medidor {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    margin: 10px 0 8px;
+
+    filter: drop-shadow(0 0 5px rgba(26, 217, 109, .55));
+}
+
+.mision-emblema {
+    position: relative;
+    z-index: 2;
+
+    flex-shrink: 0;
+
+    width: 34px;
+    height: 34px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+    border: 2px solid #b6ffd4;
+
+    background: radial-gradient(
+        circle at 35% 30%,
+        #5dffa6,
+        var(--verde) 45%,
+        #0a7a3d 100%
+    );
+
+    box-shadow:
+        0 0 10px var(--verde),
+        inset 0 0 8px rgba(0, 0, 0, .35);
+}
+
+.mision-emblema-anillo {
+    position: absolute;
+    inset: -6px;
+
+    border-radius: 50%;
+    border: 1.5px dashed rgba(26, 217, 109, .85);
+
+    animation: girar 12s linear infinite;
+}
+
+.mision-emblema-nucleo {
+    width: 10px;
+    height: 10px;
+
+    border: 1.5px solid #b6ffd4;
+    background: #06140c;
+
+    box-shadow: 0 0 6px #b6ffd4;
+
+    transform: rotate(45deg);
+}
+
+@keyframes girar {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* marco brillante con la punta recortada */
+.mision-barra {
+    flex: 1;
+
+    height: 18px;
+    margin-left: -8px;
+    padding: 2px;
+
+    box-sizing: border-box;
+
+    background: linear-gradient(
+        180deg,
+        rgba(200, 255, 225, .95),
+        var(--verde) 45%,
+        rgba(10, 122, 61, .95)
+    );
+
+    clip-path: polygon(
+        0 0,
+        calc(100% - 14px) 0,
+        100% 50%,
+        calc(100% - 14px) 100%,
+        0 100%
+    );
+}
+
+.mision-barra-interior {
+    position: relative;
+
+    height: 100%;
+
+    background: #04110a;
+
+    clip-path: polygon(
+        0 0,
+        calc(100% - 12px) 0,
+        100% 50%,
+        calc(100% - 12px) 100%,
+        0 100%
+    );
+}
+
+/* zona útil de la barra (deja libre el borde que tapa el emblema) */
+.mision-pista {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 10px;
+    right: 0;
+}
+
+.mision-barra-fill {
+    position: relative;
+
+    width: var(--pct, 0%);
+    height: 100%;
+
+    background: linear-gradient(
+        180deg,
+        #c8ffe0 0%,
+        #4dff9a 22%,
+        var(--verde) 50%,
+        #0c9a4b 100%
+    );
+
+    /* borde de avance en diagonal, como las barras de referencia */
+    clip-path: polygon(0 0, 100% 0, calc(100% - 7px) 100%, 0 100%);
+
+    transition: width .4s ease;
+
+    animation: llenar 1.1s cubic-bezier(.3, .7, .2, 1)
+        calc(var(--base, .6s) + .55s) backwards;
+}
+
+/* línea de luz arriba */
+.mision-barra-fill::before {
+    content: "";
+
+    position: absolute;
+    left: 0;
+    right: 6px;
+    top: 2px;
+
+    height: 2px;
+
+    background: rgba(255, 255, 255, .7);
+}
+
+/* destello que recorre la barra */
+.mision-barra-fill::after {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: -40px;
+
+    width: 40px;
+    height: 100%;
+
+    background: linear-gradient(
+        105deg,
+        transparent,
+        rgba(255, 255, 255, .55),
+        transparent
+    );
+
+    animation: brillo-barra 2.6s linear 1.8s infinite;
+}
+
+@keyframes brillo-barra {
+    to {
+        left: 100%;
+    }
+}
+
+@keyframes llenar {
+    from {
+        width: 0;
+    }
+}
+
+/* chispa en el borde de avance */
+.mision-chispa {
+    position: absolute;
+    top: -30%;
+
+    left: var(--pct, 0%);
+    margin-left: -9px;
+
+    width: 18px;
+    height: 160%;
+
+    background: radial-gradient(
+        circle,
+        #fff 0%,
+        rgba(120, 255, 180, .8) 35%,
+        transparent 70%
+    );
+
+    pointer-events: none;
+
+    animation:
+        chispa-llena 1.1s cubic-bezier(.3, .7, .2, 1)
+            calc(var(--base, .6s) + .55s) backwards,
+        chispa-pulso 1.3s ease-in-out infinite;
+}
+
+@keyframes chispa-llena {
+    from {
+        left: 0;
+    }
+}
+
+@keyframes chispa-pulso {
+    0%,
+    100% {
+        opacity: .65;
+        transform: scale(.85);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.15);
+    }
+}
+
+/* divisiones: una por objeto a encontrar */
+.mision-marca {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+
+    width: 2px;
+    margin-left: -1px;
+
+    background: rgba(4, 17, 10, .85);
+}
+
+.mision-medidor.completo {
+    filter: drop-shadow(0 0 9px var(--verde));
+}
+
+.mision-medidor.completo .mision-barra-fill::after {
+    animation-duration: 1.2s;
+}
+
+.mision-medidor.completo .mision-emblema {
+    animation: emblema-pulso 1.6s ease-in-out infinite;
+}
+
+@keyframes emblema-pulso {
+    0%,
+    100% {
+        box-shadow:
+            0 0 10px var(--verde),
+            inset 0 0 8px rgba(0, 0, 0, .35);
+    }
+
+    50% {
+        box-shadow:
+            0 0 20px var(--verde),
+            0 0 34px var(--verde-suave),
+            inset 0 0 8px rgba(0, 0, 0, .35);
+    }
 }
 
 .mision-completa {
@@ -549,7 +940,8 @@
     font-size: 12px;
     font-weight: bold;
 
-    color: #7bd88f;
+    color: var(--verde);
+    text-shadow: 0 0 8px var(--verde-suave);
 }
 
 .mision-link {
@@ -557,19 +949,19 @@
 
     width: fit-content;
 
-    margin: 8px auto 0;
+    margin: 10px auto 0;
 
     padding: 5px 14px;
 
-    border: 1px solid #c89c53;
+    border: 1px solid var(--verde);
     border-radius: 6px;
 
     background: transparent;
 
-    color: #f4ddb2;
+    color: var(--verde);
 
     font-family: pieces;
-    font-size: 11px;
+    font-size: 20px;
 
     text-decoration: none;
     text-align: center;
@@ -580,8 +972,8 @@
 }
 
 .mision-link:hover {
-    background: #c89c53;
-    color: #1d1712;
+    background: var(--verde);
+    color: #040806;
 }
 
 .mision-proximamente {
@@ -592,330 +984,247 @@
     font-size: 12px;
     font-style: italic;
 
-    color: #8a7860;
+    color: var(--texto-suave);
+    opacity: .7;
 }
 
 
 /* =========================================================
-   BOTÓN VER MÁS
+   BOTÓN VER MÁS (solo borde)
 ========================================================= */
 
-.link-ver {
-    text-decoration: none;
-}
-
 .btn-vermas {
-    width: 150px;
-    height: 36px;
+    width: 170px;
+    height: 42px;
 
     display: block;
 
     margin: 0 auto;
 
-    border: none;
+    border: 2px solid var(--verde);
     border-radius: 8px;
 
-    color: white;
+    background: transparent;
+    color: var(--verde);
 
     font-family: pieces;
-    font-size: 14px;
+    font-size: 20px;
 
     cursor: pointer;
 
     transition: .3s;
 }
 
+.btn-vermas:hover {
+    background: var(--verde);
+    color: #040806;
 
-/* =========================================================
-   COLORES BOTONES VER MÁS
-========================================================= */
-
-.btn-ver1 {
-    background: linear-gradient(
-        #992f1e,
-        #992f1e
-    );
-}
-
-.btn-ver2 {
-    background: linear-gradient(
-        #6d7737,
-        #6d7737
-    );
-}
-
-.btn-ver3 {
-    background: linear-gradient(
-        #3f4b62,
-        #3f4b62
-    );
-}
-
-.btn-ver4 {
-    background: linear-gradient(
-        #c1a96c,
-        #c1a96c
-    );
-}
-
-.btn-ver5 {
-    background: linear-gradient(
-        #673364,
-        #673364
-    );
+    box-shadow: 0 0 14px var(--verde-suave);
 }
 
 
 /* =========================================================
-   ANIMACIÓN DEL PANEL
-========================================================= */
-
-@keyframes panel {
-    from {
-        opacity: 0;
-        transform: translateX(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-
-/* =========================================================
-   BARRA DE CAPÍTULOS
+   BARRA DE CAPÍTULOS (solo borde)
 ========================================================= */
 
 .barra-capitulos {
-    width: 590px;
-    height: auto;
-    min-height: 72px;
+    position: relative;
 
-    margin: 18px auto 0;
+    width: 130px;
+    flex-shrink: 0;
 
+    padding: 18px 10px;
+
+    box-sizing: border-box;
+
+    /* vertical: los iconos van bajando */
     display: flex;
-
-    justify-content: space-evenly;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    gap: 30px;
 
-    padding: 6px 15px;
-
-    background: rgba(18, 13, 10, .92);
-
-    border: 2px solid #49331f;
-
-    border-radius: 12px;
+    background: transparent;
 }
-
-
-/* =========================================================
-   ITEMS DE LA BARRA
-========================================================= */
 
 .item-capitulo {
     position: relative;
 
-    width: 150px;
+    width: 100%;
 
     display: flex;
-
     flex-direction: column;
-
     align-items: center;
     justify-content: center;
 
     cursor: pointer;
 
-    transition: .3s;
+    opacity: 0;
+    visibility: hidden;
+
+    transition: transform .3s;
+}
+
+/* Línea de puntos que baja de un capítulo al siguiente
+   (misma gracia que la ruta del mapa). El alto = el gap de la barra. */
+.item-capitulo:not(:last-child)::after {
+    content: "";
+
+    position: absolute;
+    z-index: -1;
+
+    left: 50%;
+    top: 100%;
+
+    height: 30px;
+
+    /* tramo "apagado" */
+    border-left: 2px dotted rgba(26, 217, 109, .22);
+    transform: translateX(-1px);
+}
+
+/* Tramo "encendido": crece hacia abajo y va prendiendo los puntos uno a uno.
+   El alto (30px) debe ser igual al gap de la barra. */
+.tramo-recorrido {
+    position: absolute;
+    z-index: -1;
+
+    left: 50%;
+    top: 100%;
+
+    height: 0;
+    overflow: hidden;
+
+    border-left: 2px dotted var(--verde);
+    transform: translateX(-1px);
+
+    filter: drop-shadow(0 0 3px var(--verde));
+
+    transition: height .35s linear var(--delay, 0s);
+}
+
+.tramo-recorrido.lleno {
+    height: 30px;
+}
+
+.barra-capitulos.visible .item-capitulo {
+    visibility: visible;
+
+    animation: aparecer-texto .6s ease var(--retraso, 0s) forwards;
 }
 
 .item-capitulo:hover {
     transform: translateY(-3px);
 }
 
-
-/* =========================================================
-   ICONOS DE LA BARRA
-========================================================= */
-
 .icono-barra {
-    width: 25px;
+    width: 36px;
+    height: 36px;
+
+    /* --escala viene del capítulo (prop "tamano") */
+    transform: scale(var(--escala, 1));
+    transform-origin: center;
 
     transition: .3s;
 }
 
-
-/* =========================================================
-   TEXTO DE LA BARRA
-========================================================= */
-
 .item-capitulo p {
-    margin-top: 3px;
+    margin: 4px 0 0;
 
-    font-size: 9px;
+    font-size: 10px;
     line-height: 12px;
 
-    color: #ddb97d;
+    color: var(--texto-suave);
 
     text-align: center;
 
     font-family: pieces;
 }
 
+.item-capitulo.seleccionado .icono-barra {
+    transform: scale(calc(1.15 * var(--escala, 1)));
 
-/* =========================================================
-   MINI INDICADOR DE MISIÓN (en cada tarjeta de la barra)
-========================================================= */
+    filter: drop-shadow(0 0 6px var(--verde));
+}
+
+.item-capitulo.seleccionado p {
+    color: var(--verde);
+}
 
 .mini-progreso {
-    margin-top: -2px;
+    margin-top: 2px;
 
-    padding: 0px 5px;
+    padding: 0 5px;
 
     border-radius: 6px;
 
-    background: rgba(0, 0, 0, .5);
-    border: 1px solid #49331f;
+    border: 1px solid rgba(26, 217, 109, .45);
 
-    color: #ddb97d;
+    color: var(--texto-suave);
 
-    font-size: 6px;
-    line-height: 9px;
-    letter-spacing: .3px;
+    font-size: 7px;
+    line-height: 10px;
 
     font-family: pieces;
 }
 
 .mini-progreso-completo {
-    border-color: #7bd88f;
+    border-color: var(--verde);
 
-    color: #7bd88f;
+    color: var(--verde);
 }
 
 
 /* =========================================================
-   CAPÍTULO SELECCIONADO
+   RESPONSIVE
 ========================================================= */
 
-.seleccionado1 .icono-barra {
-    transform: scale(1.12);
-
-    filter:
-        drop-shadow(0 0 6px #992f1e)
-        drop-shadow(0 0 14px #992f1e);
-}
-
-
-.seleccionado2 .icono-barra {
-    transform: scale(1.12);
-
-    filter:
-        drop-shadow(0 0 6px #6d7737)
-        drop-shadow(0 0 14px #6d7737);
-}
-
-
-.seleccionado3 .icono-barra {
-    transform: scale(1.12);
-
-    filter:
-        drop-shadow(0 0 6px #3f4b62)
-        drop-shadow(0 0 14px #3f4b62);
-}
-
-
-.seleccionado4 .icono-barra {
-    transform: scale(1.12);
-
-    filter:
-        drop-shadow(0 0 6px #c1a96c)
-        drop-shadow(0 0 14px #c1a96c);
-}
-
-
-.seleccionado5 .icono-barra {
-    transform: scale(1.12);
-
-    filter:
-        drop-shadow(0 0 6px #673364)
-        drop-shadow(0 0 14px #673364);
-}
-
-
-/* =========================================================
-   HOVER DE ICONOS
-========================================================= */
-
-.item-capitulo:hover .icono-barra {
-    transform: scale(1.08);
-}
-
-
-/* =========================================================
-   RESPONSIVE - 1400px
-========================================================= */
-
-@media (max-width: 1400px) {
-
-    .marco-pergamino {
-        width: 98%;
-    }
-
-    .mapa {
-        width: 700px;
-    }
-
-    .barra-capitulos {
-        width: 680px;
-    }
-
-    .panel-capitulo {
-        width: 250px;
-    }
-}
-
-
-/* =========================================================
-   RESPONSIVE - 1200px
-========================================================= */
-
-@media (max-width: 1200px) {
+@media (max-width: 1000px) {
 
     .contenido-principal {
         flex-direction: column;
-
         align-items: center;
     }
 
-    .panel-capitulo {
+    .zona-mapa {
+        order: 1;
+        flex: none;
         width: 100%;
-        max-width: 300px;
+    }
 
-        margin: 25px auto 0;
+    /* En pantallas angostas la barra vuelve a ser horizontal, bajo el mapa */
+    .barra-capitulos {
+        order: 2;
+
+        width: 100%;
+        max-width: 640px;
+
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        gap: 10px;
+    }
+
+    .item-capitulo {
+        width: 100px;
+    }
+
+    .item-capitulo:not(:last-child)::after,
+    .tramo-recorrido {
+        display: none;
+    }
+
+    .panel-capitulo {
+        order: 3;
+
+        width: 100%;
+        max-width: 380px;
     }
 
     .panel-contenido {
-        min-height: auto;
-    }
-
-    .mapa {
-        width: 100%;
-        max-width: 720px;
-
-        margin: auto;
-    }
-
-    .barra-capitulos {
-        width: 100%;
-        max-width: 720px;
+        height: auto;
     }
 }
-
-
-/* =========================================================
-   RESPONSIVE - 768px
-========================================================= */
 
 @media (max-width: 768px) {
 
@@ -923,84 +1232,175 @@
         padding: 10px;
     }
 
-    .marco-pergamino {
-        height: auto;
-
-        padding: 15px;
-    }
-
-    .header-mapa {
-        flex-direction: column;
-
-        gap: 15px;
-    }
-
-    .titulo-lado {
-        margin-left: 0;
-    }
-
     .titulo-mapa {
-        font-size: 38px;
+        font-size: 44px;
+        line-height: 44px;
     }
 
-    .titulo-lado span {
-        font-size: 18px;
+    .texto-sub {
+        font-size: 20px;
+        letter-spacing: 3px;
     }
 
-    .frase-mapa {
-        margin-top: 10px;
+    @keyframes sub-entra {
+        from {
+            opacity: 0;
+            letter-spacing: 9px;
+        }
 
-        text-align: left;
-    }
-
-    .frase-mapa p {
-        font-size: 14px;
-    }
-
-    .ojo {
-        font-size: 18px;
-    }
-
-    .mapa {
-        width: 100%;
-    }
-
-    .barra-capitulos {
-        height: auto;
-
-        flex-wrap: wrap;
-
-        gap: 10px;
-
-        padding: 10px;
+        to {
+            opacity: 1;
+            letter-spacing: 3px;
+        }
     }
 
     .item-capitulo {
-        width: 70px;
+        width: 80px;
     }
 
-    .icono-barra {
-        width: 34px;
+    .btn-mapa {
+        width: calc(9% * var(--escala, 1));
+    }
+}
+
+
+/* =========================================================
+   MOVIMIENTO REDUCIDO
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .svg-dibujo .trazo,
+    .marco-trazo rect,
+    .letra,
+    .texto-sub,
+    .panel-interior > *,
+    .panel-scan,
+    .panel-scan::before,
+    .mision-barra-fill {
+        animation-duration: .01s !important;
+        animation-delay: 0s !important;
     }
 
-    .item-capitulo p {
-        font-size: 10px;
+    .mision-emblema-anillo,
+    .mision-barra-fill::after,
+    .mision-chispa,
+    .mision-medidor.completo .mision-emblema {
+        animation: none !important;
     }
 
-    .panel-capitulo {
-        width: 100%;
+    .titulo-mapa {
+        animation: none;
     }
 
-    .panel-contenido {
-        padding: 15px;
+    .tramo-recorrido {
+        transition-duration: .01s !important;
+        transition-delay: 0s !important;
+    }
+}
+
+
+/* =========================================================
+   RUTA DE PUNTOS (aparecen uno por uno)
+========================================================= */
+
+.ruta-puntos {
+    position: absolute;
+
+    height: auto;
+    overflow: visible;
+
+    pointer-events: none;
+}
+
+.ruta-puntos.activa {
+    filter: drop-shadow(0 0 3px rgba(26, 217, 109, .9));
+}
+
+.punto-ruta {
+    fill: var(--verde);
+
+    opacity: 0;
+
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+.ruta-puntos.activa .punto-ruta {
+    animation: punto-aparece .35s cubic-bezier(.2, 1.6, .4, 1) forwards;
+}
+
+@keyframes punto-aparece {
+    from {
+        opacity: 0;
+        transform: scale(.2);
     }
 
-    .panel-contenido h2 {
-        font-size: 20px;
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .ruta-puntos.activa .punto-ruta {
+        animation-duration: .01s !important;
+        animation-delay: 0s !important;
+    }
+}
+
+
+/* =========================================================
+   ICONOS RELLENOS (cap1.svg ... cap5.svg)
+   Se dibujan primero como contorno y luego se rellenan;
+   el número romano aparece al final.
+========================================================= */
+
+.icono-mapa .trazo,
+.icono-barra .trazo,
+.icono-capitulo-panel .trazo {
+    stroke: var(--verde);
+    stroke-width: 2;
+
+    fill-opacity: 0;
+}
+
+.icono-mapa.dibujando .trazo,
+.icono-barra.dibujando .trazo,
+.icono-capitulo-panel.dibujando .trazo {
+    animation-name: dibujar, rellenar;
+}
+
+@keyframes rellenar {
+    0%,
+    55% {
+        fill-opacity: 0;
+        stroke-opacity: 1;
     }
 
-    .btn-vermas {
-        width: 150px;
-        height: 40px;
+    100% {
+        fill-opacity: 1;
+        stroke-opacity: 0;
+    }
+}
+
+.svg-dibujo .trazo-texto {
+    opacity: 0;
+}
+
+.svg-dibujo.dibujando .trazo-texto {
+    animation-name: aparecer-suave;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+}
+
+@keyframes aparecer-suave {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
     }
 }
