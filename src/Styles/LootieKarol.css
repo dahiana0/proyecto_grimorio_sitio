@@ -5,6 +5,16 @@
     overflow: hidden;
 }
 
+/* Lienzo de tamaño fijo que se escala al visor */
+.escenario {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1500px;   /* = ANCHO */
+    height: 836px;   /* = ALTO */
+    transform-origin: center center;
+    overflow: hidden;
+}
 
 .camara {
     position: relative;
@@ -15,12 +25,10 @@
 }
 
 @keyframes zoomInicial {
-
-
     0% {
         transform: scale(1.8) translate(-20px, 120px);
     }
-   
+
     40% {
         transform: scale(1.8) translate(-20px, 120px);
     }
@@ -30,17 +38,14 @@
     }
 }
 
-
 .fondo {
     position: absolute;
     inset: 0;
-    width: 105%;
+    width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: fill;
     z-index: 1;
 }
-
-
 
 @keyframes resplandor {
     0% {
@@ -55,8 +60,6 @@
         filter: drop-shadow(0 0 2px #1ad96d00);
     }
 }
-
-
 
 .tablero,
 .calavera,
@@ -77,39 +80,37 @@
     transform: scale(1.03);
 }
 
-
-
 .tablero {
     left: 600px;
-    top: 150px;
+    top: 224px;
     width: 290px;
     z-index: 2;
 }
 
 .calavera {
-    left: 250px;
-    top: 350px;
+    left: 270px;
+    top: 450px;
     width: 170px;
     z-index: 3;
 }
 
 .step {
     left: 500px;
-    top: 200px;
+    top: 274px;
     width: 500px;
     z-index: 4;
 }
 
 .libro {
     left: 780px;
-    top: 330px;
+    top: 404px;
     width: 95px;
     z-index: 5;
 }
 
 .libroC {
     left: 375px;
-    top: 339px;
+    top: 413px;
     width: 75px;
     z-index: 6;
 }

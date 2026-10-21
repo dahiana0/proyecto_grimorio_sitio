@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import LottieModule from "lottie-react";
 
 import moustro1 from "../assets/moustro1.json";
@@ -10,19 +10,20 @@ import "../Styles/LotieCap3.css";
 
 const Lottie = LottieModule.default;
 
+// Tamaño de diseño de la escena (igual que las demás escenas)
+const ANCHO = 1500;
+const ALTO = 836;
 
 const T_LLEGA = 14.21;
 const T_ZOOM_IN = 1.0;
 const T_ZOOM_OUT = 21.18;
 const T_FIN = 22.02;
 
-
 const ZOOM = 1.8;
 const CINTURA = 0.55;
 const CAMINAR = true;
 const SEPARACION_X = 45;
 const AJUSTE_Y = 80;
-
 
 const AUDIO_PASOS = "./Sonido de pasos.mp3";
 const AUDIO_ANTORCHA = "./anto.mp3";
@@ -36,6 +37,9 @@ const ease = (x) =>
   x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
 
 const LotieCap3 = () => {
+  const contenedorRef = useRef(null);
+  const [escala, setEscala] = useState(1);
+
   const moustro1Ref = useRef(null);
   const moustro2Ref = useRef(null);
   const moustro3Ref = useRef(null);
@@ -51,14 +55,28 @@ const LotieCap3 = () => {
 
   const stepCap3Ref = useRef(null);
 
-
   const pasosAudioRef = useRef(null);
-
 
   const escenaRef = useRef(null);
   const camaraCap3Ref = useRef(null);
   const moustro1WrapRef = useRef(null);
 
+  // Ajusta la escala al tamaño del visor
+  useEffect(() => {
+    const el = contenedorRef.current;
+    if (!el) return;
+
+    const ajustar = () => {
+      const { width, height } = el.getBoundingClientRect();
+      if (!width || !height) return;
+      setEscala(Math.min(width / ANCHO, height / ALTO));
+    };
+
+    ajustar();
+    const ro = new ResizeObserver(ajustar);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
 
   const sonar = (src, volumen = 1) => {
     const a = new Audio(src);
@@ -108,7 +126,6 @@ const LotieCap3 = () => {
     v.play().catch(() => { });
   };
 
-
   const moverAntorcha = (e) => {
     const el = e.currentTarget;
 
@@ -119,11 +136,10 @@ const LotieCap3 = () => {
     el.classList.add("antorcha-mover");
   };
 
-
   useEffect(() => {
     reproducirVideo(stepCap3Ref);
 
-    // 🔊 Audio de pasos (en bucle, solo suena mientras camina)
+    // Audio de pasos (en bucle, solo suena mientras camina)
     const pasos = new Audio(AUDIO_PASOS);
     pasos.loop = true;
     pasos.volume = VOLUMEN_PASOS;
@@ -139,9 +155,9 @@ const LotieCap3 = () => {
 
       if (step && cam && escena && m) {
         const t = step.currentTime;
+        // Medidas del lienzo (no cambian con la escala del visor)
         const W = escena.clientWidth;
         const H = escena.clientHeight;
-
 
         const caminando = t < T_LLEGA && !step.paused && !step.ended;
 
@@ -152,9 +168,7 @@ const LotieCap3 = () => {
           pasos.currentTime = 0;
         }
 
-
         const mx = m.offsetLeft + m.offsetWidth / 2;
-
 
         const stopX = mx - SEPARACION_X;
         const dy = Math.min(0, -(H - (m.offsetTop + m.offsetHeight) - 1) + AJUSTE_Y);
@@ -166,7 +180,6 @@ const LotieCap3 = () => {
           step.style.transform = `translate(calc(-50% + ${dx * w}px), ${dy * w}px)`;
         }
 
-
         let p = 0;
 
         if (t >= T_ZOOM_OUT) {
@@ -175,11 +188,9 @@ const LotieCap3 = () => {
           p = ease(clamp01((t - T_LLEGA) / T_ZOOM_IN));
         }
 
-
         const stepH = step.offsetHeight;
         const piesY = H - 1 + dy;
         const cinturaY = piesY - stepH * (1 - CINTURA);
-
 
         const fx = (stopX + mx) / 2;
         const fy = cinturaY - H / (2 * ZOOM);
@@ -208,167 +219,170 @@ const LotieCap3 = () => {
   }, []);
 
   return (
-    <div className="contenedor-escena">
-      <div className="escenacap3" ref={escenaRef}>
-        <div className="camara-cap-3" ref={camaraCap3Ref}>
-          <img
-            className="fondo3"
-            src="/Cap 3.png"
-            alt="Escenario capítulo 3"
-          />
-
-          <img
-            className="antorcha antorcha-fondo antorcha1"
-            src="/antorcha1.png"
-            alt="Antorcha 1"
-            onClick={moverAntorcha}
-            onAnimationEnd={(e) => e.currentTarget.classList.remove("antorcha-mover")}
-          />
-
-          <img
-            className="antorcha antorcha-fondo antorcha2"
-            src="/antorcha2.png"
-            alt="Antorcha 2"
-            onClick={moverAntorcha}
-            onAnimationEnd={(e) => e.currentTarget.classList.remove("antorcha-mover")}
-          />
-
-          <img
-            className="antorcha antorcha-frente antorcha3"
-            src="/antorcha3.png"
-            alt="Antorcha 3"
-            onClick={moverAntorcha}
-            onAnimationEnd={(e) => e.currentTarget.classList.remove("antorcha-mover")}
-          />
-
-          <img
-            className="antorcha antorcha-frente antorcha4"
-            src="/antorcha4.png"
-            alt="Antorcha 4"
-            onClick={moverAntorcha}
-            onAnimationEnd={(e) => e.currentTarget.classList.remove("antorcha-mover")}
-          />
-
-          <video
-            ref={puertaRef}
-            className="puerta"
-            muted
-            playsInline
-            preload="auto"
-            onLoadedMetadata={() => mostrarInicio(puertaRef)}
-            onClick={abrirPuerta}
-          >
-            <source src="/Puerta.webm" type="video/webm" />
-          </video>
-
-          <video
-            ref={telarana1Ref}
-            className="telarana telarana-fondo telarana1c"
-            muted
-            playsInline
-            preload="auto"
-            onLoadedMetadata={() => mostrarFinal(telarana1Ref)}
-            onClick={() => reproducirVideo(telarana1Ref)}
-          >
-            <source src="./telaraña1c.webm" type="video/webm" />
-          </video>
-
-          <video
-            ref={telarana2Ref}
-            className="telarana telarana-fondo telarana2c"
-            muted
-            playsInline
-            preload="auto"
-            onLoadedMetadata={() => mostrarFinal(telarana2Ref)}
-            onClick={() => reproducirVideo(telarana2Ref)}
-          >
-            <source src="./telaraña2c.webm" type="video/webm" />
-          </video>
-
-          <video
-            ref={telarana3Ref}
-            className="telarana telarana-frente telarana3c"
-            muted
-            playsInline
-            preload="auto"
-            onLoadedMetadata={() => mostrarFinal(telarana3Ref)}
-            onClick={() => reproducirVideo(telarana3Ref)}
-          >
-            <source src="./telaraña3c .webm" type="video/webm" />
-          </video>
-
-          <video
-            ref={telarana4Ref}
-            className="telarana telarana-frente telarana4c"
-            muted
-            playsInline
-            preload="auto"
-            onLoadedMetadata={() => mostrarFinal(telarana4Ref)}
-            onClick={() => reproducirVideo(telarana4Ref)}
-          >
-            <source src="/telaraña4c .webm" type="video/webm" />
-          </video>
-
-
-          <div
-            ref={moustro1WrapRef}
-            className="moustro moustro1c"
-            onClick={() => animarLottie(moustro1Ref)}
-          >
-            <Lottie
-              lottieRef={moustro1Ref}
-              animationData={moustro1}
-              autoplay={false}
-              loop={false}
+    <div className="contenedor-escena visorCap3" ref={contenedorRef}>
+      <div
+        className="escenarioCap3"
+        style={{ transform: `translate(-50%, -50%) scale(${escala})` }}
+      >
+        <div className="escenacap3" ref={escenaRef}>
+          <div className="camara-cap-3" ref={camaraCap3Ref}>
+            <img
+              className="fondoCap3"
+              src="/Cap 3.png"
+              alt="Escenario capítulo 3"
             />
-          </div>
 
-          <div
-            className="moustro moustro2c"
-            onClick={() => animarLottie(moustro2Ref)}
-          >
-            <Lottie
-              lottieRef={moustro2Ref}
-              animationData={moustro2}
-              autoplay={false}
-              loop={false}
+            <img
+              className="antorcha antorcha-fondo antorcha1"
+              src="/antorcha1.png"
+              alt="Antorcha 1"
+              onClick={moverAntorcha}
+              onAnimationEnd={(e) => e.currentTarget.classList.remove("antorcha-mover")}
             />
-          </div>
 
-          <div
-            className="moustro moustro3c"
-            onClick={() => animarLottie(moustro3Ref)}
-          >
-            <Lottie
-              lottieRef={moustro3Ref}
-              animationData={moustro3}
-              autoplay={false}
-              loop={false}
+            <img
+              className="antorcha antorcha-fondo antorcha2"
+              src="/antorcha2.png"
+              alt="Antorcha 2"
+              onClick={moverAntorcha}
+              onAnimationEnd={(e) => e.currentTarget.classList.remove("antorcha-mover")}
             />
-          </div>
 
-          <div
-            className="moustro moustro4c"
-            onClick={() => animarLottie(moustro4Ref)}
-          >
-            <Lottie
-              lottieRef={moustro4Ref}
-              animationData={moustro4}
-              autoplay={false}
-              loop={false}
+            <img
+              className="antorcha antorcha-frente antorcha3"
+              src="/antorcha3.png"
+              alt="Antorcha 3"
+              onClick={moverAntorcha}
+              onAnimationEnd={(e) => e.currentTarget.classList.remove("antorcha-mover")}
             />
+
+            <img
+              className="antorcha antorcha-frente antorcha4"
+              src="/antorcha4.png"
+              alt="Antorcha 4"
+              onClick={moverAntorcha}
+              onAnimationEnd={(e) => e.currentTarget.classList.remove("antorcha-mover")}
+            />
+
+            <video
+              ref={puertaRef}
+              className="puerta"
+              muted
+              playsInline
+              preload="auto"
+              onLoadedMetadata={() => mostrarInicio(puertaRef)}
+              onClick={abrirPuerta}
+            >
+              <source src="/Puerta.webm" type="video/webm" />
+            </video>
+
+            <video
+              ref={telarana1Ref}
+              className="telarana telarana-fondo telarana1c"
+              muted
+              playsInline
+              preload="auto"
+              onLoadedMetadata={() => mostrarFinal(telarana1Ref)}
+              onClick={() => reproducirVideo(telarana1Ref)}
+            >
+              <source src="./telaraña1c.webm" type="video/webm" />
+            </video>
+
+            <video
+              ref={telarana2Ref}
+              className="telarana telarana-fondo telarana2c"
+              muted
+              playsInline
+              preload="auto"
+              onLoadedMetadata={() => mostrarFinal(telarana2Ref)}
+              onClick={() => reproducirVideo(telarana2Ref)}
+            >
+              <source src="./telaraña2c.webm" type="video/webm" />
+            </video>
+
+            <video
+              ref={telarana3Ref}
+              className="telarana telarana-frente telarana3c"
+              muted
+              playsInline
+              preload="auto"
+              onLoadedMetadata={() => mostrarFinal(telarana3Ref)}
+              onClick={() => reproducirVideo(telarana3Ref)}
+            >
+              <source src="./telaraña3c .webm" type="video/webm" />
+            </video>
+
+            <video
+              ref={telarana4Ref}
+              className="telarana telarana-frente telarana4c"
+              muted
+              playsInline
+              preload="auto"
+              onLoadedMetadata={() => mostrarFinal(telarana4Ref)}
+              onClick={() => reproducirVideo(telarana4Ref)}
+            >
+              <source src="/telaraña4c .webm" type="video/webm" />
+            </video>
+
+            <div
+              ref={moustro1WrapRef}
+              className="moustro moustro1c"
+              onClick={() => animarLottie(moustro1Ref)}
+            >
+              <Lottie
+                lottieRef={moustro1Ref}
+                animationData={moustro1}
+                autoplay={false}
+                loop={false}
+              />
+            </div>
+
+            <div
+              className="moustro moustro2c"
+              onClick={() => animarLottie(moustro2Ref)}
+            >
+              <Lottie
+                lottieRef={moustro2Ref}
+                animationData={moustro2}
+                autoplay={false}
+                loop={false}
+              />
+            </div>
+
+            <div
+              className="moustro moustro3c"
+              onClick={() => animarLottie(moustro3Ref)}
+            >
+              <Lottie
+                lottieRef={moustro3Ref}
+                animationData={moustro3}
+                autoplay={false}
+                loop={false}
+              />
+            </div>
+
+            <div
+              className="moustro moustro4c"
+              onClick={() => animarLottie(moustro4Ref)}
+            >
+              <Lottie
+                lottieRef={moustro4Ref}
+                animationData={moustro4}
+                autoplay={false}
+                loop={false}
+              />
+            </div>
+
+            <video
+              ref={stepCap3Ref}
+              className="step-cap-3"
+              muted
+              playsInline
+              preload="auto"
+            >
+              <source src="./stepcap3.webm" type="video/webm" />
+            </video>
           </div>
-
-
-          <video
-            ref={stepCap3Ref}
-            className="step-cap-3"
-            muted
-            playsInline
-            preload="auto"
-          >
-            <source src="./stepcap3.webm" type="video/webm" />
-          </video>
         </div>
       </div>
     </div>

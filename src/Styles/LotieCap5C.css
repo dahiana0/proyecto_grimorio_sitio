@@ -184,7 +184,7 @@
 .cuadro8-5c { left: 34.4%; top: 41.5%; width: 6.2%; }
 
 /* Pared derecha (4 = más lejos, 1 = más cerca) */
-.cuadro4-5c { left: 63.5%; top: 40%;   width: 70px; }
+.cuadro4-5c { left: 63.5%; top: 40%;   width: 65px; }
 .cuadro3-5c { left: 69.7%; top: 39.5%; width: 6%;   }
 .cuadro2-5c { left: 78.9%; top: 37.5%; width: 10%;  }
 .cuadro1-5c { left: 91.7%; top: 38%;   width: 15%;  }
@@ -265,7 +265,7 @@
 .step-espalda1-5c,
 .orabona5c {
     position: absolute;
-    width: 18.2%;
+    width: 20%;
     aspect-ratio: 270 / 400;
     height: auto;
     object-fit: contain;

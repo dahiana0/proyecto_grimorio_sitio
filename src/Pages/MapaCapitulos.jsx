@@ -9,13 +9,7 @@ import React, {
 import { Link, useNavigate } from "react-router-dom";
 import "../Styles/MapaCapitulo.css";
 
-// =========================================================================
-// SvgDibujado
-// Carga un .svg, lo mete inline y hace que sus trazos se "dibujen".
-// - Prefija clases e ids para que varios SVG exportados de Illustrator
-//   (todos con .cls-1, .cls-2...) no se pisen entre sí.
-// - Si el archivo no existe todavía, muestra la imagen de respaldo (fallback).
-// =========================================================================
+
 const cacheSvg = new Map();
 
 const cargarSvg = (src) => {
@@ -59,9 +53,7 @@ const prepararSvg = (texto, uid, duracion, retraso) => {
   svg.removeAttribute("width");
   svg.removeAttribute("height");
 
-  // Illustrator exporta el brillo del <text> sin x/y/width/height; el valor
-  // por defecto (-10% / 120%) deja fuera la parte alta de la letra y solo
-  // se ve la base. Se le da una región amplia alrededor del texto.
+  
   svg.querySelectorAll("filter").forEach((f) => {
     if (!f.hasAttribute("width")) {
       f.setAttribute("filterUnits", "userSpaceOnUse");
@@ -535,6 +527,15 @@ export const MapaCapitulos = () => {
     <div className="Container-mapa">
       <div className="contenedor-mapa-pagina">
         <div className="header-mapa">
+          {/* Botón volver: cambia to="/" si tu inicio tiene otra ruta.
+              Borra el botón viejo (App / Layout) o saldrán dos. */}
+          <Link to="/" className="btn-volver" onClick={reproducirSonido}>
+            <span className="btn-volver-flecha" aria-hidden="true">
+              ←
+            </span>
+            Volver al inicio
+          </Link>
+
           <div className="titulo-lado">
             <h1 className="titulo-mapa" aria-label="Grimorio">
               {"Grimorio".split("").map((letra, i) => (

@@ -5,6 +5,16 @@
     overflow: hidden;
 }
 
+/* Lienzo de tamaño fijo que se escala al visor */
+.escenario3 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1500px;   /* = ANCHO */
+    height: 836px;   /* = ALTO */
+    transform-origin: center center;
+    overflow: hidden;
+}
 
 .camaraEscena3 {
     /* Punto al que enfoca la cámara (donde está Step frente) */
@@ -36,7 +46,6 @@
     object-fit: cover;
     z-index: 1;
 }
-
 
 .lampara1,
 .lampara2,
@@ -87,7 +96,6 @@
     100% { transform: rotate(0deg); }
 }
 
-
 .telarana1,
 .telarana2,
 .monstruo1,
@@ -115,7 +123,6 @@
     transform: scale(1.03);
 }
 
-
 .telarana1 {
     left: 300px;
     top: -50px;
@@ -130,32 +137,31 @@
     z-index: 3;
 }
 
-
 .monstruo1 {
     left: 5px;
     bottom: 80px;
-    width: 260px;
+    width: 350px;
     z-index: 4;
 }
 
 .monstruo2 {
     left: 270px;
     bottom: 80px;
-    width: 270px;
+    width: 350px;
     z-index: 4;
 }
 
 .monstruo3 {
     right: 200px;
     bottom: 100px;
-    width: 520px;
+    width: 650px;
     z-index: 4;
 }
 
 .monstruo4 {
     right: 70px;
     bottom: 70px;
-    width: 400px;
+    width: 550px;
     z-index: 4;
 }
 

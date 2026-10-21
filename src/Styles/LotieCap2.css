@@ -1,30 +1,43 @@
+/* Contenedor exterior: recorta lo que se sale del visor */
+.visorCap2 {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
 
+/* Lienzo de tamaño fijo que se escala al visor (sin overflow hidden,
+   porque el clip-path de .escenacap2 necesita dejar ver fuera del cuadro) */
+.escenario2 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1500px;   /* = ANCHO */
+    height: 836px;   /* = ALTO */
+    transform-origin: center center;
+}
 
 .escenacap2 {
     position: relative;
     width: 100%;
     height: 100%;
 
-   
     clip-path: inset(-200px);
     animation: escenaCapitulo2Recorte 25s forwards;
 }
 
 @keyframes escenaCapitulo2Recorte {
     0%    { clip-path: inset(-200px); }
-    40%   { clip-path: inset(-200px); }   
+    40%   { clip-path: inset(-200px); }
     40.5% { clip-path: inset(0); }
     99.5% { clip-path: inset(0); }
-    100%  { clip-path: inset(-200px); }  
+    100%  { clip-path: inset(-200px); }
 }
 
-
-
-
 .camaraCapitulo2 {
-    --cara-zoom: 3.4;
-    --cara-x: 1165px;
-    --cara-y: 300px;
+    --cara-zoom: 2.6;
+    --cara-x: 1185px;
+    --cara-y: 330px;
 
     position: absolute;
     inset: 0;
@@ -36,18 +49,15 @@
 
 @keyframes camaraCapitulo2Mov {
 
-    
     0% {
         transform: translate(0, 0) scale(1);
     }
 
-    
     40% {
         transform: translate(0, 0) scale(1);
         animation-timing-function: cubic-bezier(0.37, 0, 0.63, 1);
     }
 
-   
     50% {
         transform:
             translate(
@@ -57,7 +67,6 @@
             scale(var(--cara-zoom));
     }
 
-   
     90% {
         transform:
             translate(
@@ -68,15 +77,12 @@
         animation-timing-function: cubic-bezier(0.37, 0, 0.63, 1);
     }
 
-   
     100% {
         transform: translate(0, 0) scale(1);
     }
 }
 
-
-
-.fondo {
+.fondoCap2 {
     position: absolute;
     inset: 0;
 
@@ -87,9 +93,6 @@
 
     z-index: 1;
 }
-
-
-
 
 .lampara {
     position: absolute;
@@ -143,9 +146,6 @@
     100% { transform: rotate(0deg); }
 }
 
-
-
-
 .rata {
     position: absolute;
 
@@ -171,8 +171,6 @@
     filter: drop-shadow(0 0 8px rgba(26, 217, 109, 0));
 }
 
-
-
 .estatua {
     position: absolute;
 
@@ -194,8 +192,8 @@
 }
 
 .estatua1 {
-    left: 700px;
-    bottom: 20px;
+    left: 745px;
+    bottom: 40px;
 
     width: 710px;
 
@@ -204,7 +202,7 @@
 
 .estatua3 {
     right: 750px;
-    bottom: 80px;
+    bottom: 100px;
 
     width: 250px;
 
@@ -212,8 +210,8 @@
 }
 
 .estatua4 {
-    right: 1080px;
-    bottom: 30px;
+    right: 1150px;
+    bottom: 50px;
 
     width: 250px;
 
@@ -222,7 +220,7 @@
 
 .estatua5 {
     left: 300px;
-    bottom: 110px;
+    bottom: 150px;
 
     width: 250px;
 
@@ -231,15 +229,12 @@
 
 .estatua6 {
     right: 50px;
-    bottom: 80px;
+    bottom: 100px;
 
     width: 260px;
 
     z-index: 3;
 }
-
-
-
 
 .stepCap2Espalda,
 .stepCap2Frente,
@@ -248,8 +243,6 @@
     object-fit: contain;
     pointer-events: none;
 }
-
-
 
 .stepCap2Espalda {
     left: 400px;
@@ -266,7 +259,6 @@
     40%     { opacity: 0; visibility: hidden; }
     100%    { opacity: 0; visibility: hidden; }
 }
-
 
 .stepCap2Frente {
     left: 990px;
@@ -287,10 +279,9 @@
     100% { opacity: 0; }
 }
 
-
 .stepCap2Frente2 {
     left: 850px;
-    bottom: 40px;
+    bottom: 100px;
     width: 350px;
     z-index: 5;
 
@@ -313,143 +304,9 @@
     100% { opacity: 0; }
 }
 
-
-
-
 .estatua.activa,
 .rata.activa {
     filter:
         drop-shadow(0 0 6px rgba(26, 217, 109, 0))
         drop-shadow(0 0 14px rgba(26, 217, 109, 0));
-}
-
-
-
-
-@media (max-width: 1200px) {
-
-    .lampara {
-        width: 80px;
-    }
-
-    .rata {
-        width: 150px;
-        left: 35%;
-    }
-
-    .estatua1 {
-        width: 240px;
-        left: 0;
-    }
-
-    .estatua3 {
-        width: 400px;
-        right: 15%;
-    }
-
-    .estatua4 {
-        width: 320px;
-        right: 0;
-    }
-
-    .estatua5 {
-        width: 240px;
-        left: 30%;
-    }
-
-    .estatua6 {
-        width: 240px;
-        right: 30%;
-    }
-
-    .stepCap2Frente {
-        width: 210px;
-        left: 42%;
-    }
-
-    .stepCap2Espalda {
-        width: 500px;
-        left: 58%;
-    }
-
-    .stepCap2Frente2 {
-        width: 210px;
-        left: 74%;
-    }
-}
-
-
-
-
-@media (max-width: 768px) {
-
-    .lampara {
-        width: 65px;
-    }
-
-    .lampara1C {
-        left: 30px;
-    }
-
-    .lampara2C {
-        right: 30px;
-    }
-
-    .lampara3C {
-        right: 45%;
-    }
-
-    .rata {
-        width: 110px;
-        left: 40%;
-        bottom: 20px;
-    }
-
-    .estatua1 {
-        width: 170px;
-        left: -20px;
-        bottom: 40px;
-    }
-
-    .estatua3 {
-        width: 280px;
-        right: 10%;
-        bottom: 50px;
-    }
-
-    .estatua4 {
-        width: 220px;
-        right: -20px;
-        bottom: 40px;
-    }
-
-    .estatua5 {
-        width: 170px;
-        left: 30%;
-        bottom: 40px;
-    }
-
-    .estatua6 {
-        width: 170px;
-        right: 25%;
-        bottom: 40px;
-    }
-
-    .stepCap2Frente {
-        width: 150px;
-        left: 35%;
-        bottom: 30px;
-    }
-
-    .stepCap2Espalda {
-        width: 500px;
-        left: 55%;
-        bottom: 30px;
-    }
-
-    .stepCap2Frente2 {
-        width: 150px;
-        left: 75%;
-        bottom: 30px;
-    }
 }

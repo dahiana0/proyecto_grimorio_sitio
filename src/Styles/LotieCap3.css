@@ -1,3 +1,20 @@
+/* Contenedor exterior: recorta lo que se sale del visor */
+.visorCap3 {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Lienzo de tamaño fijo que se escala al visor */
+.escenarioCap3 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1500px;   /* = ANCHO */
+    height: 836px;   /* = ALTO */
+    transform-origin: center center;
+}
 
 .escenacap3 {
     position: relative;
@@ -5,16 +22,8 @@
     width: 100%;
     height: 100%;
 
-    max-width: 1920px;
-    max-height: 1080px;
-
-    margin: auto;
-
     overflow: hidden;
 }
-
-
-
 
 .camara-cap-3 {
     position: absolute;
@@ -24,9 +33,7 @@
     will-change: transform;
 }
 
-
-
-.fondo3 {
+.fondoCap3 {
     position: absolute;
 
     inset: 0;
@@ -45,9 +52,6 @@
     pointer-events: none;
 }
 
-
-
-
 .moustro,
 .telarana,
 .antorcha,
@@ -63,23 +67,17 @@
         filter 0.25s ease;
 }
 
-
-
-
 .telarana,
 .puerta,
 .step-cap-3 {
     object-fit: contain;
 }
 
-
-
-
 .puerta {
-    left: 725px;
-    top: 405px;
+    left: 734px;
+    top: 510px;
 
-    width: 85px;
+    width: 110px;
     height: auto;
 
     transform: translate(-50%, -50%);
@@ -95,9 +93,6 @@
     filter:
         drop-shadow(0 0 8px rgba(255, 255, 255, 0.25));
 }
-
-
-
 
 .antorcha {
     height: auto;
@@ -185,9 +180,6 @@
     }
 }
 
-
-
-
 .moustro {
     z-index: 4;
 
@@ -203,28 +195,28 @@
     left: 815px;
     bottom: 22%;
 
-    width: 128px;
+    width: 200px;
 }
 
 .moustro2c {
     left: 475px;
     bottom: 22%;
 
-    width: 128px;
+    width: 200px;
 }
 
 .moustro3c {
     right: 250px;
     bottom: 4%;
 
-    width: 215px;
+    width: 290px;
 }
 
 .moustro4c {
     right: 1030px;
     bottom: 3%;
 
-    width: 270px;
+    width: 350px;
 }
 
 .moustro:hover {
@@ -233,9 +225,6 @@
     filter:
         drop-shadow(0 0 8px rgba(26, 217, 109, 0.25));
 }
-
-
-
 
 .telarana {
     height: auto;
@@ -282,14 +271,11 @@
         drop-shadow(0 0 7px rgba(255, 255, 255, 0.25));
 }
 
-
-
-
 .step-cap-3 {
     left: 50%;
     bottom: 1px;
 
-    width: 200px;
+    width: 250px;
 
     transform: translateX(-50%);
 
@@ -298,9 +284,7 @@
     pointer-events: none;
 }
 
-
-
-
+/* Reglas compartidas con otras escenas (se mantienen igual) */
 .visor-scene {
     position: relative;
 
@@ -316,8 +300,6 @@
     align-items: center;
 }
 
-
-
 .contenedor-escena {
     position: relative;
 
@@ -329,76 +311,4 @@
     align-items: center;
 
     overflow: hidden;
-}
-
-
-
-@media (max-width: 1200px) {
-
-    .moustro1c,
-    .moustro2c,
-    .moustro3c,
-    .moustro4c {
-        width: 19%;
-    }
-
-    .step-cap-3 {
-        width: 14%;
-    }
-}
-
-
-
-
-@media (max-width: 768px) {
-
-    .visor-scene {
-        height: calc(100vh - 90px);
-    }
-
-    .moustro1c {
-        width: 22%;
-        left: 2%;
-        bottom: 4%;
-    }
-
-    .moustro2c {
-        width: 22%;
-        left: 25%;
-        bottom: 3%;
-    }
-
-    .moustro3c {
-        width: 22%;
-        right: 25%;
-        bottom: 3%;
-    }
-
-    .moustro4c {
-        width: 22%;
-        right: 2%;
-        bottom: 4%;
-    }
-
-    .step-cap-3 {
-        width: 18%;
-        bottom: 4%;
-    }
-}
-
-
-
-
-@media (max-width: 480px) {
-
-    .moustro1c,
-    .moustro2c,
-    .moustro3c,
-    .moustro4c {
-        width: 23%;
-    }
-
-    .step-cap-3 {
-        width: 20%;
-    }
 }

@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import "../Styles/LootieParte3.css";
 
+// Tamaño de diseño de la escena (igual que la escena 1)
+const ANCHO = 1500;
+const ALTO = 836;
 
 const DIALOGOS = [
   {
@@ -42,17 +45,18 @@ const DIALOGOS = [
   },
 ];
 
-
 const LootieParte3 = ({
   volumen = 1,
   onDialogoInicio,
   onDialogoFin,
   onSubtitulo,
 }) => {
+  const contenedorRef = useRef(null);
+  const [escala, setEscala] = useState(1);
+
   const [lampara1Activa, setLampara1Activa] = useState(false);
   const [lampara2Activa, setLampara2Activa] = useState(false);
   const [lampara3Activa, setLampara3Activa] = useState(false);
-
 
   const [fase, setFase] = useState("lado");
 
@@ -75,11 +79,27 @@ const LootieParte3 = ({
   const dialogosIniciados = useRef(false);
   const finNotificado = useRef(false);
 
-
   const callbacksRef = useRef({});
   callbacksRef.current = { onDialogoInicio, onDialogoFin, onSubtitulo };
   const volumenRef = useRef(volumen);
   volumenRef.current = volumen;
+
+  // Ajusta la escala al tamaño del visor
+  useEffect(() => {
+    const el = contenedorRef.current;
+    if (!el) return;
+
+    const ajustar = () => {
+      const { width, height } = el.getBoundingClientRect();
+      if (!width || !height) return;
+      setEscala(Math.min(width / ANCHO, height / ALTO));
+    };
+
+    ajustar();
+    const ro = new ResizeObserver(ajustar);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
 
   const reproducirVideo = (ref) => {
     if (ref.current) {
@@ -89,14 +109,12 @@ const LootieParte3 = ({
     }
   };
 
-
   const notificarFinDialogos = () => {
     if (finNotificado.current) return;
     finNotificado.current = true;
     callbacksRef.current.onSubtitulo?.("");
     callbacksRef.current.onDialogoFin?.();
   };
-
 
   const programarDialogos = () => {
     timersRef.current.forEach(clearTimeout);
@@ -134,7 +152,6 @@ const LootieParte3 = ({
       });
     });
 
-
     const ultimo = DIALOGOS[DIALOGOS.length - 1];
     const ultimoFin = ultimo.subs[ultimo.subs.length - 1].fin;
     timersRef.current.push(
@@ -142,13 +159,11 @@ const LootieParte3 = ({
     );
   };
 
-
   const alEmpezarStepFrente = () => {
     if (dialogosIniciados.current) return;
     dialogosIniciados.current = true;
     programarDialogos();
   };
-
 
   const alEmpezarStepLado = () => {
     const pasos = pasosRef.current;
@@ -158,7 +173,6 @@ const LootieParte3 = ({
       pasos.play().catch(() => { });
     }
   };
-
 
   const alTerminarStepLado = () => {
     if (pasosRef.current) pasosRef.current.pause();
@@ -176,7 +190,6 @@ const LootieParte3 = ({
 
       audio.onerror = () =>
         console.error("No se pudo cargar el audio del diálogo:", d.src);
-
 
       audio.onended = () => {
         if (i === DIALOGOS.length - 1) notificarFinDialogos();
@@ -200,7 +213,6 @@ const LootieParte3 = ({
       callbacksRef.current.onSubtitulo?.("");
     };
   }, []);
-
 
   useEffect(() => {
     audiosRef.current.forEach((a) => {
@@ -245,123 +257,127 @@ const LootieParte3 = ({
   const camaraConZoom = fase === "zoom" || fase === "frente";
 
   return (
-    <div className="escena3">
+    <div className="escena3" ref={contenedorRef}>
       <div
-        className={`camaraEscena3 ${camaraConZoom ? "camaraEscena3Zoom" : ""}`}
-        onTransitionEnd={alTerminarZoomCamara}
+        className="escenario3"
+        style={{ transform: `translate(-50%, -50%) scale(${escala})` }}
       >
-        <img className="fondo3" src="/Fondo3.png" alt="" />
-
-        <img
-          src="/lampara1.png"
-          alt=""
-          className={`lampara1 ${lampara1Activa ? "moverLampara" : ""}`}
-          onClick={moverLampara1}
-        />
-        <img
-          src="/lampara1.png"
-          alt=""
-          className={`lampara2 ${lampara2Activa ? "moverLampara" : ""}`}
-          onClick={moverLampara2}
-        />
-        <img
-          src="/lampara1.png"
-          alt=""
-          className={`lampara3 ${lampara3Activa ? "moverLampara" : ""}`}
-          onClick={moverLampara3}
-        />
-
-        <video
-          ref={telarana1Ref}
-          className="telarana1"
-          muted
-          playsInline
-          preload="auto"
-          onClick={() => reproducirVideo(telarana1Ref)}
+        <div
+          className={`camaraEscena3 ${camaraConZoom ? "camaraEscena3Zoom" : ""}`}
+          onTransitionEnd={alTerminarZoomCamara}
         >
-          <source src="/telarana1.webm" type="video/webm" />
-        </video>
+          <img className="fondo3" src="/Fondo3.png" alt="" />
 
-        <video
-          ref={telarana2Ref}
-          className="telarana2"
-          muted
-          playsInline
-          preload="auto"
-          onClick={() => reproducirVideo(telarana2Ref)}
-        >
-          <source src="/telarana2.webm" type="video/webm" />
-        </video>
+          <img
+            src="/lampara1.png"
+            alt=""
+            className={`lampara1 ${lampara1Activa ? "moverLampara" : ""}`}
+            onClick={moverLampara1}
+          />
+          <img
+            src="/lampara1.png"
+            alt=""
+            className={`lampara2 ${lampara2Activa ? "moverLampara" : ""}`}
+            onClick={moverLampara2}
+          />
+          <img
+            src="/lampara1.png"
+            alt=""
+            className={`lampara3 ${lampara3Activa ? "moverLampara" : ""}`}
+            onClick={moverLampara3}
+          />
 
-        <video
-          ref={monstruo1Ref}
-          className="monstruo1"
-          muted
-          playsInline
-          preload="auto"
-          onClick={() => reproducirVideo(monstruo1Ref)}
-        >
-          <source src="/monstruo1.webm" type="video/webm" />
-        </video>
+          <video
+            ref={telarana1Ref}
+            className="telarana1"
+            muted
+            playsInline
+            preload="auto"
+            onClick={() => reproducirVideo(telarana1Ref)}
+          >
+            <source src="/telarana1.webm" type="video/webm" />
+          </video>
 
-        <video
-          ref={monstruo2Ref}
-          className="monstruo2"
-          muted
-          playsInline
-          preload="auto"
-          onClick={() => reproducirVideo(monstruo2Ref)}
-        >
-          <source src="/monstruo2.webm" type="video/webm" />
-        </video>
+          <video
+            ref={telarana2Ref}
+            className="telarana2"
+            muted
+            playsInline
+            preload="auto"
+            onClick={() => reproducirVideo(telarana2Ref)}
+          >
+            <source src="/telarana2.webm" type="video/webm" />
+          </video>
 
-        <video
-          ref={monstruo3Ref}
-          className="monstruo3"
-          muted
-          playsInline
-          preload="auto"
-          onClick={() => reproducirVideo(monstruo3Ref)}
-        >
-          <source src="/monstruo3.webm" type="video/webm" />
-        </video>
+          <video
+            ref={monstruo1Ref}
+            className="monstruo1"
+            muted
+            playsInline
+            preload="auto"
+            onClick={() => reproducirVideo(monstruo1Ref)}
+          >
+            <source src="/monstruo1.webm" type="video/webm" />
+          </video>
 
-        <video
-          ref={monstruo4Ref}
-          className="monstruo4"
-          muted
-          playsInline
-          preload="auto"
-          onClick={() => reproducirVideo(monstruo4Ref)}
-        >
-          <source src="/monstruo4.webm" type="video/webm" />
-        </video>
+          <video
+            ref={monstruo2Ref}
+            className="monstruo2"
+            muted
+            playsInline
+            preload="auto"
+            onClick={() => reproducirVideo(monstruo2Ref)}
+          >
+            <source src="/monstruo2.webm" type="video/webm" />
+          </video>
 
-        <video
-          ref={stepFrenteRef}
-          className="stepFrente"
-          muted
-          playsInline
-          preload="auto"
-          onPlaying={alEmpezarStepFrente}
-        >
-          <source src="./step-frente.webm" type="video/webm" />
-        </video>
+          <video
+            ref={monstruo3Ref}
+            className="monstruo3"
+            muted
+            playsInline
+            preload="auto"
+            onClick={() => reproducirVideo(monstruo3Ref)}
+          >
+            <source src="/monstruo3.webm" type="video/webm" />
+          </video>
 
-        <video
-          ref={stepLadoRef}
-          className="stepLado"
-          muted
-          playsInline
-          preload="auto"
-          onPlaying={alEmpezarStepLado}
-          onEnded={alTerminarStepLado}
-        >
-          <source src="./step-lado.webm" type="video/webm" />
-        </video>
+          <video
+            ref={monstruo4Ref}
+            className="monstruo4"
+            muted
+            playsInline
+            preload="auto"
+            onClick={() => reproducirVideo(monstruo4Ref)}
+          >
+            <source src="/monstruo4.webm" type="video/webm" />
+          </video>
 
+          <video
+            ref={stepFrenteRef}
+            className="stepFrente"
+            muted
+            playsInline
+            preload="auto"
+            onPlaying={alEmpezarStepFrente}
+          >
+            <source src="./step-frente.webm" type="video/webm" />
+          </video>
 
-        <audio ref={pasosRef} src="./Sonido de pasos.mp3" loop preload="auto" />
+          <video
+            ref={stepLadoRef}
+            className="stepLado"
+            muted
+            playsInline
+            preload="auto"
+            onPlaying={alEmpezarStepLado}
+            onEnded={alTerminarStepLado}
+          >
+            <source src="./step-lado.webm" type="video/webm" />
+          </video>
+
+          <audio ref={pasosRef} src="./Sonido de pasos.mp3" loop preload="auto" />
+        </div>
       </div>
     </div>
   );

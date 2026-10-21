@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import LotieCap4 from "./LotieCap4";
 
+import BarraControles from "./Barracontroles";
 import "../Styles/visorCap1.css";
 
 // Duración de la transición a oscuro entre escenas (ms).
@@ -23,12 +24,14 @@ export default function VisorComic4({
   // ---------------------------------------------------------------------
   const [index, setIndex] = useState(0);
 
+  // true mientras suena la narración (para el botón play/pausa)
+  const [audioSonando, setAudioSonando] = useState(false);
+
   const [play, setPlay] = useState(false);
   const [showControls, setShowControls] = useState(true);
 
   // Volumen manual (0 a 1) y visibilidad de la ventanita del slider
   const [nivelVolumen, setNivelVolumen] = useState(1);
-  const [mostrarPanelVolumen, setMostrarPanelVolumen] = useState(false);
   const volumenPrevioRef = useRef(1);
 
   const [mostrarSubtitulo, setMostrarSubtitulo] = useState(true);
@@ -203,6 +206,28 @@ export default function VisorComic4({
   };
 
   // ---------------------------------------------------------------------
+  // Pausa / reanudar (video o narración de la escena)
+  // ---------------------------------------------------------------------
+  const reproduciendo =
+    escenas[index].tipo === "video" ? play : audioSonando;
+
+  const alternarPausa = () => {
+    if (escenas[index].tipo === "video") {
+      handlePlayPause();
+      return;
+    }
+
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (audio.paused) {
+      audio.play().catch(() => {});
+    } else {
+      audio.pause();
+    }
+  };
+
+  // ---------------------------------------------------------------------
   // Render
   // ---------------------------------------------------------------------
   return (
@@ -225,49 +250,6 @@ export default function VisorComic4({
           </div>
         </div>
 
-        <div className="d-flex align-items-center gap-3">
-          <div
-            className="visor-volume-wrapper"
-            onMouseEnter={() => setMostrarPanelVolumen(true)}
-            onMouseLeave={() => setMostrarPanelVolumen(false)}
-          >
-            {mostrarPanelVolumen && (
-              <div className="visor-volume-panel">
-                <input
-                  type="range"
-                  min="0"
-                  max="1"
-                  step="0.01"
-                  value={nivelVolumen}
-                  onChange={cambiarNivelVolumen}
-                  className="visor-volume-slider"
-                  aria-label="Volumen"
-                />
-              </div>
-            )}
-
-            <img
-              onClick={alternarMute}
-              src={nivelVolumen === 0 ? "./volume-3.svg" : "./volume-2 (2).svg"}
-              alt="Volumen"
-              className={`visor-icon ${nivelVolumen === 0 ? "off" : ""}`}
-            />
-          </div>
-
-          <img
-            onClick={cambiarSubtitulos}
-            src={mostrarSubtitulo ? "./subtitles.svg" : "./subtitles-off.svg"}
-            alt="Subtítulos"
-            className={`visor-icon ${!mostrarSubtitulo ? "off" : ""}`}
-          />
-
-          <img
-            onClick={() => navigate("/archivo")}
-            src="./Archivo.png"
-            alt="Interacciones guardadas"
-            className="visor-iconnn"
-          />
-        </div>
       </div>
 
       {/* Escenario: lottie o video, con transición a oscuro entre escenas */}
@@ -348,51 +330,25 @@ export default function VisorComic4({
         </div>
       </div>
 
-      {/* Navegación inferior: flecha izquierda + barra de progreso + flecha derecha */}
-      <div className="visor-bottom-nav">
-        <button
-          onClick={anterior}
-          className={`visor-arrow-btn ${index === 0 ? "disabled" : ""}`}
-          aria-label="Escena anterior"
-        >
-          <img src="./circle-chevron-left.svg" alt="" />
-        </button>
+      {/* Barra de controles: anterior / pausa / siguiente + progreso + volumen + subtítulos */}
+      <BarraControles
+        index={index}
+        total={escenas.length}
+        onAnterior={anterior}
+        onSiguiente={siguiente}
+        onIr={cambiarEscena}
+        reproduciendo={reproduciendo}
+        onAlternarPausa={alternarPausa}
+        nivelVolumen={nivelVolumen}
+        onCambiarVolumen={cambiarNivelVolumen}
+        onAlternarMute={alternarMute}
+        mostrarSubtitulo={mostrarSubtitulo}
+        onAlternarSubtitulos={() => setMostrarSubtitulo((v) => !v)}
+      />
 
-        <div className="visor-progress-track">
-          {escenas.map((_, i) => (
-            <div key={i} className="visor-progress-step">
-              <button
-                onClick={() => cambiarEscena(i)}
-                className={`visor-progress-number ${
-                  i < index ? "completed" : ""
-                } ${i === index ? "active" : ""}`}
-              >
-                {String(i + 1).padStart(2, "0")}
-              </button>
-
-              {i < escenas.length - 1 && (
-                <div
-                  className={`visor-progress-line ${
-                    i < index ? "completed" : ""
-                  }`}
-                />
-              )}
-            </div>
-          ))}
-        </div>
-
-        <button
-          onClick={siguiente}
-          className={`visor-arrow-btn ${
-            index === escenas.length - 1 ? "disabled" : ""
-          }`}
-          aria-label="Siguiente escena"
-        >
-          <img src="./circle-chevron-right.svg" alt="" />
-        </button>
-      </div>
-
-      <audio ref={audioRef} onTimeUpdate={actualizarSubtitulo} />
+      <audio ref={audioRef}
+        onPlay={() => setAudioSonando(true)}
+        onPause={() => setAudioSonando(false)} onTimeUpdate={actualizarSubtitulo} />
     </div>
   );
 }

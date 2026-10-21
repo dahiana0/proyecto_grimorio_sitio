@@ -15,7 +15,7 @@
     justify-content: center;
     align-items: flex-start;
 
-    padding: 20px;
+    padding: 8px 20px 20px; /* menos aire arriba */
     box-sizing: border-box;
     color: var(--texto);
 }
@@ -31,12 +31,65 @@
 ========================================================= */
 
 .header-mapa {
+    position: relative; /* para ubicar el botón volver */
+
     display: flex;
     justify-content: center;
 }
 
+/* ---------- Botón volver al inicio ---------- */
+.btn-volver {
+    position: absolute;
+    left: 0;
+    top: 6px;
+    z-index: 5;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 6px 16px;
+
+    border: 1px solid var(--verde);
+    border-radius: 8px;
+
+    background: rgba(26, 217, 109, .06);
+    color: var(--verde);
+
+    font-family: pieces;
+    font-size: 18px;
+    letter-spacing: 1px;
+    text-decoration: none;
+
+    box-shadow: 0 0 8px rgba(26, 217, 109, .25);
+
+    transition: background .25s, color .25s, box-shadow .25s;
+}
+
+.btn-volver-flecha {
+    display: inline-block;
+
+    transition: transform .25s;
+}
+
+.btn-volver:hover {
+    background: var(--verde);
+    color: #040806;
+
+    box-shadow: 0 0 14px var(--verde-suave);
+}
+
+.btn-volver:hover .btn-volver-flecha {
+    transform: translateX(-4px);
+}
+
+.btn-volver:focus-visible {
+    outline: 2px solid var(--texto);
+    outline-offset: 3px;
+}
+
 .titulo-lado {
-    margin: 8px 0 6px;
+    margin: 0 0 2px;
 
     text-align: center;
 }
@@ -47,8 +100,8 @@
     display: flex;
     justify-content: center;
 
-    font-size: 72px;
-    line-height: 66px;
+    font-size: 64px;
+    line-height: 60px;
 
     font-family: pieces;
     color: var(--verde);
@@ -98,7 +151,7 @@
 
 /* Subtítulo: líneas que se abren desde el centro y texto que se asienta */
 .subtitulo-mapa {
-    margin-top: 12px;
+    margin-top: 6px;
 
     display: flex;
     align-items: center;
@@ -141,7 +194,7 @@
     align-items: stretch;
     gap: 26px;
 
-    margin-top: 10px;
+    margin-top: 4px;
 }
 
 .zona-mapa {
@@ -577,7 +630,6 @@
     font-size: 14px;
     line-height: 21px;
     font-family: glacia;
-    
 
     color: var(--texto);
 }
@@ -1229,7 +1281,22 @@
 @media (max-width: 768px) {
 
     .Container-mapa {
-        padding: 10px;
+        padding: 8px 10px 10px;
+    }
+
+    /* el botón deja de flotar y se apila sobre el título */
+    .header-mapa {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn-volver {
+        position: static;
+
+        margin-bottom: 6px;
+        padding: 4px 12px;
+
+        font-size: 15px;
     }
 
     .titulo-mapa {

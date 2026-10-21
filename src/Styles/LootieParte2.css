@@ -130,7 +130,7 @@
     left: 50%;
     bottom: 1%;           /* más abajo = más adelante, más cerca de la cámara */
     transform: translateX(-50%);
-    width: 230px;               /* un poco más grande para que parezca que está más cerca */
+    width: 220px;               /* un poco más grande para que parezca que está más cerca */
     z-index: 10;
     cursor: pointer;
     transition: transform .25s ease;

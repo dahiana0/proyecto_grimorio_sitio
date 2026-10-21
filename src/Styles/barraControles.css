@@ -1,0 +1,693 @@
+/* ==========================================================================
+   BARRA DE CONTROLES — píldora lateral + píldora inferior (estilo visionOS)
+   Para cambiar el verde edita solo --bc (RGB) y --bc-soft.
+   Va en src/Styles/barraControles.css
+   ========================================================================== */
+
+.bc-side,
+.bc-bottom {
+    --bc: 26, 217, 109;          /* #1ad96d, el verde de tus iconos */
+    --bc-soft: #7dffb9;
+    box-sizing: border-box;
+}
+
+/* ---------- Cristal de las píldoras ---------- */
+.bc-side,
+.bc-bottom {
+    background:
+        linear-gradient(rgba(14, 70, 48, .34), rgba(4, 18, 12, .55)),
+        #040b08;
+    backdrop-filter: blur(28px) saturate(140%);
+    -webkit-backdrop-filter: blur(28px) saturate(140%);
+    border: 1px solid rgba(var(--bc), .55);
+    border-radius: 999px;
+    animation: bc-respira-pildora 4.5s ease-in-out infinite;
+}
+
+@keyframes bc-respira-pildora {
+    0%, 100% { box-shadow: 0 0 12px rgba(var(--bc), .25), inset 0 0 20px rgba(var(--bc), .06); }
+    50%      { box-shadow: 0 0 26px rgba(var(--bc), .55), inset 0 0 26px rgba(var(--bc), .13); }
+}
+
+/* ---------- Píldora lateral (vertical, pegada a la pantalla del visor) ----------
+   Si la quieres más cerca o más lejos de la pantalla, cambia --bc-hueco.
+   Si tu ventana no mide 1100px de ancho, cambia --bc-ventana. */
+.bc-side {
+    --bc-ventana: 1100px;   /* ancho de la pantalla del visor */
+    --bc-pill: 84px;        /* ancho de esta píldora */
+    --bc-hueco: 16px;       /* separación entre la píldora y la pantalla */
+
+    position: fixed;
+    left: max(8px, calc(max(110px, 50% - var(--bc-ventana) / 2) - var(--bc-pill) - var(--bc-hueco)));
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 20;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    padding: 28px 8px;
+
+    animation:
+        bc-entra-izq .7s cubic-bezier(.2, .9, .3, 1) both,
+        bc-respira-pildora 4.5s ease-in-out .7s infinite;
+}
+
+/* iconos de la píldora lateral: más grandes */
+.bc-side .bc-btn {
+    width: 66px;   /* más angosto... */
+    height: 82px;  /* ...pero igual de alto */
+}
+
+@keyframes bc-entra-izq {
+    from { opacity: 0; transform: translate(-30px, -50%); }
+    to   { opacity: 1; transform: translate(0, -50%); }
+}
+
+/* ---------- Píldora inferior ---------- */
+.bc-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+
+    width: fit-content;
+    max-width: 100%;
+    margin: 18px auto 0;
+    padding: 8px 22px;
+
+    animation:
+        bc-entra-abajo .7s cubic-bezier(.2, .9, .3, 1) .1s both,
+        bc-respira-pildora 4.5s ease-in-out .8s infinite;
+}
+
+@keyframes bc-entra-abajo {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.bc-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.bc-bottom--dos {
+    border-radius: 32px;
+    padding: 10px 26px 8px;
+    min-width: min(620px, 100%);
+}
+
+/* barra de tiempo */
+.bc-timeline {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.bc-time {
+    min-width: 34px;
+    text-align: center;
+    font-family: glacia, sans-serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: var(--bc-soft);
+    text-shadow: 0 0 6px rgba(var(--bc), .6);
+    font-variant-numeric: tabular-nums;
+}
+
+.bc-bar {
+    -webkit-appearance: none;
+            appearance: none;
+    flex: 1;
+    height: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    outline: none;
+    background: linear-gradient(90deg, rgb(var(--bc)) var(--v), rgba(var(--bc), .2) var(--v));
+    box-shadow: 0 0 8px rgba(var(--bc), .45);
+}
+
+.bc-bar:disabled { opacity: .35; cursor: not-allowed; }
+
+.bc-bar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--bc-soft);
+    box-shadow: 0 0 10px rgba(var(--bc), 1), 0 0 20px rgba(var(--bc), .6);
+    transition: transform .2s ease;
+}
+
+.bc-bar:not(:disabled)::-webkit-slider-thumb:hover { transform: scale(1.3); }
+
+.bc-bar::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border: none;
+    border-radius: 50%;
+    background: var(--bc-soft);
+    box-shadow: 0 0 10px rgba(var(--bc), 1), 0 0 20px rgba(var(--bc), .6);
+}
+
+/* botones de ±5 s */
+.bc-chip {
+    position: relative;
+    padding: 5px 10px;
+    border-radius: 999px;
+    cursor: pointer;
+
+    font-family: glacia, sans-serif;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--bc-soft);
+
+    background: rgba(var(--bc), .08);
+    border: 1px solid rgba(var(--bc), .45);
+    text-shadow: 0 0 6px rgba(var(--bc), .7);
+    box-shadow: 0 0 8px rgba(var(--bc), .2);
+    transition: background .25s ease, box-shadow .25s ease, transform .25s ease;
+}
+
+.bc-chip:hover:not(:disabled) {
+    background: rgba(var(--bc), .22);
+    box-shadow: 0 0 16px rgba(var(--bc), .65);
+    transform: translateY(-1px);
+}
+
+.bc-chip:active:not(:disabled) { transform: scale(.94); }
+.bc-chip:disabled { opacity: .28; cursor: not-allowed; }
+
+/* "Siguiente capítulo": el botón se enciende para llamar la atención */
+.bc-destacado {
+    animation: bc-llamada 1.6s ease-in-out infinite;
+}
+
+@keyframes bc-llamada {
+    0%, 100% { box-shadow: 0 0 0 rgba(var(--bc), 0); }
+    50%      { box-shadow: 0 0 22px rgba(var(--bc), .9), inset 0 0 12px rgba(var(--bc), .35); }
+}
+
+.bc-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.bc-sep {
+    width: 1px;
+    height: 28px;
+    background: rgba(var(--bc), .35);
+    box-shadow: 0 0 6px rgba(var(--bc), .5);
+}
+
+/* ---------- Botón base ---------- */
+.bc-btn {
+    position: relative;
+    flex-shrink: 0;
+
+    width: 56px;
+    height: 56px;
+    padding: 4px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* halo que aparece al pasar el mouse */
+.bc-btn::before {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(var(--bc), .34), rgba(var(--bc), 0) 70%);
+    opacity: 0;
+    transform: scale(.6);
+    transition: opacity .3s ease, transform .35s cubic-bezier(.2, .9, .3, 1);
+    pointer-events: none;
+}
+
+.bc-btn:hover::before,
+.bc-btn:focus-visible::before {
+    opacity: 1;
+    transform: scale(1.12);
+}
+
+.bc-btn:focus-visible {
+    outline: 2px solid rgba(var(--bc), .8);
+    outline-offset: 2px;
+}
+
+/* ---------- Icono: resplandor que late ---------- */
+.bc-ico {
+    position: relative;
+    height: 100%;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    pointer-events: none;
+    user-select: none;
+
+    filter:
+        drop-shadow(0 0 3px rgba(var(--bc), .9))
+        drop-shadow(0 0 9px rgba(var(--bc), .45));
+    animation: bc-latido 3.2s ease-in-out infinite;
+    transition: transform .3s cubic-bezier(.2, .9, .3, 1), opacity .3s ease;
+}
+
+@keyframes bc-latido {
+    0%, 100% {
+        filter:
+            drop-shadow(0 0 3px rgba(var(--bc), .85))
+            drop-shadow(0 0 8px rgba(var(--bc), .35));
+    }
+    50% {
+        filter:
+            drop-shadow(0 0 5px rgba(var(--bc), 1))
+            drop-shadow(0 0 16px rgba(var(--bc), .75));
+    }
+}
+
+/* hover: crece y se enciende más */
+.bc-btn:hover .bc-ico {
+    transform: scale(1.14);
+    filter:
+        drop-shadow(0 0 5px rgba(var(--bc), 1))
+        drop-shadow(0 0 18px rgba(var(--bc), .9));
+    animation: none;
+}
+
+/* click: se hunde un poquito */
+.bc-btn:active .bc-ico {
+    transform: scale(.88);
+}
+
+/* iconos de la píldora lateral flotan suavemente, desfasados */
+.bc-float .bc-ico {
+    animation:
+        bc-latido 3.2s ease-in-out var(--d, 0s) infinite,
+        bc-flota 4s ease-in-out var(--d, 0s) infinite;
+}
+
+.bc-float:hover .bc-ico {
+    animation: none;
+}
+
+.bc-float .bc-pop {
+    animation:
+        bc-pop .38s cubic-bezier(.2, 1.4, .4, 1),
+        bc-latido 3.2s ease-in-out calc(.38s + var(--d, 0s)) infinite,
+        bc-flota 4s ease-in-out var(--d, 0s) infinite;
+}
+
+@keyframes bc-flota {
+    0%, 100% { translate: 0 0; }
+    50%      { translate: 0 -2.5px; }
+}
+
+/* icono nuevo al cambiar (pausa⇄despausa, volumen⇄sin volumen) */
+.bc-pop {
+    animation: bc-pop .38s cubic-bezier(.2, 1.4, .4, 1), bc-latido 3.2s ease-in-out .38s infinite;
+}
+
+@keyframes bc-pop {
+    0%   { transform: scale(.5) rotate(-12deg); opacity: 0; }
+    100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+/* ---------- Anterior / siguiente ---------- */
+.bc-bottom .bc-btn--prev,
+.bc-bottom .bc-btn--next {
+    width: 50px;
+    height: 50px;
+}
+
+/* "siguiente" = el mismo icono volteado */
+.bc-flip {
+    transform: scaleX(-1);
+}
+
+.bc-btn--prev:hover .bc-ico {
+    transform: translateX(-3px) scale(1.14);
+}
+
+.bc-btn--next:hover .bc-ico.bc-flip {
+    transform: translateX(3px) scale(-1.14, 1.14);
+}
+
+.bc-btn--next:active .bc-ico.bc-flip {
+    transform: scale(-.88, .88);
+}
+
+.bc-btn:disabled {
+    opacity: .28;
+    pointer-events: none;
+}
+
+.bc-btn:disabled .bc-ico {
+    animation: none;
+    filter: drop-shadow(0 0 2px rgba(var(--bc), .4));
+}
+
+/* ---------- Botón central pausa / despausa ---------- */
+.bc-bottom .bc-play {
+    width: 68px;
+    height: 68px;
+    padding: 7px;
+
+    background: radial-gradient(circle, rgba(var(--bc), .30), rgba(var(--bc), .08) 70%);
+    border: 1px solid rgba(var(--bc), .7);
+    box-shadow: 0 0 16px rgba(var(--bc), .5), inset 0 0 12px rgba(var(--bc), .25);
+    transition: box-shadow .3s ease, transform .3s ease;
+}
+
+.bc-play:hover {
+    transform: scale(1.06);
+    box-shadow: 0 0 28px rgba(var(--bc), .9), inset 0 0 14px rgba(var(--bc), .4);
+}
+
+.bc-play:active {
+    transform: scale(.95);
+}
+
+/* aro de luz que gira alrededor del botón: rápido sonando, lento en pausa */
+.bc-aro {
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, transparent 0 55%, rgba(var(--bc), .95) 100%);
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px));
+            mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px));
+    filter: drop-shadow(0 0 6px rgba(var(--bc), .9));
+    pointer-events: none;
+    animation: bc-giro 2.4s linear infinite;
+}
+
+.bc-play.bc-paused .bc-aro {
+    animation-duration: 9s;
+    opacity: .55;
+}
+
+@keyframes bc-giro {
+    to { transform: rotate(360deg); }
+}
+
+/* ---------- Estado apagado (sin volumen / sin subtítulos) ---------- */
+.bc-off .bc-ico {
+    opacity: .45;
+    animation: none;
+    filter: drop-shadow(0 0 2px rgba(var(--bc), .35));
+}
+
+.bc-off .bc-pop {
+    animation: bc-pop .38s cubic-bezier(.2, 1.4, .4, 1);
+}
+
+.bc-off:hover .bc-ico {
+    opacity: .85;
+}
+
+/* tachón que se dibuja al apagar los subtítulos */
+.bc-slash {
+    position: absolute;
+    left: 14%;
+    right: 14%;
+    top: 50%;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--bc-soft);
+    box-shadow: 0 0 8px rgba(var(--bc), .9);
+    transform: rotate(-42deg) scaleX(0);
+    transform-origin: center;
+    animation: bc-tachon .3s .05s ease-out forwards;
+    pointer-events: none;
+}
+
+@keyframes bc-tachon {
+    to { transform: rotate(-42deg) scaleX(1); }
+}
+
+/* ---------- Progreso numerado 01 —— 02 —— 03 ---------- */
+.bc-track {
+    flex: 1;
+    min-width: 170px;
+    display: flex;
+    align-items: center;
+}
+
+.bc-step {
+    display: flex;
+    align-items: center;
+    flex: 1 1 auto;
+}
+
+.bc-step:last-child { flex: 0 0 auto; }
+
+.bc-num {
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+
+    font-family: glacia, sans-serif;
+    font-size: 13px;
+    letter-spacing: 1px;
+    color: rgba(125, 255, 185, .45);
+    transition: color .25s ease, text-shadow .25s ease, transform .25s ease;
+}
+
+.bc-num:hover,
+.bc-num.completed {
+    color: var(--bc-soft);
+    text-shadow: 0 0 6px rgba(var(--bc), .6);
+}
+
+.bc-num:hover { transform: translateY(-1px); }
+
+.bc-num.active {
+    color: rgb(var(--bc));
+    font-weight: 600;
+    text-shadow: 0 0 8px rgba(var(--bc), .95), 0 0 20px rgba(var(--bc), .6);
+    animation: bc-num-late 2.2s ease-in-out infinite;
+}
+
+@keyframes bc-num-late {
+    0%, 100% { text-shadow: 0 0 8px rgba(var(--bc), .9), 0 0 18px rgba(var(--bc), .5); }
+    50%      { text-shadow: 0 0 12px rgba(var(--bc), 1), 0 0 28px rgba(var(--bc), .85); }
+}
+
+.bc-line {
+    flex: 1;
+    height: 2px;
+    margin: 0 10px;
+    border-radius: 2px;
+    background: rgba(var(--bc), .22);
+    transition: background .4s ease, box-shadow .4s ease;
+}
+
+.bc-line.completed {
+    background: rgb(var(--bc));
+    box-shadow: 0 0 8px rgba(var(--bc), .9), 0 0 16px rgba(var(--bc), .45);
+}
+
+/* ---------- Responsive: la píldora lateral pasa a horizontal bajo la ventana ---------- */
+@media (max-width: 900px) {
+    .bc-side {
+        position: static;
+        transform: none;
+        flex-direction: row;
+        width: fit-content;
+        margin: 14px auto 0;
+        padding: 6px 14px;
+        animation: bc-respira-pildora 4.5s ease-in-out infinite;
+    }
+
+    .bc-side .bc-btn { width: 50px; height: 50px; }
+
+    .bc-bottom {
+        width: 100%;
+        border-radius: 28px;
+    }
+
+    .bc-row {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .bc-track { order: 5; flex-basis: 100%; }
+    .bc-sep { display: none; }
+}
+
+/* ---------- Accesibilidad: sin movimiento ---------- */
+@media (prefers-reduced-motion: reduce) {
+    .bc-side,
+    .bc-bottom,
+    .bc-ico,
+    .bc-aro,
+    .bc-destacado,
+    .bc-num.active {
+        animation: none !important;
+    }
+}
+
+
+/* ==========================================================================
+   EXTRAS PARA EL VISOR NUEVO (barra de tiempo, ±5 s, fila, destacado)
+   ========================================================================== */
+
+/* fila: anterior · pausa · siguiente | números */
+.bc-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+}
+
+/* con barra de tiempo: la píldora pasa a dos pisos y ocupa el ancho de la ventana */
+.bc-bottom--dos {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+    width: 100%;
+    max-width: 1100px;
+    padding: 12px 26px 8px;
+    border-radius: 34px;
+}
+
+.bc-timeline {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.bc-time {
+    min-width: 40px;
+    font-family: glacia, sans-serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: var(--bc-soft);
+    text-shadow: 0 0 6px rgba(var(--bc), .6);
+    text-align: center;
+}
+
+/* barra de progreso */
+.bc-bar {
+    -webkit-appearance: none;
+            appearance: none;
+    flex: 1;
+    height: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    outline: none;
+    background: linear-gradient(90deg, rgb(var(--bc)) var(--v), rgba(var(--bc), .2) var(--v));
+    box-shadow: 0 0 8px rgba(var(--bc), .5);
+}
+
+.bc-bar:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+}
+
+.bc-bar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--bc-soft);
+    box-shadow: 0 0 10px rgba(var(--bc), 1), 0 0 20px rgba(var(--bc), .6);
+    transition: transform .2s ease;
+}
+
+.bc-bar::-webkit-slider-thumb:hover { transform: scale(1.3); }
+
+.bc-bar::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border: none;
+    border-radius: 50%;
+    background: var(--bc-soft);
+    box-shadow: 0 0 10px rgba(var(--bc), 1), 0 0 20px rgba(var(--bc), .6);
+}
+
+/* botones −5s / +5s */
+.bc-chip {
+    position: relative;
+    padding: 6px 11px;
+    border-radius: 999px;
+    cursor: pointer;
+
+    font-family: glacia, sans-serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: var(--bc-soft);
+
+    background: rgba(var(--bc), .08);
+    border: 1px solid rgba(var(--bc), .5);
+    text-shadow: 0 0 8px rgba(var(--bc), .7);
+    box-shadow: 0 0 10px rgba(var(--bc), .2);
+    transition: background .25s ease, box-shadow .25s ease, transform .25s ease;
+}
+
+.bc-chip:hover {
+    background: rgba(var(--bc), .22);
+    box-shadow: 0 0 18px rgba(var(--bc), .6);
+    transform: translateY(-1px);
+}
+
+.bc-chip:active { transform: scale(.94); }
+
+.bc-chip:disabled {
+    opacity: .28;
+    pointer-events: none;
+}
+
+/* "siguiente" cuando toca pasar al siguiente capítulo: late más fuerte */
+.bc-destacado::before {
+    opacity: 1;
+    transform: scale(1.1);
+    animation: bc-destacado 1.6s ease-in-out infinite;
+}
+
+.bc-destacado .bc-ico.bc-flip {
+    animation: bc-latido 1.2s ease-in-out infinite;
+}
+
+@keyframes bc-destacado {
+    0%, 100% { opacity: .55; transform: scale(1); }
+    50%      { opacity: 1;   transform: scale(1.25); }
+}
+
+@media (max-width: 900px) {
+    .bc-row { flex-wrap: wrap; }
+    .bc-bottom--dos { border-radius: 28px; padding: 10px 16px 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .bc-destacado::before,
+    .bc-destacado .bc-ico.bc-flip {
+        animation: none !important;
+    }
+}
+
+
+/* ==========================================================================
+   REPRODUCTOR MÁS BAJO — la pantalla se adapta a la altura del navegador
+   para no tener que hacer scroll. Para más alto/bajo cambia el 250px:
+   número mayor = pantalla más baja.   (solo en pantallas de escritorio)
+   ========================================================================== */
+@media (min-width: 901px) {
+    .visor-container .visor-scene {
+        height: clamp(380px, calc(100vh - 250px), 600px);
+    }
+}

@@ -1,4 +1,12 @@
-
+/* Lienzo de tamaño fijo que se escala al visor */
+.escenarioCap4 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1500px;   /* = ANCHO */
+    height: 836px;   /* = ALTO */
+    transform-origin: center center;
+}
 
 .escenacap4 {
     position: relative;
@@ -6,24 +14,13 @@
     width: 100%;
     height: 100%;
 
-    max-width: 1920px;
-    max-height: 1080px;
-
-    margin: auto;
-
     overflow: hidden;
 }
-
-
-
 
 .escena-interna-cap4 {
     position: absolute;
     inset: 0;
 }
-
-
-
 
 .fondo4 {
     position: absolute;
@@ -44,8 +41,6 @@
     pointer-events: none;
 }
 
-
-
 .moustro-cap4,
 .telarana-cap4,
 .antorcha-cap4,
@@ -61,22 +56,17 @@
         filter 0.25s ease;
 }
 
-
-
 .telarana-cap4,
 .puerta-cap4,
 .step-cap4 {
     object-fit: contain;
 }
 
-
-
-
 .puerta-cap4 {
-    left: 725px;
-    top: 405px;
+   left: 734px;
+    top: 510px;
 
-    width: 85px;
+    width: 110px;
     height: auto;
 
     transform: translate(-50%, -50%);
@@ -92,9 +82,6 @@
     filter:
         drop-shadow(0 0 8px rgba(255, 255, 255, 0.25));
 }
-
-
-
 
 .antorcha-cap4 {
     height: auto;
@@ -182,9 +169,6 @@
     }
 }
 
-
-
-
 .moustro-cap4 {
     z-index: 4;
 
@@ -200,28 +184,28 @@
     left: 815px;
     bottom: 22%;
 
-    width: 128px;
+    width: 200px;
 }
 
 .moustro2c-cap4 {
     left: 475px;
     bottom: 22%;
 
-    width: 128px;
+    width: 200px;
 }
 
 .moustro3c-cap4 {
     right: 250px;
     bottom: 4%;
 
-    width: 215px;
+    width: 290px;
 }
 
 .moustro4c-cap4 {
     right: 1030px;
     bottom: 3%;
 
-    width: 270px;
+    width: 350px;
 }
 
 .moustro-cap4:hover {
@@ -230,8 +214,6 @@
     filter:
         drop-shadow(0 0 8px rgba(26, 217, 109, 0.25));
 }
-
-
 
 .telarana-cap4 {
     height: auto;
@@ -278,9 +260,6 @@
         drop-shadow(0 0 7px rgba(255, 255, 255, 0.25));
 }
 
-
-
-
 .step-cap4 {
     left: 50%;
     bottom: 1px;
@@ -302,15 +281,11 @@
     opacity: 1;
 }
 
-
-
-
 .stepespalda-cap4 {
     left: 42%;
     bottom: 1px;
     width: 250px;
 }
-
 
 .rogersfrente-cap4 {
     left: 48%;
@@ -351,9 +326,7 @@
     width: 230px;
 }
 
-
-
-
+/* Contenedores compartidos (se mantienen) */
 .visor-scene-cap4 {
     position: relative;
 
@@ -369,136 +342,11 @@
     align-items: center;
 }
 
-
-
-
 .contenedor-escena-cap4 {
     position: relative;
 
     width: 100%;
     height: 100%;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
     overflow: hidden;
-}
-
-
-
-@media (max-width: 1200px) {
-
-    .moustro1c-cap4,
-    .moustro2c-cap4,
-    .moustro3c-cap4,
-    .moustro4c-cap4 {
-        width: 19%;
-    }
-
-    .step-cap4 {
-        width: 14%;
-    }
-
-    .stepespalda-cap4,
-    .rogersfrente-cap4 {
-        width: 16%;
-    }
-
-    .pelea-cap4 {
-        width: 26%;
-    }
-
-    .silla-cap4 {
-        width: 16%;
-    }
-}
-
-
-
-@media (max-width: 768px) {
-
-    .visor-scene-cap4 {
-        height: calc(100vh - 90px);
-    }
-
-    .moustro1c-cap4 {
-        width: 22%;
-        left: 2%;
-        bottom: 4%;
-    }
-
-    .moustro2c-cap4 {
-        width: 22%;
-        left: 25%;
-        bottom: 3%;
-    }
-
-    .moustro3c-cap4 {
-        width: 22%;
-        right: 25%;
-        bottom: 3%;
-    }
-
-    .moustro4c-cap4 {
-        width: 22%;
-        right: 2%;
-        bottom: 4%;
-    }
-
-    .step-cap4 {
-        width: 18%;
-        bottom: 4%;
-    }
-
-    .stepespalda-cap4,
-    .rogersfrente-cap4 {
-        width: 20%;
-    }
-
-    .stepespalda-cap4 {
-        bottom: 14%;
-    }
-
-    .rogersfrente-cap4 {
-        bottom: 15%;
-    }
-
-    .pelea-cap4 {
-        width: 32%;
-    }
-
-    .silla-cap4 {
-        width: 20%;
-    }
-}
-
-
-
-
-@media (max-width: 480px) {
-
-    .moustro1c-cap4,
-    .moustro2c-cap4,
-    .moustro3c-cap4,
-    .moustro4c-cap4 {
-        width: 23%;
-    }
-
-    .step-cap4 {
-        width: 20%;
-    }
-
-    .stepespalda-cap4,
-    .rogersfrente-cap4 {
-        width: 22%;
-    }
-
-    .pelea-cap4 {
-        width: 36%;
-    }
-
-    .silla-cap4 {
-        width: 22%;
-    }
 }
