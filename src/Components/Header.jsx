@@ -1,178 +1,67 @@
 import React, { useRef } from "react";
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import "../Styles/css.css";
+import "../Styles/Header.css";
+
+// Cada item: ruta, texto que se ve al desplegar e icono (ponle tus propios SVG)
+const ITEMS = [
+  { to: "/", label: "Inicio", icon: "/InicioI.svg" },
+  { to: "/sobrenosotros", label: "Sobre Nosotros", icon: "/SobreNosotros.svg" },
+  { to: "/personajes", label: "Personajes", icon: "/Personajes.svg" },
+  { to: "/Recomendaciones", label: "Recomendaciones", icon: "/recomendacioness.svg" },
+  { to: "/intro-juego", label: "Comentarios", icon: "/comentarioss.svg" },
+  { to: "/archivo", label: "Archivo", icon: "/archivooo.svg" },
+];
 
 export const Header = () => {
   const sonidoBoton = useRef(new Audio("./audios/sonidoboton.ogg"));
 
   const reproducirSonido = () => {
     sonidoBoton.current.currentTime = 0;
-    sonidoBoton.current.play().catch(() => { });
-  };
-
-
-  const estiloNav = {
-    color: "#fff",
-    textDecoration: "none",
-    fontSize: "25px",
+    sonidoBoton.current.play().catch(() => {});
   };
 
   return (
-    <nav
-      className="navbar navbar-expand-lg mainmenu"
-      style={{
-        background: "transparent",
-        position: "absolute",
-        width: "100%",
-        zIndex: "10",
-        fontFamily: "pieces",
-        
-      }}
-    >
-      <div className="container">
+    <nav className="sidebar" aria-label="Menú principal">
+      {/* Logo: insignia cuando está cerrado, logo completo cuando se despliega */}
+      <Link
+        to="/"
+        className="sidebar__logo"
+        onClick={reproducirSonido}
+        aria-label="Inicio"
+      >
+        <img src="./Icono logoo.svg" alt="" className="sidebar__logo-mini" />
+        <img src="./Logo.svg" alt="Logo" className="sidebar__logo-full" />
+      </Link>
 
-
-        <Link
-          className="navbar-brand"
-          to="/"
-          onClick={reproducirSonido}
-          style={{
-            color: "#ffffff",
-            letterSpacing: "3px",
-            fontSize: "30px",
-            textShadow: "0 0 6px #fff",
-          }}
-        >
-          <img
-            src="./Logo.svg"
-            alt="Logo"
-            style={{
-              width: "170px",
-              objectFit: "contain",
-              marginRight: "8px",
-            }}
-          />
-        </Link>
-
-
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          onClick={reproducirSonido}
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-
-
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <div className="ms-auto d-flex flex-column flex-lg-row align-items-center gap-3">
-
-
-            <Link
-              className="nav-link"
-              to="/"
+      <ul className="sidebar__list">
+        {ITEMS.map(({ to, label, icon }, i) => (
+          <li key={to}>
+            <NavLink
+              to={to}
               onClick={reproducirSonido}
-              style={estiloNav}
+              className={({ isActive }) =>
+                "sidebar__link" + (isActive ? " sidebar__link--active" : "")
+              }
+              style={{ "--d": `${i * 0.4}s` }} /* desfasa el latido de cada icono */
             >
-              Inicio
-            </Link>
+              <img src={icon} alt="" className="sidebar__icon" />
+              <span className="sidebar__label">{label}</span>
+            </NavLink>
+          </li>
+        ))}
+      </ul>
 
-
-            <Link
-              className="nav-link"
-              to="/sobrenosotros"
-              onClick={reproducirSonido}
-              style={estiloNav}
-            >
-              Sobre Nosotros
-            </Link>
-
-
-            <Link
-              className="nav-link"
-              to="/personajes"
-              onClick={reproducirSonido}
-              style={estiloNav}
-            >
-              Personajes
-            </Link>
-
-
-            <Link
-              className="nav-link"
-              to="/Recomendaciones"
-              onClick={reproducirSonido}
-              style={estiloNav}
-            >
-              Recomendaciones
-            </Link>
-
-
-            <Link
-              className="nav-link"
-              to="/intro-juego"
-              onClick={reproducirSonido}
-              style={estiloNav}
-            >
-              Comentarios
-            </Link>
-
-
-
-            <Link
-              to="/archivo"
-              onClick={reproducirSonido}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "7px",
-                color: "#ffffff",
-                textDecoration: "none",
-                letterSpacing: "1px",
-                fontSize: "20px",
-
-              }}
-            >
-
-              Diario
-            </Link>
-
-
-            <Link
-              to="/guia"
-              onClick={reproducirSonido}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-                border: "1px solid #ffffff",
-                padding: "8px 16px",
-                borderRadius: "6px",
-                color: "#ffffff",
-                textDecoration: "none",
-                letterSpacing: "1px",
-                fontSize: "20px",
-                textShadow: "0 0 6px #fff",
-              }}
-            >
-              <img
-                src="./book.svg"
-                alt="Icono museo"
-                style={{
-                  width: "16px",
-                  height: "16px",
-                  objectFit: "contain",
-                }}
-              />
-
-              Explorar Museo
-            </Link>
-
-          </div>
-        </div>
-      </div>
+      {/* Botón destacado al fondo: pon aquí tu icono del museo */}
+      <Link
+        to="/guia"
+        onClick={reproducirSonido}
+        className="sidebar__link sidebar__link--cta"
+      >
+        <span className="sidebar__aro" aria-hidden="true" />
+        <img src="/comicccc.svg" alt="" className="sidebar__icon" />
+        <span className="sidebar__label">Explorar Museo</span>
+      </Link>
     </nav>
   );
 };
