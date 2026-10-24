@@ -6,16 +6,19 @@ import "../Styles/LotieCap5A.css";
 
 const Lottie = LottieModule.default;
 
+// true = muestra los cuadros de clic en rojo para calibrarlos
+// false = invisibles (versión final)
+const DEBUG = false;
 
 const AMBIENTE = {
-  archivo: "/audios/ambiente.mp3", 
-  volumen: 0.13,                   
+  archivo: "/audios/ambiente.mp3",
+  volumen: 0.13,
 };
 
 const SONIDOS = {
- 
+
   cintas: {
-    archivo: "/audios/cinta.mp3", 
+    archivo: "/audios/cinta.mp3",
     inicio: 3,
     fin: null,
     volumen: 0.35,
@@ -23,7 +26,7 @@ const SONIDOS = {
 
   // 2) Rejas abriéndose
   rejas: {
-    archivo: "/audios/rejas.mp3",  
+    archivo: "/audios/rejas.mp3",
     inicio: 9,
     fin: null,
     volumen: 0.35,
@@ -31,7 +34,7 @@ const SONIDOS = {
 
   // 3) Pasos: cuando empieza a caminar
   pasos: {
-    archivo: "/audios/pasos.mp3", 
+    archivo: "/audios/pasos.mp3",
     inicio: 10,
     fin: 16,
     volumen: 0.4,
@@ -167,7 +170,7 @@ const LotieCap5A = () => {
 
   return (
     <div className="escena5a">
-      <div className="camara5a">
+      <div className={`camara5a${DEBUG ? " debug" : ""}`}>
         <img className="fondo5a" src="./Fondo5a.png" alt="" />
 
         <img className="nube1_5a" src="/nube1.png" alt="" />
@@ -175,37 +178,60 @@ const LotieCap5A = () => {
         <img className="nube3_5a" src="/nube3.png" alt="" />
         <img className="nube4_5a" src="/nube4.png" alt="" />
 
-        <video
-          ref={videoRef}
-          className="stepc5a"
-          muted
-          playsInline
-          preload="auto"
-          onClick={iniciarEscena}
-        >
-          <source src="./caminado5.webm" type="video/webm" />
-        </video>
+        {/* ===== Edificio ===== */}
+        <div className="anim5a edificio5a">
+          {/* Solo visual: no recibe clics */}
+          <div className="vista5a">
+            <Lottie
+              lottieRef={edificioRef}
+              animationData={edificio}
+              autoplay={false}
+              loop={false}
+              rendererSettings={{ preserveAspectRatio: "none" }}
+            />
+          </div>
 
-        <div className="edificio5a" onClick={animarEdificio}>
-          <Lottie
-            lottieRef={edificioRef}
-            animationData={edificio}
-            autoplay={false}
-            loop={false}
-            rendererSettings={{ preserveAspectRatio: "none" }}
-          />
+          {/* Cuadro de clic propio, dentro de su animación */}
+          <div className="hitbox5a" onClick={animarEdificio}>
+            <span className="pista5a" />
+          </div>
         </div>
 
-        <video
-          ref={rejasRef}
-          className="rejas5a"
-          muted
-          playsInline
-          preload="auto"
-          onClick={iniciarEscena}
-        >
-          <source src="./reja5c.webm" type="video/webm" />
-        </video>
+        {/* ===== Rejas ===== */}
+        <div className="anim5a rejas5a">
+          <div className="vista5a">
+            <video
+              ref={rejasRef}
+              muted
+              playsInline
+              preload="auto"
+            >
+              <source src="./reja5c.webm" type="video/webm" />
+            </video>
+          </div>
+
+          <div className="hitbox5a" onClick={iniciarEscena}>
+            <span className="pista5a" />
+          </div>
+        </div>
+
+        {/* ===== Step ===== */}
+        <div className="anim5a stepc5a">
+          <div className="vista5a">
+            <video
+              ref={videoRef}
+              muted
+              playsInline
+              preload="auto"
+            >
+              <source src="./caminado5.webm" type="video/webm" />
+            </video>
+          </div>
+
+          <div className="hitbox5a" onClick={iniciarEscena}>
+            <span className="pista5a" />
+          </div>
+        </div>
       </div>
     </div>
   );

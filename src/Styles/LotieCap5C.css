@@ -33,42 +33,112 @@
 }
 
 /* ---------------------------------------------------------------------
+   Contenedor de cada objeto con clic (posición y tamaño originales)
+   Los nombres llevan el sufijo 5c para no chocar con otras escenas.
+   Casi todos se centran con transform, así que cada uno lleva su z-index
+   explícito (si no, quedarían DETRÁS del fondo y no se verían).
+   Orden de capas: fondo 1 → manchas 2 → cuadros 3 → huesos 4 → antorchas 5
+   → puerta 6 → cinta 7 → personajes 10
+--------------------------------------------------------------------- */
+.anim5c {
+    position: absolute;
+    pointer-events: none;   /* lo visual nunca captura clics */
+    user-select: none;
+    z-index: var(--z);
+}
+
+/* ---------------------------------------------------------------------
    Manchas: cubren toda la escena
 --------------------------------------------------------------------- */
 .manchas5c {
-    position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
+    --z: 2;
+}
+
+.manchas5c .vista5c,
+.manchas5c .vista5c > video {
+    width: 100%;
+    height: 100%;
+}
+
+.manchas5c .vista5c > video {
     object-fit: cover;
-    transform: scale(1);
-    transform-origin: center;
-    cursor: pointer;
-    z-index: 2;
+}
+
+/* ---------------------------------------------------------------------
+   Cuadros: left/top = CENTRO del cuadro (en % de la escena)
+   width = tamaño (en % de la escena). Los lejanos son más pequeños.
+--------------------------------------------------------------------- */
+.cuadro5c {
+    transform: translate(-50%, -50%);
+    --z: 3;
+    --hover: 1.05;
+}
+
+/* Pared izquierda (5 = más cerca, 8 = más lejos) */
+.cuadro5-5c { left: 7.8%;  top: 38%;   width: 12%;  }
+.cuadro6-5c { left: 20.3%; top: 40%;   width: 9.1%; }
+.cuadro7-5c { left: 28.4%; top: 39.5%; width: 7.8%; }
+.cuadro8-5c { left: 34.4%; top: 41.5%; width: 6.2%; }
+
+/* Pared derecha (4 = más lejos, 1 = más cerca) */
+.cuadro4-5c { left: 63.5%; top: 40%;   width: 65px; }
+.cuadro3-5c { left: 69.7%; top: 39.5%; width: 6%;   }
+.cuadro2-5c { left: 78.9%; top: 37.5%; width: 10%;  }
+.cuadro1-5c { left: 91.7%; top: 38%;   width: 15%;  }
+
+/* ---------------------------------------------------------------------
+   Huesos (6 imágenes)
+   left/top = CENTRO del hueso (en % de la escena) | width = tamaño
+   --giro = hacia dónde gira al saltar (en grados, puede ser negativo)
+--------------------------------------------------------------------- */
+.hueso5c {
+    transform: translate(-50%, -50%);
+    --z: 4;
+    --hover: 1.1;
+}
+
+.hueso1-5c { left: 38%;   top: 58%;   width: 4%; --giro: 360deg;  } /* junto a la puerta, izquierda */
+.hueso2-5c { left: 57%;   top: 57%;   width: 4%; --giro: -360deg; } /* junto a la puerta, derecha */
+.hueso3-5c { left: 31.5%; top: 71.5%; width: 4%; --giro: 360deg;  } /* centro-izquierda */
+.hueso4-5c { left: 69.5%; top: 70%;   width: 4%; --giro: -360deg; } /* centro-derecha */
+.hueso5-5c { left: 8.5%;  top: 87%;   width: 4%; --giro: 360deg;  } /* esquina inferior izquierda */
+.hueso6-5c { left: 85.5%; top: 81.5%; width: 4%; --giro: -360deg; } /* esquina inferior derecha */
+
+/* Animación al tocar un hueso: salta, gira y rebota
+   (la clase la agrega el JSX en cada clic a la imagen) */
+.hueso-animando {
+    animation: saltoHueso .8s ease-out;
+}
+
+@keyframes saltoHueso {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+    35% {
+        transform: translateY(-45px) rotate(var(--giro)) scale(1.25);
+    }
+    60% {
+        transform: rotate(var(--giro)) scale(1);
+    }
+    75% {
+        transform: translateY(-14px) rotate(var(--giro)) scale(1.08);
+    }
+    100% {
+        transform: rotate(var(--giro)) scale(1);
+    }
 }
 
 /* ---------------------------------------------------------------------
    Antorchas (4 imágenes, mismas del capítulo 3)
    left/top = CENTRO de la antorcha (en % de la escena)
-   width = tamaño (en % de la escena)
-   Para acomodarlas, cambia left, top y width de cada una.
+   width = tamaño (en % de la escena).
 --------------------------------------------------------------------- */
 .antorcha5c {
-    position: absolute;
-    height: auto;
     transform: translate(-50%, -50%);
-    transform-origin: 50% 65%;
-    cursor: pointer;
-    z-index: 5;
-    user-select: none;
-    -webkit-user-drag: none;
-    transition: filter 0.25s ease;
-}
-
-.antorcha5c:hover {
-    filter:
-        brightness(1.15)
-        drop-shadow(0 0 10px rgba(255, 180, 50, 0.6));
+    --z: 5;
 }
 
 /* Tamaños: lejanas (1 y 2) más pequeñas, cercanas (3 y 4) más grandes */
@@ -82,6 +152,10 @@
 .antorcha4-5c { left: 84%; top: 15%; }   /* pared derecha, cercana */
 
 /* Animación al tocar una antorcha: se balancea y brilla */
+.antorcha5c .vista5c > img {
+    transform-origin: 50% 65%;
+}
+
 .antorcha5c-mover {
     animation: balanceoAntorcha5c 0.9s ease-in-out;
 }
@@ -118,6 +192,93 @@
 }
 
 /* ---------------------------------------------------------------------
+   Parte visual: aquí se aplica el hover (sin resplandor)
+--------------------------------------------------------------------- */
+.vista5c {
+    position: relative;
+    transition: transform .25s ease;
+}
+
+.vista5c > video,
+.vista5c > img {
+    display: block;
+    width: 100%;
+    height: auto;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.cuadro5c:has(.hitbox5c:hover) .vista5c,
+.hueso5c:has(.hitbox5c:hover) .vista5c {
+    transform: scale(var(--hover));
+}
+
+/* ---------------------------------------------------------------------
+   Cuadro de clic: invisible, en % de SU objeto
+--------------------------------------------------------------------- */
+.hitbox5c {
+    position: absolute;
+    left:   var(--hx, 0%);
+    top:    var(--hy, 0%);
+    width:  var(--hw, 100%);
+    height: var(--hh, 100%);
+    z-index: calc(var(--z) + 10);
+    pointer-events: auto;           /* solo el cuadro recibe clics */
+    cursor: pointer;
+    background: transparent;
+}
+
+/* ---------------------------------------------------------------------
+   Ajuste de cada cuadro (x, y, ancho, alto en % de su objeto)
+   --px / --py = posición del puntito dentro del cuadro (por defecto, centro).
+   Cambia solo el objeto que necesites; los demás no se afectan.
+   Las manchas ocupan toda la escena, así que su cuadro es solo la parte del
+   piso, y queda por detrás de los demás objetos.
+--------------------------------------------------------------------- */
+.manchas5c { --hx: 20%; --hy: 55%; --hw: 60%; --hh: 40%; }
+.cuadro5c  { --hx: 10%; --hy: 10%; --hw: 80%; --hh: 80%; }
+.hueso5c   { --hx: 0%;  --hy: 0%;  --hw: 100%; --hh: 100%; }
+.antorcha5c-fondo  { --hx: 25%; --hy: 5%; --hw: 50%; --hh: 90%; }
+.antorcha5c-frente { --hx: 35%; --hy: 5%; --hw: 30%; --hh: 90%; }
+
+/* ---------------------------------------------------------------------
+   Señal sutil: puntito siempre visible, con un latido corto y destello verde
+--------------------------------------------------------------------- */
+.pista5c {
+    position: absolute;
+    top: var(--py, 50%);
+    left: var(--px, 50%);
+    width: 14px;
+    height: 14px;
+    margin: -7px 0 0 -7px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 4px rgba(26, 217, 109, 0.5);
+    pointer-events: none;
+    animation: latido5c 1.2s ease-in-out infinite;
+}
+
+@keyframes latido5c {
+    0%, 100% { transform: scale(1);   opacity: 0.9; box-shadow: 0 0 3px rgba(26, 217, 109, 0.4); }
+    50%      { transform: scale(1.3); opacity: 0.7; box-shadow: 0 0 7px rgba(26, 217, 109, 0.7); }
+}
+
+/* Con el zoom de la secuencia cerrado, los punticos se ocultan (los clics siguen activos) */
+.camara5c[data-zoom="1"] .pista5c {
+    visibility: hidden;
+}
+
+/* Modo prueba (solo si pones DEBUG = true en el .jsx) */
+.camara5c.debug .hitbox5c {
+    background: rgba(255, 0, 0, 0.3);
+    outline: 1px solid red;
+}
+.camara5c.debug .anim5c {
+    outline: 1px dashed rgba(0, 150, 255, 0.9);  /* borde real de cada objeto */
+}
+
+/* ---------------------------------------------------------------------
    Puerta (la controla la secuencia)
 --------------------------------------------------------------------- */
 .puerta5c {
@@ -145,117 +306,6 @@
     pointer-events: none;
     z-index: 7;
 }
-
-/* ---------------------------------------------------------------------
-   Cuadros: left/top = CENTRO del cuadro (en % de la escena)
-   width = tamaño (en % de la escena). Los lejanos son más pequeños.
---------------------------------------------------------------------- */
-.cuadro1-5c,
-.cuadro2-5c,
-.cuadro3-5c,
-.cuadro4-5c,
-.cuadro5-5c,
-.cuadro6-5c,
-.cuadro7-5c,
-.cuadro8-5c {
-    position: absolute;
-    height: auto;
-    transform: translate(-50%, -50%) scale(1);
-    transition: transform .25s ease;
-    cursor: pointer;
-    z-index: 3;
-}
-
-.cuadro1-5c:hover,
-.cuadro2-5c:hover,
-.cuadro3-5c:hover,
-.cuadro4-5c:hover,
-.cuadro5-5c:hover,
-.cuadro6-5c:hover,
-.cuadro7-5c:hover,
-.cuadro8-5c:hover {
-    transform: translate(-50%, -50%) scale(1.05);
-}
-
-/* Pared izquierda (5 = más cerca, 8 = más lejos) */
-.cuadro5-5c { left: 7.8%;  top: 38%;   width: 12%;  }
-.cuadro6-5c { left: 20.3%; top: 40%;   width: 9.1%; }
-.cuadro7-5c { left: 28.4%; top: 39.5%; width: 7.8%; }
-.cuadro8-5c { left: 34.4%; top: 41.5%; width: 6.2%; }
-
-/* Pared derecha (4 = más lejos, 1 = más cerca) */
-.cuadro4-5c { left: 63.5%; top: 40%;   width: 65px; }
-.cuadro3-5c { left: 69.7%; top: 39.5%; width: 6%;   }
-.cuadro2-5c { left: 78.9%; top: 37.5%; width: 10%;  }
-.cuadro1-5c { left: 91.7%; top: 38%;   width: 15%;  }
-
-/* ---------------------------------------------------------------------
-   Huesos (6 imágenes)
-   left/top = CENTRO del hueso (en % de la escena) | width = tamaño
-   --giro = hacia dónde gira al saltar (en grados, puede ser negativo)
---------------------------------------------------------------------- */
-.hueso1-5c,
-.hueso2-5c,
-.hueso3-5c,
-.hueso4-5c,
-.hueso5-5c,
-.hueso6-5c {
-    position: absolute;
-    height: auto;
-    transform: translate(-50%, -50%) scale(1);
-    transition: transform .2s ease;
-    cursor: pointer;
-    z-index: 4;
-    user-select: none;
-    -webkit-user-drag: none;
-}
-
-.hueso1-5c:hover,
-.hueso2-5c:hover,
-.hueso3-5c:hover,
-.hueso4-5c:hover,
-.hueso5-5c:hover,
-.hueso6-5c:hover {
-    transform: translate(-50%, -50%) scale(1.1);
-}
-
-.hueso1-5c { left: 38%;   top: 58%;   width: 4%; --giro: 360deg;  } /* junto a la puerta, izquierda */
-.hueso2-5c { left: 57%;   top: 57%;   width: 4%; --giro: -360deg; } /* junto a la puerta, derecha */
-.hueso3-5c { left: 31.5%; top: 71.5%; width: 4%; --giro: 360deg;  } /* centro-izquierda */
-.hueso4-5c { left: 69.5%; top: 70%;   width: 4%; --giro: -360deg; } /* centro-derecha */
-.hueso5-5c { left: 8.5%;  top: 87%;   width: 4%; --giro: 360deg;  } /* esquina inferior izquierda */
-.hueso6-5c { left: 85.5%; top: 81.5%; width: 4%; --giro: -360deg; } /* esquina inferior derecha */
-
-/* ---------------------------------------------------------------------
-   Animación al tocar un hueso: salta, gira y rebota
-   (la clase la agrega el JSX en cada clic)
---------------------------------------------------------------------- */
-.hueso-animando {
-    animation: saltoHueso .8s ease-out;
-}
-
-@keyframes saltoHueso {
-    0% {
-        transform: translate(-50%, -50%) rotate(0deg) scale(1);
-    }
-    35% {
-        transform: translate(-50%, calc(-50% - 45px)) rotate(var(--giro)) scale(1.25);
-    }
-    60% {
-        transform: translate(-50%, -50%) rotate(var(--giro)) scale(1);
-    }
-    75% {
-        transform: translate(-50%, calc(-50% - 14px)) rotate(var(--giro)) scale(1.08);
-    }
-    100% {
-        transform: translate(-50%, -50%) rotate(var(--giro)) scale(1);
-    }
-}
-
-/* ---------------------------------------------------------------------
-   Orden de capas: de atrás hacia adelante
-   fondo 1 → manchas 2 → cuadros 3 → huesos 4 → antorchas 5 → puerta 6 → cinta 7 → personajes 10
---------------------------------------------------------------------- */
 
 /* ---------------------------------------------------------------------
    Personajes de espalda (los mueve la secuencia con transform).

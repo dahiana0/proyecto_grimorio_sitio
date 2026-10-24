@@ -41,92 +41,96 @@
     pointer-events: none;
 }
 
-.moustro-cap4,
-.telarana-cap4,
-.antorcha-cap4,
-.puerta-cap4,
-.step-cap4 {
+/* ===== Contenedor de cada objeto con clic (posición y ancho originales) =====
+   Los nombres llevan el sufijo -cap4 para no chocar con las otras escenas. */
+.anim-cap4 {
     position: absolute;
-
     user-select: none;
-
-    transition:
-        transform 0.25s ease,
-        scale 0.25s ease,
-        filter 0.25s ease;
+    pointer-events: none;   /* lo visual nunca captura clics */
 }
 
-.telarana-cap4,
-.puerta-cap4,
-.step-cap4 {
-    object-fit: contain;
-}
-
+/* --- Puerta --- */
 .puerta-cap4 {
-   left: 734px;
+    left: 734px;
     top: 510px;
-
     width: 110px;
-    height: auto;
-
     transform: translate(-50%, -50%);
-
-    z-index: 2;
-
-    cursor: pointer;
+    --z: 2;
+    --hover: 1.02;
 }
 
-.puerta-cap4:hover {
-    scale: 1.02;
-
-    filter:
-        drop-shadow(0 0 8px rgba(255, 255, 255, 0.25));
-}
-
+/* --- Antorchas --- */
 .antorcha-cap4 {
-    height: auto;
-
     transform: translate(-50%, -50%);
+    --z: 3;
+}
 
+.antorcha-fondo-cap4  { width: 16%; }
+.antorcha-frente-cap4 { width: 30%; }
+
+.antorcha1-cap4 { left: 29.8%; top: 35%; }
+.antorcha2-cap4 { left: 68.6%; top: 35%; }
+.antorcha3-cap4 { left: 14%;   top: 31%; }
+.antorcha4-cap4 { left: 88%;   top: 33%; }
+
+/* --- Monstruos --- */
+.moustro-cap4 { --z: 4; }
+
+.moustro1c-cap4 { left: 815px;   bottom: 22%; width: 200px; }
+.moustro2c-cap4 { left: 475px;   bottom: 22%; width: 200px; }
+.moustro3c-cap4 { right: 250px;  bottom: 4%;  width: 290px; }
+.moustro4c-cap4 { right: 1030px; bottom: 3%;  width: 350px; }
+
+/* --- Telarañas --- */
+.telarana-cap4 {
+    transform: translate(-50%, -50%);
+    --z: 2;
+}
+
+.telarana-fondo-cap4  { width: 200px; }
+.telarana-frente-cap4 { width: 1050px; }
+
+.telarana1c-cap4 { left: 500px; top: 37.6%; }
+.telarana2c-cap4 { left: 900px; top: 45.5%; }
+.telarana3c-cap4 { left: 500px; top: 240px; }
+.telarana4c-cap4 { left: 900px; top: 240px; }
+
+/* Los contenedores centrados con transform (puerta, antorchas y telarañas)
+   crean su propia capa. Sin z-index quedarían DETRÁS del fondo y no se verían. */
+.puerta-cap4,
+.antorcha-cap4,
+.telarana-cap4 {
+    z-index: var(--z);
+}
+
+/* ===== Parte visual: aquí se aplica el hover (sin resplandor) ===== */
+.vista-cap4 {
+    position: relative;
+    z-index: var(--z);
+    transition: transform .25s ease;
+}
+
+.vista-cap4 > div {
+    width: 100%;
+    height: 100%;
+}
+
+.vista-cap4 > img,
+.vista-cap4 > video {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    user-select: none;
+}
+
+.anim-cap4:has(.hitbox-cap4:hover) .vista-cap4 {
+    transform: scale(var(--hover, 1.03));
+}
+
+/* ===== Antorcha: balanceo con destello al hacer clic ===== */
+.antorcha-cap4 .vista-cap4 > img {
     transform-origin: 50% 65%;
-
-    cursor: pointer;
-}
-
-.antorcha-fondo-cap4 {
-    width: 16%;
-    z-index: 3;
-}
-
-.antorcha-frente-cap4 {
-    width: 30%;
-    z-index: 3;
-}
-
-.antorcha1-cap4 {
-    left: 29.8%;
-    top: 35%;
-}
-
-.antorcha2-cap4 {
-    left: 68.6%;
-    top: 35%;
-}
-
-.antorcha3-cap4 {
-    left: 14%;
-    top: 31%;
-}
-
-.antorcha4-cap4 {
-    left: 88%;
-    top: 33%;
-}
-
-.antorcha-cap4:hover {
-    filter:
-        brightness(1.15)
-        drop-shadow(0 0 10px rgba(255, 180, 50, 0.6));
 }
 
 .antorcha-mover-cap4 {
@@ -169,98 +173,75 @@
     }
 }
 
-.moustro-cap4 {
-    z-index: 4;
-
+/* ===== Cuadro de clic: invisible, en % de SU animación ===== */
+.hitbox-cap4 {
+    position: absolute;
+    left:   var(--hx, 0%);
+    top:    var(--hy, 0%);
+    width:  var(--hw, 100%);
+    height: var(--hh, 100%);
+    /* Prioridad de clic: por defecto sigue el orden visual (lo de adelante gana),
+       se puede fijar con --zh. */
+    z-index: var(--zh, calc(var(--z) + 10));
+    pointer-events: auto;           /* solo el cuadro recibe clics */
     cursor: pointer;
+    background: transparent;
 }
 
-.moustro-cap4 > div {
-    width: 100%;
-    height: 100%;
+/* ===== Ajuste de cada cuadro (x, y, ancho, alto en % de su animación) =====
+   --px / --py = posición del puntito dentro del cuadro (por defecto, centro).
+   Cambia solo el objeto que necesites; los demás no se afectan.
+   Las telarañas grandes ("frente") tienen cuadro pequeño para no tapar nada. */
+.puerta-cap4 { --hx: 10%; --hy: 5%;  --hw: 80%; --hh: 90%; }
+
+.antorcha-fondo-cap4  { --hx: 25%; --hy: 5%;  --hw: 50%; --hh: 90%; }
+.antorcha-frente-cap4 { --hx: 35%; --hy: 5%;  --hw: 30%; --hh: 90%; }
+
+.moustro1c-cap4 { --hx: 15%; --hy: 10%; --hw: 70%; --hh: 85%; }
+.moustro2c-cap4 { --hx: 15%; --hy: 10%; --hw: 70%; --hh: 85%; }
+.moustro3c-cap4 { --hx: 15%; --hy: 10%; --hw: 70%; --hh: 85%; }
+.moustro4c-cap4 { --hx: 15%; --hy: 10%; --hw: 70%; --hh: 85%; }
+
+.telarana-fondo-cap4 { --hx: 15%; --hy: 10%; --hw: 70%; --hh: 80%; }
+.telarana3c-cap4 { --hx: 40%; --hy: 15%; --hw: 20%; --hh: 25%; }
+.telarana4c-cap4 { --hx: 40%; --hy: 15%; --hw: 20%; --hh: 25%; }
+
+/* ===== Señal sutil: puntito siempre visible, con un latido corto y destello verde ===== */
+.pista-cap4 {
+    position: absolute;
+    top: var(--py, 50%);
+    left: var(--px, 50%);
+    width: 14px;
+    height: 14px;
+    margin: -7px 0 0 -7px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 4px rgba(26, 217, 109, 0.5);
+    pointer-events: none;
+    animation: latidoCap4 1.2s ease-in-out infinite;
 }
 
-.moustro1c-cap4 {
-    left: 815px;
-    bottom: 22%;
-
-    width: 200px;
+@keyframes latidoCap4 {
+    0%, 100% { transform: scale(1);   opacity: 0.9; box-shadow: 0 0 3px rgba(26, 217, 109, 0.4); }
+    50%      { transform: scale(1.3); opacity: 0.7; box-shadow: 0 0 7px rgba(26, 217, 109, 0.7); }
 }
 
-.moustro2c-cap4 {
-    left: 475px;
-    bottom: 22%;
-
-    width: 200px;
+/* ===== Modo prueba (solo si pones DEBUG = true en el .jsx) ===== */
+.escena-interna-cap4.debug .hitbox-cap4 {
+    background: rgba(255, 0, 0, 0.3);
+    outline: 1px solid red;
+}
+.escena-interna-cap4.debug .anim-cap4 {
+    outline: 1px dashed rgba(0, 150, 255, 0.9);  /* borde real de cada objeto */
 }
 
-.moustro3c-cap4 {
-    right: 250px;
-    bottom: 4%;
-
-    width: 290px;
-}
-
-.moustro4c-cap4 {
-    right: 1030px;
-    bottom: 3%;
-
-    width: 350px;
-}
-
-.moustro-cap4:hover {
-    transform: scale(1.03);
-
-    filter:
-        drop-shadow(0 0 8px rgba(26, 217, 109, 0.25));
-}
-
-.telarana-cap4 {
-    height: auto;
-
-    transform: translate(-50%, -50%);
-
-    z-index: 2;
-
-    cursor: pointer;
-}
-
-.telarana-fondo-cap4 {
-    width: 200px;
-}
-
-.telarana-frente-cap4 {
-    width: 1050px;
-}
-
-.telarana1c-cap4 {
-    left: 500px;
-    top: 37.6%;
-}
-
-.telarana2c-cap4 {
-    left: 900px;
-    top: 45.5%;
-}
-
-.telarana3c-cap4 {
-    left: 500px;
-    top: 240px;
-}
-
-.telarana4c-cap4 {
-    left: 900px;
-    top: 240px;
-}
-
-.telarana-cap4:hover {
-    scale: 1.03;
-
-    filter:
-        drop-shadow(0 0 7px rgba(255, 255, 255, 0.25));
-}
-
+/* ===== Personajes: solo se ven, no reciben clics ===== */
 .step-cap4 {
+    position: absolute;
+    object-fit: contain;
+    user-select: none;
+
     left: 50%;
     bottom: 1px;
 

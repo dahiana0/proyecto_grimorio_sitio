@@ -1,6 +1,10 @@
 import { useRef, useEffect, useState } from "react";
 import "../Styles/LotieCap5E.css";
 
+// true = muestra los cuadros de clic en rojo para calibrarlos
+// false = invisibles (versión final)
+const DEBUG = false;
+
 /* ---------------------------------------------------------------------
    CÁMARA
    TIEMPO_ZOOM = segundo del video de Step en que voltea:
@@ -166,7 +170,7 @@ const LotieCap5E = () => {
 
       {/* Cámara: todo lo que está dentro se mueve junto */}
       <div
-        className={`camara5e ${zoom ? "camara5e--zoom" : ""}`}
+        className={`camara5e${zoom ? " camara5e--zoom" : ""}${DEBUG ? " debug" : ""}`}
         onAnimationEnd={(e) => {
           // Solo reacciona a la animación de la propia cámara
           if (e.target === e.currentTarget) setZoom(false);
@@ -176,33 +180,46 @@ const LotieCap5E = () => {
         {/* Fondo: imagen */}
         <img className="fondo5e" src="./Fondo5e.png" alt="" />
 
+        {/* ===== Pinturas, paso, huesos, monstruo, Roges y Step (todos con clic) ===== */}
         {VIDEOS.map((v) => (
-          <video
-            key={v.nombre}
-            ref={(el) => (videoRefs.current[v.nombre] = el)}
-            className={v.clase}
-            muted
-            playsInline
-            preload="auto"
-            onClick={() => reproducirVideo(v.nombre)}
-            onPlay={() => alIniciar(v)}
-            onEnded={() => alTerminar(v)}
-          >
-            <source src={v.src} type="video/webm" />
-          </video>
+          <div key={v.nombre} className={`anim5e ${v.clase}`}>
+            {/* Solo visual: no recibe clics */}
+            <div className="vista5e">
+              <video
+                ref={(el) => (videoRefs.current[v.nombre] = el)}
+                muted
+                playsInline
+                preload="auto"
+                onPlay={() => alIniciar(v)}
+                onEnded={() => alTerminar(v)}
+              >
+                <source src={v.src} type="video/webm" />
+              </video>
+            </div>
+            {/* Cuadro de clic propio, dentro de su objeto */}
+            <div className="hitbox5e" onClick={() => reproducirVideo(v.nombre)}>
+              <span className="pista5e" />
+            </div>
+          </div>
         ))}
 
-        {/* Lámpara: al frente. Clic = se balancea y resplandece */}
-        <img
-          className={`lampara5e ${lamparaActiva ? "lampara5e--activa" : ""}`}
-          src="./lampara1.png"
-          alt=""
-          onClick={() => setLamparaActiva(true)}
-          onAnimationEnd={(e) => {
-            e.stopPropagation();
-            setLamparaActiva(false);
-          }}
-        />
+        {/* ===== Lámpara: al frente. Clic = se balancea y resplandece ===== */}
+        <div className="anim5e lampara5e">
+          <div className="vista5e">
+            <img
+              src="./lampara1.png"
+              alt=""
+              className={lamparaActiva ? "lampara5e--activa" : ""}
+              onAnimationEnd={(e) => {
+                e.stopPropagation();
+                setLamparaActiva(false);
+              }}
+            />
+          </div>
+          <div className="hitbox5e" onClick={() => setLamparaActiva(true)}>
+            <span className="pista5e" />
+          </div>
+        </div>
 
       </div>
 

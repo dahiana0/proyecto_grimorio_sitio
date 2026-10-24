@@ -1,6 +1,10 @@
 import { useRef, useEffect } from "react";
 import "../Styles/LotieCap5F.css";
 
+// true = muestra los cuadros de clic en rojo para calibrarlos
+// false = invisibles (versión final)
+const DEBUG = false;
+
 // Esta escena solo maneja los sonidos de la puerta y la silla.
 
 // ---------------------------------------------------------------------
@@ -136,18 +140,19 @@ const LotieCap5F = ({ volumen = 1 }) => {
   };
 
   // Lámpara: balanceo + resplandor
+  // (el centrado horizontal lo hace el contenedor, por eso no hay translateX aquí)
   const animarLampara = () => {
     lanzarAnimacion(
       "lampara",
       lamparaRef,
       [
-        { transform: "translateX(-50%) rotate(0deg)",    filter: "brightness(1)   drop-shadow(0 0 10px rgba(255, 200, 100, .5))", offset: 0 },
-        { transform: "translateX(-50%) rotate(8deg)",    filter: "brightness(1.5) drop-shadow(0 0 40px rgba(255, 210, 120, 1))",  offset: 0.15 },
-        { transform: "translateX(-50%) rotate(-6deg)",   filter: "brightness(1.4) drop-shadow(0 0 34px rgba(255, 210, 120, .9))", offset: 0.3 },
-        { transform: "translateX(-50%) rotate(4deg)",    filter: "brightness(1.3) drop-shadow(0 0 26px rgba(255, 205, 110, .8))", offset: 0.45 },
-        { transform: "translateX(-50%) rotate(-2.5deg)", filter: "brightness(1.2) drop-shadow(0 0 20px rgba(255, 200, 100, .7))", offset: 0.6 },
-        { transform: "translateX(-50%) rotate(1deg)",    filter: "brightness(1.1) drop-shadow(0 0 14px rgba(255, 200, 100, .6))", offset: 0.8 },
-        { transform: "translateX(-50%) rotate(0deg)",    filter: "brightness(1)   drop-shadow(0 0 10px rgba(255, 200, 100, .5))", offset: 1 },
+        { transform: "rotate(0deg)",    filter: "brightness(1)   drop-shadow(0 0 10px rgba(255, 200, 100, .5))", offset: 0 },
+        { transform: "rotate(8deg)",    filter: "brightness(1.5) drop-shadow(0 0 40px rgba(255, 210, 120, 1))",  offset: 0.15 },
+        { transform: "rotate(-6deg)",   filter: "brightness(1.4) drop-shadow(0 0 34px rgba(255, 210, 120, .9))", offset: 0.3 },
+        { transform: "rotate(4deg)",    filter: "brightness(1.3) drop-shadow(0 0 26px rgba(255, 205, 110, .8))", offset: 0.45 },
+        { transform: "rotate(-2.5deg)", filter: "brightness(1.2) drop-shadow(0 0 20px rgba(255, 200, 100, .7))", offset: 0.6 },
+        { transform: "rotate(1deg)",    filter: "brightness(1.1) drop-shadow(0 0 14px rgba(255, 200, 100, .6))", offset: 0.8 },
+        { transform: "rotate(0deg)",    filter: "brightness(1)   drop-shadow(0 0 10px rgba(255, 200, 100, .5))", offset: 1 },
       ],
       { duration: 3500, easing: "ease-out" }
     );
@@ -159,89 +164,71 @@ const LotieCap5F = ({ volumen = 1 }) => {
       nombre,
       ref,
       [
-        { transform: "translateX(-50%) scale(1, 1)",       filter: "brightness(1)",   offset: 0 },
-        { transform: "translateX(-50%) scale(0.85, 0.8)",  filter: "brightness(0.8)", offset: 0.15 },
-        { transform: "translateX(-50%) scale(1.25, 1.1)",  filter: "brightness(1.2)", offset: 0.45 },
-        { transform: "translateX(-50%) scale(1.15, 1.05)", filter: "brightness(1.1)", offset: 0.7 },
-        { transform: "translateX(-50%) scale(1, 1)",       filter: "brightness(1)",   offset: 1 },
+        { transform: "scale(1, 1)",       filter: "brightness(1)",   offset: 0 },
+        { transform: "scale(0.85, 0.8)",  filter: "brightness(0.8)", offset: 0.15 },
+        { transform: "scale(1.25, 1.1)",  filter: "brightness(1.2)", offset: 0.45 },
+        { transform: "scale(1.15, 1.05)", filter: "brightness(1.1)", offset: 0.7 },
+        { transform: "scale(1, 1)",       filter: "brightness(1)",   offset: 1 },
       ],
       { duration: 1600, easing: "ease-out" }
     );
   };
 
+  // Objetos con clic: cada uno tiene su animación + su propio cuadro de clic
+  const manchas = [
+    { clase: "mancha1-5f", ref: mancha1Ref, src: "./Mancha1 .png", nombre: "mancha1" },
+    { clase: "mancha2-5f", ref: mancha2Ref, src: "./Mancha2 .png", nombre: "mancha2" },
+  ];
+
+  const videos = [
+    { clase: "puerta5f",     ref: puertaRef,     src: "./Puerta5f.webm",  onClick: () => tocarAnimacion("puerta", puertaRef) },
+    { clase: "silla5f",      ref: sillaRef,      src: "./silla.webm",     onClick: () => tocarAnimacion("silla", sillaRef) },
+    { clase: "libros5f",     ref: librosRef,     src: "./Libros.webm",    onClick: () => reproducirVideo(librosRef) },
+    { clase: "pergaminos5f", ref: pergaminosRef, src: "./periodico.webm", onClick: () => reproducirVideo(pergaminosRef) },
+  ];
+
   return (
-    <div className="escena5f">
+    <div className={`escena5f${DEBUG ? " debug" : ""}`}>
       {/* Fondo */}
       <img className="fondo5f" src="./Escenario5F.png" alt="" />
 
-      {/* Manchas del piso (imágenes con animación de derrame en cada click) */}
-      <img
-        ref={mancha1Ref}
-        className="mancha1-5f"
-        src="./Mancha1 .png"
-        alt=""
-        onClick={() => animarMancha("mancha1", mancha1Ref)}
-      />
-      <img
-        ref={mancha2Ref}
-        className="mancha2-5f"
-        src="./Mancha2 .png"
-        alt=""
-        onClick={() => animarMancha("mancha2", mancha2Ref)}
-      />
+      {/* ===== Manchas del piso (derrame al tocar) ===== */}
+      {manchas.map(({ clase, ref, src, nombre }) => (
+        <div key={clase} className={`anim5f mancha5f ${clase}`}>
+          {/* Solo visual: no recibe clics */}
+          <div className="vista5f">
+            <img ref={ref} src={src} alt="" />
+          </div>
+          {/* Cuadro de clic propio, dentro de su objeto */}
+          <div className="hitbox5f" onClick={() => animarMancha(nombre, ref)}>
+            <span className="pista5f" />
+          </div>
+        </div>
+      ))}
 
-      {/* Puerta (video al tocar) */}
-      <video
-        ref={puertaRef}
-        className="puerta5f"
-        muted
-        playsInline
-        onClick={() => tocarAnimacion("puerta", puertaRef)}
-      >
-        <source src="./Puerta5f.webm" type="video/webm" />
-      </video>
+      {/* ===== Puerta, silla, libros y pergaminos (videos al tocar) ===== */}
+      {videos.map(({ clase, ref, src, onClick }) => (
+        <div key={clase} className={`anim5f ${clase}`}>
+          <div className="vista5f">
+            <video ref={ref} muted playsInline>
+              <source src={src} type="video/webm" />
+            </video>
+          </div>
+          <div className="hitbox5f" onClick={onClick}>
+            <span className="pista5f" />
+          </div>
+        </div>
+      ))}
 
-      {/* Silla (video al tocar) */}
-      <video
-        ref={sillaRef}
-        className="silla5f"
-        muted
-        playsInline
-        onClick={() => tocarAnimacion("silla", sillaRef)}
-      >
-        <source src="./silla.webm" type="video/webm" />
-      </video>
-
-      {/* Libros (video al tocar) */}
-      <video
-        ref={librosRef}
-        className="libros5f"
-        muted
-        playsInline
-        onClick={() => reproducirVideo(librosRef)}
-      >
-        <source src="./Libros.webm" type="video/webm" />
-      </video>
-
-      {/* Pergaminos (video al tocar) */}
-      <video
-        ref={pergaminosRef}
-        className="pergaminos5f"
-        muted
-        playsInline
-        onClick={() => reproducirVideo(pergaminosRef)}
-      >
-        <source src="./periodico.webm" type="video/webm" />
-      </video>
-
-      {/* Lámpara (imagen): resplandor constante y balanceo en cada click */}
-      <img
-        ref={lamparaRef}
-        className="lampara5f"
-        src="./Lampara5F.png"
-        alt=""
-        onClick={animarLampara}
-      />
+      {/* ===== Lámpara (imagen): resplandor constante y balanceo en cada click ===== */}
+      <div className="anim5f lampara5f">
+        <div className="vista5f">
+          <img ref={lamparaRef} src="./Lampara5F.png" alt="" />
+        </div>
+        <div className="hitbox5f" onClick={animarLampara}>
+          <span className="pista5f" />
+        </div>
+      </div>
 
       {/* Orabona (video sin sonido, una sola vez; la voz la pone el visor) */}
       <video

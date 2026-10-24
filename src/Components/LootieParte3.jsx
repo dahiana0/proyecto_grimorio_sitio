@@ -5,6 +5,10 @@ import "../Styles/LootieParte3.css";
 const ANCHO = 1500;
 const ALTO = 836;
 
+// true = muestra los cuadros de clic en rojo para calibrarlos
+// false = invisibles (versión final)
+const DEBUG = false;
+
 const DIALOGOS = [
   {
     src: "./Step 1 .wav",
@@ -256,6 +260,22 @@ const LootieParte3 = ({
 
   const camaraConZoom = fase === "zoom" || fase === "frente";
 
+  // Objetos con clic: cada uno tiene su animación + su propio cuadro de clic
+  const lamparas = [
+    { clase: "lampara1", activa: lampara1Activa, onClick: moverLampara1 },
+    { clase: "lampara2", activa: lampara2Activa, onClick: moverLampara2 },
+    { clase: "lampara3", activa: lampara3Activa, onClick: moverLampara3 },
+  ];
+
+  const videos = [
+    { clase: "telarana1", ref: telarana1Ref, src: "/telarana1.webm" },
+    { clase: "telarana2", ref: telarana2Ref, src: "/telarana2.webm" },
+    { clase: "monstruo1", ref: monstruo1Ref, src: "/monstruo1.webm" },
+    { clase: "monstruo2", ref: monstruo2Ref, src: "/monstruo2.webm" },
+    { clase: "monstruo3", ref: monstruo3Ref, src: "/monstruo3.webm" },
+    { clase: "monstruo4", ref: monstruo4Ref, src: "/monstruo4.webm" },
+  ];
+
   return (
     <div className="escena3" ref={contenedorRef}>
       <div
@@ -263,96 +283,42 @@ const LootieParte3 = ({
         style={{ transform: `translate(-50%, -50%) scale(${escala})` }}
       >
         <div
-          className={`camaraEscena3 ${camaraConZoom ? "camaraEscena3Zoom" : ""}`}
+          className={`camaraEscena3${camaraConZoom ? " camaraEscena3Zoom" : ""}${DEBUG ? " debug" : ""}`}
           onTransitionEnd={alTerminarZoomCamara}
         >
           <img className="fondo3" src="/Fondo3.png" alt="" />
 
-          <img
-            src="/lampara1.png"
-            alt=""
-            className={`lampara1 ${lampara1Activa ? "moverLampara" : ""}`}
-            onClick={moverLampara1}
-          />
-          <img
-            src="/lampara1.png"
-            alt=""
-            className={`lampara2 ${lampara2Activa ? "moverLampara" : ""}`}
-            onClick={moverLampara2}
-          />
-          <img
-            src="/lampara1.png"
-            alt=""
-            className={`lampara3 ${lampara3Activa ? "moverLampara" : ""}`}
-            onClick={moverLampara3}
-          />
+          {/* ===== Lámparas ===== */}
+          {lamparas.map(({ clase, activa, onClick }) => (
+            <div key={clase} className={`anim ${clase}`}>
+              <div className="vista">
+                <img
+                  src="/lampara1.png"
+                  alt=""
+                  className={activa ? "moverLampara" : ""}
+                />
+              </div>
+              <div className="hitbox" onClick={onClick}>
+                <span className="pista" />
+              </div>
+            </div>
+          ))}
 
-          <video
-            ref={telarana1Ref}
-            className="telarana1"
-            muted
-            playsInline
-            preload="auto"
-            onClick={() => reproducirVideo(telarana1Ref)}
-          >
-            <source src="/telarana1.webm" type="video/webm" />
-          </video>
+          {/* ===== Telarañas y monstruos ===== */}
+          {videos.map(({ clase, ref, src }) => (
+            <div key={clase} className={`anim ${clase}`}>
+              <div className="vista">
+                <video ref={ref} muted playsInline preload="auto">
+                  <source src={src} type="video/webm" />
+                </video>
+              </div>
+              <div className="hitbox" onClick={() => reproducirVideo(ref)}>
+                <span className="pista" />
+              </div>
+            </div>
+          ))}
 
-          <video
-            ref={telarana2Ref}
-            className="telarana2"
-            muted
-            playsInline
-            preload="auto"
-            onClick={() => reproducirVideo(telarana2Ref)}
-          >
-            <source src="/telarana2.webm" type="video/webm" />
-          </video>
-
-          <video
-            ref={monstruo1Ref}
-            className="monstruo1"
-            muted
-            playsInline
-            preload="auto"
-            onClick={() => reproducirVideo(monstruo1Ref)}
-          >
-            <source src="/monstruo1.webm" type="video/webm" />
-          </video>
-
-          <video
-            ref={monstruo2Ref}
-            className="monstruo2"
-            muted
-            playsInline
-            preload="auto"
-            onClick={() => reproducirVideo(monstruo2Ref)}
-          >
-            <source src="/monstruo2.webm" type="video/webm" />
-          </video>
-
-          <video
-            ref={monstruo3Ref}
-            className="monstruo3"
-            muted
-            playsInline
-            preload="auto"
-            onClick={() => reproducirVideo(monstruo3Ref)}
-          >
-            <source src="/monstruo3.webm" type="video/webm" />
-          </video>
-
-          <video
-            ref={monstruo4Ref}
-            className="monstruo4"
-            muted
-            playsInline
-            preload="auto"
-            onClick={() => reproducirVideo(monstruo4Ref)}
-          >
-            <source src="/monstruo4.webm" type="video/webm" />
-          </video>
-
+          {/* ===== Step (no se le hace clic) ===== */}
           <video
             ref={stepFrenteRef}
             className="stepFrente"

@@ -17,85 +17,54 @@
 }
 
 /* ---------------------------------------------------------------------
+   Contenedor de cada objeto con clic (posición y tamaño originales)
+   Los nombres llevan el sufijo 5f para no chocar con otras escenas.
+   Todos se centran con transform, así que cada uno lleva su z-index
+   explícito (si no, quedarían DETRÁS del fondo y no se verían).
+--------------------------------------------------------------------- */
+.anim5f {
+    position: absolute;
+    pointer-events: none;   /* lo visual nunca captura clics */
+    user-select: none;
+    transform: translateX(-50%);
+    z-index: var(--z);
+}
+
+/* ---------------------------------------------------------------------
    Manchas del piso (imágenes) con animación de derrame al tocar
    Ajusta left / bottom / width a la posición real en tu fondo.
 --------------------------------------------------------------------- */
-.mancha1-5f,
-.mancha2-5f {
-    position: absolute;
-    height: auto;
-    transform: translateX(-50%);
-    transform-origin: center center;
-    cursor: pointer;
-    z-index: 2;
-}
+.mancha1-5f { left: 50%; bottom: 0%; width: 25%; --z: 2; }
+.mancha2-5f { left: 80%; bottom: 1%; width: 25%; --z: 2; }
 
-.mancha1-5f { left: 50%; bottom: 0%; width: 25%; }
-.mancha2-5f { left: 80%; bottom: 1%; width: 25%; }
-
-.mancha1-5f.animar,
-.mancha2-5f.animar {
-    animation: derrame5f 1.6s ease-out;
-}
-
-/* La mancha se contrae un poco y luego se expande como líquido que se riega */
-@keyframes derrame5f {
-    0%   { transform: translateX(-50%) scale(1, 1);       filter: brightness(1); }
-    15%  { transform: translateX(-50%) scale(0.85, 0.8);  filter: brightness(0.8); }
-    45%  { transform: translateX(-50%) scale(1.25, 1.1);  filter: brightness(1.2); }
-    70%  { transform: translateX(-50%) scale(1.15, 1.05); filter: brightness(1.1); }
-    100% { transform: translateX(-50%) scale(1, 1);       filter: brightness(1); }
+.mancha5f .vista5f > img {
+    transform-origin: center center;   /* el derrame crece desde el centro */
 }
 
 /* ---------------------------------------------------------------------
    Puerta, silla, libros, pergaminos (videos al tocar)
    Ajusta left / bottom / width a la posición real en tu fondo.
 --------------------------------------------------------------------- */
-.puerta5f,
-.silla5f,
-.libros5f,
-.pergaminos5f {
-    position: absolute;
-    height: auto;
-    transform: translateX(-50%);
-    cursor: pointer;
-    transition: transform .25s ease;
-}
-
-.puerta5f:hover,
-.silla5f:hover,
-.libros5f:hover,
-.pergaminos5f:hover {
-    transform: translateX(-50%) scale(1.03);
-}
-
-.puerta5f      { left: 81.4%; bottom: 15%; width: 34%; z-index: 3; }
-.silla5f       { left: 42%; bottom: 1%;  width: 25%; z-index: 4; }
-.libros5f      { left: 25%; bottom: 30%; width: 8%; z-index: 4; }
-.pergaminos5f  { left: 10%; bottom: 8%;  width: 15%; z-index: 5; }
+.puerta5f      { left: 81.4%; bottom: 15%; width: 34%; --z: 3; }
+.silla5f       { left: 42%;   bottom: 1%;  width: 25%; --z: 4; }
+.libros5f      { left: 25%;   bottom: 30%; width: 8%;  --z: 4; }
+.pergaminos5f  { left: 10%;   bottom: 8%;  width: 15%; --z: 5; }
 
 /* ---------------------------------------------------------------------
    Lámpara (imagen): cuelga del techo.
-   - Resplandor suave constante
-   - Al tocar: balanceo + resplandor más fuerte
+   - Resplandor suave constante (luz propia de la lámpara)
+   - Al tocar: balanceo + resplandor más fuerte (lo lanza el JSX)
 --------------------------------------------------------------------- */
 .lampara5f {
-    position: absolute;
     left: 50%;
     bottom: 450px;
     width: 18%;
-    height: auto;
-    transform: translateX(-50%);
-    transform-origin: top center;
-    cursor: pointer;
-    z-index: 8;
-    animation: resplandorSuave5f 3s ease-in-out infinite;
+    --z: 8;
 }
 
-.lampara5f.animar {
-    animation:
-        balanceo5f 3.5s ease-out,
-        resplandorFuerte5f 3.5s ease-out;
+.lampara5f .vista5f > img {
+    transform-origin: top center;
+    animation: resplandorSuave5f 3s ease-in-out infinite;
 }
 
 @keyframes resplandorSuave5f {
@@ -103,21 +72,91 @@
     50%      { filter: brightness(1.12) drop-shadow(0 0 16px rgba(255, 201, 100, 0.138)); }
 }
 
-@keyframes resplandorFuerte5f {
-    0%   { filter: brightness(1)   drop-shadow(0 0 10px rgba(255, 201, 100, 0.205)); }
-    25%  { filter: brightness(1.5) drop-shadow(0 0 40px rgba(255, 210, 120, 1)); }
-    100% { filter: brightness(1)   drop-shadow(0 0 10px rgba(255, 201, 100, 0.268)); }
+/* ---------------------------------------------------------------------
+   Parte visual: aquí se aplica el hover (sin resplandor)
+--------------------------------------------------------------------- */
+.vista5f {
+    position: relative;
+    transition: transform .25s ease;
 }
 
-/* Péndulo que se va frenando */
-@keyframes balanceo5f {
-    0%   { transform: translateX(-50%) rotate(0deg); }
-    15%  { transform: translateX(-50%) rotate(8deg); }
-    30%  { transform: translateX(-50%) rotate(-6deg); }
-    45%  { transform: translateX(-50%) rotate(4deg); }
-    60%  { transform: translateX(-50%) rotate(-2.5deg); }
-    80%  { transform: translateX(-50%) rotate(1deg); }
-    100% { transform: translateX(-50%) rotate(0deg); }
+.vista5f > video,
+.vista5f > img {
+    display: block;
+    width: 100%;
+    height: auto;
+    user-select: none;
+}
+
+/* Las manchas y la lámpara no tenían zoom al pasar el mouse; los videos sí */
+.puerta5f:has(.hitbox5f:hover) .vista5f,
+.silla5f:has(.hitbox5f:hover) .vista5f,
+.libros5f:has(.hitbox5f:hover) .vista5f,
+.pergaminos5f:has(.hitbox5f:hover) .vista5f {
+    transform: scale(1.03);
+}
+
+/* ---------------------------------------------------------------------
+   Cuadro de clic: invisible, en % de SU objeto
+   La prioridad de clic sigue el orden visual: lo de adelante gana.
+--------------------------------------------------------------------- */
+.hitbox5f {
+    position: absolute;
+    left:   var(--hx, 0%);
+    top:    var(--hy, 0%);
+    width:  var(--hw, 100%);
+    height: var(--hh, 100%);
+    z-index: calc(var(--z) + 10);
+    pointer-events: auto;           /* solo el cuadro recibe clics */
+    cursor: pointer;
+    background: transparent;
+}
+
+/* ---------------------------------------------------------------------
+   Ajuste de cada cuadro (x, y, ancho, alto en % de su objeto)
+   --px / --py = posición del puntito dentro del cuadro (por defecto, centro).
+   Cambia solo el objeto que necesites; los demás no se afectan.
+--------------------------------------------------------------------- */
+.mancha1-5f   { --hx: 5%;  --hy: 10%; --hw: 90%; --hh: 80%; }
+.mancha2-5f   { --hx: 5%;  --hy: 10%; --hw: 90%; --hh: 80%; }
+
+.puerta5f     { --hx: 10%; --hy: 5%;  --hw: 80%; --hh: 90%; --px: 50%; --py: 12%; }
+.silla5f      { --hx: 15%; --hy: 10%; --hw: 70%; --hh: 85%; }
+.libros5f     { --hx: 5%;  --hy: 5%;  --hw: 90%; --hh: 90%; }
+.pergaminos5f { --hx: 5%;  --hy: 5%;  --hw: 90%; --hh: 90%; }
+
+.lampara5f    { --hx: 20%; --hy: 0%;  --hw: 60%; --hh: 100%; }
+
+/* ---------------------------------------------------------------------
+   Señal sutil: puntito siempre visible, con un latido corto y destello verde
+--------------------------------------------------------------------- */
+.pista5f {
+    position: absolute;
+    top: var(--py, 50%);
+    left: var(--px, 50%);
+    width: 14px;
+    height: 14px;
+    margin: -7px 0 0 -7px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 4px rgba(26, 217, 109, 0.5);
+    pointer-events: none;
+    animation: latido5f 1.2s ease-in-out infinite;
+}
+
+@keyframes latido5f {
+    0%, 100% { transform: scale(1);   opacity: 0.9; box-shadow: 0 0 3px rgba(26, 217, 109, 0.4); }
+    50%      { transform: scale(1.3); opacity: 0.7; box-shadow: 0 0 7px rgba(26, 217, 109, 0.7); }
+}
+
+/* Modo prueba (solo si pones DEBUG = true en el .jsx) */
+.escena5f.debug .hitbox5f {
+    background: rgba(255, 0, 0, 0.3);
+    outline: 1px solid red;
+}
+.escena5f.debug .anim5f {
+    outline: 1px dashed rgba(0, 150, 255, 0.9);  /* borde real de cada objeto */
 }
 
 /* ---------------------------------------------------------------------

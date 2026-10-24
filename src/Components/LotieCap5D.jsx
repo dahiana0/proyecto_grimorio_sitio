@@ -1,6 +1,10 @@
 import { useRef, useEffect, useState } from "react";
 import "../Styles/LotieCap5D.css";
 
+// true = muestra los cuadros de clic en rojo para calibrarlos
+// false = invisibles (versión final)
+const DEBUG = false;
+
 /* ---------------------------------------------------------------------
    VIDEOS DE LA ESCENA (de atrás hacia adelante)
    nombre   = identificador
@@ -120,33 +124,46 @@ const LotieCap5D = () => {
   }, []);
 
   return (
-    <div className="escena5d" ref={escenaRef}>
+    <div className={`escena5d${DEBUG ? " debug" : ""}`} ref={escenaRef}>
 
       {/* Fondo: imagen */}
       <img className="fondo5d" src="./Fondo5d.png" alt="" />
 
-      {/* Lámpara: clic = se mueve y resplandece */}
-      <img
-        className={`lampara5d ${lamparaActiva ? "lampara5d--activa" : ""}`}
-        src="./lampara1.png"
-        alt=""
-        onClick={() => setLamparaActiva(true)}
-        onAnimationEnd={() => setLamparaActiva(false)}
-      />
+      {/* ===== Lámpara: clic = se mueve y resplandece ===== */}
+      <div className="anim5d lampara5d">
+        {/* Solo visual: no recibe clics */}
+        <div className="vista5d">
+          <img
+            src="./lampara1.png"
+            alt=""
+            className={lamparaActiva ? "lampara5d--activa" : ""}
+            onAnimationEnd={() => setLamparaActiva(false)}
+          />
+        </div>
+        {/* Cuadro de clic propio, dentro de su objeto */}
+        <div className="hitbox5d" onClick={() => setLamparaActiva(true)}>
+          <span className="pista5d" />
+        </div>
+      </div>
 
+      {/* ===== Estatuas, rata, monstruo y Step (todos con clic) ===== */}
       {VIDEOS.map((v) => (
-        <video
-          key={v.nombre}
-          ref={(el) => (videoRefs.current[v.nombre] = el)}
-          className={v.clase}
-          muted
-          playsInline
-          preload="auto"
-          onClick={() => reproducirVideo(v.nombre)}
-          onEnded={() => alTerminar(v)}
-        >
-          <source src={v.src} type="video/webm" />
-        </video>
+        <div key={v.nombre} className={`anim5d ${v.clase}`}>
+          <div className="vista5d">
+            <video
+              ref={(el) => (videoRefs.current[v.nombre] = el)}
+              muted
+              playsInline
+              preload="auto"
+              onEnded={() => alTerminar(v)}
+            >
+              <source src={v.src} type="video/webm" />
+            </video>
+          </div>
+          <div className="hitbox5d" onClick={() => reproducirVideo(v.nombre)}>
+            <span className="pista5d" />
+          </div>
+        </div>
       ))}
 
     </div>

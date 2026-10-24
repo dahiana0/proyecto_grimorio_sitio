@@ -1,4 +1,3 @@
-
 .escena2 {
     position: relative;
     width: 100%;
@@ -32,12 +31,6 @@
     z-index: 1;
 }
 
-@keyframes resplandor {
-    0%   { filter: drop-shadow(0 0 2px #1ad96d00); }
-    50%  { filter: drop-shadow(0 0 8px #1ad96d00); }
-    100% { filter: drop-shadow(0 0 2px #1ad96d00); }
-}
-
 
 .nube1,
 .nube2,
@@ -47,97 +40,149 @@
     height: auto;
     z-index: 2;
     pointer-events: none;
-    will-change: transform, filter;
+    will-change: transform;
 }
 
 .nube4 {
     left: 2%;
     top: 5%;
     width: 20%;
-    animation: moverNube4 6.5s ease-in-out infinite, resplandor 2.5s ease-in-out infinite;
+    animation: moverNube4 6.5s ease-in-out infinite;
 }
 
 .nube3 {
     left: 66%;
     top: 2%;
     width: 31%;
-    animation: moverNube3 8s ease-in-out infinite, resplandor 2.5s ease-in-out infinite;
+    animation: moverNube3 8s ease-in-out infinite;
 }
 
 .nube2 {
     left: 9%;
     top: 36%;
     width: 14%;
-    animation: moverNube2 7s ease-in-out infinite, resplandor 2.5s ease-in-out infinite;
+    animation: moverNube2 7s ease-in-out infinite;
 }
 
 .nube1 {
     left: 80%;
     top: 38%;
     width: 12%;
-    animation: moverNube1 6s ease-in-out infinite, resplandor 2.5s ease-in-out infinite;
+    animation: moverNube1 6s ease-in-out infinite;
 }
 
 
-.edificio {
+/* ===== Contenedor de cada animación (posición y tamaño) =====
+   No tiene z-index propio: así la parte visual (.vista) y el cuadro de clic
+   (.hitbox) se ordenan directamente en la escena, y los puntos de
+   interacción siempre quedan por encima de todas las animaciones. */
+.anim {
     position: absolute;
+    pointer-events: none;   /* la animación nunca captura clics */
+}
+
+.edificio {
     left: 15%;
     top: 15%;
     width: 70%;
     height: 72%;
-    z-index: 3;
-    cursor: pointer;
-    transform-origin: center bottom;
-    animation: resplandor 2.5s ease-in-out infinite;
-    transition: transform .25s ease;
+    --z: 3;
 }
-
-.edificio:hover {
-    transform: scale(1.02);
-}
-
 
 .rejas {
-    position: absolute;
     left: 0;
     top: 40%;
     width: 100%;
     height: 51%;
-    z-index: 4;
-    cursor: pointer;
+    --z: 4;
+}
+
+/* Parte visual: aquí se aplica el hover (sin resplandor) */
+.vista {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: var(--z);
     transform-origin: center bottom;
-    animation: resplandor 2.5s ease-in-out infinite;
     transition: transform .25s ease;
 }
 
-.rejas:hover {
-    transform: scale(1.015);
-}
-
-
-.edificio > div,
-.rejas > div,
-.edificio svg,
-.rejas svg {
+.vista > div,
+.vista svg {
     width: 100% !important;
     height: 100% !important;
     display: block;
 }
 
+.edificio:has(.hitbox:hover) .vista { transform: scale(1.02); }
+.rejas:has(.hitbox:hover)    .vista { transform: scale(1.015); }
 
-.step2 {
+
+/* ===== Cuadro de clic: invisible, en % de SU animación ===== */
+.hitbox {
     position: absolute;
-    left: 50%;
-    bottom: 1%;           /* más abajo = más adelante, más cerca de la cámara */
-    transform: translateX(-50%);
-    width: 220px;               /* un poco más grande para que parezca que está más cerca */
-    z-index: 10;
+    left:   var(--hx, 0%);
+    top:    var(--hy, 0%);
+    width:  var(--hw, 100%);
+    height: var(--hh, 100%);
+    z-index: calc(var(--z) + 10);   /* siempre sobre todas las animaciones */
+    pointer-events: auto;           /* solo el cuadro recibe clics */
     cursor: pointer;
-    transition: transform .25s ease;
+    background: transparent;
 }
 
-.step2:hover {
-    transform: translateX(-50%) scale(1.05);
+/* ===== Ajuste de cada cuadro (x, y, ancho, alto en % de su animación) =====
+   --px / --py = posición del puntito dentro del cuadro (por defecto, centro).
+   La reja va por encima del edificio: donde se solapan, gana la reja. */
+.edificio { --hx: 5%;  --hy: 0%;  --hw: 90%; --hh: 60%; --px: 50%; --py: 30%; }
+.rejas    { --hx: 20%; --hy: 5%;  --hw: 60%; --hh: 90%; --px: 50%; --py: 90%; }
+
+
+/* ===== Señal sutil: puntito siempre visible, con un latido corto y destello verde ===== */
+.pista {
+    position: absolute;
+    top: var(--py, 50%);
+    left: var(--px, 50%);
+    width: 14px;
+    height: 14px;
+    margin: -7px 0 0 -7px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 4px rgba(26, 217, 109, 0.5);
+    pointer-events: none;
+    animation: latido 1.2s ease-in-out infinite;
+}
+
+@keyframes latido {
+    0%, 100% { transform: scale(1);   opacity: 0.9; box-shadow: 0 0 3px rgba(26, 217, 109, 0.4); }
+    50%      { transform: scale(1.3); opacity: 0.7; box-shadow: 0 0 7px rgba(26, 217, 109, 0.7); }
+}
+
+/* ===== Modo prueba (solo si pones DEBUG = true en el .jsx) ===== */
+.camara.debug .hitbox {
+    background: rgba(255, 0, 0, 0.3);
+    outline: 1px solid red;
+}
+.camara.debug .anim {
+    outline: 1px dashed rgba(0, 150, 255, 0.9);  /* borde real de cada Lottie */
+}
+
+
+.step2 {
+    /* Tamaño en % del ancho de la escena (antes 220px fijos), así Step
+       mantiene su proporción con el edificio en cualquier pantalla.
+       Más chico = más lejos. Ajusta --step-ancho y --step-bajo a gusto. */
+    --step-ancho: 14cqw;
+    --step-bajo: 9%;
+
+    position: absolute;
+    left: 50%;
+    bottom: var(--step-bajo);
+    transform: translateX(-50%);
+    width: var(--step-ancho);
+    z-index: 10;
+    pointer-events: none;   /* no tapa los cuadros de clic */
 }
 
 

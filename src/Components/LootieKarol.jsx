@@ -16,6 +16,10 @@ const Lottie = LottieModule.default;
 const ANCHO = 1500;
 const ALTO = 836;
 
+// true = muestra los cuadros de clic en rojo para calibrarlos
+// false = invisibles (versión final)
+const DEBUG = false;
+
 const LootieKarol = () => {
   const contenedorRef = useRef(null);
   const [escala, setEscala] = useState(1);
@@ -97,63 +101,46 @@ const LootieKarol = () => {
     GuardarInteraccion("libroC", "Libro caído", "libroC");
   };
 
+  // Cada objeto: su animación + su propio cuadro de clic
+  const objetos = [
+    { clase: "tablero",  lottieRef: tableroRef,  data: tableroo, onClick: animarTablero },
+    { clase: "calavera", lottieRef: calaveraRef, data: calabera, onClick: animarCalavera },
+    { clase: "step",     lottieRef: stepRef,     data: step,     onClick: animarStep },
+    { clase: "libro",    lottieRef: libroRef,    data: libroM,   onClick: animarLibro },
+    { clase: "libroC",   lottieRef: libroCRef,   data: libroc,   onClick: animarLibroC },
+  ];
+
   return (
     <div className="escena1" ref={contenedorRef}>
       <div
         className="escenario"
         style={{ transform: `translate(-50%, -50%) scale(${escala})` }}
       >
-        <div className="camara">
+        <div className={`camara${DEBUG ? " debug" : ""}`}>
           <img
             className="fondo"
             src="/Escenario-Oficina-Step-Final-1.png"
             alt="Fondo"
           />
 
-          <div className="tablero" onClick={animarTablero}>
-            <Lottie
-              lottieRef={tableroRef}
-              animationData={tableroo}
-              autoplay={false}
-              loop={false}
-            />
-          </div>
+          {objetos.map(({ clase, lottieRef, data, onClick }) => (
+            <div key={clase} className={`anim ${clase}`}>
+              {/* Solo visual: no recibe clics */}
+              <div className="vista">
+                <Lottie
+                  lottieRef={lottieRef}
+                  animationData={data}
+                  autoplay={false}
+                  loop={false}
+                />
+              </div>
 
-          <div className="calavera" onClick={animarCalavera}>
-            <Lottie
-              lottieRef={calaveraRef}
-              animationData={calabera}
-              autoplay={false}
-              loop={false}
-            />
-          </div>
-
-          <div className="step" onClick={animarStep}>
-            <Lottie
-              lottieRef={stepRef}
-              animationData={step}
-              autoplay={false}
-              loop={false}
-            />
-          </div>
-
-          <div className="libro" onClick={animarLibro}>
-            <Lottie
-              lottieRef={libroRef}
-              animationData={libroM}
-              autoplay={false}
-              loop={false}
-            />
-          </div>
-
-          <div className="libroC" onClick={animarLibroC}>
-            <Lottie
-              lottieRef={libroCRef}
-              animationData={libroc}
-              autoplay={false}
-              loop={false}
-            />
-          </div>
+              {/* Cuadro de clic propio, dentro de su animación */}
+              <div className="hitbox" onClick={onClick}>
+                <span className="pista" />
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

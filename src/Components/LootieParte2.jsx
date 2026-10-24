@@ -12,6 +12,14 @@ const Lottie = LottieModule.default;
 // (24 fps: 4 s ≈ frame 96. Revisa "fr" en rejas.json si exportaste con otro fps)
 const FRAME_INICIO = 60;
 
+// 👇 Frame de la reja en el que Step deja de caminar (cuando se cierra).
+// Pon null para que se detenga cuando la reja termine su animación.
+const FRAME_DETENER = null;
+
+// true = muestra los cuadros de clic en rojo para calibrarlos
+// false = invisibles (versión final)
+const DEBUG = false;
+
 const LootieParte2 = () => {
   const edificioRef = useRef(null);
   const rejasRef = useRef(null);
@@ -84,22 +92,32 @@ const LootieParte2 = () => {
     rejasRef.current?.play();
   };
 
+  // Detiene a Step y los pasos (se queda quieto donde está)
+  const detenerVideo = () => {
+    videoRef.current?.pause();
+    sonidoPasos.current.pause();
+  };
+
   // Se ejecuta en cada frame de la reja
   const revisarFrame = ({ currentTime }) => {
+    if (FRAME_DETENER !== null && currentTime >= FRAME_DETENER) {
+      detenerVideo();
+      return;
+    }
     if (FRAME_INICIO !== null && currentTime >= FRAME_INICIO) {
       animarVideo();
     }
   };
 
-  // Se ejecuta cuando la reja termina de abrirse
+  // Se ejecuta cuando la reja termina su animación (reja cerrada)
   const alTerminarRejas = () => {
-    animarVideo(); // por si no se llegó a FRAME_INICIO (o si es null)
+    detenerVideo(); // Step no sigue caminando con la reja cerrada
     abriendo.current = false;
   };
 
   return (
     <div className="escena2">
-      <div className="camara">
+      <div className={`camara${DEBUG ? " debug" : ""}`}>
         <img className="fondo2" src="./Fondo5a.png" alt="" />
 
         <img className="nube1" src="/nube1.png" alt="" />
@@ -107,30 +125,52 @@ const LootieParte2 = () => {
         <img className="nube3" src="/nube3.png" alt="" />
         <img className="nube4" src="/nube4.png" alt="" />
 
-        <video ref={videoRef} className="step2" muted playsInline>
+        <video
+          ref={videoRef}
+          className="step2"
+          muted
+          playsInline
+          onEnded={() => sonidoPasos.current.pause()}
+        >
           <source src="./caminado2.webm" type="video/webm" />
         </video>
 
-        <div className="edificio" onClick={animarEdificio}>
-          <Lottie
-            lottieRef={edificioRef}
-            animationData={edificio}
-            autoplay={false}
-            loop={false}
-            rendererSettings={{ preserveAspectRatio: "none" }}
-          />
+        {/* ===== Edificio ===== */}
+        <div className="anim edificio">
+          {/* Solo visual: no recibe clics */}
+          <div className="vista">
+            <Lottie
+              lottieRef={edificioRef}
+              animationData={edificio}
+              autoplay={false}
+              loop={false}
+              rendererSettings={{ preserveAspectRatio: "none" }}
+            />
+          </div>
+
+          {/* Cuadro de clic propio, dentro de su animación */}
+          <div className="hitbox" onClick={animarEdificio}>
+            <span className="pista" />
+          </div>
         </div>
 
-        <div className="rejas" onClick={animarRejas}>
-          <Lottie
-            lottieRef={rejasRef}
-            animationData={rejas}
-            autoplay={false}
-            loop={false}
-            onEnterFrame={revisarFrame}
-            onComplete={alTerminarRejas}
-            rendererSettings={{ preserveAspectRatio: "none" }}
-          />
+        {/* ===== Rejas ===== */}
+        <div className="anim rejas">
+          <div className="vista">
+            <Lottie
+              lottieRef={rejasRef}
+              animationData={rejas}
+              autoplay={false}
+              loop={false}
+              onEnterFrame={revisarFrame}
+              onComplete={alTerminarRejas}
+              rendererSettings={{ preserveAspectRatio: "none" }}
+            />
+          </div>
+
+          <div className="hitbox" onClick={animarRejas}>
+            <span className="pista" />
+          </div>
         </div>
       </div>
     </div>

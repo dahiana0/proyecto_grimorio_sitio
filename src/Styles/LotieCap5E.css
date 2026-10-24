@@ -60,18 +60,32 @@
 }
 
 /* ---------------------------------------------------------------------
+   Contenedor de cada objeto con clic (posición y tamaño originales)
+   Los nombres llevan el sufijo 5e para no chocar con otras escenas.
+   Todos se centran con transform, así que cada uno lleva su z-index
+   explícito (si no, quedarían DETRÁS del fondo y no se verían).
+--------------------------------------------------------------------- */
+.anim5e {
+    position: absolute;
+    pointer-events: none;   /* lo visual nunca captura clics */
+    user-select: none;
+    transform: translateX(-50%);
+    z-index: var(--z);
+}
+
+/* ---------------------------------------------------------------------
    Lámpara (al frente, interactiva)
    transform-origin arriba: se balancea colgando de la cadena
 --------------------------------------------------------------------- */
 .lampara5e {
-    position: absolute;
     left: 50%;
     top: -20px;
-    transform: translateX(-50%);
-    transform-origin: 50% 0;
     width: 100px;
-    z-index: 20;
-    cursor: pointer;
+    --z: 20;
+}
+
+.lampara5e .vista5e > img {
+    transform-origin: 50% 0;
 }
 
 .lampara5e--activa {
@@ -80,15 +94,17 @@
         lamparaResplandor5e 2.4s ease-in-out;
 }
 
+/* Balanceo (el centrado lo hace el contenedor) */
 @keyframes lamparaBalanceo5e {
-    0%   { transform: translateX(-50%) rotate(0deg); }
-    15%  { transform: translateX(-50%) rotate(14deg); }
-    35%  { transform: translateX(-50%) rotate(-10deg); }
-    55%  { transform: translateX(-50%) rotate(6deg); }
-    75%  { transform: translateX(-50%) rotate(-3deg); }
-    100% { transform: translateX(-50%) rotate(0deg); }
+    0%   { transform: rotate(0deg); }
+    15%  { transform: rotate(14deg); }
+    35%  { transform: rotate(-10deg); }
+    55%  { transform: rotate(6deg); }
+    75%  { transform: rotate(-3deg); }
+    100% { transform: rotate(0deg); }
 }
 
+/* Resplandor al hacer clic */
 @keyframes lamparaResplandor5e {
     0% {
         filter: brightness(1) drop-shadow(0 0 0 rgba(255, 220, 120, 0));
@@ -111,124 +127,162 @@
    Pintura 1
 --------------------------------------------------------------------- */
 .pintura1-5e {
-    position: absolute;
     left: 25%;
     bottom: 250px;
-    transform: translateX(-50%);
     width: 300px;
-    z-index: 2;
-    cursor: pointer;
-    transition: transform .25s ease;
-}
-
-.pintura1-5e:hover {
-    transform: translateX(-50%) scale(1.03);
+    --z: 2;
 }
 
 /* ---------------------------------------------------------------------
    Pintura 2
 --------------------------------------------------------------------- */
 .pintura2-5e {
-    position: absolute;
     left: 75%;
     bottom: 250px;
-    transform: translateX(-50%);
     width: 300px;
-    z-index: 2;
-    cursor: pointer;
-    transition: transform .25s ease;
-}
-
-.pintura2-5e:hover {
-    transform: translateX(-50%) scale(1.03);
+    --z: 2;
 }
 
 /* ---------------------------------------------------------------------
    Paso
 --------------------------------------------------------------------- */
 .paso5e {
-    position: absolute;
     left: 45%;
     bottom: -25px;
-    transform: translateX(-50%);
     width: 300px;
-    z-index: 4;
-    cursor: pointer;
-    transition: transform .25s ease;
-}
-
-.paso5e:hover {
-    transform: translateX(-50%) scale(1.03);
+    --z: 4;
 }
 
 /* ---------------------------------------------------------------------
    Huesos
 --------------------------------------------------------------------- */
 .huesos5e {
-    position: absolute;
     left: 32%;
     bottom: 40px;
-    transform: translateX(-50%);
     width: 250px;
-    z-index: 8;
-    cursor: pointer;
-    transition: transform .25s ease;
-}
-
-.huesos5e:hover {
-    transform: translateX(-50%) scale(1.05);
+    --z: 8;
+    --hover: 1.05;
 }
 
 /* ---------------------------------------------------------------------
    Step
 --------------------------------------------------------------------- */
 .step5e {
-    position: absolute;
     left: 80%;
     bottom: 1px;
-    transform: translateX(-50%);
     width: 310px;
-    z-index: 10;
-    cursor: pointer;
-    transition: transform .25s ease;
-}
-
-.step5e:hover {
-    transform: translateX(-50%) scale(1.05);
+    --z: 10;
+    --hover: 1.05;
 }
 
 /* ---------------------------------------------------------------------
    Roges
 --------------------------------------------------------------------- */
 .roges5e {
-    position: absolute;
     left: 20%;
     bottom: 1px;
-    transform: translateX(-50%);
     width: 400px;
-    z-index: 10;
-    cursor: pointer;
-    transition: transform .25s ease;
-}
-
-.roges5e:hover {
-    transform: translateX(-50%) scale(1.05);
+    --z: 10;
+    --hover: 1.05;
 }
 
 /* ---------------------------------------------------------------------
    Monstruo
 --------------------------------------------------------------------- */
 .monstruo5e {
-    position: absolute;
     left: 50%;
     bottom: 1px;
-    transform: translateX(-50%);
     width: 390px;
-    z-index: 9;
-    cursor: pointer;
+    --z: 9;
+    --hover: 1.05;
+}
+
+/* ---------------------------------------------------------------------
+   Parte visual: aquí se aplica el hover (sin resplandor)
+--------------------------------------------------------------------- */
+.vista5e {
+    position: relative;
     transition: transform .25s ease;
 }
 
-.monstruo5e:hover {
-    transform: translateX(-50%) scale(1.05);
+.vista5e > video,
+.vista5e > img {
+    display: block;
+    width: 100%;
+    height: auto;
+    user-select: none;
+}
+
+.anim5e:has(.hitbox5e:hover) .vista5e {
+    transform: scale(var(--hover, 1.03));
+}
+
+/* ---------------------------------------------------------------------
+   Cuadro de clic: invisible, en % de SU objeto
+   La prioridad de clic sigue el orden visual: lo de adelante gana.
+--------------------------------------------------------------------- */
+.hitbox5e {
+    position: absolute;
+    left:   var(--hx, 0%);
+    top:    var(--hy, 0%);
+    width:  var(--hw, 100%);
+    height: var(--hh, 100%);
+    z-index: calc(var(--z) + 10);
+    pointer-events: auto;           /* solo el cuadro recibe clics */
+    cursor: pointer;
+    background: transparent;
+}
+
+/* ---------------------------------------------------------------------
+   Ajuste de cada cuadro (x, y, ancho, alto en % de su objeto)
+   --px / --py = posición del puntito dentro del cuadro (por defecto, centro).
+   Cambia solo el objeto que necesites; los demás no se afectan.
+--------------------------------------------------------------------- */
+.lampara5e  { --hx: 20%; --hy: 0%;  --hw: 60%; --hh: 100%; }
+
+.pintura1-5e { --hx: 10%; --hy: 10%; --hw: 80%; --hh: 80%; }
+.pintura2-5e { --hx: 10%; --hy: 10%; --hw: 80%; --hh: 80%; }
+
+.paso5e     { --hx: 15%; --hy: 10%; --hw: 70%; --hh: 80%; }
+.huesos5e   { --hx: 10%; --hy: 15%; --hw: 80%; --hh: 75%; }
+.monstruo5e { --hx: 15%; --hy: 8%;  --hw: 70%; --hh: 87%; --py: 30%; }
+.roges5e    { --hx: 15%; --hy: 10%; --hw: 70%; --hh: 85%; }
+.step5e     { --hx: 20%; --hy: 5%;  --hw: 60%; --hh: 90%; }
+
+/* ---------------------------------------------------------------------
+   Señal sutil: puntito siempre visible, con un latido corto y destello verde
+--------------------------------------------------------------------- */
+.pista5e {
+    position: absolute;
+    top: var(--py, 50%);
+    left: var(--px, 50%);
+    width: 14px;
+    height: 14px;
+    margin: -7px 0 0 -7px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 4px rgba(26, 217, 109, 0.5);
+    pointer-events: none;
+    animation: latido5e 1.2s ease-in-out infinite;
+}
+
+@keyframes latido5e {
+    0%, 100% { transform: scale(1);   opacity: 0.9; box-shadow: 0 0 3px rgba(26, 217, 109, 0.4); }
+    50%      { transform: scale(1.3); opacity: 0.7; box-shadow: 0 0 7px rgba(26, 217, 109, 0.7); }
+}
+
+/* Mientras dura el zoom a la cara de Step, los punticos se ocultan
+   (los clics siguen activos) */
+.camara5e--zoom .pista5e {
+    visibility: hidden;
+}
+
+/* Modo prueba (solo si pones DEBUG = true en el .jsx) */
+.camara5e.debug .hitbox5e {
+    background: rgba(255, 0, 0, 0.3);
+    outline: 1px solid red;
+}
+.camara5e.debug .anim5e {
+    outline: 1px dashed rgba(0, 150, 255, 0.9);  /* borde real de cada objeto */
 }

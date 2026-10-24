@@ -14,6 +14,10 @@ const Lottie = LottieModule.default;
 const ANCHO = 1500;
 const ALTO = 836;
 
+// true = muestra los cuadros de clic en rojo para calibrarlos
+// false = invisibles (versión final)
+const DEBUG = false;
+
 const T_LLEGA = 14.21;
 const T_ZOOM_IN = 1.0;
 const T_ZOOM_OUT = 21.18;
@@ -126,14 +130,16 @@ const LotieCap3 = () => {
     v.play().catch(() => { });
   };
 
+  // El clic llega por el cuadro de clic; la que se mueve es la imagen de la antorcha
   const moverAntorcha = (e) => {
-    const el = e.currentTarget;
+    const img = e.currentTarget.closest(".anim")?.querySelector("img");
+    if (!img) return;
 
     sonar(AUDIO_ANTORCHA, VOLUMEN_ANTORCHA);
 
-    el.classList.remove("antorcha-mover");
-    void el.offsetWidth;
-    el.classList.add("antorcha-mover");
+    img.classList.remove("antorcha-mover");
+    void img.offsetWidth;
+    img.classList.add("antorcha-mover");
   };
 
   useEffect(() => {
@@ -205,6 +211,9 @@ const LotieCap3 = () => {
         const ty = tyF * p;
 
         cam.style.transform = `translate(${tx}px, ${ty}px) scale(${s})`;
+
+        // Mientras la cámara se acerca se ocultan los punticos (los clics siguen activos)
+        cam.dataset.zoom = p > 0.02 ? "1" : "0";
       }
 
       raf = requestAnimationFrame(tick);
@@ -218,6 +227,28 @@ const LotieCap3 = () => {
     };
   }, []);
 
+  // Objetos con clic: cada uno tiene su animación + su propio cuadro de clic
+  const antorchas = [
+    { clase: "antorcha-fondo antorcha1", src: "/antorcha1.png", alt: "Antorcha 1" },
+    { clase: "antorcha-fondo antorcha2", src: "/antorcha2.png", alt: "Antorcha 2" },
+    { clase: "antorcha-frente antorcha3", src: "/antorcha3.png", alt: "Antorcha 3" },
+    { clase: "antorcha-frente antorcha4", src: "/antorcha4.png", alt: "Antorcha 4" },
+  ];
+
+  const telaranas = [
+    { clase: "telarana-fondo telarana1c", ref: telarana1Ref, src: "./telaraña1c.webm" },
+    { clase: "telarana-fondo telarana2c", ref: telarana2Ref, src: "./telaraña2c.webm" },
+    { clase: "telarana-frente telarana3c", ref: telarana3Ref, src: "./telaraña3c .webm" },
+    { clase: "telarana-frente telarana4c", ref: telarana4Ref, src: "/telaraña4c .webm" },
+  ];
+
+  const monstruos = [
+    { clase: "moustro1c", lottieRef: moustro1Ref, data: moustro1, wrapRef: moustro1WrapRef },
+    { clase: "moustro2c", lottieRef: moustro2Ref, data: moustro2 },
+    { clase: "moustro3c", lottieRef: moustro3Ref, data: moustro3 },
+    { clase: "moustro4c", lottieRef: moustro4Ref, data: moustro4 },
+  ];
+
   return (
     <div className="contenedor-escena visorCap3" ref={contenedorRef}>
       <div
@@ -225,154 +256,94 @@ const LotieCap3 = () => {
         style={{ transform: `translate(-50%, -50%) scale(${escala})` }}
       >
         <div className="escenacap3" ref={escenaRef}>
-          <div className="camara-cap-3" ref={camaraCap3Ref}>
+          <div
+            className={`camara-cap-3${DEBUG ? " debug" : ""}`}
+            ref={camaraCap3Ref}
+          >
             <img
               className="fondoCap3"
               src="/Cap 3.png"
               alt="Escenario capítulo 3"
             />
 
-            <img
-              className="antorcha antorcha-fondo antorcha1"
-              src="/antorcha1.png"
-              alt="Antorcha 1"
-              onClick={moverAntorcha}
-              onAnimationEnd={(e) => e.currentTarget.classList.remove("antorcha-mover")}
-            />
+            {/* ===== Antorchas ===== */}
+            {antorchas.map(({ clase, src, alt }) => (
+              <div key={src} className={`anim antorcha ${clase}`}>
+                <div className="vista">
+                  <img
+                    src={src}
+                    alt={alt}
+                    onAnimationEnd={(e) =>
+                      e.currentTarget.classList.remove("antorcha-mover")
+                    }
+                  />
+                </div>
+                <div className="hitbox" onClick={moverAntorcha}>
+                  <span className="pista" />
+                </div>
+              </div>
+            ))}
 
-            <img
-              className="antorcha antorcha-fondo antorcha2"
-              src="/antorcha2.png"
-              alt="Antorcha 2"
-              onClick={moverAntorcha}
-              onAnimationEnd={(e) => e.currentTarget.classList.remove("antorcha-mover")}
-            />
-
-            <img
-              className="antorcha antorcha-frente antorcha3"
-              src="/antorcha3.png"
-              alt="Antorcha 3"
-              onClick={moverAntorcha}
-              onAnimationEnd={(e) => e.currentTarget.classList.remove("antorcha-mover")}
-            />
-
-            <img
-              className="antorcha antorcha-frente antorcha4"
-              src="/antorcha4.png"
-              alt="Antorcha 4"
-              onClick={moverAntorcha}
-              onAnimationEnd={(e) => e.currentTarget.classList.remove("antorcha-mover")}
-            />
-
-            <video
-              ref={puertaRef}
-              className="puerta"
-              muted
-              playsInline
-              preload="auto"
-              onLoadedMetadata={() => mostrarInicio(puertaRef)}
-              onClick={abrirPuerta}
-            >
-              <source src="/Puerta.webm" type="video/webm" />
-            </video>
-
-            <video
-              ref={telarana1Ref}
-              className="telarana telarana-fondo telarana1c"
-              muted
-              playsInline
-              preload="auto"
-              onLoadedMetadata={() => mostrarFinal(telarana1Ref)}
-              onClick={() => reproducirVideo(telarana1Ref)}
-            >
-              <source src="./telaraña1c.webm" type="video/webm" />
-            </video>
-
-            <video
-              ref={telarana2Ref}
-              className="telarana telarana-fondo telarana2c"
-              muted
-              playsInline
-              preload="auto"
-              onLoadedMetadata={() => mostrarFinal(telarana2Ref)}
-              onClick={() => reproducirVideo(telarana2Ref)}
-            >
-              <source src="./telaraña2c.webm" type="video/webm" />
-            </video>
-
-            <video
-              ref={telarana3Ref}
-              className="telarana telarana-frente telarana3c"
-              muted
-              playsInline
-              preload="auto"
-              onLoadedMetadata={() => mostrarFinal(telarana3Ref)}
-              onClick={() => reproducirVideo(telarana3Ref)}
-            >
-              <source src="./telaraña3c .webm" type="video/webm" />
-            </video>
-
-            <video
-              ref={telarana4Ref}
-              className="telarana telarana-frente telarana4c"
-              muted
-              playsInline
-              preload="auto"
-              onLoadedMetadata={() => mostrarFinal(telarana4Ref)}
-              onClick={() => reproducirVideo(telarana4Ref)}
-            >
-              <source src="/telaraña4c .webm" type="video/webm" />
-            </video>
-
-            <div
-              ref={moustro1WrapRef}
-              className="moustro moustro1c"
-              onClick={() => animarLottie(moustro1Ref)}
-            >
-              <Lottie
-                lottieRef={moustro1Ref}
-                animationData={moustro1}
-                autoplay={false}
-                loop={false}
-              />
+            {/* ===== Puerta ===== */}
+            <div className="anim puerta">
+              <div className="vista">
+                <video
+                  ref={puertaRef}
+                  muted
+                  playsInline
+                  preload="auto"
+                  onLoadedMetadata={() => mostrarInicio(puertaRef)}
+                >
+                  <source src="/Puerta.webm" type="video/webm" />
+                </video>
+              </div>
+              <div className="hitbox" onClick={abrirPuerta}>
+                <span className="pista" />
+              </div>
             </div>
 
-            <div
-              className="moustro moustro2c"
-              onClick={() => animarLottie(moustro2Ref)}
-            >
-              <Lottie
-                lottieRef={moustro2Ref}
-                animationData={moustro2}
-                autoplay={false}
-                loop={false}
-              />
-            </div>
+            {/* ===== Telarañas ===== */}
+            {telaranas.map(({ clase, ref, src }) => (
+              <div key={src} className={`anim telarana ${clase}`}>
+                <div className="vista">
+                  <video
+                    ref={ref}
+                    muted
+                    playsInline
+                    preload="auto"
+                    onLoadedMetadata={() => mostrarFinal(ref)}
+                  >
+                    <source src={src} type="video/webm" />
+                  </video>
+                </div>
+                <div className="hitbox" onClick={() => reproducirVideo(ref)}>
+                  <span className="pista" />
+                </div>
+              </div>
+            ))}
 
-            <div
-              className="moustro moustro3c"
-              onClick={() => animarLottie(moustro3Ref)}
-            >
-              <Lottie
-                lottieRef={moustro3Ref}
-                animationData={moustro3}
-                autoplay={false}
-                loop={false}
-              />
-            </div>
+            {/* ===== Monstruos ===== */}
+            {monstruos.map(({ clase, lottieRef, data, wrapRef }) => (
+              <div
+                key={clase}
+                ref={wrapRef}
+                className={`anim moustro ${clase}`}
+              >
+                <div className="vista">
+                  <Lottie
+                    lottieRef={lottieRef}
+                    animationData={data}
+                    autoplay={false}
+                    loop={false}
+                  />
+                </div>
+                <div className="hitbox" onClick={() => animarLottie(lottieRef)}>
+                  <span className="pista" />
+                </div>
+              </div>
+            ))}
 
-            <div
-              className="moustro moustro4c"
-              onClick={() => animarLottie(moustro4Ref)}
-            >
-              <Lottie
-                lottieRef={moustro4Ref}
-                animationData={moustro4}
-                autoplay={false}
-                loop={false}
-              />
-            </div>
-
+            {/* ===== Step (no se le hace clic) ===== */}
             <video
               ref={stepCap3Ref}
               className="step-cap-3"

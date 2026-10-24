@@ -14,6 +14,10 @@ const Lottie = LottieModule.default;
 const ANCHO = 1500;
 const ALTO = 836;
 
+// true = muestra los cuadros de clic en rojo para calibrarlos
+// false = invisibles (versión final)
+const DEBUG = false;
+
 const SECUENCIA = [
   { id: "espalda", persistir: false },
   { id: "frente", persistir: false, junto: true }, // entra a la vez que espalda
@@ -58,7 +62,6 @@ const LotieCap4 = () => {
   const telarana4Ref = useRef(null);
 
   const puertaRef = useRef(null);
-  const puertaAbiertaRef = useRef(false);
 
   const stepEspaldaRef = useRef(null);
   const stepFrenteRef = useRef(null);
@@ -159,24 +162,28 @@ const LotieCap4 = () => {
 
   const abrirPuerta = () => {
     const v = puertaRef.current;
-    if (!v || puertaAbiertaRef.current) return;
+    if (!v) return;
 
-    puertaAbiertaRef.current = true;
+    // Solo se ignora el clic mientras la animación está corriendo;
+    // si ya terminó (o nunca arrancó), se puede volver a reproducir.
+    if (!v.paused && !v.ended) return;
 
     sonar(AUDIO_PUERTA, VOLUMEN_PUERTA);
 
     v.currentTime = 0;
-    v.play().catch(() => { });
+    v.play().catch((err) => console.error("No se pudo reproducir la puerta:", err));
   };
 
+  // El clic llega por el cuadro de clic; la que se mueve es la imagen de la antorcha
   const moverAntorcha = (e) => {
-    const el = e.currentTarget;
+    const img = e.currentTarget.closest(".anim-cap4")?.querySelector("img");
+    if (!img) return;
 
     sonar(AUDIO_ANTORCHA, VOLUMEN_ANTORCHA);
 
-    el.classList.remove("antorcha-mover-cap4");
-    void el.offsetWidth;
-    el.classList.add("antorcha-mover-cap4");
+    img.classList.remove("antorcha-mover-cap4");
+    void img.offsetWidth;
+    img.classList.add("antorcha-mover-cap4");
   };
 
   const alTerminarClip = (i) => {
@@ -250,6 +257,28 @@ const LotieCap4 = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actual]);
 
+  // Objetos con clic: cada uno tiene su animación + su propio cuadro de clic
+  const antorchas = [
+    { clase: "antorcha-fondo-cap4 antorcha1-cap4", src: "/antorcha1.png", alt: "Antorcha 1" },
+    { clase: "antorcha-fondo-cap4 antorcha2-cap4", src: "/antorcha2.png", alt: "Antorcha 2" },
+    { clase: "antorcha-frente-cap4 antorcha3-cap4", src: "/antorcha3.png", alt: "Antorcha 3" },
+    { clase: "antorcha-frente-cap4 antorcha4-cap4", src: "/antorcha4.png", alt: "Antorcha 4" },
+  ];
+
+  const telaranas = [
+    { clase: "telarana-fondo-cap4 telarana1c-cap4", ref: telarana1Ref, src: "./telaraña1c.webm" },
+    { clase: "telarana-fondo-cap4 telarana2c-cap4", ref: telarana2Ref, src: "./telaraña2c.webm" },
+    { clase: "telarana-frente-cap4 telarana3c-cap4", ref: telarana3Ref, src: "./telaraña3c .webm" },
+    { clase: "telarana-frente-cap4 telarana4c-cap4", ref: telarana4Ref, src: "/telaraña4c .webm" },
+  ];
+
+  const monstruos = [
+    { clase: "moustro1c-cap4", lottieRef: moustro1Ref, data: moustro1 },
+    { clase: "moustro2c-cap4", lottieRef: moustro2Ref, data: moustro2 },
+    { clase: "moustro3c-cap4", lottieRef: moustro3Ref, data: moustro3 },
+    { clase: "moustro4c-cap4", lottieRef: moustro4Ref, data: moustro4 },
+  ];
+
   return (
     <div className="contenedor-escena-cap4" ref={contenedorRef}>
       <div
@@ -257,153 +286,87 @@ const LotieCap4 = () => {
         style={{ transform: `translate(-50%, -50%) scale(${escala})` }}
       >
         <div className="escenacap4">
-          <div className="escena-interna-cap4">
+          <div className={`escena-interna-cap4${DEBUG ? " debug" : ""}`}>
             <img
               className="fondo4"
               src="/Cap 3.png"
               alt="Escenario capítulo 4"
             />
 
-            <img
-              className="antorcha-cap4 antorcha-fondo-cap4 antorcha1-cap4"
-              src="/antorcha1.png"
-              alt="Antorcha 1"
-              onClick={moverAntorcha}
-              onAnimationEnd={(e) => e.currentTarget.classList.remove("antorcha-mover-cap4")}
-            />
+            {/* ===== Antorchas ===== */}
+            {antorchas.map(({ clase, src, alt }) => (
+              <div key={src} className={`anim-cap4 antorcha-cap4 ${clase}`}>
+                <div className="vista-cap4">
+                  <img
+                    src={src}
+                    alt={alt}
+                    onAnimationEnd={(e) =>
+                      e.currentTarget.classList.remove("antorcha-mover-cap4")
+                    }
+                  />
+                </div>
+                <div className="hitbox-cap4" onClick={moverAntorcha}>
+                  <span className="pista-cap4" />
+                </div>
+              </div>
+            ))}
 
-            <img
-              className="antorcha-cap4 antorcha-fondo-cap4 antorcha2-cap4"
-              src="/antorcha2.png"
-              alt="Antorcha 2"
-              onClick={moverAntorcha}
-              onAnimationEnd={(e) => e.currentTarget.classList.remove("antorcha-mover-cap4")}
-            />
-
-            <img
-              className="antorcha-cap4 antorcha-frente-cap4 antorcha3-cap4"
-              src="/antorcha3.png"
-              alt="Antorcha 3"
-              onClick={moverAntorcha}
-              onAnimationEnd={(e) => e.currentTarget.classList.remove("antorcha-mover-cap4")}
-            />
-
-            <img
-              className="antorcha-cap4 antorcha-frente-cap4 antorcha4-cap4"
-              src="/antorcha4.png"
-              alt="Antorcha 4"
-              onClick={moverAntorcha}
-              onAnimationEnd={(e) => e.currentTarget.classList.remove("antorcha-mover-cap4")}
-            />
-
-            <video
-              ref={puertaRef}
-              className="puerta-cap4"
-              muted
-              playsInline
-              preload="auto"
-              onLoadedMetadata={() => mostrarInicio(puertaRef)}
-              onClick={abrirPuerta}
-            >
-              <source src="/Puerta.webm" type="video/webm" />
-            </video>
-
-            <video
-              ref={telarana1Ref}
-              className="telarana-cap4 telarana-fondo-cap4 telarana1c-cap4"
-              muted
-              playsInline
-              preload="auto"
-              onLoadedMetadata={() => mostrarFinal(telarana1Ref)}
-              onClick={() => reproducirVideo(telarana1Ref)}
-            >
-              <source src="./telaraña1c.webm" type="video/webm" />
-            </video>
-
-            <video
-              ref={telarana2Ref}
-              className="telarana-cap4 telarana-fondo-cap4 telarana2c-cap4"
-              muted
-              playsInline
-              preload="auto"
-              onLoadedMetadata={() => mostrarFinal(telarana2Ref)}
-              onClick={() => reproducirVideo(telarana2Ref)}
-            >
-              <source src="./telaraña2c.webm" type="video/webm" />
-            </video>
-
-            <video
-              ref={telarana3Ref}
-              className="telarana-cap4 telarana-frente-cap4 telarana3c-cap4"
-              muted
-              playsInline
-              preload="auto"
-              onLoadedMetadata={() => mostrarFinal(telarana3Ref)}
-              onClick={() => reproducirVideo(telarana3Ref)}
-            >
-              <source src="./telaraña3c .webm" type="video/webm" />
-            </video>
-
-            <video
-              ref={telarana4Ref}
-              className="telarana-cap4 telarana-frente-cap4 telarana4c-cap4"
-              muted
-              playsInline
-              preload="auto"
-              onLoadedMetadata={() => mostrarFinal(telarana4Ref)}
-              onClick={() => reproducirVideo(telarana4Ref)}
-            >
-              <source src="/telaraña4c .webm" type="video/webm" />
-            </video>
-
-            <div
-              className="moustro-cap4 moustro1c-cap4"
-              onClick={() => animarLottie(moustro1Ref)}
-            >
-              <Lottie
-                lottieRef={moustro1Ref}
-                animationData={moustro1}
-                autoplay={false}
-                loop={false}
-              />
+            {/* ===== Puerta ===== */}
+            <div className="anim-cap4 puerta-cap4">
+              <div className="vista-cap4">
+                <video
+                  ref={puertaRef}
+                  muted
+                  playsInline
+                  preload="auto"
+                  onLoadedMetadata={() => mostrarInicio(puertaRef)}
+                >
+                  <source src="/Puerta.webm" type="video/webm" />
+                </video>
+              </div>
+              <div className="hitbox-cap4" onClick={abrirPuerta}>
+                <span className="pista-cap4" />
+              </div>
             </div>
 
-            <div
-              className="moustro-cap4 moustro2c-cap4"
-              onClick={() => animarLottie(moustro2Ref)}
-            >
-              <Lottie
-                lottieRef={moustro2Ref}
-                animationData={moustro2}
-                autoplay={false}
-                loop={false}
-              />
-            </div>
+            {/* ===== Telarañas ===== */}
+            {telaranas.map(({ clase, ref, src }) => (
+              <div key={src} className={`anim-cap4 telarana-cap4 ${clase}`}>
+                <div className="vista-cap4">
+                  <video
+                    ref={ref}
+                    muted
+                    playsInline
+                    preload="auto"
+                    onLoadedMetadata={() => mostrarFinal(ref)}
+                  >
+                    <source src={src} type="video/webm" />
+                  </video>
+                </div>
+                <div className="hitbox-cap4" onClick={() => reproducirVideo(ref)}>
+                  <span className="pista-cap4" />
+                </div>
+              </div>
+            ))}
 
-            <div
-              className="moustro-cap4 moustro3c-cap4"
-              onClick={() => animarLottie(moustro3Ref)}
-            >
-              <Lottie
-                lottieRef={moustro3Ref}
-                animationData={moustro3}
-                autoplay={false}
-                loop={false}
-              />
-            </div>
+            {/* ===== Monstruos ===== */}
+            {monstruos.map(({ clase, lottieRef, data }) => (
+              <div key={clase} className={`anim-cap4 moustro-cap4 ${clase}`}>
+                <div className="vista-cap4">
+                  <Lottie
+                    lottieRef={lottieRef}
+                    animationData={data}
+                    autoplay={false}
+                    loop={false}
+                  />
+                </div>
+                <div className="hitbox-cap4" onClick={() => animarLottie(lottieRef)}>
+                  <span className="pista-cap4" />
+                </div>
+              </div>
+            ))}
 
-            <div
-              className="moustro-cap4 moustro4c-cap4"
-              onClick={() => animarLottie(moustro4Ref)}
-            >
-              <Lottie
-                lottieRef={moustro4Ref}
-                animationData={moustro4}
-                autoplay={false}
-                loop={false}
-              />
-            </div>
-
+            {/* ===== Personajes (no se les hace clic) ===== */}
             <video
               ref={stepEspaldaRef}
               className={`step-cap4 stepespalda-cap4 ${clipVisible(0) ? "visible-cap4" : ""}`}

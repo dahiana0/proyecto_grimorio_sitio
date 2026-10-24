@@ -94,46 +94,52 @@
     z-index: 1;
 }
 
-.lampara {
-    position: absolute;
-
-    width: 100px;
-
-    z-index: 2;
-
-    cursor: pointer;
-    user-select: none;
-
-    transform-origin: top center;
-
-    transition:
-        transform .25s ease,
-        filter .25s ease;
-}
-
-.lampara:hover {
-    filter:
-        drop-shadow(0 0 8px rgba(255, 235, 160, .65))
-        drop-shadow(0 0 16px rgba(255, 235, 160, .35));
-}
-
-.lampara1C {
-    left: 85px;
-    top: -10px;
-}
-
-.lampara2C {
-    right: 90px;
-    top: -10px;
-}
-
-.lampara3C {
-    right: 600px;
-    top: -10px;
-}
-
 .moverLampara {
-    animation: balanceoLampara .6s ease;
+    /* balanceo (0,6 s) + iluminación de la bombilla (1,2 s) */
+    animation:
+        balanceoLampara .6s ease,
+        iluminarLampara 1.2s ease-out;
+}
+
+@keyframes iluminarLampara {
+    0%   { filter: none; }
+    20%  {
+        filter:
+            brightness(1.3)
+            drop-shadow(0 0 10px rgba(255, 235, 160, .9))
+            drop-shadow(0 0 24px rgba(255, 215, 110, .6));
+    }
+    100% { filter: none; }
+}
+
+/* Halo de luz alrededor de la bombilla */
+.luzLampara {
+    position: absolute;
+    left: 50%;
+    top: 55%;
+    width: 320%;
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(
+        circle,
+        rgba(255, 235, 160, .55) 0%,
+        rgba(255, 220, 120, .25) 35%,
+        rgba(255, 220, 120, 0) 70%
+    );
+    mix-blend-mode: screen;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.lamparaActiva .luzLampara {
+    animation: haloLampara 1.2s ease-out;
+}
+
+@keyframes haloLampara {
+    0%   { opacity: 0; }
+    20%  { opacity: 1; }
+    100% { opacity: 0; }
 }
 
 @keyframes balanceoLampara {
@@ -146,96 +152,138 @@
     100% { transform: rotate(0deg); }
 }
 
-.rata {
+/* ===== Contenedor de cada objeto con clic (posición y ancho originales) =====
+   No tiene z-index propio: así la parte visual (.vista) y el cuadro de clic
+   (.hitbox) se ordenan directamente en la escena, y los puntos de
+   interacción siempre quedan por encima de todo. */
+.anim {
     position: absolute;
-
-    left: 350px;
-    bottom: 48px;
-
-    width: 250px;
-
-    object-fit: contain;
-
-    cursor: pointer;
-
-    z-index: 3;
-
-    transition:
-        transform .25s ease,
-        filter .25s ease;
+    pointer-events: none;   /* lo visual nunca captura clics */
 }
 
-.rata:hover {
+.estatua1 { left: 745px;   bottom: 40px;  width: 710px; --z: 4; }
+.estatua3 { right: 750px;  bottom: 100px; width: 250px; --z: 4; }
+.estatua4 { right: 1150px; bottom: 50px;  width: 250px; --z: 4; }
+.estatua5 { left: 300px;   bottom: 150px; width: 250px; --z: 3; }
+.estatua6 { right: 50px;   bottom: 100px; width: 260px; --z: 3; }
+.rata     { left: 350px;   bottom: 48px;  width: 250px; --z: 3; --zh: 20; }
+
+.lampara1C { left: 85px;   top: -10px;    width: 100px; --z: 2; --zh: 30; }
+.lampara2C { right: 90px;  top: -10px;    width: 100px; --z: 2; --zh: 30; }
+.lampara3C { right: 600px; top: -10px;    width: 100px; --z: 2; --zh: 30; }
+
+/* Parte visual: aquí se aplica el hover (sin resplandor) */
+.vista {
+    position: relative;
+    z-index: var(--z);
+    transition: transform .25s ease;
+}
+
+.anim:has(.hitbox:hover) .vista,
+.forma .vista:hover {
     transform: scale(1.03);
-
-    filter: drop-shadow(0 0 8px rgba(26, 217, 109, 0));
 }
 
-.estatua {
+/* Lámpara: la imagen ocupa su contenedor y se balancea desde arriba */
+.vista > img {
+    display: block;
+    width: 100%;
+    height: auto;
+    user-select: none;
+    transform-origin: top center;
+}
+
+/* ===== Estatuas: el clic solo cuenta sobre su dibujo (no sobre un cuadro) =====
+   Las partes transparentes dejan pasar el clic, así una estatua no tapa a otra
+   y la de atrás se puede tocar en la parte que se ve. */
+.forma .vista svg {
+    pointer-events: none;
+}
+.forma .vista svg path {
+    pointer-events: visiblePainted;
+    cursor: pointer;
+}
+
+/* ===== Cuadro de clic: invisible, en % de SU animación ===== */
+.hitbox {
     position: absolute;
-
-    object-fit: contain;
-
+    left:   var(--hx, 0%);
+    top:    var(--hy, 0%);
+    width:  var(--hw, 100%);
+    height: var(--hh, 100%);
+    /* Prioridad de clic: por defecto sigue el orden visual, se puede fijar con --zh.
+       Siempre queda sobre Step y sobre las animaciones. */
+    z-index: var(--zh, calc(var(--z) + 10));
+    pointer-events: auto;           /* solo el cuadro recibe clics */
     cursor: pointer;
+    background: transparent;
 
-    z-index: 4;
-
-    transition:
-        transform .25s ease,
-        filter .25s ease;
+    /* Durante el acercamiento a la cara de Step se ocultan cuadros y puntos
+       (para que no tapen la cara); al terminar la cámara vuelven. */
+    animation: hitboxCamara 25s forwards;
 }
 
-.estatua:hover {
-    transform: scale(1.03);
-
-    filter: drop-shadow(0 0 7px rgba(26, 217, 109, 0));
+@keyframes hitboxCamara {
+    0%, 38%   { visibility: visible; }
+    40%, 99.9% { visibility: hidden; }
+    100%      { visibility: visible; }
 }
 
-.estatua1 {
-    left: 745px;
-    bottom: 40px;
+/* ===== Ajuste de cada cuadro (x, y, ancho, alto en % de su animación) =====
+   Solo la rata y las lámparas usan cuadro. --px / --py = posición del puntito
+   (por defecto, centro). */
+.rata     { --hx: 10%; --hy: 20%; --hw: 80%; --hh: 70%; }
+.lampara1C,
+.lampara2C,
+.lampara3C { --hx: 20%; --hy: 0%; --hw: 60%; --hh: 100%; }
 
-    width: 710px;
+/* ===== Puntito de cada estatua (% de su animación) =====
+   Colócalo sobre una parte VISIBLE de cada estatua, sobre todo en las que
+   se solapan. Mueve solo el de la que necesites. */
+.estatua1 { --px: 50%; --py: 55%; }
+.estatua3 { --px: 50%; --py: 55%; }
+.estatua4 { --px: 60%; --py: 70%; }   /* la de adelante */
+.estatua5 { --px: 35%; --py: 35%; }   /* la de atrás */
+.estatua6 { --px: 50%; --py: 55%; }
 
-    z-index: 4;
+/* ===== Señal sutil: puntito siempre visible, con un latido corto y destello verde ===== */
+.pista {
+    position: absolute;
+    top: var(--py, 50%);
+    left: var(--px, 50%);
+    width: 14px;
+    height: 14px;
+    margin: -7px 0 0 -7px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 4px rgba(26, 217, 109, 0.5);
+    pointer-events: none;
+    animation: latido 1.2s ease-in-out infinite;
 }
 
-.estatua3 {
-    right: 750px;
-    bottom: 100px;
-
-    width: 250px;
-
-    z-index: 4;
+@keyframes latido {
+    0%, 100% { transform: scale(1);   opacity: 0.9; box-shadow: 0 0 3px rgba(26, 217, 109, 0.4); }
+    50%      { transform: scale(1.3); opacity: 0.7; box-shadow: 0 0 7px rgba(26, 217, 109, 0.7); }
 }
 
-.estatua4 {
-    right: 1150px;
-    bottom: 50px;
-
-    width: 250px;
-
-    z-index: 4;
+/* Puntito de estatua (no está dentro de un cuadro): va sobre todo y también
+   se oculta durante el acercamiento a la cara de Step */
+.forma > .pista {
+    z-index: calc(var(--z) + 10);
+    animation: latido 1.2s ease-in-out infinite, hitboxCamara 25s forwards;
 }
 
-.estatua5 {
-    left: 300px;
-    bottom: 150px;
-
-    width: 250px;
-
-    z-index: 3;
+/* ===== Modo prueba (solo si pones DEBUG = true en el .jsx) ===== */
+.camaraCapitulo2.debug .hitbox {
+    background: rgba(255, 0, 0, 0.3);
+    outline: 1px solid red;
+}
+.camaraCapitulo2.debug .anim {
+    outline: 1px dashed rgba(0, 150, 255, 0.9);  /* borde real de cada Lottie */
 }
 
-.estatua6 {
-    right: 50px;
-    bottom: 100px;
-
-    width: 260px;
-
-    z-index: 3;
-}
-
+/* ===== Step: solo se ve, no recibe clics ===== */
 .stepCap2Espalda,
 .stepCap2Frente,
 .stepCap2Frente2 {
@@ -262,7 +310,7 @@
 
 .stepCap2Frente {
     left: 990px;
-    bottom: 55px;
+    bottom: 200px;
     width: 390px;
     z-index: 5;
 
@@ -302,11 +350,4 @@
 @keyframes stepCap2Frente2Fin {
     0%   { opacity: 1; }
     100% { opacity: 0; }
-}
-
-.estatua.activa,
-.rata.activa {
-    filter:
-        drop-shadow(0 0 6px rgba(26, 217, 109, 0))
-        drop-shadow(0 0 14px rgba(26, 217, 109, 0));
 }

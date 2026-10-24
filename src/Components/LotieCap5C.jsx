@@ -1,6 +1,10 @@
 import { useRef, useEffect } from "react";
 import "../Styles/LotieCap5C.css";
 
+// true = muestra los cuadros de clic en rojo para calibrarlos
+// false = invisibles (versión final)
+const DEBUG = false;
+
 /* ---------------------------------------------------------------------
    AUDIO (ruta dentro de public/)
    Pon tus archivos de sonido con estos nombres o cambia las rutas.
@@ -205,7 +209,11 @@ const LotieCap5C = ({ activo = true }) => {
       const H = escena.clientHeight;
 
       // Cámara
-      camara.style.transform = `scale(${valor(t, PISTAS.camara)})`;
+      const zoom = valor(t, PISTAS.camara);
+      camara.style.transform = `scale(${zoom})`;
+
+      // Con el zoom cerrado se ocultan los punticos (los clics siguen activos)
+      camara.dataset.zoom = zoom > 1.1 ? "1" : "0";
 
       // Personajes
       mover(v.orabona, BASE_X.orabona, PISTAS.orabona, t, W, H);
@@ -307,9 +315,13 @@ const LotieCap5C = ({ activo = true }) => {
     }
   };
 
+  // El clic llega por el cuadro de clic; la que se anima es la imagen del objeto
+  const imagenDe = (e) => e.currentTarget.closest(".anim5c")?.querySelector("img");
+
   // Animar un hueso (se puede repetir en cada clic)
   const animarHueso = (e) => {
-    const img = e.currentTarget;
+    const img = imagenDe(e);
+    if (!img) return;
     img.classList.remove("hueso-animando");
     void img.offsetWidth; // reinicia la animación
     img.classList.add("hueso-animando");
@@ -328,36 +340,87 @@ const LotieCap5C = ({ activo = true }) => {
 
   // Mover una antorcha (se puede repetir en cada clic)
   const moverAntorcha = (e) => {
-    const el = e.currentTarget;
+    const img = imagenDe(e);
+    if (!img) return;
     sonar(AUDIO_ANTORCHA, VOLUMEN_ANTORCHA);
-    el.classList.remove("antorcha5c-mover");
-    void el.offsetWidth; // reinicia la animación
-    el.classList.add("antorcha5c-mover");
+    img.classList.remove("antorcha5c-mover");
+    void img.offsetWidth; // reinicia la animación
+    img.classList.add("antorcha5c-mover");
   };
 
   const terminarAntorcha = (e) => {
     e.currentTarget.classList.remove("antorcha5c-mover");
   };
 
+  const videosConClic = VIDEOS.filter((vd) => !vd.auto);
+  const videosAuto = VIDEOS.filter((vd) => vd.auto);
+
   return (
     <div className="escena5c" ref={escenaRef}>
-      <div className="camara5c" ref={camaraRef}>
+      <div className={`camara5c${DEBUG ? " debug" : ""}`} ref={camaraRef}>
 
         <img className="fondo5c" src="./Fondo5c.png" alt="" />
 
-        {ANTORCHAS.map((a) => (
-          <img
-            key={a.nombre}
-            className={a.clase}
-            src={a.src}
-            alt=""
-            draggable={false}
-            onClick={moverAntorcha}
-            onAnimationEnd={terminarAntorcha}
-          />
+        {/* ===== Manchas y cuadros (videos con clic) ===== */}
+        {videosConClic.map((vd) => (
+          <div
+            key={vd.nombre}
+            className={`anim5c ${vd.nombre === "manchas" ? "" : "cuadro5c "}${vd.clase}`}
+          >
+            {/* Solo visual: no recibe clics */}
+            <div className="vista5c">
+              <video
+                ref={(el) => (videoRefs.current[vd.nombre] = el)}
+                muted
+                playsInline
+                preload="auto"
+              >
+                <source src={vd.src} type="video/webm" />
+              </video>
+            </div>
+            {/* Cuadro de clic propio, dentro de su objeto */}
+            <div className="hitbox5c" onClick={() => reproducirVideo(vd.nombre)}>
+              <span className="pista5c" />
+            </div>
+          </div>
         ))}
 
-        {VIDEOS.map((vd) => (
+        {/* ===== Huesos ===== */}
+        {HUESOS.map((h) => (
+          <div key={h.nombre} className={`anim5c hueso5c ${h.clase}`}>
+            <div className="vista5c">
+              <img
+                src={h.src}
+                alt=""
+                draggable={false}
+                onAnimationEnd={terminarAnimacion}
+              />
+            </div>
+            <div className="hitbox5c" onClick={animarHueso}>
+              <span className="pista5c" />
+            </div>
+          </div>
+        ))}
+
+        {/* ===== Antorchas ===== */}
+        {ANTORCHAS.map((a) => (
+          <div key={a.nombre} className={`anim5c ${a.clase}`}>
+            <div className="vista5c">
+              <img
+                src={a.src}
+                alt=""
+                draggable={false}
+                onAnimationEnd={terminarAntorcha}
+              />
+            </div>
+            <div className="hitbox5c" onClick={moverAntorcha}>
+              <span className="pista5c" />
+            </div>
+          </div>
+        ))}
+
+        {/* ===== Puerta, cinta y personajes (los controla la secuencia, sin clic) ===== */}
+        {videosAuto.map((vd) => (
           <video
             key={vd.nombre}
             ref={(el) => (videoRefs.current[vd.nombre] = el)}
@@ -365,22 +428,9 @@ const LotieCap5C = ({ activo = true }) => {
             muted
             playsInline
             preload="auto"
-            onClick={vd.auto ? undefined : () => reproducirVideo(vd.nombre)}
           >
             <source src={vd.src} type="video/webm" />
           </video>
-        ))}
-
-        {HUESOS.map((h) => (
-          <img
-            key={h.nombre}
-            className={h.clase}
-            src={h.src}
-            alt=""
-            draggable={false}
-            onClick={animarHueso}
-            onAnimationEnd={terminarAnimacion}
-          />
         ))}
 
       </div>

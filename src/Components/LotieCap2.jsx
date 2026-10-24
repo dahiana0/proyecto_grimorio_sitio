@@ -16,6 +16,10 @@ const Lottie = LottieModule.default;
 const ANCHO = 1500;
 const ALTO = 836;
 
+// true = muestra los cuadros de clic en rojo para calibrarlos
+// false = invisibles (versión final)
+const DEBUG = false;
+
 const ESPALDA_FIN_MS = 10000;
 const FRENTE_INICIO_MS = 12500;
 const FRENTE2_INICIO_MS = 25000;
@@ -50,6 +54,7 @@ const LotieCap2 = () => {
   const stepCap2Frente2Ref = useRef(null);
 
   const [frente2Termino, setFrente2Termino] = useState(false);
+  const [lamparasActivas, setLamparasActivas] = useState({});
 
   const audiosRef = useRef({});
 
@@ -203,9 +208,37 @@ const LotieCap2 = () => {
     reproducirSonido("rata");
   };
 
+  // Balanceo de lámpara: se reinicia en cada clic
+  const moverLampara = (clase) => {
+    setLamparasActivas((prev) => ({ ...prev, [clase]: false }));
+    setTimeout(() => {
+      setLamparasActivas((prev) => ({ ...prev, [clase]: true }));
+      setTimeout(
+        () => setLamparasActivas((prev) => ({ ...prev, [clase]: false })),
+        1200
+      );
+    }, 10);
+  };
+
   const claseFrente2 = frente2Termino
     ? "stepCap2Frente2 stepCap2Frente2Fin"
     : "stepCap2Frente2";
+
+  // Estatuas: el clic se detecta sobre su dibujo real (no sobre un cuadro),
+  // así la estatua de atrás se puede tocar en la parte que se ve.
+  const estatuas = [
+    { clase: "estatua1", lottieRef: estatua1Ref, data: estatua1, onClick: animarEstatua1 },
+    { clase: "estatua3", lottieRef: estatua3Ref, data: estatua3, onClick: animarEstatua3 },
+    { clase: "estatua4", lottieRef: estatua4Ref, data: estatua4, onClick: animarEstatua4 },
+    { clase: "estatua5", lottieRef: estatua5Ref, data: estatua5, onClick: animarEstatua5 },
+    { clase: "estatua6", lottieRef: estatua6Ref, data: estatua6, onClick: animarEstatua6 },
+  ];
+
+  const lamparas = [
+    { clase: "lampara1C" },
+    { clase: "lampara2C" },
+    { clase: "lampara3C" },
+  ];
 
   return (
     <div className="contenedor-escena visorCap2" ref={contenedorRef}>
@@ -216,7 +249,7 @@ const LotieCap2 = () => {
         <div className="escenacap2">
           <div
             ref={camaraRef}
-            className="camaraCapitulo2"
+            className={`camaraCapitulo2${DEBUG ? " debug" : ""}`}
             data-camara="Cámara Capítulo 2"
           >
             <img
@@ -225,77 +258,56 @@ const LotieCap2 = () => {
               alt="Escenario capítulo 2"
             />
 
-            <div className="estatua estatua1" onClick={animarEstatua1}>
-              <Lottie
-                lottieRef={estatua1Ref}
-                animationData={estatua1}
-                autoplay={false}
-                loop={false}
-              />
+            {/* ===== Estatuas (clic sobre su dibujo) ===== */}
+            {estatuas.map(({ clase, lottieRef, data, onClick }) => (
+              <div key={clase} className={`anim forma ${clase}`}>
+                <div className="vista" onClick={onClick}>
+                  <Lottie
+                    lottieRef={lottieRef}
+                    animationData={data}
+                    autoplay={false}
+                    loop={false}
+                  />
+                </div>
+                <span className="pista" />
+              </div>
+            ))}
+
+            {/* ===== Rata (cuadro de clic) ===== */}
+            <div className="anim rata">
+              <div className="vista">
+                <Lottie
+                  lottieRef={rataRef}
+                  animationData={rata}
+                  autoplay={false}
+                  loop={true}
+                />
+              </div>
+              <div className="hitbox" onClick={animarRata}>
+                <span className="pista" />
+              </div>
             </div>
 
-            <div className="estatua estatua3" onClick={animarEstatua3}>
-              <Lottie
-                lottieRef={estatua3Ref}
-                animationData={estatua3}
-                autoplay={false}
-                loop={false}
-              />
-            </div>
-
-            <div className="estatua estatua4" onClick={animarEstatua4}>
-              <Lottie
-                lottieRef={estatua4Ref}
-                animationData={estatua4}
-                autoplay={false}
-                loop={false}
-              />
-            </div>
-
-            <div className="estatua estatua5" onClick={animarEstatua5}>
-              <Lottie
-                lottieRef={estatua5Ref}
-                animationData={estatua5}
-                autoplay={false}
-                loop={false}
-              />
-            </div>
-
-            <div className="estatua estatua6" onClick={animarEstatua6}>
-              <Lottie
-                lottieRef={estatua6Ref}
-                animationData={estatua6}
-                autoplay={false}
-                loop={false}
-              />
-            </div>
-
-            <div className="rata" onClick={animarRata}>
-              <Lottie
-                lottieRef={rataRef}
-                animationData={rata}
-                autoplay={false}
-                loop={true}
-              />
-            </div>
-
-            <img
-              className="lampara lampara1C"
-              src="/lampara1.png"
-              alt="Lámpara 1"
-            />
-
-            <img
-              className="lampara lampara2C"
-              src="/lampara1.png"
-              alt="Lámpara 2"
-            />
-
-            <img
-              className="lampara lampara3C"
-              src="/lampara1.png"
-              alt="Lámpara 3"
-            />
+            {/* ===== Lámparas (cuadro de clic + balanceo) ===== */}
+            {lamparas.map(({ clase }) => (
+              <div
+                key={clase}
+                className={`anim ${clase}${lamparasActivas[clase] ? " lamparaActiva" : ""}`}
+              >
+                <div className="vista">
+                  {/* Halo de luz: solo se ve mientras la lámpara se balancea */}
+                  <span className="luzLampara" />
+                  <img
+                    src="/lampara1.png"
+                    alt=""
+                    className={lamparasActivas[clase] ? "moverLampara" : ""}
+                  />
+                </div>
+                <div className="hitbox" onClick={() => moverLampara(clase)}>
+                  <span className="pista" />
+                </div>
+              </div>
+            ))}
 
             <video
               ref={stepCap2EspaldaRef}
