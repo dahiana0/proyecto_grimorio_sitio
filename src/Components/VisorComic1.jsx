@@ -5,7 +5,7 @@ import LootieKarol from "./LootieKarol";
 import LootieParte2 from "./LootieParte2";
 import LootieParte3 from "./LootieParte3";
 
-import BarraControles from "./Barracontroles";
+import BarraControles, { useControlGlobal, reiniciarControl, useCambioCapitulo, RUTAS_CAPITULOS, esperar, cancelarEspera } from "./Barracontroles";
 import "../Styles/visorCap1.css";
 
 // Duración de la transición a oscuro entre escenas (ms).
@@ -16,6 +16,9 @@ const DURACION_TRANSICION = 350;
 // (suena cuando terminan los diálogos de Step y Rogers).
 // Guárdalo en public/audios/ o cambia la ruta si se llama distinto.
 const AUDIO_PARTE3_TRAMO_B = "./audios/Narrador_2.mp3";
+
+// Posición de este capítulo en RUTAS_CAPITULOS (0 = capítulo I)
+const CAPITULO = 0;
 
 export default function VisorCapitulo({
   numeroCapitulo = "I",
@@ -34,7 +37,7 @@ export default function VisorCapitulo({
   // Temporizadores del subtítulo de respaldo (cuando no existe el audio del tramo B)
   const respaldoTimersRef = useRef([]);
   const limpiarRespaldo = () => {
-    respaldoTimersRef.current.forEach(clearTimeout);
+    respaldoTimersRef.current.forEach(cancelarEspera);
     respaldoTimersRef.current = [];
   };
 
@@ -86,8 +89,8 @@ export default function VisorCapitulo({
   // ---------------------------------------------------------------------
   const [index, setIndex] = useState(0);
 
-  // true mientras suena la narración (para el botón play/pausa)
-  const [audioSonando, setAudioSonando] = useState(false);
+  // Eventos del <audio> (ya no se usa para el botón de pausa)
+  const [, setAudioSonando] = useState(false);
   const [mostrarSubtitulo, setMostrarSubtitulo] = useState(true);
 
   // Volumen manual (0 a 1) y visibilidad de la ventanita del slider
@@ -96,6 +99,15 @@ export default function VisorCapitulo({
 
   const [play, setPlay] = useState(false);
   const [showControls, setShowControls] = useState(true);
+
+  // Pausa general de la escena (audio + videos + animaciones)
+  const [pausaUsuario, setPausaUsuario] = useState(false);
+  useControlGlobal(pausaUsuario, nivelVolumen === 0);
+
+  // Cambio de capítulo con transición a negro (sin pasar por el mapa)
+  const { cortina, irA, cambiando } = useCambioCapitulo();
+  const rutaSiguiente = RUTAS_CAPITULOS[CAPITULO + 1];
+  const rutaAnterior = RUTAS_CAPITULOS[CAPITULO - 1];
 
   // Subtítulo del narrador y subtítulo de los diálogos (Step y Rogers)
   const [subtituloActual, setSubtituloActual] = useState("");
@@ -222,8 +234,8 @@ export default function VisorCapitulo({
     limpiarRespaldo();
     subtitulosParte3B.forEach((s) => {
       respaldoTimersRef.current.push(
-        setTimeout(() => setSubtituloActual(s.texto), s.inicio * 1000),
-        setTimeout(() => setSubtituloActual(""), s.fin * 1000)
+        esperar(() => setSubtituloActual(s.texto), s.inicio * 1000),
+        esperar(() => setSubtituloActual(""), s.fin * 1000)
       );
     });
   };
@@ -339,6 +351,8 @@ export default function VisorCapitulo({
 
     setTimeout(() => {
       // 2) Se cambia el contenido mientras está oscuro
+      reiniciarControl();
+      setPausaUsuario(false);
       setIndex(nuevoIndex);
       setPlay(false);
 
@@ -347,6 +361,7 @@ export default function VisorCapitulo({
     }, DURACION_TRANSICION);
   };
 
+  const ultimaEscena = index === escenas.length - 1;
   const siguiente = () => cambiarEscena(index + 1);
   const anterior = () => cambiarEscena(index - 1);
 
@@ -370,25 +385,17 @@ export default function VisorCapitulo({
   };
 
   // ---------------------------------------------------------------------
-  // Pausa / reanudar (video o narración de la escena)
+  // Pausa / reanudar (video, o escena completa: narración + animaciones)
   // ---------------------------------------------------------------------
   const reproduciendo =
-    escenas[index].tipo === "video" ? play : audioSonando;
+    escenas[index].tipo === "video" ? play : !pausaUsuario;
 
   const alternarPausa = () => {
     if (escenas[index].tipo === "video") {
       handlePlayPause();
       return;
     }
-
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    if (audio.paused) {
-      audio.play().catch(() => {});
-    } else {
-      audio.pause();
-    }
+    setPausaUsuario((p) => !p);
   };
 
   // ---------------------------------------------------------------------
@@ -396,6 +403,8 @@ export default function VisorCapitulo({
   // ---------------------------------------------------------------------
   return (
     <div className="visor-container">
+      {cortina}
+
       {/* Barra superior: título del capítulo + íconos de opciones */}
       <div className="visor-top d-flex justify-content-between align-items-center">
         <div className="d-flex align-items-center gap-2">
@@ -414,10 +423,34 @@ export default function VisorCapitulo({
           </div>
         </div>
 
+        {/* Saltar de capítulo sin volver al mapa */}
+        <div className="d-flex align-items-center gap-2">
+          {rutaAnterior && (
+            <button
+              onClick={() => irA(rutaAnterior)}
+              className="visor-btn"
+              disabled={cambiando}
+            >
+              ← CAP. ANTERIOR
+            </button>
+          )}
+          {rutaSiguiente && (
+            <button
+              onClick={() => irA(rutaSiguiente)}
+              className="visor-btn"
+              disabled={cambiando}
+            >
+              SIGUIENTE CAP. →
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Escenario: lottie o video, con transición a oscuro entre escenas */}
-      <div className="visor-scene">
+      <div
+        className="visor-scene"
+        style={pausaUsuario ? { pointerEvents: "none" } : undefined}
+      >
         <div
           className={`visor-scene-content ${
             transicionando ? "fade-out" : "fade-in"
@@ -436,6 +469,7 @@ export default function VisorCapitulo({
                 className="visor-video"
                 autoPlay
                 playsInline
+                muted={nivelVolumen === 0}
                 onTimeUpdate={handleTimeUpdate}
                 onPlay={() => setPlay(true)}
                 onPause={() => setPlay(false)}
@@ -492,7 +526,11 @@ export default function VisorCapitulo({
         index={index}
         total={escenas.length}
         onAnterior={anterior}
-        onSiguiente={siguiente}
+        onSiguiente={ultimaEscena && rutaSiguiente ? () => irA(rutaSiguiente) : siguiente}
+        siguienteDeshabilitado={ultimaEscena && !rutaSiguiente}
+        siguienteDestacado={ultimaEscena && !!rutaSiguiente}
+        tituloSiguiente={ultimaEscena && rutaSiguiente ? "Siguiente capítulo" : "Escena siguiente"}
+        bloqueado={cambiando}
         onIr={cambiarEscena}
         reproduciendo={reproduciendo}
         onAlternarPausa={alternarPausa}

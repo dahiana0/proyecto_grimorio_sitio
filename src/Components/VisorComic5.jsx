@@ -7,7 +7,7 @@ import LotieCap5F from "./LotieCap5F.jsx"; // Orabona (escena 3)
 import LotieCap5C from "./LotieCap5C";
 import LotieCap5D from "./LotieCap5D";
 import LotieCap5E from "./LotieCap5E";
-import BarraControles from "./Barracontroles.jsx";
+import BarraControles, { useControlGlobal, reiniciarControl, useCambioCapitulo, RUTAS_CAPITULOS, esperar, cancelarEspera, BotonInicio } from "./Barracontroles.jsx";
 import "../Styles/visorCap1.css";
 
 const DURACION_TRANSICION = 350;
@@ -21,6 +21,9 @@ const INICIO_ORABONA_2 = 19.18;
 // Audio de la puerta (LotieCap5C, escena 4).
 // Copia tu archivo a public/audios/ y cambia solo el nombre aquí.
 const AUDIO_5C = "/audios/AUDIO_5C.wav";
+
+// Posición de este capítulo en RUTAS_CAPITULOS (0 = capítulo I)
+const CAPITULO = 4;
 
 export default function VisorComic5({
   numeroCapitulo = "V",
@@ -39,18 +42,27 @@ export default function VisorComic5({
   const timerTramoBRef = useRef(null);
   const limpiarTimerTramoB = () => {
     if (timerTramoBRef.current) {
-      clearTimeout(timerTramoBRef.current);
+      cancelarEspera(timerTramoBRef.current);
       timerTramoBRef.current = null;
     }
   };
 
   const [index, setIndex] = useState(0);
 
-  // true mientras suena la narración (para el botón play/pausa)
-  const [audioSonando, setAudioSonando] = useState(false);
+  // Eventos del <audio> (ya no se usa para el botón de pausa)
+  const [, setAudioSonando] = useState(false);
 
   const [nivelVolumen, setNivelVolumen] = useState(1);
   const volumenPrevioRef = useRef(1);
+
+  // Pausa general de la escena (audio + videos + animaciones)
+  const [pausaUsuario, setPausaUsuario] = useState(false);
+  useControlGlobal(pausaUsuario, nivelVolumen === 0);
+
+  // Cambio de capítulo con transición a negro (sin pasar por el mapa)
+  const { cortina, irA, cambiando } = useCambioCapitulo();
+  const rutaSiguiente = RUTAS_CAPITULOS[CAPITULO + 1];
+  const rutaAnterior = RUTAS_CAPITULOS[CAPITULO - 1];
 
   const [mostrarSubtitulo, setMostrarSubtitulo] = useState(true);
   const [subtituloActual, setSubtituloActual] = useState("");
@@ -328,7 +340,7 @@ export default function VisorComic5({
 
     const { audio: srcB, inicio } = escena.tramoB;
 
-    timerTramoBRef.current = setTimeout(() => {
+    timerTramoBRef.current = esperar(() => {
       timerTramoBRef.current = null;
       const audio = audioRef.current;
       if (!audio) return;
@@ -406,12 +418,15 @@ export default function VisorComic5({
     setTransicionando(true);
 
     setTimeout(() => {
+      reiniciarControl();
+      setPausaUsuario(false);
       setIndex(nuevoIndex);
       setSubtituloActual("");
       setTransicionando(false);
     }, DURACION_TRANSICION);
   };
 
+  const ultimaEscena = index === escenas.length - 1;
   const siguiente = () => cambiarEscena(index + 1);
   const anterior = () => cambiarEscena(index - 1);
 
@@ -429,29 +444,17 @@ export default function VisorComic5({
     }
   };
 
-  const cambiarSubtitulos = () => {
-    setMostrarSubtitulo((prev) => !prev);
-  };
-
   // ---------------------------------------------------------------------
-  // Pausa / reanudar la narración de la escena
+  // Pausa / reanudar la escena completa (narración + animaciones)
   // ---------------------------------------------------------------------
-  const reproduciendo = audioSonando;
-
-  const alternarPausa = () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    if (audio.paused) {
-      audio.play().catch(() => {});
-    } else {
-      audio.pause();
-    }
-  };
+  const reproduciendo = !pausaUsuario;
+  const alternarPausa = () => setPausaUsuario((p) => !p);
 
   // Render
   return (
     <div className="visor-container">
+      {cortina}
+
       {/* Barra superior */}
       <div className="visor-top d-flex justify-content-between align-items-center">
         <div className="d-flex align-items-center gap-2">
@@ -470,10 +473,34 @@ export default function VisorComic5({
           </div>
         </div>
 
+        {/* Saltar de capítulo sin volver al mapa */}
+        <div className="d-flex align-items-center gap-2">
+          {rutaAnterior && (
+            <button
+              onClick={() => irA(rutaAnterior)}
+              className="visor-btn"
+              disabled={cambiando}
+            >
+              ← CAP. ANTERIOR
+            </button>
+          )}
+          {rutaSiguiente && (
+            <button
+              onClick={() => irA(rutaSiguiente)}
+              className="visor-btn"
+              disabled={cambiando}
+            >
+              SIGUIENTE CAP. →
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Escenario: lottie con transición a oscuro */}
-      <div className="visor-scene">
+      <div
+        className="visor-scene"
+        style={pausaUsuario ? { pointerEvents: "none" } : undefined}
+      >
         <div
           className={`visor-scene-content ${
             transicionando ? "fade-out" : "fade-in"
@@ -506,12 +533,19 @@ export default function VisorComic5({
         )}
       </div>
 
+      {/* Volver al inicio: solo en el último capítulo, en su última escena */}
+      {ultimaEscena && <BotonInicio disabled={cambiando} />}
+
       {/* Barra de controles: anterior / pausa / siguiente + progreso + volumen + subtítulos */}
       <BarraControles
         index={index}
         total={escenas.length}
         onAnterior={anterior}
-        onSiguiente={siguiente}
+        onSiguiente={ultimaEscena && rutaSiguiente ? () => irA(rutaSiguiente) : siguiente}
+        siguienteDeshabilitado={ultimaEscena && !rutaSiguiente}
+        siguienteDestacado={ultimaEscena && !!rutaSiguiente}
+        tituloSiguiente={ultimaEscena && rutaSiguiente ? "Siguiente capítulo" : "Escena siguiente"}
+        bloqueado={cambiando}
         onIr={cambiarEscena}
         reproduciendo={reproduciendo}
         onAlternarPausa={alternarPausa}

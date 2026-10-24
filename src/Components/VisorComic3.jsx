@@ -3,12 +3,15 @@ import { useNavigate } from "react-router-dom";
 
 import LotieCap3 from "./LotieCap3";
 
-import BarraControles from "./Barracontroles";
+import BarraControles, { useControlGlobal, reiniciarControl, useCambioCapitulo, RUTAS_CAPITULOS } from "./Barracontroles";
 import "../Styles/visorCap1.css";
 
 // Duración de la transición a oscuro entre escenas (ms).
 // Debe coincidir con el "transition" definido en .visor-scene-content en el CSS.
 const DURACION_TRANSICION = 350;
+
+// Posición de este capítulo en RUTAS_CAPITULOS (0 = capítulo I)
+const CAPITULO = 2;
 
 export default function VisorComic3({
   numeroCapitulo = "III",
@@ -24,8 +27,8 @@ export default function VisorComic3({
   // ---------------------------------------------------------------------
   const [index, setIndex] = useState(0);
 
-  // true mientras suena la narración (para el botón play/pausa)
-  const [audioSonando, setAudioSonando] = useState(false);
+  // Eventos del <audio> (ya no se usa para el botón de pausa)
+  const [, setAudioSonando] = useState(false);
 
   const [play, setPlay] = useState(false);
   const [showControls, setShowControls] = useState(true);
@@ -33,6 +36,15 @@ export default function VisorComic3({
   // Volumen manual (0 a 1) y visibilidad de la ventanita del slider
   const [nivelVolumen, setNivelVolumen] = useState(1);
   const volumenPrevioRef = useRef(1);
+
+  // Pausa general de la escena (audio + videos + animaciones)
+  const [pausaUsuario, setPausaUsuario] = useState(false);
+  useControlGlobal(pausaUsuario, nivelVolumen === 0);
+
+  // Cambio de capítulo con transición a negro (sin pasar por el mapa)
+  const { cortina, irA, cambiando } = useCambioCapitulo();
+  const rutaSiguiente = RUTAS_CAPITULOS[CAPITULO + 1];
+  const rutaAnterior = RUTAS_CAPITULOS[CAPITULO - 1];
 
   const [mostrarSubtitulo, setMostrarSubtitulo] = useState(true);
   const [subtituloActual, setSubtituloActual] = useState("");
@@ -165,6 +177,8 @@ export default function VisorComic3({
 
     setTimeout(() => {
       // 2) Se cambia el contenido mientras está oscuro
+      reiniciarControl();
+      setPausaUsuario(false);
       setIndex(nuevoIndex);
       setPlay(false);
       setSubtituloActual("");
@@ -174,6 +188,7 @@ export default function VisorComic3({
     }, DURACION_TRANSICION);
   };
 
+  const ultimaEscena = index === escenas.length - 1;
   const siguiente = () => cambiarEscena(index + 1);
   const anterior = () => cambiarEscena(index - 1);
 
@@ -208,30 +223,18 @@ export default function VisorComic3({
     }
   };
 
-  const cambiarSubtitulos = () => {
-    setMostrarSubtitulo((prev) => !prev);
-  };
-
   // ---------------------------------------------------------------------
-  // Pausa / reanudar (video o narración de la escena)
+  // Pausa / reanudar (video, o escena completa: narración + animaciones)
   // ---------------------------------------------------------------------
   const reproduciendo =
-    escenas[index].tipo === "video" ? play : audioSonando;
+    escenas[index].tipo === "video" ? play : !pausaUsuario;
 
   const alternarPausa = () => {
     if (escenas[index].tipo === "video") {
       handlePlayPause();
       return;
     }
-
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    if (audio.paused) {
-      audio.play().catch(() => {});
-    } else {
-      audio.pause();
-    }
+    setPausaUsuario((p) => !p);
   };
 
   // ---------------------------------------------------------------------
@@ -239,6 +242,8 @@ export default function VisorComic3({
   // ---------------------------------------------------------------------
   return (
     <div className="visor-container">
+      {cortina}
+
       {/* Barra superior: título del capítulo + íconos de opciones */}
       <div className="visor-top d-flex justify-content-between align-items-center">
         <div className="d-flex align-items-center gap-2">
@@ -257,10 +262,34 @@ export default function VisorComic3({
           </div>
         </div>
 
+        {/* Saltar de capítulo sin volver al mapa */}
+        <div className="d-flex align-items-center gap-2">
+          {rutaAnterior && (
+            <button
+              onClick={() => irA(rutaAnterior)}
+              className="visor-btn"
+              disabled={cambiando}
+            >
+              ← CAP. ANTERIOR
+            </button>
+          )}
+          {rutaSiguiente && (
+            <button
+              onClick={() => irA(rutaSiguiente)}
+              className="visor-btn"
+              disabled={cambiando}
+            >
+              SIGUIENTE CAP. →
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Escenario: lottie o video, con transición a oscuro entre escenas */}
-      <div className="visor-scene">
+      <div
+        className="visor-scene"
+        style={pausaUsuario ? { pointerEvents: "none" } : undefined}
+      >
         <div
           className={`visor-scene-content ${
             transicionando ? "fade-out" : "fade-in"
@@ -342,7 +371,11 @@ export default function VisorComic3({
         index={index}
         total={escenas.length}
         onAnterior={anterior}
-        onSiguiente={siguiente}
+        onSiguiente={ultimaEscena && rutaSiguiente ? () => irA(rutaSiguiente) : siguiente}
+        siguienteDeshabilitado={ultimaEscena && !rutaSiguiente}
+        siguienteDestacado={ultimaEscena && !!rutaSiguiente}
+        tituloSiguiente={ultimaEscena && rutaSiguiente ? "Siguiente capítulo" : "Escena siguiente"}
+        bloqueado={cambiando}
         onIr={cambiarEscena}
         reproduciendo={reproduciendo}
         onAlternarPausa={alternarPausa}
