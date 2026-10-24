@@ -1,6 +1,6 @@
 /* ==========================================================================
    SIDEBAR GRIMORIO — píldora de cristal + botones como los de la barra de
-   controles (halo, icono que late y flota, brillo verde).
+   controles (icono que late y flota, brillo verde).
    Para cambiar el verde edita solo --bc (RGB) y --bc-soft.
    Va en src/Styles/header.css
    ========================================================================== */
@@ -151,27 +151,6 @@
   outline: none;
 }
 
-/* página actual: cuadro verde, letra blanca */
-.sidebar__link--active {
-  background: rgba(var(--bc), 0.1);
-  border-color: rgba(var(--bc), 0.55);
-  box-shadow: 0 0 12px rgba(var(--bc), 0.3), inset 0 0 10px rgba(var(--bc), 0.12);
-}
-
-.sidebar__link--active:hover { color: var(--bc-soft); }
-
-/* página actual: el halo late fuerte (igual que "siguiente capítulo") */
-.sidebar__link--active::before {
-  opacity: 1;
-  transform: scale(1.1);
-  animation: sb-destacado 1.6s ease-in-out infinite;
-}
-
-@keyframes sb-destacado {
-  0%, 100% { opacity: 0.55; transform: scale(1); }
-  50%      { opacity: 1;    transform: scale(1.25); }
-}
-
 .sidebar__link:active { transform: scale(0.97); }
 
 /* ---------- Icono: resplandor que late y flota ---------- */
@@ -190,7 +169,7 @@
   animation:
     sb-latido 3.2s ease-in-out var(--d, 0s) infinite,
     sb-flota 4s ease-in-out var(--d, 0s) infinite;
-  transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1);
+  transition: transform 0.45s cubic-bezier(0.2, 0.9, 0.3, 1);
 }
 
 @keyframes sb-latido {
@@ -223,6 +202,46 @@
 
 .sidebar__link:active .sidebar__icon { transform: scale(0.88); }
 
+/* ---------- Página actual: sin círculo, el icono se agranda y respira ---------- */
+.sidebar__link--active,
+.sidebar__link--active:hover,
+.sidebar__link--active:focus-visible {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.sidebar__link--active::before,
+.sidebar__link--active:hover::before,
+.sidebar__link--active:focus-visible::before {
+  display: none;
+}
+
+/* crece al entrar a la sección (transición) y luego late suavemente (scale) */
+.sidebar__link--active .sidebar__icon {
+  transform: scale(1.25);
+  animation:
+    sb-latido 3.2s ease-in-out var(--d, 0s) infinite,
+    sb-flota 4s ease-in-out var(--d, 0s) infinite,
+    sb-activo 2.2s ease-in-out infinite;
+}
+
+@keyframes sb-activo {
+  0%, 100% { scale: 1; }
+  50%      { scale: 1.1; }
+}
+
+.sidebar__link--active:hover .sidebar__icon,
+.sidebar__link--active:focus-visible .sidebar__icon {
+  transform: scale(1.32);
+  animation: none;
+}
+
+.sidebar__link--active:active .sidebar__icon { transform: scale(1.1); }
+
+/* al desplegar, el nombre de la sección actual se ve en verde claro */
+.sidebar__link--active .sidebar__label { color: var(--bc-soft); }
+
 /* ---------- Texto: aparece al desplegar ---------- */
 .sidebar__label {
   margin-left: 16px;
@@ -240,16 +259,22 @@
   transition-delay: 0.08s, 0.08s, 0s;
 }
 
-/* ---------- Explorar Museo (como el botón central de pausa) ---------- */
-.sidebar__link--cta {
+/* ---------- Explorar Museo: sin círculo, solo el aro que gira ---------- */
+.sidebar__link--cta,
+.sidebar__link--cta:hover,
+.sidebar__link--cta:focus-visible {
   height: 78px;
-  background: radial-gradient(circle, rgba(var(--bc), 0.3), rgba(var(--bc), 0.08) 70%);
-  border: 1px solid rgba(var(--bc), 0.7);
-  box-shadow: 0 0 16px rgba(var(--bc), 0.5), inset 0 0 12px rgba(var(--bc), 0.25);
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
   padding-left: 8px;
 }
 
-.sidebar__link--cta::before { left: 0; width: 70px; height: 70px; margin-top: -35px; }
+.sidebar__link--cta::before,
+.sidebar__link--cta:hover::before,
+.sidebar__link--cta:focus-visible::before {
+  display: none;
+}
 
 /* aro de luz que gira alrededor del icono: lento en reposo, rápido al desplegar */
 .sidebar__aro {
@@ -281,7 +306,6 @@
 
 .sidebar__link--cta:hover {
   transform: scale(1.03);
-  box-shadow: 0 0 28px rgba(var(--bc), 0.9), inset 0 0 14px rgba(var(--bc), 0.4);
 }
 
 /* ---------- Que el contenido no quede tapado ---------- */
@@ -309,6 +333,6 @@
 @media (prefers-reduced-motion: reduce) {
   .sidebar,
   .sidebar__icon,
-  .sidebar__aro,
-  .sidebar__link--active::before { animation: none !important; }
+  .sidebar__link--active .sidebar__icon,
+  .sidebar__aro { animation: none !important; }
 }

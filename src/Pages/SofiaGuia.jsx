@@ -2,105 +2,130 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../Styles/SofiaGuia.css";
 
+const ICONO_ALERTA = "/alertaaaaa.svg";
+
+const dialogos = [
+  {
+    texto: "Bienvenido a Grimorio.",
+    audio: "./guia/1.wav",
+  },
+  {
+    texto:
+      "A continuación entrarás en una aventura donde cada paso revela secretos prohibidos.",
+    audio: "./guia/2.wav",
+  },
+  {
+    texto: "Este no es un museo común...",
+    audio: "./guia/3.wav",
+  },
+  {
+    texto: "Aquí las historias te observan. Atrévete a continuar.",
+    audio: "./guia/4.wav",
+  },
+];
+
+/* Cuánto hay que arrastrar una tarjeta para descartarla (px) */
+const UMBRAL_DESCARTE = 130;
+
+/* Marco del icono: cuadro neón con nodos en las esquinas */
+function IconoMarco({ children, pulsa = false }) {
+  return (
+    <div className={`icono-marco ${pulsa ? "sg-palpita" : ""}`}>
+      {children}
+    </div>
+  );
+}
+
 export function SofiaGuia() {
   const navigate = useNavigate();
 
-  const dialogos = [
-    {
-      texto: "Bienvenido a Grimorio.",
-      audio: "./guia/1.wav",
-    },
-    {
-      texto:
-        "A continuación entrarás en una aventura donde cada paso revela secretos prohibidos.",
-      audio: "./guia/2.wav",
-    },
-    {
-      texto: "Este no es un museo común...",
-      audio: "./guia/3.wav",
-    },
-    {
-      texto: "Aquí las historias te observan. Atrévete a continuar.",
-      audio: "./guia/4.wav",
-    },
-  ];
-
   const [actual, setActual] = useState(0);
+  const [letras, setLetras] = useState(0);
   const [mostrarBoton, setMostrarBoton] = useState(false);
   const [iniciado, setIniciado] = useState(false);
+  const [iconoOk, setIconoOk] = useState(true);
+
+  /* Arrastre de la tarjeta del frente */
+  const [arrastre, setArrastre] = useState({ x: 0, y: 0, activo: false });
+  const inicioArrastre = useRef({ x: 0, y: 0 });
 
   const audioRef = useRef(null);
+  const sonidoBoton = useRef(null);
 
+  /* Interacción: tilt 3D y brillo al mover el cursor */
+  const contenedorRef = useRef(null);
+  const pilaRef = useRef(null);
 
-
-  const sonidoBoton = useRef(new Audio("./audios/sonidoboton.ogg"));
-
+  /* Sonido de botones (se crea una sola vez) */
   useEffect(() => {
+    sonidoBoton.current = new Audio("./audios/sonidoboton.ogg");
     sonidoBoton.current.volume = 0.35;
   }, []);
 
   const reproducirSonido = () => {
+    if (!sonidoBoton.current) return;
     sonidoBoton.current.currentTime = 0;
-    sonidoBoton.current.play().catch(() => { });
+    sonidoBoton.current.play().catch(() => {});
   };
 
-
-
-  const irAlInicio = () => {
-    reproducirSonido();
-
+  const detenerVoz = () => {
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
     }
-
-    setTimeout(() => {
-      navigate("/");
-    }, 150);
   };
 
-
-
-  const omitirIntro = () => {
+  const irA = (ruta) => {
     reproducirSonido();
-
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
-    }
-
-    setTimeout(() => {
-      navigate("/explorar-museo");
-    }, 150);
+    detenerVoz();
+    setTimeout(() => navigate(ruta), 150);
   };
 
+  /* La tarjeta se inclina y brilla hacia donde está el cursor */
+  const alMoverEscena = (e) => {
+    const cont = contenedorRef.current;
+    if (!cont) return;
+    const r = cont.getBoundingClientRect();
+    const x = e.clientX - r.left;
+    const y = e.clientY - r.top;
+    const mx = (x / r.width) * 2 - 1;
+    const my = (y / r.height) * 2 - 1;
 
-
-  const explorarMuseo = () => {
-    reproducirSonido();
-
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
+    const pila = pilaRef.current;
+    if (pila) {
+      const pr = pila.getBoundingClientRect();
+      const gx = Math.min(Math.max(((e.clientX - pr.left) / pr.width) * 100, 0), 100);
+      const gy = Math.min(Math.max(((e.clientY - pr.top) / pr.height) * 100, 0), 100);
+      pila.style.setProperty("--ry", `${(mx * 7).toFixed(2)}deg`);
+      pila.style.setProperty("--rx", `${(-my * 5).toFixed(2)}deg`);
+      pila.style.setProperty("--gx", `${gx.toFixed(1)}%`);
+      pila.style.setProperty("--gy", `${gy.toFixed(1)}%`);
     }
-
-    setTimeout(() => {
-      navigate("/explorar-museo");
-    }, 150);
   };
 
+  const alSalirEscena = () => {
+    const pila = pilaRef.current;
+    if (pila) {
+      pila.style.setProperty("--rx", "0deg");
+      pila.style.setProperty("--ry", "0deg");
+    }
+  };
 
+  /* Si cambia la tarjeta (la voz terminó), se cancela cualquier arrastre pendiente */
+  useEffect(() => {
+    setArrastre({ x: 0, y: 0, activo: false });
+  }, [actual]);
+
+  /* Reproduce la voz de la tarjeta actual */
   useEffect(() => {
     if (!iniciado) return;
 
     const audio = audioRef.current;
-
     if (!audio) return;
 
     audio.pause();
     audio.currentTime = 0;
     audio.src = dialogos[actual].audio;
-
     audio.play().catch(console.error);
 
     return () => {
@@ -109,96 +134,206 @@ export function SofiaGuia() {
     };
   }, [actual, iniciado]);
 
+  /* Escribe las letras al ritmo de la voz */
+  useEffect(() => {
+    if (!iniciado) return;
 
+    const audio = audioRef.current;
+    const texto = dialogos[actual].texto;
+    const t0 = performance.now();
+    let raf;
+
+    setLetras(0);
+
+    const tick = () => {
+      const dur = audio?.duration;
+      let progreso;
+
+      if (Number.isFinite(dur) && dur > 0) {
+        /* termina de escribir un poco antes de que acabe la voz */
+        progreso = audio.currentTime / (dur * 0.9);
+      } else {
+        /* respaldo mientras carga el audio */
+        progreso = (performance.now() - t0) / (texto.length * 55);
+      }
+
+      setLetras(Math.min(texto.length, Math.ceil(progreso * texto.length)));
+      raf = requestAnimationFrame(tick);
+    };
+
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [actual, iniciado]);
 
   const iniciarHistoria = () => {
     if (iniciado) return;
     setIniciado(true);
   };
 
-  const siguienteDialogo = () => {
+  const siguiente = () => {
     if (actual < dialogos.length - 1) {
       setActual((prev) => prev + 1);
     } else {
+      setLetras(dialogos[actual].texto.length);
       setMostrarBoton(true);
     }
   };
 
+  /* ---------- Arrastre (mouse y touch) ---------- */
+  const alPresionar = (e) => {
+    if (!iniciado) return;
+    e.currentTarget.setPointerCapture(e.pointerId);
+    inicioArrastre.current = { x: e.clientX, y: e.clientY };
+    setArrastre({ x: 0, y: 0, activo: true });
+  };
+
+  const alMover = (e) => {
+    if (!arrastre.activo) return;
+    setArrastre({
+      x: e.clientX - inicioArrastre.current.x,
+      y: e.clientY - inicioArrastre.current.y,
+      activo: true,
+    });
+  };
+
+  const alSoltar = () => {
+    if (!arrastre.activo) return;
+
+    const distancia = Math.hypot(arrastre.x, arrastre.y);
+    setArrastre({ x: 0, y: 0, activo: false });
+
+    /* Si la lanzó lejos, pasa a la siguiente tarjeta */
+    if (distancia > UMBRAL_DESCARTE && actual < dialogos.length - 1) {
+      reproducirSonido();
+      setActual((prev) => prev + 1);
+    }
+  };
+
   return (
-    <div className="container-sofia">
+    <div
+      ref={contenedorRef}
+      className="container-sofia"
+      onPointerMove={alMoverEscena}
+      onPointerLeave={alSalirEscena}
+    >
 
-
-
-      <button
-        className="back-btn"
-        onClick={irAlInicio}
-      >
+      <button className="boton-neon back-btn" onClick={() => irA("/")}>
         Volver al inicio
       </button>
 
       <button
-        className="skip-btn"
-        onClick={omitirIntro}
+        className="boton-neon skip-btn"
+        onClick={() => irA("/explorar-museo")}
       >
         Omitir intro
       </button>
 
-      <div className="titulo-museo">
-        <h1>Conoce Al Guía</h1>
-        <p>Él Te Acompañará Durante El Recorrido…</p>
-      </div>
 
+      <div className="sg-escenario">
+        <div className="sg-pila" ref={pilaRef}>
+          {dialogos.map((d, i) => {
+            const offset = i - actual;
+            const esFrente = offset === 0;
+            const pasada = offset < 0;
+            const lejos = offset > 3;
 
+            const clases = [
+              "tarjeta-alerta",
+              esFrente ? "sg-frente" : "",
+              pasada ? "sg-pasada" : "",
+              lejos ? "sg-lejos" : "",
+              esFrente && arrastre.activo ? "sg-arrastrando" : "",
+              esFrente && !iniciado ? "sg-esperando" : "",
+            ]
+              .filter(Boolean)
+              .join(" ");
 
-      <div
-        className="character"
-        onClick={iniciarHistoria}
-      >
+            const estilo = {
+              "--o": Math.max(offset, 0),
+              zIndex: dialogos.length - Math.abs(offset),
+            };
 
-        <img
-          className="base-guia"
-          src="/base.png"
-          alt="Base"
-        />
+            if (esFrente && arrastre.activo) {
+              estilo.transform = `translate(${arrastre.x}px, ${arrastre.y}px) rotate(${
+                arrastre.x / 28
+              }deg)`;
+            }
 
-        <img
-          className="guia-img"
-          src="/guia-grimorio.webp"
-          alt="Guía Grimorio"
-        />
+            return (
+              <article
+                key={i}
+                className={clases}
+                style={estilo}
+                onClick={esFrente && !iniciado ? iniciarHistoria : undefined}
+                onPointerDown={esFrente ? alPresionar : undefined}
+                onPointerMove={esFrente ? alMover : undefined}
+                onPointerUp={esFrente ? alSoltar : undefined}
+                onPointerCancel={esFrente ? alSoltar : undefined}
+                onLostPointerCapture={esFrente ? alSoltar : undefined}
+              >
+                <header className="tarjeta-cabecera">
+                  <IconoMarco pulsa={esFrente}>
+                    {iconoOk ? (
+                      <img
+                        src={ICONO_ALERTA}
+                        alt=""
+                        draggable="false"
+                        onError={() => setIconoOk(false)}
+                      />
+                    ) : (
+                      <span className="icono-respaldo">!</span>
+                    )}
+                  </IconoMarco>
+                </header>
 
-      </div>
+                <div className="tarjeta-cuerpo">
+                  {esFrente && !iniciado ? (
+                    <p className="texto-guia">Toca la alerta para iniciar…</p>
+                  ) : (
+                    <p className="texto-guia">
+                      {pasada
+                        ? d.texto
+                        : esFrente
+                        ? d.texto
+                            .slice(0, letras)
+                            .split("")
+                            .map((c, k) => (
+                              <span key={k} className="sg-letra">
+                                {c}
+                              </span>
+                            ))
+                        : ""}
+                      {esFrente && iniciado && letras < d.texto.length && (
+                        <span className="sg-cursor" />
+                      )}
+                    </p>
+                  )}
+                </div>
 
+                {esFrente && iniciado && (
+                  <footer className="tarjeta-pie">
+                    {dialogos.map((_, k) => (
+                      <span
+                        key={k}
+                        className={`sg-punto ${k === actual ? "sg-activo" : ""}`}
+                      />
+                    ))}
+                  </footer>
+                )}
+              </article>
+            );
+          })}
+        </div>
 
-
-      <div className="dialogues">
-
-        {!iniciado ? (
-          <div className="speech-box aparecer">
-            <p>Toca la guía para iniciar...</p>
-          </div>
-        ) : (
-          <div key={actual} className="speech-box aparecer">
-            <p>{dialogos[actual].texto}</p>
-          </div>
-        )}
-
-        <audio
-          ref={audioRef}
-          src={dialogos[actual].audio}
-          preload="auto"
-          onEnded={siguienteDialogo}
-        />
+        <audio ref={audioRef} preload="auto" onEnded={siguiente} />
 
         <button
-          className={`start-btn ${mostrarBoton ? "mostrar" : ""}`}
-          onClick={explorarMuseo}
+          className={`boton-neon start-btn ${mostrarBoton ? "mostrar" : ""}`}
+          onClick={() => irA("/explorar-museo")}
         >
           Explorar Museo
         </button>
-
       </div>
-
     </div>
   );
 }

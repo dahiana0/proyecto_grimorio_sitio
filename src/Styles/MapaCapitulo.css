@@ -37,7 +37,8 @@
     justify-content: center;
 }
 
-/* ---------- Botón volver al inicio ---------- */
+/* ============ BOTÓN VOLVER ============ */
+
 .btn-volver {
     position: absolute;
     left: 0;
@@ -46,51 +47,80 @@
 
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
 
-    padding: 6px 16px;
+    width: 220px;
+    height: 55px;
+    padding: 0;
+    box-sizing: border-box;
 
-    border: 1px solid var(--verde);
-    border-radius: 8px;
+    border: 1.5px solid #00e676;
+    border-radius: 14px;
 
-    background: rgba(26, 217, 109, .06);
-    color: var(--verde);
+    background: rgba(0, 12, 8, 0.88);
+    color: #eafff3;
 
-    font-family: pieces;
-    font-size: 18px;
+    font-family: pieces, Arial, sans-serif;
+    font-size: 25px;
     letter-spacing: 1px;
     text-decoration: none;
+    cursor: pointer;
 
-    box-shadow: 0 0 8px rgba(26, 217, 109, .25);
+    text-shadow: 0 0 6px rgba(77, 255, 153, 0.7);
+    box-shadow:
+        inset 0 0 12px rgba(0, 230, 118, 0.18),
+        0 0 10px rgba(0, 230, 118, 0.45),
+        0 0 24px rgba(0, 230, 118, 0.2);
 
-    transition: background .25s, color .25s, box-shadow .25s;
-}
-
-.btn-volver-flecha {
-    display: inline-block;
-
-    transition: transform .25s;
+    transition:
+        background 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        text-shadow 0.25s ease,
+        transform 0.15s ease;
 }
 
 .btn-volver:hover {
-    background: var(--verde);
-    color: #040806;
+    border-color: #4dff99;
+    background: rgba(0, 18, 11, 0.92);
+    text-shadow: 0 0 8px rgba(77, 255, 153, 0.95);
+    box-shadow:
+        inset 0 0 16px rgba(0, 230, 118, 0.3),
+        0 0 14px rgba(0, 230, 118, 0.75),
+        0 0 32px rgba(0, 230, 118, 0.45);
+}
 
-    box-shadow: 0 0 14px var(--verde-suave);
+.btn-volver:active {
+    transform: translateY(1px) scale(0.98);
+}
+
+.btn-volver:focus-visible {
+    outline: 2px solid var(--texto, #eafff3);
+    outline-offset: 3px;
+}
+
+/* Flecha */
+.btn-volver-flecha {
+    display: inline-block;
+    transition: transform 0.25s ease;
 }
 
 .btn-volver:hover .btn-volver-flecha {
     transform: translateX(-4px);
 }
 
-.btn-volver:focus-visible {
-    outline: 2px solid var(--texto);
-    outline-offset: 3px;
+/* Móvil */
+@media (max-width: 900px) {
+    .btn-volver {
+        width: 150px;
+        height: 46px;
+        font-size: 15px;
+    }
 }
 
 .titulo-lado {
     margin: 0 0 2px;
-
     text-align: center;
 }
 
@@ -1183,7 +1213,7 @@
 .item-capitulo p {
     margin: 4px 0 0;
 
-    font-size: 10px;
+    font-size: 18px;
     line-height: 12px;
 
     color: var(--texto-suave);
@@ -1294,9 +1324,6 @@
         position: static;
 
         margin-bottom: 6px;
-        padding: 4px 12px;
-
-        font-size: 15px;
     }
 
     .titulo-mapa {
@@ -1364,6 +1391,31 @@
         transition-duration: .01s !important;
         transition-delay: 0s !important;
     }
+}
+
+
+/* =========================================================
+   SIN ANIMACIÓN DE ENTRADA
+   Se activa al volver a la página en la misma pestaña: todo aparece
+   completo al instante (solo se aceleran las animaciones de una vez;
+   las que se repiten, como el brillo, siguen igual).
+========================================================= */
+
+.sin-animacion .svg-dibujo .trazo,
+.sin-animacion .svg-dibujo .trazo-texto,
+.sin-animacion .marco-trazo rect,
+.sin-animacion .letra,
+.sin-animacion .texto-sub,
+.sin-animacion .ruta-puntos.activa .punto-ruta,
+.sin-animacion .barra-capitulos.visible .item-capitulo,
+.sin-animacion .panel-interior > *,
+.sin-animacion .mision-barra-fill {
+    animation-duration: .01s !important;
+    animation-delay: 0s !important;
+}
+
+.sin-animacion .panel-contenido::before {
+    transition-duration: .01s !important;
 }
 
 

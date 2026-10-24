@@ -53,7 +53,7 @@ const prepararSvg = (texto, uid, duracion, retraso) => {
   svg.removeAttribute("width");
   svg.removeAttribute("height");
 
-  
+
   svg.querySelectorAll("filter").forEach((f) => {
     if (!f.hasAttribute("width")) {
       f.setAttribute("filterUnits", "userSpaceOnUse");
@@ -187,9 +187,19 @@ const MarcoTrazo = ({ activo, radio = 12, duracion = 1.2, retraso = 0 }) => (
 // =========================================================================
 const MAPA_SVG = "/mapa3.svg";
 const VIEWBOX = { w: 1530, h: 1015 };
-const DURACION_MAPA = 4; // segundos que tarda en dibujarse el mapa
+const DURACION_MAPA = 3; // segundos que tarda en dibujarse el mapa (original 4)
 
 const T_BOTONES = DURACION_MAPA * 1000;
+
+// =========================================================================
+// ¿Ya se vio la animación de entrada? Se recuerda al navegar dentro de la web,
+// así al volver de "Explorar museo" el mapa aparece completo al instante.
+// Si se recarga la página, el dibujo se ve de nuevo.
+// =========================================================================
+// Se reinicia al recargar la página (F5); se mantiene al navegar dentro de la web
+let animacionYaVista = false;
+
+const mapaYaVisto = () => animacionYaVista;
 
 // =========================================================================
 // RUTA DE PUNTOS (pppp1111.svg)
@@ -220,14 +230,14 @@ const RUTA = [
   { hasta: 1, grupos: [3], invertir: true },
 ];
 
-const SEG_PUNTO = 0.04; // segundos entre un punto y el siguiente
-const SEG_NODO = 0.45; // segundos que se toma cada capítulo en aparecer
+const SEG_PUNTO = 0.03; // segundos entre un punto y el siguiente (original 0.04)
+const SEG_NODO = 0.35; // segundos que se toma cada capítulo en aparecer (original 0.45)
 
 // Respaldo si el SVG de puntos no carga: los capítulos salen escalonados
 const HORARIO_BASE = {
   dots: null,
-  nodos: { 1: 0, 2: 0.35, 3: 0.7, 4: 1.05, 5: 1.4 },
-  duracion: 2,
+  nodos: { 1: 0, 2: 0.3, 3: 0.6, 4: 0.9, 5: 1.2 },
+  duracion: 1.7,
 };
 
 const cargarPuntos = async (src) => {
@@ -386,8 +396,10 @@ export const MapaCapitulos = () => {
 
   // ---------------------------------------------------------------------
   // Secuencia: 0 = dibujando mapa · 1 = botones · 2 = barra · 3 = tarjeta
+  // Si ya se vio la animación en esta pestaña, todo sale completo de una.
   // ---------------------------------------------------------------------
-  const [fase, setFase] = useState(0);
+  const [saltar] = useState(mapaYaVisto);
+  const [fase, setFase] = useState(saltar ? 3 : 0);
 
   // Ruta de puntos + horario de aparición (capítulos y puntos)
   const [ruta, setRuta] = useState(null);
@@ -419,8 +431,8 @@ export const MapaCapitulos = () => {
 
   useEffect(() => {
     const t1 = T_BOTONES;
-    const t2 = T_BOTONES + (horario.duracion + 0.4) * 1000;
-    const t3 = t2 + 900;
+    const t2 = T_BOTONES + (horario.duracion + 0.3) * 1000; // original + 0.4
+    const t3 = t2 + 700; // original + 900
     const transcurrido = performance.now() - inicio.current;
 
     const timers = [
@@ -436,6 +448,12 @@ export const MapaCapitulos = () => {
 
     return () => timers.forEach(clearTimeout);
   }, [horario.duracion]);
+
+  // Cuando ya salieron los capítulos se recuerda, para no repetir la animación
+  // al volver de otra página
+  useEffect(() => {
+    if (fase >= 1) animacionYaVista = true;
+  }, [fase]);
 
   // ---------------------------------------------------------------------
   // Interacciones guardadas (Grimorio)
@@ -524,7 +542,7 @@ export const MapaCapitulos = () => {
   };
 
   return (
-    <div className="Container-mapa">
+    <div className={`Container-mapa ${saltar ? "sin-animacion" : ""}`}>
       <div className="contenedor-mapa-pagina">
         <div className="header-mapa">
           {/* Botón volver: cambia to="/" si tu inicio tiene otra ruta.
