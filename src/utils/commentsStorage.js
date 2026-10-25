@@ -1,84 +1,147 @@
-const STORAGE_KEY = "grimorio-comments";
-const CHANNEL_NAME = "grimorio-comments-sync";
+// src/utils/commentsStorage.js
+// Mismas funciones de antes (getStoredComments, persistComments,
+// subscribeToComments), pero ahora guardan en Supabase.
+import { supabase } from "./supabaseClient";
 
-export const getStoredComments = () => {
-  if (typeof window === "undefined") return [];
+const CLAVE_CACHE = "grimorio-comments-cache"; // copia local para que cargue rápido
+const EVENTO = "grimorio-comments-updated"; // lo escucha IntroJuego
 
+let cache = leerCache();
+let usuarioId = null;
+let iniciado = false;
+const oyentes = new Set();
+
+/* ---------- copia local ---------- */
+function leerCache() {
   try {
-    const savedComments = window.localStorage.getItem(STORAGE_KEY);
-    if (!savedComments) return [];
-
-    const parsed = JSON.parse(savedComments);
-    return Array.isArray(parsed) ? parsed : [];
-  } catch (error) {
-    console.error("Error al leer comentarios guardados:", error);
+    const guardado = JSON.parse(localStorage.getItem(CLAVE_CACHE));
+    return Array.isArray(guardado) ? guardado : [];
+  } catch {
     return [];
   }
-};
+}
 
-export const persistComments = (comments) => {
-  if (typeof window === "undefined") return [];
-
-  const normalizedComments = Array.isArray(comments) ? comments : [];
-  const safeComments = normalizedComments.filter(Boolean);
-
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(safeComments));
-
-  if (typeof window.BroadcastChannel !== "undefined") {
-    const channel = new window.BroadcastChannel(CHANNEL_NAME);
-    channel.postMessage(safeComments);
-    channel.close();
+function avisar() {
+  try {
+    localStorage.setItem(CLAVE_CACHE, JSON.stringify(cache));
+  } catch {
+    /* sin espacio: no pasa nada */
   }
+  window.dispatchEvent(new CustomEvent(EVENTO, { detail: cache }));
+  oyentes.forEach((cb) => cb(cache));
+}
 
-  window.dispatchEvent(
-    new window.CustomEvent("grimorio-comments-updated", {
-      detail: safeComments,
-    })
-  );
+/* ---------- conversión fila <-> comentario ---------- */
+const desdeFila = (f) => ({
+  id: Number(f.id),
+  name: f.name,
+  message: f.message,
+  createdAt: f.created_at,
+  userId: f.user_id,
+});
 
-  return safeComments;
-};
+const aFila = (c) => ({
+  id: c.id,
+  name: c.name,
+  message: c.message,
+  created_at: c.createdAt,
+});
 
-export const subscribeToComments = (callback) => {
-  if (typeof window === "undefined") return () => {};
+/* ---------- conexión ---------- */
+async function cargar() {
+  const { data, error } = await supabase
+    .from("comentarios")
+    .select("*")
+    .order("created_at", { ascending: true });
 
-  const channel =
-    typeof window.BroadcastChannel !== "undefined"
-      ? new window.BroadcastChannel(CHANNEL_NAME)
-      : null;
-
-  const handleMessage = (event) => {
-    if (Array.isArray(event.data)) {
-      callback(event.data);
-    }
-  };
-
-  const handleStorage = (event) => {
-    if (event.key === STORAGE_KEY) {
-      callback(getStoredComments());
-    }
-  };
-
-  const handleCustomEvent = (event) => {
-    if (Array.isArray(event.detail)) {
-      callback(event.detail);
-    }
-  };
-
-  if (channel) {
-    channel.addEventListener("message", handleMessage);
+  if (error) {
+    console.error("No se pudieron cargar los comentarios", error);
+    return;
   }
+  cache = data.map(desdeFila);
+  avisar();
+}
 
-  window.addEventListener("storage", handleStorage);
-  window.addEventListener("grimorio-comments-updated", handleCustomEvent);
+async function iniciar() {
+  if (iniciado) return;
+  iniciado = true;
 
-  return () => {
-    if (channel) {
-      channel.removeEventListener("message", handleMessage);
-      channel.close();
+  // Sesión anónima: el visitante no se registra, pero queda identificado
+  // para poder editar y borrar solo sus comentarios.
+  let { data } = await supabase.auth.getSession();
+  if (!data.session) {
+    const res = await supabase.auth.signInAnonymously();
+    if (res.error) {
+      console.error("No se pudo iniciar la sesión anónima", res.error);
     }
+    data = res.data;
+  }
+  usuarioId = data?.session?.user?.id ?? data?.user?.id ?? null;
 
-    window.removeEventListener("storage", handleStorage);
-    window.removeEventListener("grimorio-comments-updated", handleCustomEvent);
-  };
-};
+  await cargar();
+
+  // Tiempo real: cuando alguien publica, edita o borra, se recarga la lista
+  supabase
+    .channel("comentarios-cambios")
+    .on("postgres_changes", { event: "*", schema: "public", table: "comentarios" }, cargar)
+    .subscribe();
+}
+
+/* ---------- API que usan las páginas ---------- */
+export function getStoredComments() {
+  iniciar();
+  return cache;
+}
+
+export function subscribeToComments(callback) {
+  iniciar();
+  oyentes.add(callback);
+  callback(cache);
+  return () => oyentes.delete(callback);
+}
+
+// Recibe la lista completa (como antes) y guarda solo lo que cambió.
+export function persistComments(siguiente) {
+  const lista = Array.isArray(siguiente) ? siguiente : [];
+  const anteriores = new Map(cache.map((c) => [c.id, c]));
+  const nuevosIds = new Set(lista.map((c) => c.id));
+
+  const paraInsertar = lista.filter((c) => !anteriores.has(c.id));
+  const paraBorrar = cache.filter((c) => !nuevosIds.has(c.id)).map((c) => c.id);
+  const paraEditar = lista.filter((c) => {
+    const antes = anteriores.get(c.id);
+    return antes && (antes.message !== c.message || antes.createdAt !== c.createdAt);
+  });
+
+  // Se muestra de una vez (optimista); si algo falla, se vuelve a cargar
+  cache = lista.map((c) => ({ userId: usuarioId, ...anteriores.get(c.id), ...c }));
+  avisar();
+
+  (async () => {
+    try {
+      if (paraInsertar.length) {
+        const { error } = await supabase.from("comentarios").insert(paraInsertar.map(aFila));
+        if (error) throw error;
+      }
+      for (const c of paraEditar) {
+        const { error } = await supabase
+          .from("comentarios")
+          .update({ message: c.message, created_at: c.createdAt })
+          .eq("id", c.id);
+        if (error) throw error;
+      }
+      if (paraBorrar.length) {
+        const { error } = await supabase.from("comentarios").delete().in("id", paraBorrar);
+        if (error) throw error;
+      }
+    } catch (error) {
+      console.error("No se pudo guardar el cambio", error);
+      cargar(); // vuelve a lo que de verdad hay en la base de datos
+    }
+  })();
+}
+
+// ¿Este comentario lo escribió el visitante actual? (para mostrar Editar / Borrar)
+export function esComentarioMio(comentario) {
+  return Boolean(usuarioId) && comentario?.userId === usuarioId;
+}

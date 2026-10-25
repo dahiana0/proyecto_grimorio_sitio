@@ -375,7 +375,7 @@ const LotieCap4 = () => {
               preload="auto"
               onEnded={() => alTerminarClip(0)}
             >
-              <source src="./stepespaldacap4.webm" type="video/webm" />
+              <source src="./step correcion 3.webm" type="video/webm" />
             </video>
 
             <video

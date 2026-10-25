@@ -22,9 +22,9 @@ const TONOS = [
     fondo: "radial-gradient(circle at 50% 30%, #1f8a55 0%, #0b3321 55%, #04140c 100%)",
   },
   {
-    accent: "#a35cff",
-    rgb: "163, 92, 255",
-    fondo: "radial-gradient(circle at 50% 30%, #6d41c9 0%, #2b1763 55%, #0e0624 100%)",
+     accent: "#1ad96d",
+    rgb: "26, 217, 109",
+    fondo: "radial-gradient(circle at 50% 30%, #1f8a55 0%, #0b3321 55%, #04140c 100%)",
   },
 ];
 

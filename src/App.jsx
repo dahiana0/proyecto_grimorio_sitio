@@ -6,7 +6,6 @@ import { SobreNosotros } from "./Pages/SobreNosotros";
 import { Personajes } from "./Pages/Personajes";
 import { Recomendaciones } from "./Pages/Recomendaciones";
 import { ExplorarMuseo } from "./Pages/ExplorarMuseo";
-import Banner from "./Components/Banner";
 import CthulhuDescripcion from "./Components/CthulhuDescripcion";
 import StepDescripcion from "./Components/StepDescripcion";
 import RogersDescripcion from "./Components/RogersDescripcion";

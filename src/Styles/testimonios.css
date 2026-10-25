@@ -1,0 +1,819 @@
+/* =========================================================
+   LIBRO DE VISITAS — sección de comentarios (IntroJuego)
+   Va en src/Styles/testimonios.css
+   Verde Grimorio: #1ad96d · dorado: #bfa76a · morado de niebla
+   Todo va con prefijo "tm-" para no chocar con juego.css
+   ========================================================= */
+
+.tm-page,
+.tm-page * {
+  box-sizing: border-box;
+}
+
+.tm-page {
+  --verde: 26, 217, 109;
+  --dorado: 191, 167, 106;
+
+  position: relative;
+  min-height: 100svh;
+  /* a la izquierda queda el espacio del menú lateral (Header) */
+  padding: 36px clamp(16px, 4vw, 56px) 80px calc(112px + clamp(16px, 4vw, 56px));
+  overflow-x: hidden;
+  color: #e8e6e3;
+  font-family: glacia;
+  background:
+    radial-gradient(circle at 50% 16%, rgba(var(--verde), 0.14), transparent 42%),
+    radial-gradient(circle at 88% 85%, rgba(49, 36, 87, 0.4), transparent 46%),
+    linear-gradient(135deg, #020806 0%, #0a0f16 48%, #020806 100%);
+}
+
+/* ---------- BOTÓN VOLVER (va dentro de la página, al lado del menú) ---------- */
+.tm-barra {
+  max-width: 1240px;
+  margin: 0 auto clamp(18px, 3vh, 30px);
+}
+
+.tm-volver {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 20px 9px 14px;
+  border: 1px solid rgba(var(--verde), 0.55);
+  border-radius: 999px;
+  background: rgba(4, 14, 10, 0.6);
+  color: #e8fff1;
+  font-family: pieces;
+  font-size: 15px;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 0 14px rgba(var(--verde), 0.18);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.tm-volver-flecha {
+  display: inline-block;
+  color: rgb(var(--verde));
+  transition: transform 0.3s ease;
+}
+
+.tm-volver:hover,
+.tm-volver:focus-visible {
+  border-color: rgb(var(--verde));
+  color: #fff;
+  box-shadow: 0 0 22px rgba(var(--verde), 0.5);
+  outline: none;
+}
+
+.tm-volver:hover .tm-volver-flecha {
+  transform: translateX(-4px);
+}
+
+/* ---------- CABECERA ---------- */
+.tm-cabecera {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto clamp(36px, 6vh, 64px);
+}
+
+.tm-kicker {
+  margin: 0 0 10px;
+  font-size: clamp(11px, 1.3vw, 13px);
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: rgb(var(--dorado));
+}
+
+.tm-titulo {
+  margin: 0;
+  font-family: pieces;
+  font-weight: 400;
+  font-size: clamp(46px, 8vw, 96px);
+  line-height: 1;
+  color: #1ad96d;
+  text-shadow: 0 0 10px #1ad96d, 0 0 34px rgba(var(--verde), 0.5);
+}
+
+.tm-texto {
+  margin: 0 0 26px;
+  max-width: 560px;
+  font-size: clamp(14px, 1.6vw, 17px);
+  line-height: 1.7;
+  color: #cfcfcf;
+}
+
+/* Botón principal: aro de luz que gira, como el de "Explorar museo" */
+.tm-cta {
+  all: unset;
+  position: relative;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 9px 34px 9px 10px;
+  border: 1px solid #1ad96d;
+  border-radius: 999px;
+  background: rgba(2, 12, 8, 0.8);
+  box-shadow: 0 0 22px rgba(var(--verde), 0.4), inset 0 0 14px rgba(var(--verde), 0.15);
+  font-family: pieces;
+  font-size: clamp(18px, 2.4vw, 26px);
+  letter-spacing: 2px;
+  color: #fff;
+  text-shadow: 0 0 6px #fff;
+  cursor: pointer;
+  animation: tmPulsa 4s ease-in-out infinite;
+  transition: box-shadow 0.3s ease;
+}
+
+.tm-cta:hover {
+  box-shadow: 0 0 38px rgba(var(--verde), 0.75), inset 0 0 18px rgba(var(--verde), 0.3);
+}
+
+.tm-cta:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  animation: none;
+}
+
+.tm-cta:focus-visible,
+.tm-ver:focus-visible {
+  outline: 2px solid rgb(var(--dorado));
+  outline-offset: 4px;
+}
+
+@keyframes tmPulsa {
+  0%, 100% { box-shadow: 0 0 18px rgba(var(--verde), 0.32), inset 0 0 14px rgba(var(--verde), 0.12); }
+  50% { box-shadow: 0 0 34px rgba(var(--verde), 0.62), inset 0 0 18px rgba(var(--verde), 0.24); }
+}
+
+.tm-cta-anillo {
+  position: relative;
+  width: clamp(40px, 5vw, 52px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 1.1em;
+  color: #1ad96d;
+  text-shadow: 0 0 8px #1ad96d;
+}
+
+.tm-cta-anillo img {
+  width: 58%;
+  height: 58%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 5px rgba(var(--verde), 0.8));
+}
+
+/* el aro que gira alrededor del icono */
+.tm-cta-anillo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent 0 55%, rgba(var(--verde), 0.95) 100%);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px));
+          mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px));
+  animation: tmGira 6s linear infinite;
+}
+
+.tm-cta:hover .tm-cta-anillo::before {
+  animation-duration: 2s;
+}
+
+@keyframes tmGira {
+  to { transform: rotate(360deg); }
+}
+
+.tm-pista {
+  margin: 18px 0 0;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* ---------- TABLERO: las dos vitrinas ---------- */
+.tm-tablero {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(18px, 2.4vw, 32px);
+  max-width: 1240px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+.tm-vitrina {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(14px, 1.8vw, 22px);
+  border: 1px solid rgba(var(--verde), 0.38);
+  border-radius: 14px;
+  background: rgba(4, 12, 9, 0.55);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 26px rgba(var(--verde), 0.08);
+}
+
+/* esquinas de luz, como las tarjetas del inicio */
+.tm-vitrina::before,
+.tm-vitrina::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #1ad96d;
+  pointer-events: none;
+  filter: drop-shadow(0 0 4px #1ad96d);
+}
+
+.tm-vitrina::before {
+  top: -2px;
+  left: -2px;
+  border-right: 0;
+  border-bottom: 0;
+  border-top-left-radius: 14px;
+}
+
+.tm-vitrina::after {
+  right: -2px;
+  bottom: -2px;
+  border-left: 0;
+  border-top: 0;
+  border-bottom-right-radius: 14px;
+}
+
+.tm-vitrina-cab {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.tm-vitrina-titulo {
+  margin: 0;
+  font-family: pieces;
+  font-weight: 400;
+  font-size: clamp(26px, 3vw, 34px);
+  letter-spacing: 1px;
+  color: #e8fff1;
+  text-shadow: 0 0 8px rgba(var(--verde), 0.6);
+}
+
+.tm-vitrina-sub {
+  margin: 2px 0 0;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgb(var(--dorado));
+}
+
+.tm-contador {
+  flex: none;
+  min-width: 44px;
+  height: 44px;
+  padding: 0 10px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(var(--verde), 0.7);
+  border-radius: 999px;
+  font-family: pieces;
+  font-size: 20px;
+  color: #1ad96d;
+  text-shadow: 0 0 8px #1ad96d;
+  box-shadow: 0 0 14px rgba(var(--verde), 0.3), inset 0 0 10px rgba(var(--verde), 0.12);
+}
+
+/* El campo donde viven (y se arrastran) las fichas: liso, sin cuadrícula */
+.tm-campo {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 22px 16px;
+  min-height: clamp(300px, 46vh, 440px);
+  padding: 22px 18px 26px;
+  border: 1px solid rgba(var(--verde), 0.14);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.28);
+}
+
+/* ---------- FICHA ---------- */
+.tm-ficha {
+  position: relative;
+  flex: 0 0 auto;
+  width: min(100%, 224px);
+  padding: 20px 15px 13px;
+  border: 1px solid rgba(var(--verde), 0.4);
+  border-radius: 6px;
+  background: linear-gradient(160deg, rgba(22, 38, 31, 0.94), rgba(5, 10, 8, 0.97));
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55), inset 0 0 18px rgba(var(--verde), 0.05);
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+
+.tm-ficha:hover {
+  border-color: rgba(var(--verde), 0.85);
+}
+
+.tm-chincheta {
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  width: 9px;
+  height: 9px;
+  margin-left: -4.5px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #b6ffd2, #1ad96d 60%);
+  box-shadow: 0 0 8px rgba(var(--verde), 0.9);
+}
+
+.tm-ficha-num {
+  margin: 0 0 6px;
+  font-size: 9.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.tm-ficha-nombre {
+  margin: 0 0 6px;
+  font-family: pieces;
+  font-weight: 400;
+  font-size: 19px;
+  line-height: 1.1;
+  color: #1ad96d;
+  text-shadow: 0 0 6px rgba(var(--verde), 0.7);
+  overflow-wrap: anywhere;
+}
+
+.tm-ficha-texto {
+  margin: 0 0 10px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #e8e6e3;
+  overflow-wrap: anywhere;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  line-clamp: 5;
+  overflow: hidden;
+}
+
+.tm-ficha--abierta .tm-ficha-texto {
+  display: block;
+  -webkit-line-clamp: unset;
+  line-clamp: unset;
+}
+
+.tm-ficha-fecha {
+  margin: 0;
+  padding-top: 8px;
+  border-top: 1px solid rgba(var(--verde), 0.18);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgb(var(--dorado));
+}
+
+/* ---------- Vacío ---------- */
+.tm-vacio {
+  width: 100%;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.tm-vacio p {
+  margin: 0;
+  max-width: 280px;
+}
+
+.tm-sigilo {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid rgba(var(--verde), 0.5);
+  border-radius: 50%;
+  font-size: 22px;
+  color: #1ad96d;
+  text-shadow: 0 0 8px #1ad96d;
+  animation: tmSigilo 3.4s ease-in-out infinite;
+}
+
+@keyframes tmSigilo {
+  0%, 100% { transform: scale(0.94); opacity: 0.6; }
+  50% { transform: scale(1.08); opacity: 1; }
+}
+
+/* ---------- "Ver todos" ---------- */
+.tm-ver {
+  all: unset;
+  align-self: flex-start;
+  margin-top: 14px;
+  cursor: pointer;
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #1ad96d;
+  transition: letter-spacing 0.3s ease, text-shadow 0.3s ease;
+}
+
+.tm-ver:hover {
+  letter-spacing: 3.5px;
+  text-shadow: 0 0 8px #1ad96d;
+}
+
+/* ---------- Tablet y móvil ---------- */
+@media (max-width: 900px) {
+  .tm-tablero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .tm-page {
+    padding: 24px 14px 60px 94px; /* 94px = menú lateral cerrado en móvil */
+  }
+  .tm-volver {
+    font-size: 13px;
+    padding: 8px 16px 8px 12px;
+  }
+  .tm-campo {
+    gap: 20px 12px;
+    padding: 20px 12px 22px;
+    justify-content: center;
+  }
+  .tm-ficha {
+    width: min(100%, 250px);
+  }
+}
+
+/* ---------- Sin movimiento ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .tm-cta,
+  .tm-cta-anillo::before,
+  .tm-sigilo {
+    animation: none;
+  }
+}
+
+/* =========================================================
+   FORMULARIO (Juego.jsx): panel + vista previa de la ficha
+   ========================================================= */
+.tm-formulario {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: clamp(18px, 2.4vw, 32px);
+  max-width: 1040px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+.tm-form {
+  display: grid;
+  gap: 22px;
+}
+
+.tm-campo-form {
+  position: relative;
+  display: grid;
+  gap: 8px;
+}
+
+.tm-campo-form label {
+  font-family: pieces;
+  font-size: 18px;
+  letter-spacing: 1px;
+  color: #1ad96d;
+  text-shadow: 0 0 6px rgba(var(--verde), 0.6);
+}
+
+.tm-campo-form input,
+.tm-campo-form textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid rgba(var(--verde), 0.3);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.38);
+  color: #fff;
+  font-family: glacia;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.tm-campo-form textarea {
+  min-height: 170px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.tm-campo-form input::placeholder,
+.tm-campo-form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.tm-campo-form input:focus,
+.tm-campo-form textarea:focus {
+  border-color: #1ad96d;
+  background: rgba(2, 14, 9, 0.6);
+  box-shadow: 0 0 16px rgba(var(--verde), 0.28);
+}
+
+.tm-car {
+  justify-self: end;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.tm-form .tm-cta {
+  justify-self: start;
+}
+
+.tm-exito {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 14px;
+  font-size: 14px;
+  color: #b6ffd2;
+}
+
+.tm-exito .tm-ver {
+  margin: 0;
+}
+
+/* Vista previa: cómo se verá la ficha en el libro */
+.tm-previa {
+  position: sticky;
+  top: 28px;
+  display: grid;
+  gap: 16px;
+  justify-items: center;
+}
+
+.tm-previa-titulo {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgb(var(--dorado));
+}
+
+.tm-ficha--previa {
+  width: 100%;
+  cursor: default;
+  touch-action: auto;
+  transform: rotate(-2deg);
+}
+
+.tm-ficha--previa .tm-ficha-texto {
+  -webkit-line-clamp: 8;
+  line-clamp: 8;
+}
+
+.tm-ficha--previa .tm-vacia {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+@media (max-width: 900px) {
+  .tm-formulario {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .tm-previa {
+    position: static;
+  }
+  .tm-ficha--previa {
+    max-width: 260px;
+  }
+}
+
+/* =========================================================
+   COMENTARIOS COMPLETOS (nuevos / antiguos)
+   ========================================================= */
+.tm-titulo--largo {
+  font-size: clamp(40px, 6.4vw, 78px);
+}
+
+.tm-lista {
+  max-width: 1040px;
+  margin: 0 auto;
+}
+
+/* Comentario de bienvenida anclado: ocupa todo el ancho del campo */
+.tm-ficha--anclada {
+  flex: 1 0 100%;
+  width: 100%;
+  padding: 24px 22px 16px;
+  cursor: default;
+  touch-action: auto;
+  border-color: rgba(var(--verde), 0.6);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55), 0 0 22px rgba(var(--verde), 0.12),
+    inset 0 0 18px rgba(var(--verde), 0.06);
+}
+
+.tm-ficha--anclada .tm-ficha-nombre {
+  font-size: clamp(18px, 2.2vw, 24px);
+  padding-right: 80px;
+}
+
+.tm-ficha--anclada .tm-ficha-texto {
+  display: block;
+  -webkit-line-clamp: unset;
+  line-clamp: unset;
+  font-size: 14.5px;
+}
+
+.tm-ancla {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  font-size: 9.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgb(var(--dorado));
+}
+
+/* Enlaces del pie de la vitrina */
+.tm-pie {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px 24px;
+  margin-top: 14px;
+}
+
+.tm-pie .tm-ver {
+  margin: 0;
+}
+
+/* Dos listas apiladas (cuando no hay :tipo en la ruta) */
+.tm-listas {
+  display: grid;
+  gap: clamp(20px, 3vw, 36px);
+}
+
+/* Botones de cada ficha: editar y borrar */
+.tm-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.tm-accion {
+  padding: 5px 12px;
+  border: 1px solid rgba(var(--verde), 0.5);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.35);
+  color: #1ad96d;
+  font-family: pieces;
+  font-size: 12px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+
+.tm-accion:hover:not(:disabled),
+.tm-accion:focus-visible {
+  background: rgba(var(--verde), 0.14);
+  border-color: #1ad96d;
+  box-shadow: 0 0 10px rgba(var(--verde), 0.35);
+  outline: none;
+}
+
+.tm-accion:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.tm-accion--borrar {
+  border-color: rgba(224, 90, 79, 0.55);
+  color: #ff9d94;
+}
+
+.tm-accion--borrar:hover:not(:disabled),
+.tm-accion--borrar:focus-visible,
+.tm-accion--confirmar {
+  background: rgba(224, 90, 79, 0.16);
+  border-color: #e05a4f;
+  box-shadow: 0 0 10px rgba(224, 90, 79, 0.4);
+  color: #ffb9b2;
+}
+
+/* Edición: la ficha se ensancha y se endereza */
+.tm-ficha--editando {
+  width: min(100%, 360px);
+  cursor: default;
+  touch-action: auto;
+}
+
+.tm-editar textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 10px 12px;
+  border: 1px solid rgba(var(--verde), 0.35);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  font-family: glacia;
+  font-size: 14px;
+  line-height: 1.5;
+  resize: vertical;
+  outline: none;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.tm-editar textarea:focus {
+  border-color: #1ad96d;
+  box-shadow: 0 0 14px rgba(var(--verde), 0.28);
+}
+
+/* Varias listas (cuando se ven nuevos y antiguos juntos) */
+.tm-listas {
+  display: grid;
+  gap: clamp(20px, 3vw, 34px);
+}
+
+/* Botones de cada ficha: editar / borrar / guardar / cancelar */
+.tm-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.tm-btn {
+  padding: 5px 13px;
+  border: 1px solid rgba(var(--verde), 0.5);
+  border-radius: 999px;
+  background: rgba(var(--verde), 0.06);
+  color: #1ad96d;
+  font-family: pieces;
+  font-size: 12px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+
+.tm-btn:hover,
+.tm-btn:focus-visible {
+  background: rgba(var(--verde), 0.18);
+  border-color: #1ad96d;
+  box-shadow: 0 0 12px rgba(var(--verde), 0.35);
+  outline: none;
+}
+
+.tm-btn--borrar {
+  border-color: rgba(255, 110, 110, 0.45);
+  background: rgba(255, 80, 80, 0.05);
+  color: #ff9a9a;
+}
+
+.tm-btn--borrar:hover,
+.tm-btn--borrar:focus-visible {
+  background: rgba(255, 80, 80, 0.16);
+  border-color: #ff8080;
+  box-shadow: 0 0 12px rgba(255, 90, 90, 0.3);
+}
+
+.tm-editar textarea {
+  width: 100%;
+  min-height: 110px;
+  padding: 10px 12px;
+  border: 1px solid rgba(var(--verde), 0.35);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  font-family: glacia;
+  font-size: 13.5px;
+  line-height: 1.5;
+  resize: vertical;
+  outline: none;
+  user-select: text;
+  -webkit-user-select: text;
+  cursor: text;
+}
+
+.tm-editar textarea:focus {
+  border-color: #1ad96d;
+  box-shadow: 0 0 14px rgba(var(--verde), 0.28);
+}

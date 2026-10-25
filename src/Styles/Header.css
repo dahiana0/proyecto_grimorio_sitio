@@ -308,6 +308,28 @@
   transform: scale(1.03);
 }
 
+/* ---------- La página se corre cuando el menú se despliega ----------
+   Todo se maneja desde aquí (no hay que tocar las demás páginas): cuando el
+   menú se abre (mouse encima o con foco), el body gana margen a la izquierda
+   con la misma animación, y el contenido se acomoda en el espacio que queda.
+   180px = lo que crece el menú al abrirse (280px - 100px). */
+body {
+  padding-left: 0;
+  transition: padding-left 0.35s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+body:has(.sidebar:hover),
+body:has(.sidebar:focus-within) {
+  padding-left: 180px;
+}
+
+@media (max-width: 576px) {
+  body:has(.sidebar:hover),
+  body:has(.sidebar:focus-within) {
+    padding-left: 172px; /* 240px - 68px */
+  }
+}
+
 /* ---------- Que el contenido no quede tapado ---------- */
 /* Añade la clase "con-sidebar" al contenedor principal de tus páginas */
 .con-sidebar {

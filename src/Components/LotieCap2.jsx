@@ -319,7 +319,7 @@ const LotieCap2 = () => {
               onPause={() => detenerSonido("pasosEspalda")}
               onEnded={() => detenerSonido("pasosEspalda")}
             >
-              <source src="/Comp 2.webm" type="video/webm" />
+              <source src="./step correccion 1.webm" type="video/webm" />
             </video>
 
             <video
@@ -346,7 +346,7 @@ const LotieCap2 = () => {
                 setFrente2Termino(true);
               }}
             >
-              <source src="./Comp 3.webm" type="video/webm" />
+              <source src="./step correcion 2.webm" type="video/webm" />
             </video>
           </div>
         </div>

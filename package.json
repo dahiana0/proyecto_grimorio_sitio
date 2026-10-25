@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@google/model-viewer": "^4.4.0",
+    "@supabase/supabase-js": "^2.118.0",
     "@tabler/icons-react": "^3.46.0",
     "aos": "^2.3.4",
     "bootstrap": "^5.3.8",
