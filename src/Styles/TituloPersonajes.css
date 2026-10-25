@@ -11,10 +11,10 @@
 .tp-titulo {
   margin: 0;
   font-family: "pieces";
-  font-weight: normal;
-  font-size: clamp(32px, 5.2vw, 60px);
-  line-height: 1.1;
-  color: rgb(var(--verde));
+  font-weight: 400;
+  font-size: clamp(46px, 8vw, 96px); /* mismo tamaño que "Libro de visitas" */
+  line-height: 1;
+  color: #1ad96d;
   animation:
     tpPulso 4s ease-in-out 2.4s infinite alternate,
     tpFlota 7s ease-in-out 2.4s infinite;
@@ -31,7 +31,8 @@
   opacity: 0;
   transform: translateY(0.7em) scale(0.7);
   filter: blur(10px);
-  text-shadow: 0 0 10px rgba(var(--verde), 0.8), 0 0 28px rgba(var(--verde), 0.45);
+  /* mismo doble resplandor verde de "Libro de visitas" */
+  text-shadow: 0 0 10px #1ad96d, 0 0 34px rgba(var(--verde), 0.5);
   animation: tpLetra 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
   animation-delay: calc(0.5s + var(--i) * 0.07s);
 }
@@ -43,12 +44,12 @@
 /* El brillo verde late suavemente */
 @keyframes tpPulso {
   from {
-    filter: drop-shadow(0 0 4px rgba(var(--verde), 0.5))
-      drop-shadow(0 0 14px rgba(var(--verde), 0.3));
+    filter: drop-shadow(0 0 4px rgba(var(--verde), 0.4))
+      drop-shadow(0 0 14px rgba(var(--verde), 0.25));
   }
   to {
-    filter: drop-shadow(0 0 8px rgba(var(--verde), 0.85))
-      drop-shadow(0 0 22px rgba(var(--verde), 0.45));
+    filter: drop-shadow(0 0 8px rgba(var(--verde), 0.7))
+      drop-shadow(0 0 22px rgba(var(--verde), 0.4));
   }
 }
 
@@ -57,22 +58,21 @@
   50%      { transform: translateY(-4px); }
 }
 
-/* Subtítulo */
+/* Subtítulo: fuente normal de la página, gris claro */
 .tp-sub {
-  margin: 16px auto 0;
-  max-width: 640px;
-  font-size: clamp(13px, 1.6vw, 16px);
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.78);
+  margin: 18px auto 0;
+  max-width: 560px;
+  font-family: "glacia";
+  font-size: clamp(14px, 1.6vw, 17px);
+  line-height: 1.7;
+  color: #cfcfcf;
   opacity: 0;
   transform: translateY(14px);
-  letter-spacing: 0.1em;
   animation: tpSub 1.4s ease 1.6s forwards;
-  font-family: glacia;
 }
 
 @keyframes tpSub {
-  to { opacity: 1; transform: none; letter-spacing: 0.02em; }
+  to { opacity: 1; transform: none; }
 }
 
 /* Respeta a quien desactiva las animaciones */
