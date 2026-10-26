@@ -104,6 +104,11 @@
   z-index: 3;
 }
 
+/* Tarjeta del autor: un poco más compacta */
+.dash-c {
+  padding: clamp(8px, 1.6vh, 16px) clamp(12px, 1.3vw, 20px);
+}
+
 .dash-card-titulo {
   flex: none;
   display: flex;
@@ -491,14 +496,14 @@
   flex: 1 0 auto;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
-  align-items: center;
-  gap: clamp(10px, 1.4vw, 20px);
+  align-items: start;
+  gap: clamp(8px, 1vw, 14px);
 }
 
 .dash-autor-circulo {
   all: unset;
   cursor: pointer;
-  height: clamp(80px, 17vh, 150px);
+  height: clamp(60px, 11vh, 105px);
   aspect-ratio: 1;
   overflow: hidden;
   border-radius: 50%;
@@ -519,17 +524,17 @@
 
 .dash-autor-nombre {
   font-family: "pieces";
-  font-size: clamp(16px, 2.6vh, 24px);
+  font-size: clamp(14px, 2.2vh, 20px);
   color: #1ad96d;
   text-shadow: 0 0 6px #1ad96d;
   margin: 0 0 2px;
 }
 
 .dash-autor-anios {
-  margin: 0 0 6px;
+  margin: 0 0 4px;
   font-family: glacia;
-  font-size: clamp(9px, 1.3vh, 12px);
-  letter-spacing: 0.15em;
+  font-size: clamp(8px, 1.1vh, 10px);
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #bfa76a;
 }
@@ -539,6 +544,8 @@
 }
 
 .dash-autor-texto .dash-card-p {
+  font-size: clamp(10px, 1.45vh, 12.5px);
+  line-height: 1.45;
   min-height: 5.4em;
 }
 
@@ -782,14 +789,15 @@
   }
 }
 
-/* Autor: foto arriba, texto debajo */
-@container (max-width: 330px) {
+/* Autor: foto arriba, texto debajo (apila desde 400px) */
+@container (max-width: 400px) {
   .dash-autor {
     grid-template-columns: minmax(0, 1fr);
     justify-items: center;
     text-align: center;
-    gap: 10px;
+    gap: 8px;
   }
+  .dash-autor-circulo { height: clamp(60px, 10vh, 85px); }
   .dash-autor-texto .dash-card-p { min-height: 0; }
   .dash-autor-texto .dash-link { align-self: center; }
 }
@@ -857,6 +865,7 @@
   .dash-autor-circulo { height: clamp(100px, 22vw, 150px); }
   .dash-autor-nombre { font-size: clamp(18px, 3.6vw, 24px); }
   .dash-autor-anios { font-size: clamp(10px, 1.9vw, 12px); }
+  .dash-autor-texto .dash-card-p { font-size: clamp(13px, 2.2vw, 15px); }
 
   .dash-cinta-fila { min-height: 200px; }
 }
