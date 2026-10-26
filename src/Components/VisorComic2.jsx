@@ -33,7 +33,7 @@ export default function VisorComic2({
   const [play, setPlay] = useState(false);
   const [showControls, setShowControls] = useState(true);
 
-  // Volumen manual (0 a 1) y visibilidad de la ventanita del slider
+  // Volumen manual (0 a 1)
   const [nivelVolumen, setNivelVolumen] = useState(1);
   const volumenPrevioRef = useRef(1);
 
@@ -53,44 +53,19 @@ export default function VisorComic2({
   const [transicionando, setTransicionando] = useState(false);
 
   // ---------------------------------------------------------------------
-  // Datos: subtítulos por escena
+  // Datos: subtítulos por escena (inicio y fin en segundos del audio)
   // ---------------------------------------------------------------------
-  const subtitulosCap2 = [
-    {
-      inicio: 0.48,
-      fin: 6.71,
-      texto: "Steven cruzó un límite donde la curiosidad deja de ser segura,",
-    },
-    {
-      inicio: 6.72,
-      fin: 11.99,
-      texto: "se enfrenta a algo inexplicable que lo observa en la oscuridad,",
-    },
-    {
-      inicio: 12.0,
-      fin: 16.75,
-      texto: "cada paso lo acerca más a una verdad peligrosa,",
-    },
-    {
-      inicio: 16.76,
-      fin: 22.19,
-      texto: "el ambiente se vuelve pesado y las sombras parecen seguirlo,",
-    },
-    {
-      inicio: 22.2,
-      fin: 29.91,
-      texto:
-        "el miedo ya no es una idea, es una presencia constante, ahora no solo busca.",
-    },
-    {
-      inicio: 30.36,
-      fin: 33.63,
-      texto: "Estas, lucha por sobrevivir.",
-    },
+  const subtitulosCap = [
+    { inicio: 0.48, fin: 6.71, texto: "Steven cruzó un límite donde la curiosidad deja de ser segura," },
+    { inicio: 6.72, fin: 11.99, texto: "se enfrenta a algo inexplicable que lo observa en la oscuridad," },
+    { inicio: 12.0, fin: 16.75, texto: "cada paso lo acerca más a una verdad peligrosa," },
+    { inicio: 16.76, fin: 22.19, texto: "el ambiente se vuelve pesado y las sombras parecen seguirlo," },
+    { inicio: 22.2, fin: 29.91, texto: "el miedo ya no es una idea, es una presencia constante, ahora no solo busca." },
+    { inicio: 30.36, fin: 33.63, texto: "Estas, lucha por sobrevivir." },
   ];
 
   const subtitulosPorEscena = {
-    0: subtitulosCap2,
+    0: subtitulosCap,
     1: [],
   };
 
@@ -99,7 +74,7 @@ export default function VisorComic2({
   // ---------------------------------------------------------------------
   const escenas = [
     { tipo: "lottie", componente: <LotieCap2 />, audio: "/audios/cap2.wav" },
-    { tipo: "video", video: "./videos/capitulo 2 video.mp4" },
+    { tipo: "video", video: "/videos/capitulo2.webm" },
   ];
 
   // ---------------------------------------------------------------------
@@ -136,7 +111,7 @@ export default function VisorComic2({
     setPlay(false);
     setSubtituloActual("");
 
-    // Si la escena tiene audio
+    // Reproducir audio de la escena Lottie
     if (escenaActual.tipo === "lottie" && escenaActual.audio) {
       audioRef.current.src = escenaActual.audio;
       audioRef.current.currentTime = 0;
@@ -185,14 +160,13 @@ export default function VisorComic2({
   // Video: play / pause
   // ---------------------------------------------------------------------
   const handlePlayPause = () => {
-    if (!videoRef.current) return;
+    const video = videoRef.current;
+    if (!video) return;
 
-    if (videoRef.current.paused) {
-      videoRef.current.play();
-      setPlay(true);
+    if (video.paused) {
+      video.play().catch((error) => console.error("No se pudo reproducir el video:", error));
     } else {
-      videoRef.current.pause();
-      setPlay(false);
+      video.pause();
     }
   };
 
@@ -299,11 +273,12 @@ export default function VisorComic2({
                 className="visor-video"
                 autoPlay
                 playsInline
+                preload="auto"
                 muted={nivelVolumen === 0}
                 onPlay={() => setPlay(true)}
                 onPause={() => setPlay(false)}
               >
-                <source src={escenas[index].video} type="video/mp4" />
+                <source src={escenas[index].video} type="video/webm" />
                 Tu navegador no soporta videos HTML5.
               </video>
 
@@ -344,7 +319,6 @@ export default function VisorComic2({
               </div>
             </div>
           )}
-
         </div>
       </div>
 
@@ -366,12 +340,15 @@ export default function VisorComic2({
         onAlternarMute={alternarMute}
         mostrarSubtitulo={mostrarSubtitulo}
         onAlternarSubtitulos={() => setMostrarSubtitulo((v) => !v)}
-        subtitulo={(escenas[index].tipo === "lottie" ? subtituloActual : "")}
+        subtitulo={escenas[index].tipo === "lottie" ? subtituloActual : ""}
       />
 
-      <audio ref={audioRef}
+      <audio
+        ref={audioRef}
         onPlay={() => setAudioSonando(true)}
-        onPause={() => setAudioSonando(false)} onTimeUpdate={actualizarSubtitulo} />
+        onPause={() => setAudioSonando(false)}
+        onTimeUpdate={actualizarSubtitulo}
+      />
     </div>
   );
 }

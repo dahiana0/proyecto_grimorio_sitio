@@ -15,7 +15,10 @@ const DURACION_TRANSICION = 350;
 // Audio del segundo tramo del narrador en la parte 3
 // (suena cuando terminan los diálogos de Step y Rogers).
 // Guárdalo en public/audios/ o cambia la ruta si se llama distinto.
-const AUDIO_PARTE3_TRAMO_B = "./audios/Narrador_2.mp3";
+const AUDIO_PARTE3_TRAMO_B = "/audios/Narrador_2.mp3";
+
+// Video final del capítulo (WebM). Va en public/videos/
+const VIDEO_CAP1 = "/videos/capitulo1.webm";
 
 // Posición de este capítulo en RUTAS_CAPITULOS (0 = capítulo I)
 const CAPITULO = 0;
@@ -93,7 +96,7 @@ export default function VisorCapitulo({
   const [, setAudioSonando] = useState(false);
   const [mostrarSubtitulo, setMostrarSubtitulo] = useState(true);
 
-  // Volumen manual (0 a 1) y visibilidad de la ventanita del slider
+  // Volumen manual (0 a 1)
   const [nivelVolumen, setNivelVolumen] = useState(1);
   const volumenPrevioRef = useRef(1);
 
@@ -215,6 +218,17 @@ export default function VisorCapitulo({
     setSubtituloActual("");
   };
 
+  // Subtítulo del tramo B sin audio (usa los tiempos de subtitulosParte3B)
+  const mostrarSubtituloSinAudio = () => {
+    limpiarRespaldo();
+    subtitulosParte3B.forEach((s) => {
+      respaldoTimersRef.current.push(
+        esperar(() => setSubtituloActual(s.texto), s.inicio * 1000),
+        esperar(() => setSubtituloActual(""), s.fin * 1000)
+      );
+    });
+  };
+
   // Cuando terminan los diálogos, suena el segundo tramo del narrador
   const reanudarNarrador = () => {
     const audio = audioRef.current;
@@ -227,17 +241,6 @@ export default function VisorCapitulo({
     // Si el audio no existe o falla (no por autoplay), el subtítulo
     // se muestra igual, con los mismos tiempos
     reproducirConReintento(mostrarSubtituloSinAudio);
-  };
-
-  // Subtítulo del tramo B sin audio (usa los tiempos de subtitulosParte3B)
-  const mostrarSubtituloSinAudio = () => {
-    limpiarRespaldo();
-    subtitulosParte3B.forEach((s) => {
-      respaldoTimersRef.current.push(
-        esperar(() => setSubtituloActual(s.texto), s.inicio * 1000),
-        esperar(() => setSubtituloActual(""), s.fin * 1000)
-      );
-    });
   };
 
   // ---------------------------------------------------------------------
@@ -258,7 +261,7 @@ export default function VisorCapitulo({
       ),
       audio: "/audios/Narrador_1.mp3",
     },
-    { tipo: "video", video: "./videos/capitulo 1 video.mp4" },
+    { tipo: "video", video: "/videos/capitulo1.webm" },
   ];
 
   // ---------------------------------------------------------------------
@@ -293,6 +296,12 @@ export default function VisorCapitulo({
     cancelarReintento();
 
     const escenaActual = escenas[index];
+
+    // Detener video
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
 
     if (escenaActual.tipo === "lottie" && escenaActual.audio) {
       audioRef.current.src = escenaActual.audio;
@@ -366,22 +375,17 @@ export default function VisorCapitulo({
   const anterior = () => cambiarEscena(index - 1);
 
   // ---------------------------------------------------------------------
-  // Video: play / pause / avance
+  // Video: play / pause
   // ---------------------------------------------------------------------
   const handlePlayPause = () => {
-    if (!videoRef.current) return;
+    const video = videoRef.current;
+    if (!video) return;
 
-    if (videoRef.current.paused) {
-      videoRef.current.play();
-      setPlay(true);
+    if (video.paused) {
+      video.play().catch((error) => console.error("No se pudo reproducir el video:", error));
     } else {
-      videoRef.current.pause();
-      setPlay(false);
+      video.pause();
     }
-  };
-
-  const handleTimeUpdate = () => {
-    if (!videoRef.current) return;
   };
 
   // ---------------------------------------------------------------------
@@ -469,12 +473,13 @@ export default function VisorCapitulo({
                 className="visor-video"
                 autoPlay
                 playsInline
+                preload="auto"
                 muted={nivelVolumen === 0}
-                onTimeUpdate={handleTimeUpdate}
                 onPlay={() => setPlay(true)}
                 onPause={() => setPlay(false)}
               >
-                <source src={escenas[index].video} type="video/mp4" />
+                <source src={escenas[index].video} type="video/webm" />
+                Tu navegador no soporta videos HTML5.
               </video>
 
               <div className={`visor-controls ${showControls ? "show" : ""}`}>
@@ -483,7 +488,10 @@ export default function VisorCapitulo({
                     className="video-btn"
                     onClick={() => {
                       if (videoRef.current) {
-                        videoRef.current.currentTime -= 10;
+                        videoRef.current.currentTime = Math.max(
+                          0,
+                          videoRef.current.currentTime - 10
+                        );
                       }
                     }}
                   >
@@ -511,7 +519,6 @@ export default function VisorCapitulo({
               </div>
             </div>
           )}
-
         </div>
       </div>
 
@@ -533,12 +540,15 @@ export default function VisorCapitulo({
         onAlternarMute={alternarMute}
         mostrarSubtitulo={mostrarSubtitulo}
         onAlternarSubtitulos={() => setMostrarSubtitulo((v) => !v)}
-        subtitulo={(escenas[index].tipo === "lottie" ? (subtituloDialogo || subtituloActual) : "")}
+        subtitulo={escenas[index].tipo === "lottie" ? (subtituloDialogo || subtituloActual) : ""}
       />
 
-      <audio ref={audioRef}
+      <audio
+        ref={audioRef}
         onPlay={() => setAudioSonando(true)}
-        onPause={() => setAudioSonando(false)} onTimeUpdate={actualizarSubtitulo} />
+        onPause={() => setAudioSonando(false)}
+        onTimeUpdate={actualizarSubtitulo}
+      />
     </div>
   );
 }

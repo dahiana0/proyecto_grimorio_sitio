@@ -963,3 +963,33 @@
     .visor-sub { font-size: 17px; padding: 10px 18px; }
     .visor-btn { font-size: 12px; padding: 8px 14px; letter-spacing: 2px; }
 }
+
+/* ==========================================================================
+   VIDEO (WebM): ajustes para que se vea y los controles funcionen bien
+   ========================================================================== */
+
+/* El video se centra y no deja el espacio extra debajo que dejan los elementos en línea */
+.visor-video-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.visor-video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #000;
+}
+
+/* Los controles siempre quedan por encima del video.
+   Cuando están ocultos no bloquean clics; al pasar el mouse vuelven a aparecer. */
+.visor-controls {
+    z-index: 15;
+    pointer-events: none;
+}
+
+.visor-controls.show {
+    pointer-events: auto;
+}

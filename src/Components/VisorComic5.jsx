@@ -22,9 +22,8 @@ const INICIO_ORABONA_2 = 19.18;
 // Copia tu archivo a public/audios/ y cambia solo el nombre aquí.
 const AUDIO_5C = "/audios/AUDIO_5C.wav";
 
-// Video final del capítulo (escena 7).
-// Copia tu archivo a public/ y cambia solo el nombre aquí.
-const VIDEO_CAP5 = "/Capitulo 5 video.mp4";
+// Video final del capítulo (escena 7, WebM). Va en public/videos/
+const VIDEO_CAP5 = "/videos/capitulo5.webm";
 
 // Posición de este capítulo en RUTAS_CAPITULOS (0 = capítulo I)
 const CAPITULO = 4;
@@ -323,7 +322,7 @@ export default function VisorComic5({
     { tipo: "lottie", componente: <LotieCap5D />, audio: "/audios/narrador5D.wav" },
     { tipo: "lottie", componente: <LotieCap5E />, audio: "/audios/Narrador5E.wav" },
     // Video final del capítulo
-    { tipo: "video", video: "/videos/capitulo 5 video.mp4" },
+    { tipo: "video", video: VIDEO_CAP5 },
   ];
 
   // Sincroniza el subtítulo con el tiempo actual del audio
@@ -344,6 +343,10 @@ export default function VisorComic5({
 
     setSubtituloActual(subtitulo ? subtitulo.texto : "");
   };
+
+  // Volumen siempre actualizado para usarlo dentro de temporizadores
+  const volumenActualRef = useRef(1);
+  volumenActualRef.current = nivelVolumen;
 
   // Programa el segundo audio de la escena (si lo tiene).
   // Se cuenta desde que el primer audio realmente arranca.
@@ -367,10 +370,6 @@ export default function VisorComic5({
       });
     }, inicio * 1000);
   };
-
-  // Volumen siempre actualizado para usarlo dentro de temporizadores
-  const volumenActualRef = useRef(1);
-  volumenActualRef.current = nivelVolumen;
 
   // Intenta reproducir el audio; si el navegador lo bloquea, muestra el botón
   const reproducirAudio = () => {
@@ -456,14 +455,13 @@ export default function VisorComic5({
 
   // Video: play / pause
   const handlePlayPause = () => {
-    if (!videoRef.current) return;
+    const video = videoRef.current;
+    if (!video) return;
 
-    if (videoRef.current.paused) {
-      videoRef.current.play();
-      setPlay(true);
+    if (video.paused) {
+      video.play().catch((error) => console.error("No se pudo reproducir el video:", error));
     } else {
-      videoRef.current.pause();
-      setPlay(false);
+      video.pause();
     }
   };
 
@@ -566,11 +564,12 @@ export default function VisorComic5({
                 className="visor-video"
                 autoPlay
                 playsInline
+                preload="auto"
                 muted={nivelVolumen === 0}
                 onPlay={() => setPlay(true)}
                 onPause={() => setPlay(false)}
               >
-                <source src={escenas[index].video} type="video/mp4" />
+                <source src={escenas[index].video} type="video/webm" />
                 Tu navegador no soporta videos HTML5.
               </video>
 

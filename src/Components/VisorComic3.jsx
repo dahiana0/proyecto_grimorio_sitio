@@ -33,7 +33,7 @@ export default function VisorComic3({
   const [play, setPlay] = useState(false);
   const [showControls, setShowControls] = useState(true);
 
-  // Volumen manual (0 a 1) y visibilidad de la ventanita del slider
+  // Volumen manual (0 a 1)
   const [nivelVolumen, setNivelVolumen] = useState(1);
   const volumenPrevioRef = useRef(1);
 
@@ -53,55 +53,21 @@ export default function VisorComic3({
   const [transicionando, setTransicionando] = useState(false);
 
   // ---------------------------------------------------------------------
-  // Datos: subtítulos por escena
+  // Datos: subtítulos por escena (inicio y fin en segundos del audio)
   // ---------------------------------------------------------------------
-  const subtitulosCap3 = [
-    {
-      inicio: 0.36,
-      fin: 6.15,
-      texto: "Algunos secretos no desaparecen, solo cambian de guardián.",
-    },
-    {
-      inicio: 6.16,
-      fin: 12.39,
-      texto:
-        "Stephen creyó haber dejado todo atrás, pero hay lugares que no olvidan,",
-    },
-    {
-      inicio: 12.4,
-      fin: 16.07,
-      texto: "y presencias que nunca se van.",
-    },
-    {
-      inicio: 16.08,
-      fin: 22.71,
-      texto:
-        "Ha regresado, no por valentía, sino por esa inquietud que no lo deja en paz,",
-    },
-    {
-      inicio: 22.72,
-      fin: 26.75,
-      texto: "esa sensación de que algo quedó incompleto.",
-    },
-    {
-      inicio: 26.76,
-      fin: 29.91,
-      texto: "Busca respuestas, pero en este lugar.",
-    },
-    {
-      inicio: 30.36,
-      fin: 34.47,
-      texto: "Las respuestas siempre tienen un precio,",
-    },
-    {
-      inicio: 34.48,
-      fin: 39.95,
-      texto: "no está solo, hay alguien más, una presencia que observa.",
-    },
+  const subtitulosCap = [
+    { inicio: 0.36, fin: 6.15, texto: "Algunos secretos no desaparecen, solo cambian de guardián." },
+    { inicio: 6.16, fin: 12.39, texto: "Stephen creyó haber dejado todo atrás, pero hay lugares que no olvidan," },
+    { inicio: 12.4, fin: 16.07, texto: "y presencias que nunca se van." },
+    { inicio: 16.08, fin: 22.71, texto: "Ha regresado, no por valentía, sino por esa inquietud que no lo deja en paz," },
+    { inicio: 22.72, fin: 26.75, texto: "esa sensación de que algo quedó incompleto." },
+    { inicio: 26.76, fin: 29.91, texto: "Busca respuestas, pero en este lugar." },
+    { inicio: 30.36, fin: 34.47, texto: "Las respuestas siempre tienen un precio," },
+    { inicio: 34.48, fin: 39.95, texto: "no está solo, hay alguien más, una presencia que observa." },
   ];
 
   const subtitulosPorEscena = {
-    0: subtitulosCap3,
+    0: subtitulosCap,
     1: [],
   };
 
@@ -110,7 +76,7 @@ export default function VisorComic3({
   // ---------------------------------------------------------------------
   const escenas = [
     { tipo: "lottie", componente: <LotieCap3 />, audio: "/audios/cap3.wav" },
-    { tipo: "video", video: "./videos/capitulo 3 video.mp4" },
+    { tipo: "video", video: "/videos/capitulo3.webm" },
   ];
 
   // ---------------------------------------------------------------------
@@ -196,14 +162,13 @@ export default function VisorComic3({
   // Video: play / pause
   // ---------------------------------------------------------------------
   const handlePlayPause = () => {
-    if (!videoRef.current) return;
+    const video = videoRef.current;
+    if (!video) return;
 
-    if (videoRef.current.paused) {
-      videoRef.current.play();
-      setPlay(true);
+    if (video.paused) {
+      video.play().catch((error) => console.error("No se pudo reproducir el video:", error));
     } else {
-      videoRef.current.pause();
-      setPlay(false);
+      video.pause();
     }
   };
 
@@ -310,11 +275,12 @@ export default function VisorComic3({
                 className="visor-video"
                 autoPlay
                 playsInline
+                preload="auto"
                 muted={nivelVolumen === 0}
                 onPlay={() => setPlay(true)}
                 onPause={() => setPlay(false)}
               >
-                <source src={escenas[index].video} type="video/mp4" />
+                <source src={escenas[index].video} type="video/webm" />
                 Tu navegador no soporta videos HTML5.
               </video>
 
@@ -355,7 +321,6 @@ export default function VisorComic3({
               </div>
             </div>
           )}
-
         </div>
       </div>
 
@@ -377,12 +342,15 @@ export default function VisorComic3({
         onAlternarMute={alternarMute}
         mostrarSubtitulo={mostrarSubtitulo}
         onAlternarSubtitulos={() => setMostrarSubtitulo((v) => !v)}
-        subtitulo={(escenas[index].tipo === "lottie" ? subtituloActual : "")}
+        subtitulo={escenas[index].tipo === "lottie" ? subtituloActual : ""}
       />
 
-      <audio ref={audioRef}
+      <audio
+        ref={audioRef}
         onPlay={() => setAudioSonando(true)}
-        onPause={() => setAudioSonando(false)} onTimeUpdate={actualizarSubtitulo} />
+        onPause={() => setAudioSonando(false)}
+        onTimeUpdate={actualizarSubtitulo}
+      />
     </div>
   );
 }

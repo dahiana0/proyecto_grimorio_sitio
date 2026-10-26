@@ -33,7 +33,7 @@ export default function VisorComic4({
   const [play, setPlay] = useState(false);
   const [showControls, setShowControls] = useState(true);
 
-  // Volumen manual (0 a 1) y visibilidad de la ventanita del slider
+  // Volumen manual (0 a 1)
   const [nivelVolumen, setNivelVolumen] = useState(1);
   const volumenPrevioRef = useRef(1);
 
@@ -55,46 +55,18 @@ export default function VisorComic4({
   // ---------------------------------------------------------------------
   // Datos: subtítulos por escena (inicio y fin en segundos del audio)
   // ---------------------------------------------------------------------
-  const subtitulosCap4 = [
-    {
-      inicio: 0.12,
-      fin: 2.47,
-      texto: "En las profundidades del museo,",
-    },
-    {
-      inicio: 2.48,
-      fin: 7.43,
-      texto: "Stephen descubre que la curiosidad puede convertirse en una pesadilla.",
-    },
-    {
-      inicio: 7.44,
-      fin: 11.87,
-      texto: "Rogers lo somete e intenta completar un oscuro ritual,",
-    },
-    {
-      inicio: 11.88,
-      fin: 17.71,
-      texto: "pero en medio del forcejeo, Stephen encuentra una oportunidad para liberarse",
-    },
-    {
-      inicio: 17.72,
-      fin: 19.64,
-      texto: "aunque consigue abandonar el museo,",
-    },
-    {
-      inicio: 19.65,
-      fin: 24.43,
-      texto: "lo que ha presenciado lo perseguirá mucho después de aquella noche,",
-    },
-    {
-      inicio: 24.44,
-      fin: 28.87,
-      texto: "pues hay horrores de los que es posible huir, pero que jamás se olvidan.",
-    },
+  const subtitulosCap = [
+    { inicio: 0.12, fin: 2.47, texto: "En las profundidades del museo," },
+    { inicio: 2.48, fin: 7.43, texto: "Stephen descubre que la curiosidad puede convertirse en una pesadilla." },
+    { inicio: 7.44, fin: 11.87, texto: "Rogers lo somete e intenta completar un oscuro ritual," },
+    { inicio: 11.88, fin: 17.71, texto: "pero en medio del forcejeo, Stephen encuentra una oportunidad para liberarse" },
+    { inicio: 17.72, fin: 19.64, texto: "aunque consigue abandonar el museo," },
+    { inicio: 19.65, fin: 24.43, texto: "lo que ha presenciado lo perseguirá mucho después de aquella noche," },
+    { inicio: 24.44, fin: 28.87, texto: "pues hay horrores de los que es posible huir, pero que jamás se olvidan." },
   ];
 
   const subtitulosPorEscena = {
-    0: subtitulosCap4,
+    0: subtitulosCap,
     1: [],
   };
 
@@ -102,8 +74,8 @@ export default function VisorComic4({
   // Datos: escenas del capítulo
   // ---------------------------------------------------------------------
   const escenas = [
-    { tipo: "lottie", componente: <LotieCap4 />, audio: "./audios/Cap4.mp3" },
-    { tipo: "video", video: "./videos/capitulo 4 video.mp4" },
+    { tipo: "lottie", componente: <LotieCap4 />, audio: "/audios/Cap4.mp3" },
+    { tipo: "video", video: "/videos/capitulo4.webm" },
   ];
 
   // ---------------------------------------------------------------------
@@ -189,14 +161,13 @@ export default function VisorComic4({
   // Video: play / pause
   // ---------------------------------------------------------------------
   const handlePlayPause = () => {
-    if (!videoRef.current) return;
+    const video = videoRef.current;
+    if (!video) return;
 
-    if (videoRef.current.paused) {
-      videoRef.current.play();
-      setPlay(true);
+    if (video.paused) {
+      video.play().catch((error) => console.error("No se pudo reproducir el video:", error));
     } else {
-      videoRef.current.pause();
-      setPlay(false);
+      video.pause();
     }
   };
 
@@ -303,11 +274,12 @@ export default function VisorComic4({
                 className="visor-video"
                 autoPlay
                 playsInline
+                preload="auto"
                 muted={nivelVolumen === 0}
                 onPlay={() => setPlay(true)}
                 onPause={() => setPlay(false)}
               >
-                <source src={escenas[index].video} type="video/mp4" />
+                <source src={escenas[index].video} type="video/webm" />
                 Tu navegador no soporta videos HTML5.
               </video>
 
@@ -348,7 +320,6 @@ export default function VisorComic4({
               </div>
             </div>
           )}
-
         </div>
       </div>
 
@@ -370,12 +341,15 @@ export default function VisorComic4({
         onAlternarMute={alternarMute}
         mostrarSubtitulo={mostrarSubtitulo}
         onAlternarSubtitulos={() => setMostrarSubtitulo((v) => !v)}
-        subtitulo={(escenas[index].tipo === "lottie" ? subtituloActual : "")}
+        subtitulo={escenas[index].tipo === "lottie" ? subtituloActual : ""}
       />
 
-      <audio ref={audioRef}
+      <audio
+        ref={audioRef}
         onPlay={() => setAudioSonando(true)}
-        onPause={() => setAudioSonando(false)} onTimeUpdate={actualizarSubtitulo} />
+        onPause={() => setAudioSonando(false)}
+        onTimeUpdate={actualizarSubtitulo}
+      />
     </div>
   );
 }
