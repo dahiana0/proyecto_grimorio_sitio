@@ -20,7 +20,7 @@ const personajes = {
   orabona: {
     expediente: "002",
     nombre: "Orabona",
-    modelo: MODELO_PRUEBA,
+    modelo:"/models/orabonaaa.glb",
     color: "#1ad96d",
     tags: ["Misterioso", "Aliado"],
     cita: "El socio silencioso de Rogers. Misterioso y enigmático, siempre parece saber más de lo que muestra.",
@@ -30,7 +30,7 @@ const personajes = {
   rogers: {
     expediente: "003",
     nombre: "George Rogers",
-    modelo: MODELO_PRUEBA,
+    modelo: "/models/rogersss.glb",
     color: "#1ad96d",
     tags: ["Antagonista", "Obsesivo"],
     cita: "Dueño del museo de cera. Fascinado desde niño por embalsamar y preservar, su pasión roza lo macabro.",
@@ -40,7 +40,7 @@ const personajes = {
   stephen: {
     expediente: "004",
     nombre: "Stephen Jones",
-    modelo: MODELO_PRUEBA,
+    modelo: "/models/steppp.glb",
     color: "#1ad96d",
     tags: ["Protagonista", "Racional"],
     cita: "Un hombre racional y culto que no cree en lo sobrenatural… hasta que el museo le demuestra lo contrario.",

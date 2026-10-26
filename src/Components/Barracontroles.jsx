@@ -7,6 +7,7 @@ import "../Styles/barraControles.css";
   Barra de controles compartida por los visores (VisorCapitulo, VisorComic2..5).
 
   - Píldora lateral (izquierda, vertical): volumen · archivo · subtítulos
+  - Barra de subtítulos (pegada debajo de la pantalla, como la barra de arriba)
   - Píldora inferior (centrada): ⏮ anterior | ▶/⏸ pausa-despausa | siguiente ⏭
 
   Además exporta el CONTROL GLOBAL (useControlGlobal) que pausa / silencia
@@ -270,7 +271,7 @@ const ICONOS = {
   "volumen":     "/volumen.svg",
   "sin-volumen": "/sin-volumen.svg",
   "archivo":     "/archivo.svg",
-  "subtitulos":  "/subtitulos.svg",
+  "subtitulos":  "/subtitulos.svg",          // ojo: activar / ocultar subtítulos
   "pausa":       "/pausa.svg",
   "despausa":    "/despausa.svg",
   "anterior":    "/anterior.svg",
@@ -315,6 +316,7 @@ export default function BarraControles({
   onAlternarMute,
   mostrarSubtitulo,
   onAlternarSubtitulos,
+  subtitulo,                 // texto del subtítulo actual (string). Se muestra dentro de la barra inferior
 
   /* --- Opcionales: solo los usa el VisorCapitulo nuevo --- */
   tiempo,                    // { actual, total, valor, max, activa, titulo, onChange, onConfirm }
@@ -332,6 +334,13 @@ export default function BarraControles({
 
   return (
     <>
+      {/* ---------- Barra de subtítulos: continúa la ventana por debajo, como la barra de arriba ----------
+          Va justo después de la pantalla del visor. Siempre existe (aunque no haya texto)
+          para que la ventana no cambie de alto. */}
+      <div className="bc-subbar" aria-live="polite">
+        {mostrarSubtitulo && subtitulo ? <p>{subtitulo}</p> : null}
+      </div>
+
       {/* ---------- Píldora lateral: volumen · archivo · subtítulos ---------- */}
       <div className="bc-side">
         {/* Volumen: un clic silencia / activa el sonido */}

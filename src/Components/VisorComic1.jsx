@@ -258,7 +258,7 @@ export default function VisorCapitulo({
       ),
       audio: "/audios/Narrador_1.mp3",
     },
-    { tipo: "video", video: "/Capitulo1V.mp4" },
+    { tipo: "video", video: "/Capitulo 1 video.mp4" },
   ];
 
   // ---------------------------------------------------------------------
@@ -512,12 +512,6 @@ export default function VisorCapitulo({
             </div>
           )}
 
-          {/* Subtítulo: primero el del diálogo (Step/Rogers), si no el del narrador */}
-          {mostrarSubtitulo && escenas[index].tipo === "lottie" && (
-            <div className="visor-sub">
-              <p>{subtituloDialogo || subtituloActual}</p>
-            </div>
-          )}
         </div>
       </div>
 
@@ -539,6 +533,7 @@ export default function VisorCapitulo({
         onAlternarMute={alternarMute}
         mostrarSubtitulo={mostrarSubtitulo}
         onAlternarSubtitulos={() => setMostrarSubtitulo((v) => !v)}
+        subtitulo={(escenas[index].tipo === "lottie" ? (subtituloDialogo || subtituloActual) : "")}
       />
 
       <audio ref={audioRef}

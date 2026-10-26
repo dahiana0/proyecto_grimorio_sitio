@@ -1,5 +1,6 @@
 import LottieModule from "lottie-react";
 import { useRef, useEffect } from "react";
+import GuardarInteraccion from "./GuardarInteraccion";
 
 import edificio from "../assets/edificio.json";
 import rejas from "../assets/rejas.json";
@@ -57,6 +58,8 @@ const LootieParte2 = () => {
   const animarEdificio = () => {
     edificioRef.current?.stop();
     edificioRef.current?.play();
+
+    GuardarInteraccion("edificio", "Edificio", "edificio", 1, "lottie");
   };
 
   const animarVideo = () => {
@@ -70,6 +73,15 @@ const LootieParte2 = () => {
       videoRef.current.currentTime = 0;
       videoRef.current.play().catch(() => {});
     }
+
+    GuardarInteraccion(
+      "stepCamina",
+      "Step caminando",
+      "stepCamina",
+      1,
+      "video",
+      "/caminado2.webm"
+    );
   };
 
   const animarRejas = () => {
@@ -90,6 +102,8 @@ const LootieParte2 = () => {
 
     rejasRef.current?.stop();
     rejasRef.current?.play();
+
+    GuardarInteraccion("rejas", "Rejas", "rejas", 1, "lottie");
   };
 
   // Detiene a Step y los pasos (se queda quieto donde está)

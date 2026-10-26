@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import LottieModule from "lottie-react";
+import GuardarInteraccion from "./GuardarInteraccion";
 
 import estatua1 from "../assets/estatua1.json";
 import estatua3 from "../assets/estatua3.json";
@@ -11,6 +12,9 @@ import rata from "../assets/rata.json";
 
 import "../Styles/LotieCap2.css";
 const Lottie = LottieModule.default;
+
+// Número de capítulo con el que se guardan las interacciones
+const CAPITULO = 2;
 
 // Tamaño de diseño de la escena (igual que las escenas 1 y 3)
 const ANCHO = 1500;
@@ -185,31 +189,37 @@ const LotieCap2 = () => {
   const animarEstatua1 = () => {
     animarLottie(estatua1Ref);
     reproducirSonido("estatua1");
+    GuardarInteraccion("estatua1", "Estatua 1", "estatua1", CAPITULO, "lottie");
   };
 
   const animarEstatua3 = () => {
     animarLottie(estatua3Ref);
+    GuardarInteraccion("estatua3", "Estatua 3", "estatua3", CAPITULO, "lottie");
   };
 
   const animarEstatua4 = () => {
     animarLottie(estatua4Ref);
+    GuardarInteraccion("estatua4", "Estatua 4", "estatua4", CAPITULO, "lottie");
   };
 
   const animarEstatua5 = () => {
     animarLottie(estatua5Ref);
+    GuardarInteraccion("estatua5", "Estatua 5", "estatua5", CAPITULO, "lottie");
   };
 
   const animarEstatua6 = () => {
     animarLottie(estatua6Ref);
+    GuardarInteraccion("estatua6", "Estatua 6", "estatua6", CAPITULO, "lottie");
   };
 
   const animarRata = () => {
     animarLottie(rataRef);
     reproducirSonido("rata");
+    GuardarInteraccion("rata", "Rata", "rata", CAPITULO, "lottie");
   };
 
   // Balanceo de lámpara: se reinicia en cada clic
-  const moverLampara = (clase) => {
+  const moverLampara = (clase, nombre) => {
     setLamparasActivas((prev) => ({ ...prev, [clase]: false }));
     setTimeout(() => {
       setLamparasActivas((prev) => ({ ...prev, [clase]: true }));
@@ -218,6 +228,9 @@ const LotieCap2 = () => {
         1200
       );
     }, 10);
+
+    // Animación CSS: se guarda con su imagen y se balancea en el archivo
+    GuardarInteraccion(clase, nombre, "lampara", CAPITULO, "css", "/lampara1.png");
   };
 
   const claseFrente2 = frente2Termino
@@ -235,9 +248,9 @@ const LotieCap2 = () => {
   ];
 
   const lamparas = [
-    { clase: "lampara1C" },
-    { clase: "lampara2C" },
-    { clase: "lampara3C" },
+    { clase: "lampara1C", nombre: "Lámpara 1" },
+    { clase: "lampara2C", nombre: "Lámpara 2" },
+    { clase: "lampara3C", nombre: "Lámpara 3" },
   ];
 
   return (
@@ -289,7 +302,7 @@ const LotieCap2 = () => {
             </div>
 
             {/* ===== Lámparas (cuadro de clic + balanceo) ===== */}
-            {lamparas.map(({ clase }) => (
+            {lamparas.map(({ clase, nombre }) => (
               <div
                 key={clase}
                 className={`anim ${clase}${lamparasActivas[clase] ? " lamparaActiva" : ""}`}
@@ -303,7 +316,7 @@ const LotieCap2 = () => {
                     className={lamparasActivas[clase] ? "moverLampara" : ""}
                   />
                 </div>
-                <div className="hitbox" onClick={() => moverLampara(clase)}>
+                <div className="hitbox" onClick={() => moverLampara(clase, nombre)}>
                   <span className="pista" />
                 </div>
               </div>

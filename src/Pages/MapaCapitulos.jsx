@@ -202,6 +202,64 @@ let animacionYaVista = false;
 const mapaYaVisto = () => animacionYaVista;
 
 // =========================================================================
+// OBJETOS INTERACTIVOS DE CADA CAPÍTULO
+// Son los mismos IDs que cada escena pasa a GuardarInteraccion.
+// Si cambias un ID en una escena, cámbialo también aquí.
+// =========================================================================
+const OBJETOS = {
+  // Parte 1 (tablero…) + Parte 2 (edificio, Step, rejas)
+  // + Parte 3 (lámparas, telarañas, monstruos)
+  1: [
+    "tablero", "calavera", "step", "libro", "libroC",
+    "edificio", "stepCamina", "rejas",
+    "lampara1", "lampara2", "lampara3",
+    "telarana1", "telarana2",
+    "monstruo1", "monstruo2", "monstruo3", "monstruo4",
+  ],
+
+  2: [
+    "estatua1", "estatua3", "estatua4", "estatua5", "estatua6",
+    "rata",
+    "lampara1C", "lampara2C", "lampara3C",
+  ],
+
+  3: [
+    "antorcha1", "antorcha2", "antorcha3", "antorcha4",
+    "puerta",
+    "telarana1", "telarana2", "telarana3", "telarana4",
+    "moustro1", "moustro2", "moustro3", "moustro4",
+  ],
+
+  4: [
+    "antorcha1", "antorcha2", "antorcha3", "antorcha4",
+    "puerta",
+    "telarana1", "telarana2", "telarana3", "telarana4",
+    "moustro1", "moustro2", "moustro3", "moustro4",
+  ],
+
+  5: [
+    // 5A
+    "edificio", "rejas", "stepCamina",
+    // 5B
+    "cera1", "cera2", "cera3", "cera4", "cera5", "cera6",
+    "telarana1", "telarana2", "telarana3", "candelabro",
+    // 5C
+    "manchas",
+    "cuadro1", "cuadro2", "cuadro3", "cuadro4", "cuadro5", "cuadro6", "cuadro7", "cuadro8",
+    "hueso1", "hueso2", "hueso3", "hueso4", "hueso5", "hueso6",
+    "antorcha1", "antorcha2", "antorcha3", "antorcha4",
+    // 5D
+    "lampara5d", "estatua1", "estatua2", "estatua3", "estatua4",
+    "rata", "monstruo5d", "step5d",
+    // 5E
+    "pintura1", "pintura2", "paso", "huesos5e", "monstruo5e",
+    "roges", "step5e", "lampara5e",
+    // 5F
+    "mancha1", "mancha2", "puerta5f", "silla5f", "libros5f", "pergaminos5f", "lampara5f",
+  ],
+};
+
+// =========================================================================
 // RUTA DE PUNTOS (pppp1111.svg)
 // =========================================================================
 // Pon el archivo en /public. Los círculos se agrupan solos en "tramos"
@@ -306,7 +364,8 @@ export const MapaCapitulos = () => {
   // ---------------------------------------------------------------------
   // Datos de los capítulos
   // ---------------------------------------------------------------------
-  // "objetos": ids que cada Lootie del capítulo guarda con GuardarInteraccion.
+  // "objetos": ids que cada escena del capítulo guarda con GuardarInteraccion
+  //            (la lista está en OBJETOS, arriba).
   // "icono": SVG propio del botón (ponlos en /public/iconos/). Mientras no
   //          exista el archivo se usa "imagen" como respaldo.
   // "pos": posición del botón dentro del mapa, en coordenadas del viewBox
@@ -325,7 +384,7 @@ export const MapaCapitulos = () => {
       pos: { x: 314, y: 242 },
       tamano: 1,
       tamanoPanel: 1,
-      objetos: ["tablero", "calavera", "step", "libro", "libroC"],
+      objetos: OBJETOS[1],
     },
     {
       id: 2,
@@ -338,7 +397,7 @@ export const MapaCapitulos = () => {
       pos: { x: 754, y: 225 },
       tamano: 1,
       tamanoPanel: 1,
-      objetos: [],
+      objetos: OBJETOS[2],
     },
     {
       id: 3,
@@ -351,7 +410,7 @@ export const MapaCapitulos = () => {
       pos: { x: 1195, y: 254 },
       tamano: 1,
       tamanoPanel: 1,
-      objetos: [],
+      objetos: OBJETOS[3],
     },
     {
       id: 4,
@@ -364,7 +423,7 @@ export const MapaCapitulos = () => {
       pos: { x: 814, y: 718 },
       tamano: 1,
       tamanoPanel: 1,
-      objetos: [],
+      objetos: OBJETOS[4],
     },
     {
       id: 5,
@@ -377,7 +436,7 @@ export const MapaCapitulos = () => {
       pos: { x: 326, y: 750 },
       tamano: 1.8, // el icono del cap. 5 se ve más pequeño: súbelo o bájalo a gusto
       tamanoPanel: 1.4, // escala del icono en la tarjeta: ajústala hasta que se vea igual que los demás
-      objetos: [],
+      objetos: OBJETOS[5],
     },
   ];
 
@@ -477,8 +536,16 @@ export const MapaCapitulos = () => {
 
   const calcularProgreso = (capitulo) => {
     const objetos = capitulo.objetos || [];
-    const idsGuardados = interacciones.map((item) => item.id);
-    const encontrados = objetos.filter((id) => idsGuardados.includes(id)).length;
+
+    // Solo cuentan las interacciones guardadas EN ESTE capítulo
+    // (varios capítulos repiten IDs como "antorcha1" o "telarana1")
+    const idsGuardados = new Set(
+      interacciones
+        .filter((item) => (item.capitulo ?? 1) === capitulo.id)
+        .map((item) => item.id)
+    );
+
+    const encontrados = objetos.filter((id) => idsGuardados.has(id)).length;
 
     return { encontrados, total: objetos.length };
   };

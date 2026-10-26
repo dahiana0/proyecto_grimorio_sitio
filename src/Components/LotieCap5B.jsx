@@ -1,5 +1,9 @@
 import { useRef, useEffect } from "react";
+import GuardarInteraccion from "./GuardarInteraccion";
 import "../Styles/LotieCap5B.css";
+
+// Número de capítulo con el que se guardan las interacciones
+const CAPITULO = 5;
 
 // true = muestra los cuadros de clic en rojo para calibrarlos
 // false = invisibles (versión final)
@@ -163,28 +167,36 @@ const LotieCap5B = () => {
 
   // Animación de las ceras (imágenes): reinicia la clase para poder repetirla.
   // El clic llega por el cuadro de clic; la que se anima es la imagen de la cera.
-  const animarCera = (e) => {
+  const animarCera = (e, id, nombre, src) => {
     const img = e.currentTarget.closest(".anim5b")?.querySelector("img");
     if (!img) return;
     img.classList.remove("animar");
     void img.offsetWidth; // fuerza reflow para reiniciar la animación
     img.classList.add("animar");
+
+    // Animación CSS: se guarda con su imagen y se anima en el archivo
+    GuardarInteraccion(id, nombre, "cera", CAPITULO, "css", src);
+  };
+
+  const activarVideo = (ref, id, nombre, src) => {
+    reproducirVideo(ref);
+    GuardarInteraccion(id, nombre, id, CAPITULO, "video", src);
   };
 
   // Objetos con clic: cada uno tiene su animación + su propio cuadro de clic
   const ceras = [
-    { clase: "cera1-5b", src: "./cera1.png" }, // fondo
-    { clase: "cera2-5b", src: "./cera2.png" },
-    { clase: "cera3-5b", src: "./cera3.png" }, // mitad
-    { clase: "cera4-5b", src: "./cera4 .png" },
-    { clase: "cera5-5b", src: "./cera5.png" }, // frente
-    { clase: "cera6-5b", src: "./cera6.png" },
+    { id: "cera1", nombre: "Cera 1", clase: "cera1-5b", src: "./cera1.png" }, // fondo
+    { id: "cera2", nombre: "Cera 2", clase: "cera2-5b", src: "./cera2.png" },
+    { id: "cera3", nombre: "Cera 3", clase: "cera3-5b", src: "./cera3.png" }, // mitad
+    { id: "cera4", nombre: "Cera 4", clase: "cera4-5b", src: "./cera4 .png" },
+    { id: "cera5", nombre: "Cera 5", clase: "cera5-5b", src: "./cera5.png" }, // frente
+    { id: "cera6", nombre: "Cera 6", clase: "cera6-5b", src: "./cera6.png" },
   ];
 
   const telaranas = [
-    { clase: "telarana1-5b", ref: telarana1Ref, src: "/Telarana1Cap5b.webm" },
-    { clase: "telarana2-5b", ref: telarana2Ref, src: "/Telarana2Cap5b.webm" },
-    { clase: "telarana3-5b", ref: telarana3Ref, src: "/Telarana3Cap5b.webm" },
+    { id: "telarana1", nombre: "Telaraña 1", clase: "telarana1-5b", ref: telarana1Ref, src: "/Telarana1Cap5b.webm" },
+    { id: "telarana2", nombre: "Telaraña 2", clase: "telarana2-5b", ref: telarana2Ref, src: "/Telarana2Cap5b.webm" },
+    { id: "telarana3", nombre: "Telaraña 3", clase: "telarana3-5b", ref: telarana3Ref, src: "/Telarana3Cap5b.webm" },
   ];
 
   return (
@@ -195,15 +207,18 @@ const LotieCap5B = () => {
 
         <img className="fondo5b" src="./Fondo5b.png" alt="" />
 
-        {/* ===== Ceras (imagen + animación al tocar) ===== */}
-        {ceras.map(({ clase, src }) => (
+        {/* ===== Ceras (imagen + animación CSS al tocar) ===== */}
+        {ceras.map(({ id, nombre, clase, src }) => (
           <div key={clase} className={`anim5b cera5b ${clase}`}>
             {/* Solo visual: no recibe clics */}
             <div className="vista5b">
               <img src={src} alt="" />
             </div>
             {/* Cuadro de clic propio, dentro de su objeto */}
-            <div className="hitbox5b" onClick={animarCera}>
+            <div
+              className="hitbox5b"
+              onClick={(e) => animarCera(e, id, nombre, src)}
+            >
               <span className="pista5b" />
             </div>
           </div>
@@ -220,14 +235,17 @@ const LotieCap5B = () => {
         </video>
 
         {/* ===== Telarañas (videos) ===== */}
-        {telaranas.map(({ clase, ref, src }) => (
+        {telaranas.map(({ id, nombre, clase, ref, src }) => (
           <div key={clase} className={`anim5b telarana5b ${clase}`}>
             <div className="vista5b">
               <video ref={ref} muted playsInline>
                 <source src={src} type="video/webm" />
               </video>
             </div>
-            <div className="hitbox5b" onClick={() => reproducirVideo(ref)}>
+            <div
+              className="hitbox5b"
+              onClick={() => activarVideo(ref, id, nombre, src)}
+            >
               <span className="pista5b" />
             </div>
           </div>
@@ -240,7 +258,12 @@ const LotieCap5B = () => {
               <source src="./candelabro..webm" type="video/webm" />
             </video>
           </div>
-          <div className="hitbox5b" onClick={() => reproducirVideo(lamparaRef)}>
+          <div
+            className="hitbox5b"
+            onClick={() =>
+              activarVideo(lamparaRef, "candelabro", "Candelabro", "./candelabro..webm")
+            }
+          >
             <span className="pista5b" />
           </div>
         </div>

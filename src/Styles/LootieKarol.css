@@ -57,7 +57,7 @@
 }
 
 .tablero  { left: 600px; top: 224px; width: 290px; --z: 2; }
-.calavera { left: 270px; top: 450px; width: 170px; --z: 3; }
+.calavera { left: 270px; top: 390px; width: 170px; --z: 3; }
 .step     { left: 500px; top: 274px; width: 500px; --z: 4; }
 .libro    { left: 780px; top: 404px; width: 95px;  --z: 5; }
 .libroC   { left: 382px; top: 485px; width: 75px;  --z: 6; }

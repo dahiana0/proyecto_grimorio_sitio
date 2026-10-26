@@ -39,15 +39,18 @@
 
     position: fixed;
     left: max(8px, calc(max(110px, 50% - var(--bc-ventana) / 2) - var(--bc-pill) - var(--bc-hueco)));
-    top: 50%;
+    /* centrada en la mitad de la ventana del reproductor (barra superior + pantalla),
+       no en la mitad de la pantalla del navegador: 28px de margen + (62px de barra
+       + alto de la pantalla) / 2. Si la quieres más arriba/abajo, suma o resta px al final. */
+    top: calc(28px + (62px + clamp(380px, 100vh - 338px, 600px) + 88px) / 2);
     transform: translateY(-50%);
     z-index: 20;
 
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 24px;
-    padding: 28px 8px;
+    gap: 40px;               /* separación entre botones (antes 24px) */
+    padding: 44px 8px;
 
     animation:
         bc-entra-izq .7s cubic-bezier(.2, .9, .3, 1) both,
@@ -683,12 +686,12 @@
 
 /* ==========================================================================
    REPRODUCTOR MÁS BAJO — la pantalla se adapta a la altura del navegador
-   para no tener que hacer scroll. Para más alto/bajo cambia el 250px:
+   para no tener que hacer scroll. Para más alto/bajo cambia el 338px (250px de siempre + 88px de la barra de subtítulos):
    número mayor = pantalla más baja.   (solo en pantallas de escritorio)
    ========================================================================== */
 @media (min-width: 901px) {
     .visor-container .visor-scene {
-        height: clamp(380px, calc(100vh - 250px), 600px);
+        height: clamp(380px, calc(100vh - 338px), 600px);
     }
 }
 
@@ -709,4 +712,81 @@
     width: 70px;    /* tamaño del botón */
     height: 70px;
     padding: 0;
+}
+
+
+/* ==========================================================================
+   AJUSTES FINALES (NUEVO)
+   - La píldora de herramientas queda fija al lado de la pantalla, centrada
+     en la mitad de la altura, con los botones más separados.
+   - Anterior / siguiente un poco más grandes y letra más legible.
+   ========================================================================== */
+
+.bc-bottom .bc-btn--prev,
+.bc-bottom .bc-btn--next {
+    width: 54px;
+    height: 54px;
+}
+
+.bc-time {
+    font-size: 14px;
+}
+
+.bc-chip {
+    font-size: 13px;
+    padding: 6px 12px;
+}
+
+
+/* ==========================================================================
+   BARRA DE SUBTÍTULOS — continúa la ventana por debajo de la pantalla,
+   igual que la barra de arriba (mismo ancho, mismo cristal verde).
+   (va al final para sobrescribir lo de arriba)
+   - Más alta o más baja: cambia min-height.
+   - Letra más grande o chica: cambia font-size de ".bc-subbar p".
+   ========================================================================== */
+
+/* La pantalla ya no cierra con esquinas redondeadas: la barra de subtítulos
+   hace de "fondo" de la ventana, igual que la barra de arriba hace de "techo". */
+.visor-container .visor-scene {
+    border-bottom: none;
+    border-radius: 0;
+}
+
+.bc-subbar {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 1100px;          /* mismo ancho que la ventana */
+    margin: 0 auto;
+    min-height: 88px;           /* reserva 2 líneas para que la ventana no brinque */
+    padding: 10px 28px 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(rgba(14, 70, 48, .30), rgba(4, 18, 12, .42)),
+        #040b08;
+    border: 1px solid rgba(var(--neon-rgb, 43, 229, 138), .55);
+    border-top: none;
+    border-radius: 0 0 24px 24px;
+    box-shadow:
+        0 10px 26px rgba(var(--neon-rgb, 43, 229, 138), .22),
+        inset 0 0 22px rgba(var(--neon-rgb, 43, 229, 138), .07);
+}
+
+.bc-subbar p {
+    margin: 0;
+    text-align: center;
+    font-family: glacia, sans-serif;
+    font-size: 20px;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, .95);
+    text-shadow: 0 0 8px rgba(var(--neon-rgb, 43, 229, 138), .4);
+}
+
+@media (max-width: 900px) {
+    .bc-subbar { min-height: 80px; padding: 8px 18px 14px; border-radius: 0 0 20px 20px; }
+    .bc-subbar p { font-size: 17px; }
 }

@@ -22,6 +22,10 @@ const INICIO_ORABONA_2 = 19.18;
 // Copia tu archivo a public/audios/ y cambia solo el nombre aquí.
 const AUDIO_5C = "/audios/AUDIO_5C.wav";
 
+// Video final del capítulo (escena 7).
+// Copia tu archivo a public/ y cambia solo el nombre aquí.
+const VIDEO_CAP5 = "/Capitulo 5 video.mp4";
+
 // Posición de este capítulo en RUTAS_CAPITULOS (0 = capítulo I)
 const CAPITULO = 4;
 
@@ -31,8 +35,9 @@ export default function VisorComic5({
 }) {
   const navigate = useNavigate();
 
-  // Audio del narrador
+  // Audio del narrador y video final
   const audioRef = useRef(null);
+  const videoRef = useRef(null);
 
   // Tramo del narrador: "A" (primer audio de la escena) o "B" (segundo audio).
   // Es un ref para que siempre tenga el valor actual al sincronizar subtítulos.
@@ -51,6 +56,10 @@ export default function VisorComic5({
 
   // Eventos del <audio> (ya no se usa para el botón de pausa)
   const [, setAudioSonando] = useState(false);
+
+  // Estado de reproducción y controles propios del video
+  const [play, setPlay] = useState(false);
+  const [showControls, setShowControls] = useState(true);
 
   const [nivelVolumen, setNivelVolumen] = useState(1);
   const volumenPrevioRef = useRef(1);
@@ -74,6 +83,7 @@ export default function VisorComic5({
 
   // La clave es el índice de la escena (empieza en 0).
   // Son los subtítulos del PRIMER audio de cada escena.
+  // La escena 6 (video) no tiene subtítulos.
   const subtitulosPorEscena = {
     0: [
       {
@@ -295,8 +305,8 @@ export default function VisorComic5({
     ],
   };
 
-  // Cada escena tiene su animación y su audio de narrador
-  // Los archivos van en: public/audios/
+  // Cada escena tiene su animación y su audio de narrador (o es un video)
+  // Los audios van en: public/audios/
   // "tramoB": segundo audio que entra N segundos después de arrancar el primero
   const escenas = [
     { tipo: "lottie", componente: <LotieCap5A />, audio: "/audios/NarradorCP1.wav" },
@@ -312,6 +322,8 @@ export default function VisorComic5({
     { tipo: "lottie", componente: <LotieCap5C />, audio: "/audios/Narrador5c.wav" },
     { tipo: "lottie", componente: <LotieCap5D />, audio: "/audios/narrador5D.wav" },
     { tipo: "lottie", componente: <LotieCap5E />, audio: "/audios/Narrador5E.wav" },
+    // Video final del capítulo
+    { tipo: "video", video: "/Capitulo 5 video.mp4" },
   ];
 
   // Sincroniza el subtítulo con el tiempo actual del audio
@@ -384,14 +396,24 @@ export default function VisorComic5({
     limpiarTimerTramoB();
     tramoRef.current = "A";
 
+    // Detener video
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+
+    // Detener audio anterior
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
     }
 
+    setPlay(false);
+    setAudioBloqueado(false);
     setSubtituloActual("");
 
-    if (escenaActual.audio && audioRef.current) {
+    // Reproducir audio de la escena Lottie
+    if (escenaActual.tipo === "lottie" && escenaActual.audio && audioRef.current) {
       audioRef.current.src = escenaActual.audio;
       audioRef.current.currentTime = 0;
       audioRef.current.volume = nivelVolumen;
@@ -408,6 +430,7 @@ export default function VisorComic5({
 
   useEffect(() => {
     if (audioRef.current) audioRef.current.volume = nivelVolumen;
+    if (videoRef.current) videoRef.current.volume = nivelVolumen;
   }, [nivelVolumen]);
 
   // Navegación entre escenas, con transición a oscuro
@@ -421,6 +444,7 @@ export default function VisorComic5({
       reiniciarControl();
       setPausaUsuario(false);
       setIndex(nuevoIndex);
+      setPlay(false);
       setSubtituloActual("");
       setTransicionando(false);
     }, DURACION_TRANSICION);
@@ -429,6 +453,19 @@ export default function VisorComic5({
   const ultimaEscena = index === escenas.length - 1;
   const siguiente = () => cambiarEscena(index + 1);
   const anterior = () => cambiarEscena(index - 1);
+
+  // Video: play / pause
+  const handlePlayPause = () => {
+    if (!videoRef.current) return;
+
+    if (videoRef.current.paused) {
+      videoRef.current.play();
+      setPlay(true);
+    } else {
+      videoRef.current.pause();
+      setPlay(false);
+    }
+  };
 
   // Volumen: slider manual + mute con el ícono
   const cambiarNivelVolumen = (evento) => {
@@ -445,10 +482,18 @@ export default function VisorComic5({
   };
 
   // ---------------------------------------------------------------------
-  // Pausa / reanudar la escena completa (narración + animaciones)
+  // Pausa / reanudar (video, o escena completa: narración + animaciones)
   // ---------------------------------------------------------------------
-  const reproduciendo = !pausaUsuario;
-  const alternarPausa = () => setPausaUsuario((p) => !p);
+  const reproduciendo =
+    escenas[index].tipo === "video" ? play : !pausaUsuario;
+
+  const alternarPausa = () => {
+    if (escenas[index].tipo === "video") {
+      handlePlayPause();
+      return;
+    }
+    setPausaUsuario((p) => !p);
+  };
 
   // Render
   return (
@@ -496,7 +541,7 @@ export default function VisorComic5({
         </div>
       </div>
 
-      {/* Escenario: lottie con transición a oscuro */}
+      {/* Escenario: lottie o video, con transición a oscuro */}
       <div
         className="visor-scene"
         style={pausaUsuario ? { pointerEvents: "none" } : undefined}
@@ -506,17 +551,70 @@ export default function VisorComic5({
             transicionando ? "fade-out" : "fade-in"
           }`}
         >
-          <div className="visor-lottie">{escenas[index].componente}</div>
+          {escenas[index].tipo === "lottie" && (
+            <div className="visor-lottie">{escenas[index].componente}</div>
+          )}
 
-          {mostrarSubtitulo && subtituloActual && (
-            <div className="visor-sub">
-              <p>{subtituloActual}</p>
+          {escenas[index].tipo === "video" && (
+            <div
+              className="visor-video-wrapper"
+              onMouseEnter={() => setShowControls(true)}
+              onMouseLeave={() => setShowControls(false)}
+            >
+              <video
+                ref={videoRef}
+                className="visor-video"
+                autoPlay
+                playsInline
+                muted={nivelVolumen === 0}
+                onPlay={() => setPlay(true)}
+                onPause={() => setPlay(false)}
+              >
+                <source src={escenas[index].video} type="video/mp4" />
+                Tu navegador no soporta videos HTML5.
+              </video>
+
+              <div className={`visor-controls ${showControls ? "show" : ""}`}>
+                <div className="visor-controls-bottom">
+                  <button
+                    className="video-btn"
+                    onClick={() => {
+                      if (videoRef.current) {
+                        videoRef.current.currentTime = Math.max(
+                          0,
+                          videoRef.current.currentTime - 10
+                        );
+                      }
+                    }}
+                  >
+                    <img src="/icons8-rewind-50.png" alt="Retroceder" />
+                  </button>
+
+                  <button className="video-btn play-btn" onClick={handlePlayPause}>
+                    <img
+                      src={play ? "/icons8-pause-50.png" : "/icons8-play-50.png"}
+                      alt="Play/Pause"
+                    />
+                  </button>
+
+                  <button
+                    className="video-btn"
+                    onClick={() => {
+                      if (videoRef.current) {
+                        videoRef.current.currentTime += 10;
+                      }
+                    }}
+                  >
+                    <img src="/icons8-fast-forward-50.png" alt="Avanzar" />
+                  </button>
+                </div>
+              </div>
             </div>
           )}
         </div>
 
-        {/* Respaldo si el navegador bloquea el autoplay */}
-        {audioBloqueado && (
+        {/* Respaldo si el navegador bloquea el autoplay (solo escenas con narración) */}
+        {audioBloqueado && escenas[index].tipo === "lottie" && (
           <button
             onClick={reproducirAudio}
             className="visor-btn"
@@ -554,6 +652,7 @@ export default function VisorComic5({
         onAlternarMute={alternarMute}
         mostrarSubtitulo={mostrarSubtitulo}
         onAlternarSubtitulos={() => setMostrarSubtitulo((v) => !v)}
+        subtitulo={escenas[index].tipo === "lottie" ? subtituloActual : ""}
       />
 
       {/* Audio del narrador */}
