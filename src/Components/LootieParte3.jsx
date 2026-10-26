@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import GuardarInteraccion from "./GuardarInteraccion";
 import "../Styles/LootieParte3.css";
 
 // Tamaño de diseño de la escena (igual que la escena 1)
@@ -262,18 +263,18 @@ const LootieParte3 = ({
 
   // Objetos con clic: cada uno tiene su animación + su propio cuadro de clic
   const lamparas = [
-    { clase: "lampara1", activa: lampara1Activa, onClick: moverLampara1 },
-    { clase: "lampara2", activa: lampara2Activa, onClick: moverLampara2 },
-    { clase: "lampara3", activa: lampara3Activa, onClick: moverLampara3 },
+    { clase: "lampara1", nombre: "Lámpara 1", activa: lampara1Activa, onClick: moverLampara1 },
+    { clase: "lampara2", nombre: "Lámpara 2", activa: lampara2Activa, onClick: moverLampara2 },
+    { clase: "lampara3", nombre: "Lámpara 3", activa: lampara3Activa, onClick: moverLampara3 },
   ];
 
   const videos = [
-    { clase: "telarana1", ref: telarana1Ref, src: "/telarana1.webm" },
-    { clase: "telarana2", ref: telarana2Ref, src: "/telarana2.webm" },
-    { clase: "monstruo1", ref: monstruo1Ref, src: "/monstruo1.webm" },
-    { clase: "monstruo2", ref: monstruo2Ref, src: "/monstruo2.webm" },
-    { clase: "monstruo3", ref: monstruo3Ref, src: "/monstruo3.webm" },
-    { clase: "monstruo4", ref: monstruo4Ref, src: "/monstruo4.webm" },
+    { clase: "telarana1", nombre: "Telaraña 1", ref: telarana1Ref, src: "/telarana1.webm" },
+    { clase: "telarana2", nombre: "Telaraña 2", ref: telarana2Ref, src: "/telarana2.webm" },
+    { clase: "monstruo1", nombre: "Monstruo 1", ref: monstruo1Ref, src: "/monstruo1.webm" },
+    { clase: "monstruo2", nombre: "Monstruo 2", ref: monstruo2Ref, src: "/monstruo2.webm" },
+    { clase: "monstruo3", nombre: "Monstruo 3", ref: monstruo3Ref, src: "/monstruo3.webm" },
+    { clase: "monstruo4", nombre: "Monstruo 4", ref: monstruo4Ref, src: "/monstruo4.webm" },
   ];
 
   return (
@@ -288,8 +289,8 @@ const LootieParte3 = ({
         >
           <img className="fondo3" src="/Fondo3.png" alt="" />
 
-          {/* ===== Lámparas ===== */}
-          {lamparas.map(({ clase, activa, onClick }) => (
+          {/* ===== Lámparas (animación CSS) ===== */}
+          {lamparas.map(({ clase, nombre, activa, onClick }) => (
             <div key={clase} className={`anim ${clase}`}>
               <div className="vista">
                 <img
@@ -298,21 +299,33 @@ const LootieParte3 = ({
                   className={activa ? "moverLampara" : ""}
                 />
               </div>
-              <div className="hitbox" onClick={onClick}>
+              <div
+                className="hitbox"
+                onClick={() => {
+                  onClick();
+                  GuardarInteraccion(clase, nombre, "lampara", 1, "css", "/lampara1.png");
+                }}
+              >
                 <span className="pista" />
               </div>
             </div>
           ))}
 
-          {/* ===== Telarañas y monstruos ===== */}
-          {videos.map(({ clase, ref, src }) => (
+          {/* ===== Telarañas y monstruos (video) ===== */}
+          {videos.map(({ clase, nombre, ref, src }) => (
             <div key={clase} className={`anim ${clase}`}>
               <div className="vista">
                 <video ref={ref} muted playsInline preload="auto">
                   <source src={src} type="video/webm" />
                 </video>
               </div>
-              <div className="hitbox" onClick={() => reproducirVideo(ref)}>
+              <div
+                className="hitbox"
+                onClick={() => {
+                  reproducirVideo(ref);
+                  GuardarInteraccion(clase, nombre, clase, 1, "video", src);
+                }}
+              >
                 <span className="pista" />
               </div>
             </div>

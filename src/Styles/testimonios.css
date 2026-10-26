@@ -817,3 +817,187 @@
   border-color: #1ad96d;
   box-shadow: 0 0 14px rgba(var(--verde), 0.28);
 }
+
+/* =========================================================
+   AJUSTES: letras más grandes, botón Volver grande y
+   textos dorados -> blancos.
+   PEGAR AL FINAL de src/Styles/testimonios.css
+   (va al final para que sobreescriba lo anterior)
+   ========================================================= */
+
+/* ---------- Todo lo "amarillito" pasa a blanco ---------- */
+.tm-page {
+  --dorado: 255, 255, 255;
+}
+
+/* ---------- Botón VOLVER más grande ---------- */
+.tm-volver {
+  gap: 14px;
+  padding: 14px 32px 14px 22px;
+  font-size: 21px;
+  letter-spacing: 2px;
+}
+
+.tm-volver-flecha {
+  font-size: 1.2em;
+}
+
+/* ---------- Cabecera ---------- */
+.tm-texto {
+  max-width: 640px;
+  font-size: clamp(16px, 1.9vw, 20px);
+  line-height: 1.7;
+}
+
+.tm-cta {
+  font-size: clamp(22px, 2.8vw, 30px);
+}
+
+.tm-cta-anillo {
+  width: clamp(46px, 5.6vw, 58px);
+}
+
+.tm-pista {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ---------- Vitrinas ---------- */
+.tm-vitrina-titulo {
+  font-size: clamp(32px, 3.6vw, 42px);
+}
+
+.tm-vitrina-sub {
+  font-size: 14px;
+  color: #fff;
+}
+
+.tm-contador {
+  min-width: 52px;
+  height: 52px;
+  font-size: 24px;
+}
+
+.tm-vacio {
+  font-size: 17px;
+}
+
+.tm-vacio p {
+  max-width: 320px;
+}
+
+.tm-ver {
+  font-size: 16px;
+  color: #1ad96d;
+}
+
+/* ---------- Fichas ---------- */
+.tm-ficha {
+  width: min(100%, 270px);
+  padding: 24px 18px 16px;
+}
+
+.tm-ficha-num {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.tm-ficha-nombre {
+  font-size: 25px;
+}
+
+.tm-ficha-texto {
+  font-size: 16.5px;
+  line-height: 1.55;
+}
+
+.tm-ficha-fecha {
+  font-size: 13px;
+  color: #fff;
+}
+
+.tm-ficha--editando {
+  width: min(100%, 400px);
+}
+
+/* Comentario de bienvenida anclado */
+.tm-ficha--anclada {
+  width: 100%;
+}
+
+.tm-ficha--anclada .tm-ficha-nombre {
+  font-size: clamp(22px, 2.6vw, 30px);
+}
+
+.tm-ficha--anclada .tm-ficha-texto {
+  font-size: 17px;
+}
+
+.tm-ancla {
+  font-size: 12px;
+  color: #fff;
+}
+
+/* Editar / Borrar / Guardar / Cancelar */
+.tm-btn,
+.tm-accion {
+  padding: 7px 16px;
+  font-size: 15px;
+}
+
+.tm-editar textarea {
+  font-size: 16px;
+}
+
+/* ---------- Formulario ---------- */
+.tm-formulario {
+  grid-template-columns: minmax(0, 1fr) 340px;
+}
+
+.tm-campo-form label {
+  font-size: 25px;
+}
+
+.tm-campo-form input,
+.tm-campo-form textarea {
+  padding: 16px 18px;
+  font-size: 18px;
+}
+
+.tm-car {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.tm-exito {
+  font-size: 17px;
+}
+
+.tm-previa-titulo {
+  font-size: 14px;
+  color: #fff;
+}
+
+.tm-ficha--previa .tm-ficha-texto {
+  font-size: 16.5px;
+}
+
+/* ---------- Móvil ---------- */
+@media (max-width: 900px) {
+  .tm-formulario {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .tm-ficha--previa {
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 520px) {
+  .tm-volver {
+    font-size: 17px;
+    padding: 11px 24px 11px 18px;
+  }
+  .tm-ficha {
+    width: min(100%, 280px);
+  }
+}

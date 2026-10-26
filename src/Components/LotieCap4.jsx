@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import LottieModule from "lottie-react";
+import GuardarInteraccion from "./GuardarInteraccion";
 
 import moustro1 from "../assets/moustro1.json";
 import moustro2 from "../assets/moustro2.json";
@@ -9,6 +10,9 @@ import moustro4 from "../assets/moustro4.json";
 import "../Styles/LotieCap4.css";
 
 const Lottie = LottieModule.default;
+
+// Número de capítulo con el que se guardan las interacciones
+const CAPITULO = 4;
 
 // Tamaño de diseño de la escena (igual que las demás escenas)
 const ANCHO = 1500;
@@ -46,6 +50,9 @@ const AUDIO_ANTORCHA = "./anto.mp3";
 const AUDIO_PUERTA = "./Puerta.mp3";
 const VOLUMEN_ANTORCHA = 0.8;
 const VOLUMEN_PUERTA = 1;
+
+// La página del archivo vive en otra ruta: las rutas guardadas deben ser absolutas
+const rutaAbsoluta = (src) => (src.startsWith("./") ? src.slice(1) : src);
 
 const LotieCap4 = () => {
   const contenedorRef = useRef(null);
@@ -172,10 +179,12 @@ const LotieCap4 = () => {
 
     v.currentTime = 0;
     v.play().catch((err) => console.error("No se pudo reproducir la puerta:", err));
+
+    GuardarInteraccion("puerta", "Puerta", "puerta", CAPITULO, "video", "/Puerta.webm");
   };
 
   // El clic llega por el cuadro de clic; la que se mueve es la imagen de la antorcha
-  const moverAntorcha = (e) => {
+  const moverAntorcha = (e, id, nombre, src) => {
     const img = e.currentTarget.closest(".anim-cap4")?.querySelector("img");
     if (!img) return;
 
@@ -184,6 +193,19 @@ const LotieCap4 = () => {
     img.classList.remove("antorcha-mover-cap4");
     void img.offsetWidth;
     img.classList.add("antorcha-mover-cap4");
+
+    // Animación CSS: se guarda con su imagen y se mueve en el archivo
+    GuardarInteraccion(id, nombre, "antorcha", CAPITULO, "css", src);
+  };
+
+  const animarMonstruo = (ref, id, nombre) => {
+    animarLottie(ref);
+    GuardarInteraccion(id, nombre, id, CAPITULO, "lottie");
+  };
+
+  const activarTelarana = (ref, id, nombre, src) => {
+    reproducirVideo(ref);
+    GuardarInteraccion(id, nombre, id, CAPITULO, "video", rutaAbsoluta(src));
   };
 
   const alTerminarClip = (i) => {
@@ -259,24 +281,24 @@ const LotieCap4 = () => {
 
   // Objetos con clic: cada uno tiene su animación + su propio cuadro de clic
   const antorchas = [
-    { clase: "antorcha-fondo-cap4 antorcha1-cap4", src: "/antorcha1.png", alt: "Antorcha 1" },
-    { clase: "antorcha-fondo-cap4 antorcha2-cap4", src: "/antorcha2.png", alt: "Antorcha 2" },
-    { clase: "antorcha-frente-cap4 antorcha3-cap4", src: "/antorcha3.png", alt: "Antorcha 3" },
-    { clase: "antorcha-frente-cap4 antorcha4-cap4", src: "/antorcha4.png", alt: "Antorcha 4" },
+    { id: "antorcha1", nombre: "Antorcha 1", clase: "antorcha-fondo-cap4 antorcha1-cap4", src: "/antorcha1.png", alt: "Antorcha 1" },
+    { id: "antorcha2", nombre: "Antorcha 2", clase: "antorcha-fondo-cap4 antorcha2-cap4", src: "/antorcha2.png", alt: "Antorcha 2" },
+    { id: "antorcha3", nombre: "Antorcha 3", clase: "antorcha-frente-cap4 antorcha3-cap4", src: "/antorcha3.png", alt: "Antorcha 3" },
+    { id: "antorcha4", nombre: "Antorcha 4", clase: "antorcha-frente-cap4 antorcha4-cap4", src: "/antorcha4.png", alt: "Antorcha 4" },
   ];
 
   const telaranas = [
-    { clase: "telarana-fondo-cap4 telarana1c-cap4", ref: telarana1Ref, src: "./telaraña1c.webm" },
-    { clase: "telarana-fondo-cap4 telarana2c-cap4", ref: telarana2Ref, src: "./telaraña2c.webm" },
-    { clase: "telarana-frente-cap4 telarana3c-cap4", ref: telarana3Ref, src: "./telaraña3c .webm" },
-    { clase: "telarana-frente-cap4 telarana4c-cap4", ref: telarana4Ref, src: "/telaraña4c .webm" },
+    { id: "telarana1", nombre: "Telaraña 1", clase: "telarana-fondo-cap4 telarana1c-cap4", ref: telarana1Ref, src: "./telaraña1c.webm" },
+    { id: "telarana2", nombre: "Telaraña 2", clase: "telarana-fondo-cap4 telarana2c-cap4", ref: telarana2Ref, src: "./telaraña2c.webm" },
+    { id: "telarana3", nombre: "Telaraña 3", clase: "telarana-frente-cap4 telarana3c-cap4", ref: telarana3Ref, src: "./telaraña3c .webm" },
+    { id: "telarana4", nombre: "Telaraña 4", clase: "telarana-frente-cap4 telarana4c-cap4", ref: telarana4Ref, src: "/telaraña4c .webm" },
   ];
 
   const monstruos = [
-    { clase: "moustro1c-cap4", lottieRef: moustro1Ref, data: moustro1 },
-    { clase: "moustro2c-cap4", lottieRef: moustro2Ref, data: moustro2 },
-    { clase: "moustro3c-cap4", lottieRef: moustro3Ref, data: moustro3 },
-    { clase: "moustro4c-cap4", lottieRef: moustro4Ref, data: moustro4 },
+    { id: "moustro1", nombre: "Monstruo 1", clase: "moustro1c-cap4", lottieRef: moustro1Ref, data: moustro1 },
+    { id: "moustro2", nombre: "Monstruo 2", clase: "moustro2c-cap4", lottieRef: moustro2Ref, data: moustro2 },
+    { id: "moustro3", nombre: "Monstruo 3", clase: "moustro3c-cap4", lottieRef: moustro3Ref, data: moustro3 },
+    { id: "moustro4", nombre: "Monstruo 4", clase: "moustro4c-cap4", lottieRef: moustro4Ref, data: moustro4 },
   ];
 
   return (
@@ -293,8 +315,8 @@ const LotieCap4 = () => {
               alt="Escenario capítulo 4"
             />
 
-            {/* ===== Antorchas ===== */}
-            {antorchas.map(({ clase, src, alt }) => (
+            {/* ===== Antorchas (animación CSS) ===== */}
+            {antorchas.map(({ id, nombre, clase, src, alt }) => (
               <div key={src} className={`anim-cap4 antorcha-cap4 ${clase}`}>
                 <div className="vista-cap4">
                   <img
@@ -305,13 +327,16 @@ const LotieCap4 = () => {
                     }
                   />
                 </div>
-                <div className="hitbox-cap4" onClick={moverAntorcha}>
+                <div
+                  className="hitbox-cap4"
+                  onClick={(e) => moverAntorcha(e, id, nombre, src)}
+                >
                   <span className="pista-cap4" />
                 </div>
               </div>
             ))}
 
-            {/* ===== Puerta ===== */}
+            {/* ===== Puerta (video) ===== */}
             <div className="anim-cap4 puerta-cap4">
               <div className="vista-cap4">
                 <video
@@ -329,8 +354,8 @@ const LotieCap4 = () => {
               </div>
             </div>
 
-            {/* ===== Telarañas ===== */}
-            {telaranas.map(({ clase, ref, src }) => (
+            {/* ===== Telarañas (video) ===== */}
+            {telaranas.map(({ id, nombre, clase, ref, src }) => (
               <div key={src} className={`anim-cap4 telarana-cap4 ${clase}`}>
                 <div className="vista-cap4">
                   <video
@@ -343,14 +368,17 @@ const LotieCap4 = () => {
                     <source src={src} type="video/webm" />
                   </video>
                 </div>
-                <div className="hitbox-cap4" onClick={() => reproducirVideo(ref)}>
+                <div
+                  className="hitbox-cap4"
+                  onClick={() => activarTelarana(ref, id, nombre, src)}
+                >
                   <span className="pista-cap4" />
                 </div>
               </div>
             ))}
 
-            {/* ===== Monstruos ===== */}
-            {monstruos.map(({ clase, lottieRef, data }) => (
+            {/* ===== Monstruos (Lottie) ===== */}
+            {monstruos.map(({ id, nombre, clase, lottieRef, data }) => (
               <div key={clase} className={`anim-cap4 moustro-cap4 ${clase}`}>
                 <div className="vista-cap4">
                   <Lottie
@@ -360,7 +388,10 @@ const LotieCap4 = () => {
                     loop={false}
                   />
                 </div>
-                <div className="hitbox-cap4" onClick={() => animarLottie(lottieRef)}>
+                <div
+                  className="hitbox-cap4"
+                  onClick={() => animarMonstruo(lottieRef, id, nombre)}
+                >
                   <span className="pista-cap4" />
                 </div>
               </div>

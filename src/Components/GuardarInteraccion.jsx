@@ -1,36 +1,30 @@
-const GuardarInteraccion = (id, nombre, imagen, capitulo = 1) => {
-
-  const guardadas = JSON.parse(
-    localStorage.getItem("grimorio")
-  ) || [];
+const GuardarInteraccion = (
+  id,
+  nombre,
+  imagen,
+  capitulo = 1,
+  tipo = "lottie", // "lottie" | "video" | "css"
+  src = null       // ruta del video o de la imagen (solo video / css)
+) => {
+  const guardadas = JSON.parse(localStorage.getItem("grimorio")) || [];
 
   const existe = guardadas.find(
     (item) => item.id === id && item.capitulo === capitulo
   );
+  if (existe) return;
 
-  if (existe) {
-    return;
-  }
-
-  const nuevaInteraccion = {
+  guardadas.push({
     id,
     nombre,
     imagen,
     capitulo,
+    tipo,
+    src,
     fecha: new Date().toISOString(),
-  };
+  });
 
-  guardadas.push(nuevaInteraccion);
-
-  localStorage.setItem(
-    "grimorio",
-    JSON.stringify(guardadas)
-  );
-
-  window.dispatchEvent(
-    new Event("grimorioActualizado")
-  );
-
+  localStorage.setItem("grimorio", JSON.stringify(guardadas));
+  window.dispatchEvent(new Event("grimorioActualizado"));
 };
 
 export default GuardarInteraccion;

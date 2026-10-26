@@ -1,10 +1,14 @@
 import LottieModule from "lottie-react";
 import { useRef, useEffect } from "react";
+import GuardarInteraccion from "./GuardarInteraccion";
 
 import edificio from "../assets/edificio.json";
 import "../Styles/LotieCap5A.css";
 
 const Lottie = LottieModule.default;
+
+// Número de capítulo con el que se guardan las interacciones
+const CAPITULO = 5;
 
 // true = muestra los cuadros de clic en rojo para calibrarlos
 // false = invisibles (versión final)
@@ -92,6 +96,8 @@ const LotieCap5A = () => {
     e.stopPropagation();
     edificioRef.current?.stop();
     edificioRef.current?.play();
+
+    GuardarInteraccion("edificio", "Edificio", "edificio", CAPITULO, "lottie");
   };
 
   // Detiene los sonidos sincronizados (el ambiente NO se corta)
@@ -168,6 +174,18 @@ const LotieCap5A = () => {
     rafRef.current = requestAnimationFrame(sincronizar);
   };
 
+  // Clic en las rejas: arranca la escena y guarda el video de las rejas
+  const clicRejas = () => {
+    iniciarEscena();
+    GuardarInteraccion("rejas", "Rejas", "rejas", CAPITULO, "video", "/reja5c.webm");
+  };
+
+  // Clic en Step: arranca la escena y guarda el video de Step caminando
+  const clicStep = () => {
+    iniciarEscena();
+    GuardarInteraccion("stepCamina", "Step caminando", "stepCamina", CAPITULO, "video", "/caminado5.webm");
+  };
+
   return (
     <div className="escena5a">
       <div className={`camara5a${DEBUG ? " debug" : ""}`}>
@@ -210,7 +228,7 @@ const LotieCap5A = () => {
             </video>
           </div>
 
-          <div className="hitbox5a" onClick={iniciarEscena}>
+          <div className="hitbox5a" onClick={clicRejas}>
             <span className="pista5a" />
           </div>
         </div>
@@ -228,7 +246,7 @@ const LotieCap5A = () => {
             </video>
           </div>
 
-          <div className="hitbox5a" onClick={iniciarEscena}>
+          <div className="hitbox5a" onClick={clicStep}>
             <span className="pista5a" />
           </div>
         </div>

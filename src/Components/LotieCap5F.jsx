@@ -1,5 +1,9 @@
 import { useRef, useEffect } from "react";
+import GuardarInteraccion from "./GuardarInteraccion";
 import "../Styles/LotieCap5F.css";
+
+// Número de capítulo con el que se guardan las interacciones
+const CAPITULO = 5;
 
 // true = muestra los cuadros de clic en rojo para calibrarlos
 // false = invisibles (versión final)
@@ -156,10 +160,13 @@ const LotieCap5F = ({ volumen = 1 }) => {
       ],
       { duration: 3500, easing: "ease-out" }
     );
+
+    // Animación CSS: se guarda con su imagen
+    GuardarInteraccion("lampara5f", "Lámpara 3", "lampara", CAPITULO, "css", "./Lampara5F.png");
   };
 
   // Manchas: efecto de derrame (se contrae y se expande como líquido)
-  const animarMancha = (nombre, ref) => {
+  const animarMancha = (nombre, ref, titulo, src) => {
     lanzarAnimacion(
       nombre,
       ref,
@@ -172,19 +179,23 @@ const LotieCap5F = ({ volumen = 1 }) => {
       ],
       { duration: 1600, easing: "ease-out" }
     );
+
+    // Animación CSS: se guarda con su imagen
+    GuardarInteraccion(nombre, titulo, "mancha", CAPITULO, "css", src);
   };
 
   // Objetos con clic: cada uno tiene su animación + su propio cuadro de clic
   const manchas = [
-    { clase: "mancha1-5f", ref: mancha1Ref, src: "./Mancha1 .png", nombre: "mancha1" },
-    { clase: "mancha2-5f", ref: mancha2Ref, src: "./Mancha2 .png", nombre: "mancha2" },
+    { clase: "mancha1-5f", ref: mancha1Ref, src: "./Mancha1 .png", nombre: "mancha1", titulo: "Mancha 1" },
+    { clase: "mancha2-5f", ref: mancha2Ref, src: "./Mancha2 .png", nombre: "mancha2", titulo: "Mancha 2" },
   ];
 
+  // Videos: al tocar se reproducen y se guardan
   const videos = [
-    { clase: "puerta5f",     ref: puertaRef,     src: "./Puerta5f.webm",  onClick: () => tocarAnimacion("puerta", puertaRef) },
-    { clase: "silla5f",      ref: sillaRef,      src: "./silla.webm",     onClick: () => tocarAnimacion("silla", sillaRef) },
-    { clase: "libros5f",     ref: librosRef,     src: "./Libros.webm",    onClick: () => reproducirVideo(librosRef) },
-    { clase: "pergaminos5f", ref: pergaminosRef, src: "./periodico.webm", onClick: () => reproducirVideo(pergaminosRef) },
+    { id: "puerta5f",     titulo: "Puerta",     clase: "puerta5f",     ref: puertaRef,     src: "./Puerta5f.webm",  onClick: () => tocarAnimacion("puerta", puertaRef) },
+    { id: "silla5f",      titulo: "Silla",      clase: "silla5f",      ref: sillaRef,      src: "./silla.webm",     onClick: () => tocarAnimacion("silla", sillaRef) },
+    { id: "libros5f",     titulo: "Libros",     clase: "libros5f",     ref: librosRef,     src: "./Libros.webm",    onClick: () => reproducirVideo(librosRef) },
+    { id: "pergaminos5f", titulo: "Pergaminos", clase: "pergaminos5f", ref: pergaminosRef, src: "./periodico.webm", onClick: () => reproducirVideo(pergaminosRef) },
   ];
 
   return (
@@ -193,28 +204,37 @@ const LotieCap5F = ({ volumen = 1 }) => {
       <img className="fondo5f" src="./Escenario5F.png" alt="" />
 
       {/* ===== Manchas del piso (derrame al tocar) ===== */}
-      {manchas.map(({ clase, ref, src, nombre }) => (
+      {manchas.map(({ clase, ref, src, nombre, titulo }) => (
         <div key={clase} className={`anim5f mancha5f ${clase}`}>
           {/* Solo visual: no recibe clics */}
           <div className="vista5f">
             <img ref={ref} src={src} alt="" />
           </div>
           {/* Cuadro de clic propio, dentro de su objeto */}
-          <div className="hitbox5f" onClick={() => animarMancha(nombre, ref)}>
+          <div
+            className="hitbox5f"
+            onClick={() => animarMancha(nombre, ref, titulo, src)}
+          >
             <span className="pista5f" />
           </div>
         </div>
       ))}
 
       {/* ===== Puerta, silla, libros y pergaminos (videos al tocar) ===== */}
-      {videos.map(({ clase, ref, src, onClick }) => (
+      {videos.map(({ id, titulo, clase, ref, src, onClick }) => (
         <div key={clase} className={`anim5f ${clase}`}>
           <div className="vista5f">
             <video ref={ref} muted playsInline>
               <source src={src} type="video/webm" />
             </video>
           </div>
-          <div className="hitbox5f" onClick={onClick}>
+          <div
+            className="hitbox5f"
+            onClick={() => {
+              onClick();
+              GuardarInteraccion(id, titulo, id, CAPITULO, "video", src);
+            }}
+          >
             <span className="pista5f" />
           </div>
         </div>

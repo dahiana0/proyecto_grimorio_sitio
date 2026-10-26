@@ -1,11 +1,12 @@
 @font-face {
     font-family: pieces;
-    src: url("../Styles/$piecesVOG2.TTF") format("truetype");
+    src: url("./Pieces of Eight.ttf") format("truetype");
+    font-display: swap;
 }
 
 @font-face {
     font-family: glacia;
-    src: url("../Styles/glacial-indifference.regular.otf") format("opentype");
+    src: url("./glacial-indifference.regular.otf") format("opentype");
 }
 
 :root {

@@ -30,6 +30,7 @@ import LootieKarol from "./Components/LootieKarol";
 import InteraccionesGuardadas from "./Components/InteraccionesGuardadas.jsx";
 import Archivos from "./Components/Archivos";
 import Diario from "./Components/InteraccionesGuardadas.jsx";
+import CustomCursor from "./Components/Customcursor.jsx";
 
 
 
@@ -37,6 +38,7 @@ import Diario from "./Components/InteraccionesGuardadas.jsx";
 export const App = () => {
   return (
     <>
+      <CustomCursor />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Inicio />} />
@@ -68,6 +70,7 @@ export const App = () => {
           <Route path="/lootkarol" element={<LootieKarol />} />
           <Route path="/archivo" element={<Diario />} />
           <Route path="/archivo2" element={<Archivos />} />
+          <Route path="/archivo3" element={<InteraccionesGuardadas />} />
 
         </Routes>
       </BrowserRouter>

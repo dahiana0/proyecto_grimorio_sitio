@@ -1,14 +1,19 @@
 /* =========================================================
-   INICIO — layout simétrico en una sola pantalla (sin scroll en escritorio)
+   INICIO — layout simétrico
    Izquierda: El libro + Personajes (más angostas)
    Centro: Grimorio (centrado de verdad, ocupa toda la columna)
    Derecha: El autor + Animaciones
+
+   Las filas CRECEN según el contenido: si una tarjeta necesita más
+   espacio (pantalla baja, zoom, columna angosta), la página crece y
+   hace scroll en vez de dejar que el texto se salga de la tarjeta.
    ========================================================= */
 
 .dash {
   --sidebar-w: 110px;
 
-  height: 100svh;
+  /* antes: height: 100svh (fijo). Ahora es el MÍNIMO: puede crecer. */
+  min-height: 100svh;
   --centro: 36%; /* ancho de la columna de Grimorio (más grande = más protagonista) */
   /* La barra lateral ocupa la izquierda; esta mitad de la diferencia se
      le quita a la columna izquierda y se le suma a la derecha para que
@@ -24,26 +29,34 @@
     minmax(0, calc((100% - var(--centro) - 44px) / 2 - var(--ajuste)))
     var(--centro)
     minmax(0, calc((100% - var(--centro) - 44px) / 2 + var(--ajuste)));
-  grid-template-rows: repeat(5, minmax(0, 1fr));
-  grid-template-areas:
-    "a centro c"
-    "a centro c"
-    "a centro d"
-    "b centro d"
-    "b centro d";
+  /* Una sola fila: la altura la manda el contenido más alto de las tres columnas */
+  grid-template-rows: auto;
+  grid-template-areas: "izq centro der";
   gap: 16px 22px;
 }
 
-.dash-a { grid-area: a; }
-.dash-b { grid-area: b; }
-.dash-c { grid-area: c; }
-.dash-d { grid-area: d; }
+.dash-col {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dash-col-izq { grid-area: izq; }
+.dash-col-der { grid-area: der; }
 .dash-centro { grid-area: centro; }
+
+/* Reparto del espacio SOBRANTE entre las dos tarjetas de cada columna
+   (nunca por debajo de su contenido, porque flex-basis es "auto") */
+.dash-a { flex: 3 1 auto; }
+.dash-b { flex: 2 1 auto; }
+.dash-c { flex: 2 1 auto; }
+.dash-d { flex: 3 1 auto; }
 
 /* ---------- TARJETAS ---------- */
 .dash-card {
   position: relative;
-  min-height: 0;
+  /* sin "min-height: 0": la tarjeta nunca puede ser más baja que su contenido */
   min-width: 0;
   display: flex;
   flex-direction: column;
@@ -53,6 +66,9 @@
   background: transparent;
   box-shadow: 0 0 22px rgba(26, 217, 109, 0.1);
   transition: border-color 0.35s ease, box-shadow 0.35s ease;
+
+  /* permite adaptar el contenido al ANCHO de cada tarjeta (ver @container) */
+  container-type: inline-size;
 }
 
 .dash-card::before,
@@ -86,6 +102,11 @@
   border-color: #1ad96d;
   box-shadow: 0 0 30px rgba(26, 217, 109, 0.28);
   z-index: 3;
+}
+
+/* Tarjeta del autor: un poco más compacta */
+.dash-c {
+  padding: clamp(8px, 1.6vh, 16px) clamp(12px, 1.3vw, 20px);
 }
 
 .dash-card-titulo {
@@ -249,17 +270,19 @@
 
 /* ---------- EL LIBRO ---------- */
 .dash-libro-fila {
-  flex: 1;
-  min-height: 0;
+  flex: 1 0 auto;
   display: grid;
-  grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
-  align-items: center;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  align-items: start; /* antes: center */
   gap: 14px;
 }
 
 .dash-libro-caja {
-  height: 100%;
+  width: min(100%, 220px); /* nunca más ancho de 220px */
+  height: auto; /* antes: 100% */
   min-height: 0;
+  aspect-ratio: 3 / 4; /* la proporción del libro ya no se rompe */
+  margin-inline: auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -280,6 +303,7 @@
 
 .dash-libro-img {
   position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;
@@ -290,6 +314,15 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
+}
+
+/* El texto no se sale: se parte y se limita a 6 líneas */
+.dash-libro-info .dash-card-p {
+  overflow-wrap: anywhere;
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .dash-libro-titulo {
@@ -313,8 +346,9 @@
 
 /* ---------- PERSONAJES ---------- */
 .dash-pers {
-  flex: 1;
-  min-height: 0;
+  flex: 1 0 auto;
+  /* alto mínimo para que los retratos no queden planos */
+  min-height: clamp(120px, 20vh, 200px);
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
@@ -459,18 +493,17 @@
 
 /* ---------- EL AUTOR ---------- */
 .dash-autor {
-  flex: 1;
-  min-height: 0;
+  flex: 1 0 auto;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
-  align-items: center;
-  gap: clamp(10px, 1.4vw, 20px);
+  align-items: start;
+  gap: clamp(8px, 1vw, 14px);
 }
 
 .dash-autor-circulo {
   all: unset;
   cursor: pointer;
-  height: clamp(80px, 17vh, 150px);
+  height: clamp(60px, 11vh, 105px);
   aspect-ratio: 1;
   overflow: hidden;
   border-radius: 50%;
@@ -491,17 +524,17 @@
 
 .dash-autor-nombre {
   font-family: "pieces";
-  font-size: clamp(16px, 2.6vh, 24px);
+  font-size: clamp(14px, 2.2vh, 20px);
   color: #1ad96d;
   text-shadow: 0 0 6px #1ad96d;
   margin: 0 0 2px;
 }
 
 .dash-autor-anios {
-  margin: 0 0 6px;
+  margin: 0 0 4px;
   font-family: glacia;
-  font-size: clamp(9px, 1.3vh, 12px);
-  letter-spacing: 0.15em;
+  font-size: clamp(8px, 1.1vh, 10px);
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #bfa76a;
 }
@@ -511,13 +544,16 @@
 }
 
 .dash-autor-texto .dash-card-p {
+  font-size: clamp(10px, 1.45vh, 12.5px);
+  line-height: 1.45;
   min-height: 5.4em;
 }
 
 /* ---------- ANIMACIONES (cinta con 3 paneles verticales, escena real) ---------- */
 .dash-cinta-fila {
-  flex: 1;
-  min-height: 0;
+  flex: 1 0 auto;
+  /* alto mínimo: los paneles solo tienen contenido absoluto (la escena) */
+  min-height: clamp(150px, 24vh, 280px);
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: stretch;
@@ -731,6 +767,41 @@
   to { transform: rotate(360deg); }
 }
 
+/* =========================================================
+   ADAPTACIÓN AL ANCHO DE CADA TARJETA (container queries)
+   Cuando una tarjeta queda angosta (zoom, ventana pequeña, barra lateral
+   abierta), el contenido se reacomoda en vez de apretarse hasta salirse.
+   ========================================================= */
+
+/* El libro: imagen arriba, texto debajo (umbral más alto: antes 380px) */
+@container (max-width: 460px) {
+  .dash-libro-fila {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+}
+
+/* Personajes: 2 x 2 */
+@container (max-width: 300px) {
+  .dash-pers {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    min-height: clamp(240px, 36vh, 360px);
+  }
+}
+
+/* Autor: foto arriba, texto debajo (apila desde 400px) */
+@container (max-width: 400px) {
+  .dash-autor {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    text-align: center;
+    gap: 8px;
+  }
+  .dash-autor-circulo { height: clamp(60px, 10vh, 85px); }
+  .dash-autor-texto .dash-card-p { min-height: 0; }
+  .dash-autor-texto .dash-link { align-self: center; }
+}
+
 /* ---------- Pantallas bajas ---------- */
 @media (min-width: 1001px) and (max-height: 720px) {
   .dash-texto { display: none; }
@@ -743,22 +814,11 @@
   .dash-card { border-radius: 16px; }
 }
 
-/* ---------- Escritorio con poca altura (laptops pequeñas, ventanas bajas) ---------- */
-@media (min-width: 1001px) and (max-height: 560px) {
-  .dash {
-    height: auto;
-    min-height: 100svh;
-    grid-template-rows: repeat(5, minmax(90px, auto));
-  }
-  .dash-card { min-height: 190px; }
-}
-
 /* ---------- Tablet y móvil: una sola columna, con scroll ---------- */
 @media (max-width: 1000px) {
   .dash {
     --icono-size: 30px;
 
-    height: auto;
     min-height: 100svh;
     padding: 20px clamp(14px, 5vw, 40px) 32px;
     grid-template-columns: minmax(0, 760px);
@@ -772,6 +832,12 @@
       "d";
     gap: 18px;
   }
+
+  .dash-col { display: contents; }
+  .dash-a { grid-area: a; }
+  .dash-b { grid-area: b; }
+  .dash-c { grid-area: c; }
+  .dash-d { grid-area: d; }
 
   .dash-centro { padding: 28px 0; }
   .dash-titulo { font-size: clamp(56px, 18vw, 110px); }
@@ -790,7 +856,7 @@
   .dash-meta { font-size: clamp(10px, 1.9vw, 12px); }
 
   .dash-a { min-height: 320px; }
-  .dash-libro-caja { height: 240px; }
+  /* (se quitó "height: 240px" de .dash-libro-caja: ahora usa aspect-ratio) */
   .dash-libro-titulo { font-size: clamp(24px, 5vw, 34px); }
 
   .dash-pers { min-height: 210px; }
@@ -799,6 +865,7 @@
   .dash-autor-circulo { height: clamp(100px, 22vw, 150px); }
   .dash-autor-nombre { font-size: clamp(18px, 3.6vw, 24px); }
   .dash-autor-anios { font-size: clamp(10px, 1.9vw, 12px); }
+  .dash-autor-texto .dash-card-p { font-size: clamp(13px, 2.2vw, 15px); }
 
   .dash-cinta-fila { min-height: 200px; }
 }
@@ -807,9 +874,8 @@
 @media (max-width: 600px) {
   .dash { gap: 16px; }
 
-  /* Libro: imagen arriba, texto abajo */
+  /* Libro: imagen arriba, texto abajo (se quitó "height: 220px" de la caja) */
   .dash-libro-fila { grid-template-columns: minmax(0, 1fr); gap: 10px; }
-  .dash-libro-caja { height: 220px; }
 
   /* Personajes: 2 x 2 */
   .dash-pers { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; min-height: 0; }

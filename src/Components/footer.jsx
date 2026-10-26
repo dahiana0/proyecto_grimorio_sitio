@@ -1,6 +1,6 @@
 import React from "react";
 import "../Styles/Footer.css";
-import "../Styles/css.css";
+
 
 export const Footer = () => {
   return (
@@ -27,7 +27,7 @@ export const Footer = () => {
 
             <div className="footer-icons">
               <a
-                href="https://www.instagram.com/tu_usuario"
+                href="https://www.instagram.com/grimoriointeractivo?xtok=a2F0dWEyajV0ZG0w"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -39,7 +39,7 @@ export const Footer = () => {
               </a>
 
               <a
-                href="https://www.tiktok.com/@tu_usuario"
+                href="https://www.tiktok.com/@grimoriointeractivo?_r=1&_t=ZS-9AKvYWkGzuT"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -51,7 +51,7 @@ export const Footer = () => {
               </a>
 
               <a
-                href="https://www.facebook.com/tu_usuario"
+                href="https://www.facebook.com/share/1CCdrm97Bz/"
                 target="_blank"
                 rel="noopener noreferrer"
               >

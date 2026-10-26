@@ -1,5 +1,9 @@
 import { useRef, useEffect, useState } from "react";
+import GuardarInteraccion from "./GuardarInteraccion";
 import "../Styles/LotieCap5D.css";
+
+// Número de capítulo con el que se guardan las interacciones
+const CAPITULO = 5;
 
 // true = muestra los cuadros de clic en rojo para calibrarlos
 // false = invisibles (versión final)
@@ -8,6 +12,8 @@ const DEBUG = false;
 /* ---------------------------------------------------------------------
    VIDEOS DE LA ESCENA (de atrás hacia adelante)
    nombre   = identificador
+   id       = identificador único con el que se guarda en el archivo
+   titulo   = nombre que se ve en el archivo
    clase    = clase CSS
    src      = archivo de video en public/
    sonido   = audio que suena junto con el video (ruta en public/)
@@ -16,12 +22,14 @@ const DEBUG = false;
    cortar   = true si el sonido se detiene cuando termina el video
 --------------------------------------------------------------------- */
 const VIDEOS = [
-  { nombre: "estatua1", clase: "estatua1-5d", src: "/cera1c.webm" },
-  { nombre: "estatua2", clase: "estatua2-5d", src: "/cera2c.webm" },
-  { nombre: "estatua3", clase: "estatua3-5d", src: "/cera3c.webm" },
-  { nombre: "estatua4", clase: "estatua4-5d", src: "/cera4c.webm" },
+  { nombre: "estatua1", id: "estatua1", titulo: "Estatua 1", clase: "estatua1-5d", src: "/cera1c.webm" },
+  { nombre: "estatua2", id: "estatua2", titulo: "Estatua 2", clase: "estatua2-5d", src: "/cera2c.webm" },
+  { nombre: "estatua3", id: "estatua3", titulo: "Estatua 3", clase: "estatua3-5d", src: "/cera3c.webm" },
+  { nombre: "estatua4", id: "estatua4", titulo: "Estatua 4", clase: "estatua4-5d", src: "/cera4c.webm" },
   {
     nombre: "rata",
+    id: "rata",
+    titulo: "Rata",
     clase: "rata5d",
     src: "/Rata5c.webm",
     sonido: "/Rat - Sound Effect  ProSounds.mp3",
@@ -29,6 +37,8 @@ const VIDEOS = [
   },
   {
     nombre: "monstruo",
+    id: "monstruo5d",
+    titulo: "Monstruo",
     clase: "monstruo5d",
     src: "/chull.webm",
     sonido: "/audios/RUGIDO CRIATURA.mp3",
@@ -37,6 +47,8 @@ const VIDEOS = [
   },
   {
     nombre: "step",
+    id: "step5d",
+    titulo: "Step",
     clase: "step5d",
     src: "/step5D.webm",
     sonido: "/audios/pasos.mp3",
@@ -95,6 +107,12 @@ const LotieCap5D = () => {
       .catch(() => {});
   };
 
+  // Clic del lector: reproduce y guarda (los "auto" no se guardan solos)
+  const clicVideo = (v) => {
+    reproducirVideo(v.nombre);
+    GuardarInteraccion(v.id, v.titulo, v.id, CAPITULO, "video", v.src);
+  };
+
   // Detener el sonido cuando termina el video (solo si "cortar" es true)
   const alTerminar = (v) => {
     if (!v.cortar) return;
@@ -123,6 +141,12 @@ const LotieCap5D = () => {
     return () => observador.disconnect();
   }, []);
 
+  // Lámpara (animación CSS): se guarda con su imagen
+  const clicLampara = () => {
+    setLamparaActiva(true);
+    GuardarInteraccion("lampara5d", "Lámpara 1", "lampara", CAPITULO, "css", "/lampara1.png");
+  };
+
   return (
     <div className={`escena5d${DEBUG ? " debug" : ""}`} ref={escenaRef}>
 
@@ -141,7 +165,7 @@ const LotieCap5D = () => {
           />
         </div>
         {/* Cuadro de clic propio, dentro de su objeto */}
-        <div className="hitbox5d" onClick={() => setLamparaActiva(true)}>
+        <div className="hitbox5d" onClick={clicLampara}>
           <span className="pista5d" />
         </div>
       </div>
@@ -160,7 +184,7 @@ const LotieCap5D = () => {
               <source src={v.src} type="video/webm" />
             </video>
           </div>
-          <div className="hitbox5d" onClick={() => reproducirVideo(v.nombre)}>
+          <div className="hitbox5d" onClick={() => clicVideo(v)}>
             <span className="pista5d" />
           </div>
         </div>

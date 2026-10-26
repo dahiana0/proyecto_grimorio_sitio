@@ -110,7 +110,7 @@ export default function VisorComic3({
   // ---------------------------------------------------------------------
   const escenas = [
     { tipo: "lottie", componente: <LotieCap3 />, audio: "/audios/cap3.wav" },
-    { tipo: "video", video: "/Capitulo3V.mp4" },
+    { tipo: "video", video: "./videos/capitulo 3 video.mp4" },
   ];
 
   // ---------------------------------------------------------------------
@@ -356,13 +356,6 @@ export default function VisorComic3({
             </div>
           )}
 
-          {mostrarSubtitulo &&
-            escenas[index].tipo === "lottie" &&
-            subtituloActual && (
-              <div className="visor-sub">
-                <p>{subtituloActual}</p>
-              </div>
-            )}
         </div>
       </div>
 
@@ -384,6 +377,7 @@ export default function VisorComic3({
         onAlternarMute={alternarMute}
         mostrarSubtitulo={mostrarSubtitulo}
         onAlternarSubtitulos={() => setMostrarSubtitulo((v) => !v)}
+        subtitulo={(escenas[index].tipo === "lottie" ? subtituloActual : "")}
       />
 
       <audio ref={audioRef}

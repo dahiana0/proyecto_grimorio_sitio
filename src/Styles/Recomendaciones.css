@@ -1,23 +1,30 @@
 /* ===== TÍTULO ===== */
 .titulo-recomendaciones {
-  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
+  max-width: 720px;
+  margin: 0 auto clamp(36px, 6vh, 64px);
 }
 
 .reco-main {
-  color: #1ad96d;
+  margin: 0;
   font-family: "pieces";
-  font-size: 60px;
-  margin: 10px 0;
-  text-shadow: 0 0 6px #1ad96d;
+  font-weight: 400;
+  font-size: clamp(46px, 8vw, 96px);
+  line-height: 1;
+  color: #1ad96d;
+  text-shadow: 0 0 10px #1ad96d, 0 0 34px rgba(26, 217, 109, 0.5);
 }
 
 .reco-desc {
-  color: #aaa;
-  font-family: glacia;
-  font-size: 14px;
-  max-width: 500px;
-  margin: 0 auto;
+  margin: 14px 0 0;
+  max-width: 560px;
+  font-family: "glacia";
+  font-size: clamp(14px, 1.6vw, 17px);
+  line-height: 1.7;
+  color: #cfcfcf;
 }
 
 /* ===== SECCIÓN ===== */
@@ -310,12 +317,7 @@
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 480px) {
-  .reco-main { font-size: 26px; }
-
-  .reco-desc {
-    font-size: 13px;
-    padding: 0 10px;
-  }
+  .reco-desc { padding: 0 10px; }
 
   .recomendaciones-section { padding: 100px 16px 40px; }
 
@@ -348,7 +350,6 @@
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
-  .reco-main { font-size: 32px; }
 
   .recomendaciones-section { padding: 100px 20px 40px; }
 
@@ -377,7 +378,6 @@
 }
 
 @media (min-width: 768px) and (max-width: 1023px) {
-  .reco-main { font-size: 38px; }
 
   .escena-3d {
     --ancho: 170px;

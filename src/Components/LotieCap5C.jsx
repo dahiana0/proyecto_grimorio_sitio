@@ -1,5 +1,9 @@
 import { useRef, useEffect } from "react";
+import GuardarInteraccion from "./GuardarInteraccion";
 import "../Styles/LotieCap5C.css";
+
+// Número de capítulo con el que se guardan las interacciones
+const CAPITULO = 5;
 
 // true = muestra los cuadros de clic en rojo para calibrarlos
 // false = invisibles (versión final)
@@ -104,20 +108,21 @@ const caidaCinta = (t) => {
 
 /* ---------------------------------------------------------------------
    VIDEOS DE LA ESCENA
-   nombre = identificador | clase = clase CSS | src = archivo en public/
+   nombre = identificador | titulo = nombre que se ve en el archivo
+   clase = clase CSS | src = archivo en public/
    auto = true si lo controla la secuencia (no responde al clic)
 --------------------------------------------------------------------- */
 const VIDEOS = [
   // Fondo y decorado (de atrás hacia adelante)
-  { nombre: "manchas", clase: "manchas5c", src: "/Manchas .webm" },
-  { nombre: "cuadro1", clase: "cuadro1-5c", src: "/Cuadro1.webm" },
-  { nombre: "cuadro2", clase: "cuadro2-5c", src: "/Cuadro2.webm" },
-  { nombre: "cuadro3", clase: "cuadro3-5c", src: "/Cuadro3.webm" },
-  { nombre: "cuadro4", clase: "cuadro4-5c", src: "/Cuadro4.webm" },
-  { nombre: "cuadro5", clase: "cuadro5-5c", src: "/Cuadro5.webm" },
-  { nombre: "cuadro6", clase: "cuadro6-5c", src: "/Cuadro6.webm" },
-  { nombre: "cuadro7", clase: "cuadro7-5c", src: "/Cuadro7.webm" },
-  { nombre: "cuadro8", clase: "cuadro8-5c", src: "/Cuadro8.webm" },
+  { nombre: "manchas", titulo: "Manchas", clase: "manchas5c", src: "/Manchas .webm" },
+  { nombre: "cuadro1", titulo: "Cuadro 1", clase: "cuadro1-5c", src: "/Cuadro1.webm" },
+  { nombre: "cuadro2", titulo: "Cuadro 2", clase: "cuadro2-5c", src: "/Cuadro2.webm" },
+  { nombre: "cuadro3", titulo: "Cuadro 3", clase: "cuadro3-5c", src: "/Cuadro3.webm" },
+  { nombre: "cuadro4", titulo: "Cuadro 4", clase: "cuadro4-5c", src: "/Cuadro4.webm" },
+  { nombre: "cuadro5", titulo: "Cuadro 5", clase: "cuadro5-5c", src: "/Cuadro5.webm" },
+  { nombre: "cuadro6", titulo: "Cuadro 6", clase: "cuadro6-5c", src: "/Cuadro6.webm" },
+  { nombre: "cuadro7", titulo: "Cuadro 7", clase: "cuadro7-5c", src: "/Cuadro7.webm" },
+  { nombre: "cuadro8", titulo: "Cuadro 8", clase: "cuadro8-5c", src: "/Cuadro8.webm" },
   { nombre: "puerta", clase: "puerta5c", src: "/puerta5c2.webm", auto: true },
   { nombre: "cinta", clase: "cinta5c", src: "/cintaspolicia.webm", auto: true },
   // Personajes
@@ -130,12 +135,12 @@ const VIDEOS = [
    Al tocarlos saltan, giran y rebotan (animación en el CSS).
 --------------------------------------------------------------------- */
 const HUESOS = [
-  { nombre: "hueso1", clase: "hueso1-5c", src: "/Hueso1.png" },
-  { nombre: "hueso2", clase: "hueso2-5c", src: "/Hueso2.png" },
-  { nombre: "hueso3", clase: "hueso3-5c", src: "/Hueso3.png" },
-  { nombre: "hueso4", clase: "hueso4-5c", src: "/Hueso4.png" },
-  { nombre: "hueso5", clase: "hueso5-5c", src: "/Hueso5.png" },
-  { nombre: "hueso6", clase: "hueso6-5c", src: "/Hueso6.png" },
+  { nombre: "hueso1", titulo: "Hueso 1", clase: "hueso1-5c", src: "/Hueso1.png" },
+  { nombre: "hueso2", titulo: "Hueso 2", clase: "hueso2-5c", src: "/Hueso2.png" },
+  { nombre: "hueso3", titulo: "Hueso 3", clase: "hueso3-5c", src: "/Hueso3.png" },
+  { nombre: "hueso4", titulo: "Hueso 4", clase: "hueso4-5c", src: "/Hueso4.png" },
+  { nombre: "hueso5", titulo: "Hueso 5", clase: "hueso5-5c", src: "/Hueso5.png" },
+  { nombre: "hueso6", titulo: "Hueso 6", clase: "hueso6-5c", src: "/Hueso6.png" },
 ];
 
 /* ---------------------------------------------------------------------
@@ -143,10 +148,10 @@ const HUESOS = [
    Se acomodan con posición y tamaño en el CSS (.antorcha1-5c ... .antorcha4-5c)
 --------------------------------------------------------------------- */
 const ANTORCHAS = [
-  { nombre: "antorcha1", clase: "antorcha5c antorcha5c-fondo antorcha1-5c", src: "/antorcha1.png" },
-  { nombre: "antorcha2", clase: "antorcha5c antorcha5c-fondo antorcha2-5c", src: "/antorcha2.png" },
-  { nombre: "antorcha3", clase: "antorcha5c antorcha5c-frente antorcha3-5c", src: "/antorcha3.png" },
-  { nombre: "antorcha4", clase: "antorcha5c antorcha5c-frente antorcha4-5c", src: "/antorcha4.png" },
+  { nombre: "antorcha1", titulo: "Antorcha 1", clase: "antorcha5c antorcha5c-fondo antorcha1-5c", src: "/antorcha1.png" },
+  { nombre: "antorcha2", titulo: "Antorcha 2", clase: "antorcha5c antorcha5c-fondo antorcha2-5c", src: "/antorcha2.png" },
+  { nombre: "antorcha3", titulo: "Antorcha 3", clase: "antorcha5c antorcha5c-frente antorcha3-5c", src: "/antorcha3.png" },
+  { nombre: "antorcha4", titulo: "Antorcha 4", clase: "antorcha5c antorcha5c-frente antorcha4-5c", src: "/antorcha4.png" },
 ];
 
 /* activo = true cuando debe poder empezar la secuencia.
@@ -306,25 +311,29 @@ const LotieCap5C = ({ activo = true }) => {
     };
   }, [activo]);
 
-  // Reproducir un video decorativo desde el inicio (clic)
-  const reproducirVideo = (nombre) => {
-    const video = videoRefs.current[nombre];
+  // Reproducir un video decorativo desde el inicio (clic) y guardarlo
+  const reproducirVideo = (vd) => {
+    const video = videoRefs.current[vd.nombre];
     if (video) {
       video.currentTime = 0;
       video.play().catch(() => {});
     }
+
+    GuardarInteraccion(vd.nombre, vd.titulo, vd.nombre, CAPITULO, "video", vd.src);
   };
 
   // El clic llega por el cuadro de clic; la que se anima es la imagen del objeto
   const imagenDe = (e) => e.currentTarget.closest(".anim5c")?.querySelector("img");
 
   // Animar un hueso (se puede repetir en cada clic)
-  const animarHueso = (e) => {
+  const animarHueso = (e, h) => {
     const img = imagenDe(e);
     if (!img) return;
     img.classList.remove("hueso-animando");
     void img.offsetWidth; // reinicia la animación
     img.classList.add("hueso-animando");
+
+    GuardarInteraccion(h.nombre, h.titulo, "hueso", CAPITULO, "css", h.src);
   };
 
   const terminarAnimacion = (e) => {
@@ -339,13 +348,15 @@ const LotieCap5C = ({ activo = true }) => {
   };
 
   // Mover una antorcha (se puede repetir en cada clic)
-  const moverAntorcha = (e) => {
+  const moverAntorcha = (e, a) => {
     const img = imagenDe(e);
     if (!img) return;
     sonar(AUDIO_ANTORCHA, VOLUMEN_ANTORCHA);
     img.classList.remove("antorcha5c-mover");
     void img.offsetWidth; // reinicia la animación
     img.classList.add("antorcha5c-mover");
+
+    GuardarInteraccion(a.nombre, a.titulo, "antorcha", CAPITULO, "css", a.src);
   };
 
   const terminarAntorcha = (e) => {
@@ -379,13 +390,13 @@ const LotieCap5C = ({ activo = true }) => {
               </video>
             </div>
             {/* Cuadro de clic propio, dentro de su objeto */}
-            <div className="hitbox5c" onClick={() => reproducirVideo(vd.nombre)}>
+            <div className="hitbox5c" onClick={() => reproducirVideo(vd)}>
               <span className="pista5c" />
             </div>
           </div>
         ))}
 
-        {/* ===== Huesos ===== */}
+        {/* ===== Huesos (animación CSS) ===== */}
         {HUESOS.map((h) => (
           <div key={h.nombre} className={`anim5c hueso5c ${h.clase}`}>
             <div className="vista5c">
@@ -396,13 +407,13 @@ const LotieCap5C = ({ activo = true }) => {
                 onAnimationEnd={terminarAnimacion}
               />
             </div>
-            <div className="hitbox5c" onClick={animarHueso}>
+            <div className="hitbox5c" onClick={(e) => animarHueso(e, h)}>
               <span className="pista5c" />
             </div>
           </div>
         ))}
 
-        {/* ===== Antorchas ===== */}
+        {/* ===== Antorchas (animación CSS) ===== */}
         {ANTORCHAS.map((a) => (
           <div key={a.nombre} className={`anim5c ${a.clase}`}>
             <div className="vista5c">
@@ -413,7 +424,7 @@ const LotieCap5C = ({ activo = true }) => {
                 onAnimationEnd={terminarAntorcha}
               />
             </div>
-            <div className="hitbox5c" onClick={moverAntorcha}>
+            <div className="hitbox5c" onClick={(e) => moverAntorcha(e, a)}>
               <span className="pista5c" />
             </div>
           </div>
