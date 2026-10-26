@@ -103,7 +103,7 @@ export default function VisorComic4({
   // ---------------------------------------------------------------------
   const escenas = [
     { tipo: "lottie", componente: <LotieCap4 />, audio: "./audios/Cap4.mp3" },
-    { tipo: "video", video: "/Capitulo 4 video.mp4" },
+    { tipo: "video", video: "./Videos/Capitulo 4 video.mp4" },
   ];
 
   // ---------------------------------------------------------------------

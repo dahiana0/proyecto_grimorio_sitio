@@ -323,7 +323,7 @@ export default function VisorComic5({
     { tipo: "lottie", componente: <LotieCap5D />, audio: "/audios/narrador5D.wav" },
     { tipo: "lottie", componente: <LotieCap5E />, audio: "/audios/Narrador5E.wav" },
     // Video final del capítulo
-    { tipo: "video", video: "/Capitulo 5 video.mp4" },
+    { tipo: "video", video: "./Videos/Capitulo 5 video.mp4" },
   ];
 
   // Sincroniza el subtítulo con el tiempo actual del audio
