@@ -258,7 +258,7 @@ export default function VisorCapitulo({
       ),
       audio: "/audios/Narrador_1.mp3",
     },
-    { tipo: "video", video: "/Videos/Capitulo 1 video.mp4" },
+    { tipo: "video", video: "./videos/capitulo 1 video.mp4" },
   ];
 
   // ---------------------------------------------------------------------
