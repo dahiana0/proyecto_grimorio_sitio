@@ -37,6 +37,7 @@ const finDeGrupo = (inicio) => {
   return fin;
 };
 
+// Todos los audios están en public/audios/ (rutas absolutas, sin espacios)
 const AUDIOS_PERSONAJES = {
   espalda: { src: "/audios/pasos-normales.mp3", volumen: 0.6, loop: true },
   pelea: { src: "/audios/pelea.mp3", volumen: 0.8, loop: false },
@@ -274,7 +275,7 @@ const LotieCap4 = () => {
       reproducirVideo(clipRefs[j]);
       sonarClip(SECUENCIA[j].id);
     }
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actual]);
 
 
@@ -286,9 +287,9 @@ const LotieCap4 = () => {
   ];
 
   const telaranas = [
-    { id: "telarana1", nombre: "Telaraña 1", clase: "telarana-fondo-cap4 telarana1c-cap4", ref: telarana1Ref, src: "./telaraña1c.webm" },
-    { id: "telarana2", nombre: "Telaraña 2", clase: "telarana-fondo-cap4 telarana2c-cap4", ref: telarana2Ref, src: "./telaraña2c.webm" },
-    { id: "telarana3", nombre: "Telaraña 3", clase: "telarana-frente-cap4 telarana3c-cap4", ref: telarana3Ref, src: "./telaraña3c .webm" },
+    { id: "telarana1", nombre: "Telaraña 1", clase: "telarana-fondo-cap4 telarana1c-cap4", ref: telarana1Ref, src: "/telaraña1c.webm" },
+    { id: "telarana2", nombre: "Telaraña 2", clase: "telarana-fondo-cap4 telarana2c-cap4", ref: telarana2Ref, src: "/telaraña2c.webm" },
+    { id: "telarana3", nombre: "Telaraña 3", clase: "telarana-frente-cap4 telarana3c-cap4", ref: telarana3Ref, src: "/telaraña3c .webm" },
     { id: "telarana4", nombre: "Telaraña 4", clase: "telarana-frente-cap4 telarana4c-cap4", ref: telarana4Ref, src: "/telaraña4c .webm" },
   ];
 
@@ -404,7 +405,7 @@ const LotieCap4 = () => {
               preload="auto"
               onEnded={() => alTerminarClip(0)}
             >
-              <source src="./step correcion 3.webm" type="video/webm" />
+              <source src="/step correcion 3.webm" type="video/webm" />
             </video>
 
             <video
@@ -415,7 +416,7 @@ const LotieCap4 = () => {
               preload="auto"
               onEnded={() => alTerminarClip(1)}
             >
-              <source src="./rogersfrentecap4.webm" type="video/webm" />
+              <source src="/rogersfrentecap4.webm" type="video/webm" />
             </video>
 
             <video
@@ -426,7 +427,7 @@ const LotieCap4 = () => {
               preload="auto"
               onEnded={() => alTerminarClip(2)}
             >
-              <source src="./peleastep-rogers.webm" type="video/webm" />
+              <source src="/peleastep-rogers.webm" type="video/webm" />
             </video>
 
             <video
@@ -437,7 +438,7 @@ const LotieCap4 = () => {
               preload="auto"
               onEnded={() => alTerminarClip(3)}
             >
-              <source src="./stepamarrado.webm" type="video/webm" />
+              <source src="/stepamarrado.webm" type="video/webm" />
             </video>
 
             <video
@@ -453,7 +454,7 @@ const LotieCap4 = () => {
                 alTerminarClip(4);
               }}
             >
-              <source src="./rogerscamina.webm" type="video/webm" />
+              <source src="/rogerscamina.webm" type="video/webm" />
             </video>
 
             <video
@@ -463,7 +464,7 @@ const LotieCap4 = () => {
               playsInline
               preload="auto"
             >
-              <source src="./sillaycuerda.webm" type="video/webm" />
+              <source src="/sillaycuerda.webm" type="video/webm" />
             </video>
 
             <video
@@ -477,7 +478,7 @@ const LotieCap4 = () => {
                 pararClip("corre");
               }}
             >
-              <source src="./rogerscorre.webm" type="video/webm" />
+              <source src="/rogerscorre.webm" type="video/webm" />
             </video>
           </div>
         </div>
