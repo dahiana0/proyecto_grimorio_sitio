@@ -38,15 +38,15 @@ const finDeGrupo = (inicio) => {
 };
 
 const AUDIOS_PERSONAJES = {
-  espalda: { src: "./Pasos Normales  Normal Steps Sound Effect (HD).mp3", volumen: 0.6, loop: true },
-  pelea: { src: "./Sonidos de golpes y peleas.mp3", volumen: 0.8, loop: false },
-  amarrado: { src: "./respiracion.mp3", volumen: 0.7, loop: true },
-  camina: { src: "./Sonido de Susurro Tenebroso - Efecto de Sonido.mp3", volumen: 0.6, loop: true },
-  corre: { src: "./freesound_community-pasos-rapidos-loseta-29459.mp3", volumen: 0.7, loop: true },
+  espalda: { src: "/audios/pasos-normales.mp3", volumen: 0.6, loop: true },
+  pelea: { src: "/audios/pelea.mp3", volumen: 0.8, loop: false },
+  amarrado: { src: "/audios/respiracion.mp3", volumen: 0.7, loop: true },
+  camina: { src: "/audios/susurro.mp3", volumen: 0.6, loop: true },
+  corre: { src: "/audios/pasos-rapidos.mp3", volumen: 0.7, loop: true },
 };
 
-const AUDIO_ANTORCHA = "./anto.mp3";
-const AUDIO_PUERTA = "./Puerta.mp3";
+const AUDIO_ANTORCHA = "/audios/anto.mp3";
+const AUDIO_PUERTA = "/audios/Puerta.mp3";
 const VOLUMEN_ANTORCHA = 0.8;
 const VOLUMEN_PUERTA = 1;
 
