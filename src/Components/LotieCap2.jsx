@@ -13,30 +13,28 @@ import rata from "../assets/rata.json";
 import "../Styles/LotieCap2.css";
 const Lottie = LottieModule.default;
 
-// Número de capítulo con el que se guardan las interacciones
+
 const CAPITULO = 2;
 
-// Tamaño de diseño de la escena (igual que las escenas 1 y 3)
+
 const ANCHO = 1500;
 const ALTO = 836;
 
-// true = muestra los cuadros de clic en rojo para calibrarlos
-// false = invisibles (versión final)
+
 const DEBUG = false;
 
 const ESPALDA_FIN_MS = 10000;
 const FRENTE_INICIO_MS = 12500;
 const FRENTE2_INICIO_MS = 25000;
 
-// Encuadre de la cámara sobre la cara de Step
-const ZOOM_CARA = 2.6;   // qué tan cerca llega la cámara
-const CARA_FRAC = 0.22;  // altura de la cara dentro del video (0 = tope, 1 = pies)
 
+const ZOOM_CARA = 2.6;
+const CARA_FRAC = 0.22;
 const SONIDOS = {
-  rata: { src: "./Rat - Sound Effect  ProSounds.mp3", volumen: 1, loop: false }, // clic en la rata
-  estatua1: { src: "./Arrastrar silla_ efecto de sonido.mp3", volumen: 1, loop: false }, // clic en la estatua 1
-  pasosEspalda: { src: "./Pasos Normales  Normal Steps Sound Effect (HD).mp3", volumen: 1, loop: true }, // stepCap2Espalda
-  pasosFrente2: { src: "./Pasos Normales  Normal Steps Sound Effect (HD).mp3", volumen: 1, loop: true }, // stepCap2Frente2
+  rata: { src: "./Rat - Sound Effect  ProSounds.mp3", volumen: 1, loop: false },
+  estatua1: { src: "./Arrastrar silla_ efecto de sonido.mp3", volumen: 1, loop: false },
+  pasosEspalda: { src: "./Pasos Normales  Normal Steps Sound Effect (HD).mp3", volumen: 1, loop: true },
+  pasosFrente2: { src: "./Pasos Normales  Normal Steps Sound Effect (HD).mp3", volumen: 1, loop: true },
 };
 
 const LotieCap2 = () => {
@@ -62,7 +60,7 @@ const LotieCap2 = () => {
 
   const audiosRef = useRef({});
 
-  // Ajusta la escala al tamaño del visor
+
   useEffect(() => {
     const el = contenedorRef.current;
     if (!el) return;
@@ -132,20 +130,20 @@ const LotieCap2 = () => {
     }
   };
 
-  // Encuadre de la cara de Step (se calcula en medidas del lienzo)
+
   const calcularEncuadre = () => {
     const cam = camaraRef.current;
     const v = stepCap2FrenteRef.current;
     if (!cam || !v || !v.videoWidth) return;
 
-    // Medidas reales del video dentro del lienzo
+
     const vW = v.offsetWidth;
     const vH = vW * (v.videoHeight / v.videoWidth);
     const vLeft = v.offsetLeft;
     const bottom = parseFloat(getComputedStyle(v).bottom) || 0;
     const vTop = cam.offsetHeight - bottom - vH;
 
-    // Centro de la cara de Step
+
     const x = vLeft + vW / 2;
     const y = vTop + vH * CARA_FRAC;
 
@@ -218,7 +216,7 @@ const LotieCap2 = () => {
     GuardarInteraccion("rata", "Rata", "rata", CAPITULO, "lottie");
   };
 
-  // Balanceo de lámpara: se reinicia en cada clic
+
   const moverLampara = (clase, nombre) => {
     setLamparasActivas((prev) => ({ ...prev, [clase]: false }));
     setTimeout(() => {
@@ -229,7 +227,7 @@ const LotieCap2 = () => {
       );
     }, 10);
 
-    // Animación CSS: se guarda con su imagen y se balancea en el archivo
+
     GuardarInteraccion(clase, nombre, "lampara", CAPITULO, "css", "/lampara1.png");
   };
 
@@ -237,8 +235,7 @@ const LotieCap2 = () => {
     ? "stepCap2Frente2 stepCap2Frente2Fin"
     : "stepCap2Frente2";
 
-  // Estatuas: el clic se detecta sobre su dibujo real (no sobre un cuadro),
-  // así la estatua de atrás se puede tocar en la parte que se ve.
+
   const estatuas = [
     { clase: "estatua1", lottieRef: estatua1Ref, data: estatua1, onClick: animarEstatua1 },
     { clase: "estatua3", lottieRef: estatua3Ref, data: estatua3, onClick: animarEstatua3 },
@@ -271,7 +268,7 @@ const LotieCap2 = () => {
               alt="Escenario capítulo 2"
             />
 
-            {/* ===== Estatuas (clic sobre su dibujo) ===== */}
+
             {estatuas.map(({ clase, lottieRef, data, onClick }) => (
               <div key={clase} className={`anim forma ${clase}`}>
                 <div className="vista" onClick={onClick}>
@@ -286,7 +283,7 @@ const LotieCap2 = () => {
               </div>
             ))}
 
-            {/* ===== Rata (cuadro de clic) ===== */}
+
             <div className="anim rata">
               <div className="vista">
                 <Lottie
@@ -301,14 +298,14 @@ const LotieCap2 = () => {
               </div>
             </div>
 
-            {/* ===== Lámparas (cuadro de clic + balanceo) ===== */}
+
             {lamparas.map(({ clase, nombre }) => (
               <div
                 key={clase}
                 className={`anim ${clase}${lamparasActivas[clase] ? " lamparaActiva" : ""}`}
               >
                 <div className="vista">
-                  {/* Halo de luz: solo se ve mientras la lámpara se balancea */}
+
                   <span className="luzLampara" />
                   <img
                     src="/lampara1.png"

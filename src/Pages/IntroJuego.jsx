@@ -5,10 +5,8 @@ import Header from "../Components/Header"; // menú lateral
 import "../Styles/testimonios.css";
 import { getStoredComments } from "../utils/commentsStorage";
 
-/* ==================================================================
-   AJUSTA AQUÍ
-================================================================== */
-const DIAS_NUEVOS = 10; // un comentario es "nuevo" durante estos días
+
+const DIAS_NUEVOS = 10;
 
 const RUTAS = {
   inicio: "/",
@@ -17,14 +15,9 @@ const RUTAS = {
   antiguos: "/comentariosCompletos/antiguos",
 };
 
-// ★ ICONO DEL BOTÓN "Haz tu comentario" ★
-// Pon aquí la ruta de tu icono (svg, png...) que esté en la carpeta public.
-// Mientras esté en null se ve una estrellita como marcador de posición.
-const ICONO_CTA = null; // ej. "./iconos/comentar.svg"
 
-/* ---------- utilidades ---------- */
-// Número estable a partir del id: así cada ficha tiene SIEMPRE la misma
-// inclinación y desfase (no cambian cada vez que se vuelve a dibujar).
+const ICONO_CTA = null;
+
 const semilla = (id) => {
   const txt = String(id);
   let h = 2166136261;
@@ -45,14 +38,14 @@ const formatoFecha = (iso) => {
 
 const plural = (n, uno, varios) => `${n} ${n === 1 ? uno : varios}`;
 
-/* ---------- Ficha: un comentario que se puede arrastrar ---------- */
+
 const Ficha = ({ c, num, orden, tipo, limites, capa, reducir }) => {
   const [abierta, setAbierta] = useState(false);
   const [z, setZ] = useState(1);
 
   const s = semilla(c.id);
-  const giro = ((s % 70) - 35) / 10; // -3.5° a 3.5°
-  const desfase = ((s >> 5) % 4) * 14; // baja unas fichas más que otras
+  const giro = ((s % 70) - 35) / 10;
+  const desfase = ((s >> 5) % 4) * 14;
   const brillo = "rgba(26,217,109,.5)";
 
   return (
@@ -88,11 +81,11 @@ const Ficha = ({ c, num, orden, tipo, limites, capa, reducir }) => {
   );
 };
 
-/* ---------- Vitrina: la zona de nuevos o antiguos ---------- */
+
 const Vitrina = ({ tipo, titulo, sub, ruta, items, numeros, retraso, reducir }) => {
   const navigate = useNavigate();
   const campo = useRef(null);
-  const capa = useRef(1); // la última ficha tocada queda encima
+  const capa = useRef(1);
 
   return (
     <motion.section
@@ -163,7 +156,7 @@ export const IntroJuego = () => {
     const hora = (c) => new Date(c.createdAt).getTime();
     const lista = Array.isArray(comments) ? comments : [];
 
-    // El número de ficha sigue el orden en que se escribieron
+
     const porFecha = [...lista].sort((a, b) => hora(a) - hora(b));
     const nums = new Map(porFecha.map((c, i) => [c.id, i + 1]));
 
@@ -181,78 +174,78 @@ export const IntroJuego = () => {
 
   return (
     <>
-    <Header />
-    <main className="tm-page">
-      <header className="tm-cabecera">
-        <motion.h1
-          className="tm-titulo"
-          initial={reducir ? false : { opacity: 0, y: 18, filter: "blur(10px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 1, delay: 0.15, ease: [0.2, 0.8, 0.2, 1] }}
-        >
-          Libro de visitas
-        </motion.h1>
-
-        <motion.p
-          className="tm-texto"
-          initial={reducir ? false : { opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.55 }}
-        >
-          En el museo de Grimorio queremos leer tu opinión. Explora los testimonios de
-          otros visitantes: cada ficha se puede mover y apilar a tu gusto.
-        </motion.p>
-
-        <motion.button
-          className="tm-cta"
-          onClick={() => navigate(RUTAS.hacerComentario)}
-          initial={reducir ? false : { opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.75 }}
-          whileHover={{ scale: 1.04 }}
-          whileTap={{ scale: 0.97 }}
-        >
-          <span className="tm-cta-anillo" aria-hidden="true">
-            {ICONO_CTA ? <img src={ICONO_CTA} alt="" /> : "✧"}
-          </span>
-          Haz tu comentario
-        </motion.button>
-
-        {hayFichas && (
-          <motion.p
-            className="tm-pista"
-            initial={reducir ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 1.6 }}
+      <Header />
+      <main className="tm-page">
+        <header className="tm-cabecera">
+          <motion.h1
+            className="tm-titulo"
+            initial={reducir ? false : { opacity: 0, y: 18, filter: "blur(10px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 1, delay: 0.15, ease: [0.2, 0.8, 0.2, 1] }}
           >
-            Arrastra las fichas · toca una para leerla completa
-          </motion.p>
-        )}
-      </header>
+            Libro de visitas
+          </motion.h1>
 
-      <section className="tm-tablero" aria-label="Comentarios de los visitantes">
-        <Vitrina
-          tipo="nuevos"
-          titulo="Nuevos"
-          sub={`Últimos ${DIAS_NUEVOS} días`}
-          ruta={RUTAS.nuevos}
-          items={nuevos}
-          numeros={numeros}
-          retraso={0.35}
-          reducir={reducir}
-        />
-        <Vitrina
-          tipo="antiguos"
-          titulo="Antiguos"
-          sub={`Más de ${DIAS_NUEVOS} días`}
-          ruta={RUTAS.antiguos}
-          items={antiguos}
-          numeros={numeros}
-          retraso={0.5}
-          reducir={reducir}
-        />
-      </section>
-    </main>
+          <motion.p
+            className="tm-texto"
+            initial={reducir ? false : { opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.55 }}
+          >
+            En el museo de Grimorio queremos leer tu opinión. Explora los testimonios de
+            otros visitantes: cada ficha se puede mover y apilar a tu gusto.
+          </motion.p>
+
+          <motion.button
+            className="tm-cta"
+            onClick={() => navigate(RUTAS.hacerComentario)}
+            initial={reducir ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.75 }}
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.97 }}
+          >
+            <span className="tm-cta-anillo" aria-hidden="true">
+              {ICONO_CTA ? <img src={ICONO_CTA} alt="" /> : "✧"}
+            </span>
+            Haz tu comentario
+          </motion.button>
+
+          {hayFichas && (
+            <motion.p
+              className="tm-pista"
+              initial={reducir ? false : { opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 1.6 }}
+            >
+              Arrastra las fichas · toca una para leerla completa
+            </motion.p>
+          )}
+        </header>
+
+        <section className="tm-tablero" aria-label="Comentarios de los visitantes">
+          <Vitrina
+            tipo="nuevos"
+            titulo="Nuevos"
+            sub={`Últimos ${DIAS_NUEVOS} días`}
+            ruta={RUTAS.nuevos}
+            items={nuevos}
+            numeros={numeros}
+            retraso={0.35}
+            reducir={reducir}
+          />
+          <Vitrina
+            tipo="antiguos"
+            titulo="Antiguos"
+            sub={`Más de ${DIAS_NUEVOS} días`}
+            ruta={RUTAS.antiguos}
+            items={antiguos}
+            numeros={numeros}
+            retraso={0.5}
+            reducir={reducir}
+          />
+        </section>
+      </main>
     </>
   );
 };

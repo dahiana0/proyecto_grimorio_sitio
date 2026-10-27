@@ -1,8 +1,3 @@
-/* =========================================================
-   ARCHIVO DEL GRIMORIO — mismo lenguaje visual del inicio
-   Reemplaza a InteraccionesGuardadas.css y archivoMuro.css
-   ========================================================= */
-
 .arch {
   --verde: #1ad96d;
   --oro: #ffffff;
@@ -35,7 +30,6 @@
   margin: 0 auto;
 }
 
-/* ---------- ENCABEZADO (centrado) ---------- */
 .archHead {
   display: flex;
   flex-direction: column;
@@ -156,8 +150,14 @@
   transition: box-shadow 0.3s ease;
 }
 
-.portal:hover { box-shadow: 0 0 38px rgba(26, 217, 109, 0.75), inset 0 0 18px rgba(26, 217, 109, 0.3); }
-.portal:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+.portal:hover {
+  box-shadow: 0 0 38px rgba(26, 217, 109, 0.75), inset 0 0 18px rgba(26, 217, 109, 0.3);
+}
+
+.portal:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
 
 .portalAnillo {
   width: 46px;
@@ -171,7 +171,11 @@
   animation: gira 8s linear infinite;
 }
 
-@keyframes gira { to { transform: rotate(360deg); } }
+@keyframes gira {
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 .archHint {
   margin: 20px 0 0;
@@ -181,7 +185,7 @@
   color: #9caea5;
 }
 
-/* ---------- RESUMEN ---------- */
+
 .stats {
   display: flex;
   justify-content: center;
@@ -202,7 +206,11 @@
   transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
 
-.stat:hover { border-color: var(--verde); box-shadow: 0 0 28px rgba(26, 217, 109, 0.35); transform: translateY(-3px); }
+.stat:hover {
+  border-color: var(--verde);
+  box-shadow: 0 0 28px rgba(26, 217, 109, 0.35);
+  transform: translateY(-3px);
+}
 
 .stat::before,
 .stat::after {
@@ -214,8 +222,22 @@
   pointer-events: none;
   filter: drop-shadow(0 0 4px var(--verde));
 }
-.stat::before { top: -2px; left: -2px; border-right: 0; border-bottom: 0; border-top-left-radius: 12px; }
-.stat::after { bottom: -2px; right: -2px; border-left: 0; border-top: 0; border-bottom-right-radius: 12px; }
+
+.stat::before {
+  top: -2px;
+  left: -2px;
+  border-right: 0;
+  border-bottom: 0;
+  border-top-left-radius: 12px;
+}
+
+.stat::after {
+  bottom: -2px;
+  right: -2px;
+  border-left: 0;
+  border-top: 0;
+  border-bottom-right-radius: 12px;
+}
 
 .stat strong {
   display: block;
@@ -235,7 +257,7 @@
   text-overflow: ellipsis;
 }
 
-/* ---------- ESCENARIO (panel con esquinas, como el Libro de visitas) ---------- */
+
 .escenario {
   position: relative;
   margin-top: 34px;
@@ -257,8 +279,22 @@
   pointer-events: none;
   filter: drop-shadow(0 0 4px var(--verde));
 }
-.escenario::before { top: -2px; left: -2px; border-right: 0; border-bottom: 0; border-top-left-radius: 14px; }
-.escenario::after { bottom: -2px; right: -2px; border-left: 0; border-top: 0; border-bottom-right-radius: 14px; }
+
+.escenario::before {
+  top: -2px;
+  left: -2px;
+  border-right: 0;
+  border-bottom: 0;
+  border-top-left-radius: 14px;
+}
+
+.escenario::after {
+  bottom: -2px;
+  right: -2px;
+  border-left: 0;
+  border-top: 0;
+  border-bottom-right-radius: 14px;
+}
 
 .escenarioCabeza {
   display: flex;
@@ -290,9 +326,12 @@
   box-shadow: 0 0 14px rgba(26, 217, 109, 0.35);
 }
 
-.escenarioPie { margin-top: 16px; min-height: 18px; }
+.escenarioPie {
+  margin-top: 16px;
+  min-height: 18px;
+}
 
-/* ---------- MURO ---------- */
+
 .muro {
   position: relative;
   padding: 44px 22px 100px;
@@ -320,14 +359,21 @@
   animation: flotar var(--dur) ease-in-out var(--delay) infinite alternate;
 }
 
-.celda:hover .flota { animation-play-state: paused; }
-
-@keyframes flotar {
-  from { transform: translateY(-6px); }
-  to { transform: translateY(6px); }
+.celda:hover .flota {
+  animation-play-state: paused;
 }
 
-/* ---------- CARTA + INFORMACIÓN DEBAJO ---------- */
+@keyframes flotar {
+  from {
+    transform: translateY(-6px);
+  }
+
+  to {
+    transform: translateY(6px);
+  }
+}
+
+
 .cartaFigura {
   margin: 0;
   cursor: grab;
@@ -336,9 +382,11 @@
   -webkit-user-select: none;
 }
 
-.cartaFigura:active { cursor: grabbing; }
+.cartaFigura:active {
+  cursor: grabbing;
+}
 
-/* marco con esquinas de luz (igual que las tarjetas del inicio) */
+
 .cartaMarco,
 .fichaMarco {
   position: relative;
@@ -362,8 +410,23 @@
   filter: drop-shadow(0 0 4px var(--verde));
 }
 
-.cartaMarco::before, .fichaMarco::before { top: -2px; left: -2px; border-right: 0; border-bottom: 0; border-top-left-radius: 12px; }
-.cartaMarco::after, .fichaMarco::after { bottom: -2px; right: -2px; border-left: 0; border-top: 0; border-bottom-right-radius: 12px; }
+.cartaMarco::before,
+.fichaMarco::before {
+  top: -2px;
+  left: -2px;
+  border-right: 0;
+  border-bottom: 0;
+  border-top-left-radius: 12px;
+}
+
+.cartaMarco::after,
+.fichaMarco::after {
+  bottom: -2px;
+  right: -2px;
+  border-left: 0;
+  border-top: 0;
+  border-bottom-right-radius: 12px;
+}
 
 .cartaFigura:hover .cartaMarco,
 .cartaFigura:focus-visible .cartaMarco {
@@ -379,7 +442,7 @@
   background: #060d0b;
 }
 
-/* barrido de luz al pasar el cursor */
+
 .brillo {
   position: absolute;
   inset: 0;
@@ -390,9 +453,11 @@
   transition: transform 0.9s ease;
 }
 
-.cartaFigura:hover .brillo { transform: translateX(120%); }
+.cartaFigura:hover .brillo {
+  transform: translateX(120%);
+}
 
-/* punto verde: el capítulo tiene descubrimientos */
+
 .cartaFigura.conContenido .cartaArte::after {
   content: "";
   position: absolute;
@@ -406,7 +471,7 @@
   box-shadow: 0 0 12px #2dff8c;
 }
 
-/* escena real (sin clics ni sonido) */
+
 .escenaCaja {
   position: absolute;
   inset: 0;
@@ -430,11 +495,16 @@
 }
 
 @keyframes camaraLenta {
-  from { transform: scale(1); }
-  to { transform: scale(1.06); }
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.06);
+  }
 }
 
-/* información debajo de la carta */
+
 .pie {
   display: flex;
   flex-direction: column;
@@ -474,7 +544,10 @@
   transition: letter-spacing 0.35s ease, color 0.35s ease;
 }
 
-.cartaFigura:hover .pieTitulo { letter-spacing: 1.5px; color: #fff; }
+.cartaFigura:hover .pieTitulo {
+  letter-spacing: 1.5px;
+  color: #fff;
+}
 
 .pieSub {
   font-size: 11px;
@@ -500,8 +573,14 @@
   background: #3b4a43;
 }
 
-.conContenido .pieCuenta { color: #7dffb6; }
-.conContenido .punto { background: #54ff9c; box-shadow: 0 0 8px #2dff8c; }
+.conContenido .pieCuenta {
+  color: #7dffb6;
+}
+
+.conContenido .punto {
+  background: #54ff9c;
+  box-shadow: 0 0 8px #2dff8c;
+}
 
 .pieAbrir {
   font-size: 12px;
@@ -519,7 +598,7 @@
   transform: translateX(0);
 }
 
-/* ---------- PANEL DE ARCHIVO ---------- */
+
 .visor {
   position: fixed;
   inset: 0;
@@ -549,9 +628,18 @@
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75), 0 0 35px rgba(26, 217, 109, 0.2);
 }
 
-.panel::-webkit-scrollbar { width: 8px; }
-.panel::-webkit-scrollbar-track { background: rgba(0, 10, 7, 0.7); }
-.panel::-webkit-scrollbar-thumb { background: #1fae63; border-radius: 20px; }
+.panel::-webkit-scrollbar {
+  width: 8px;
+}
+
+.panel::-webkit-scrollbar-track {
+  background: rgba(0, 10, 7, 0.7);
+}
+
+.panel::-webkit-scrollbar-thumb {
+  background: #1fae63;
+  border-radius: 20px;
+}
 
 .panelCabecera {
   display: flex;
@@ -572,7 +660,7 @@
   text-shadow: 0 0 10px var(--verde), 0 0 30px rgba(26, 217, 109, 0.4);
 }
 
-/* fichas guardadas: arte arriba, información debajo */
+
 .fichas {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
@@ -585,11 +673,22 @@
   transition: transform 0.35s ease;
 }
 
-.fichas > :nth-child(even) .ficha { transform: rotate(1.2deg) translateY(8px); }
-.fichas > :nth-child(3n) .ficha { transform: rotate(-0.4deg) translateY(-5px); }
-.ficha:hover { transform: rotate(0) translateY(-6px) scale(1.04); }
+.fichas> :nth-child(even) .ficha {
+  transform: rotate(1.2deg) translateY(8px);
+}
 
-.ficha:hover .fichaMarco { border-color: var(--verde); box-shadow: 0 0 30px rgba(26, 217, 109, 0.4); }
+.fichas> :nth-child(3n) .ficha {
+  transform: rotate(-0.4deg) translateY(-5px);
+}
+
+.ficha:hover {
+  transform: rotate(0) translateY(-6px) scale(1.04);
+}
+
+.ficha:hover .fichaMarco {
+  border-color: var(--verde);
+  box-shadow: 0 0 30px rgba(26, 217, 109, 0.4);
+}
 
 .fichaArte {
   aspect-ratio: 1;
@@ -617,7 +716,10 @@
   text-shadow: 0 0 8px rgba(26, 217, 109, 0.45);
 }
 
-.fichaFecha { font-size: 13px; color: #9caea5; }
+.fichaFecha {
+  font-size: 13px;
+  color: #9caea5;
+}
 
 .btnQuitar {
   all: unset;
@@ -631,8 +733,15 @@
   transition: letter-spacing 0.3s ease, color 0.3s ease;
 }
 
-.btnQuitar:hover { letter-spacing: 3.5px; color: #ff7a8c; }
-.btnQuitar:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.btnQuitar:hover {
+  letter-spacing: 3.5px;
+  color: #ff7a8c;
+}
+
+.btnQuitar:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
 
 .vacio {
   padding: 60px 20px;
@@ -651,9 +760,13 @@
   text-shadow: 0 0 10px rgba(26, 217, 109, 0.5);
 }
 
-.vacio p { margin: 0; font-size: 17px; color: #9caea5; }
+.vacio p {
+  margin: 0;
+  font-size: 17px;
+  color: #9caea5;
+}
 
-/* ---------- CONFIRMACIÓN ---------- */
+
 .confirmFondo {
   position: fixed;
   inset: 0;
@@ -690,10 +803,21 @@
   text-shadow: 0 0 12px rgba(26, 217, 109, 0.55);
 }
 
-.confirmCaja p { margin: 0 0 26px; font-size: 16px; line-height: 1.55; color: #cfcfcf; }
-.confirmCaja p strong { color: #54ff9c; }
+.confirmCaja p {
+  margin: 0 0 26px;
+  font-size: 16px;
+  line-height: 1.55;
+  color: #cfcfcf;
+}
 
-.confirmBotones { display: flex; gap: 14px; }
+.confirmCaja p strong {
+  color: #54ff9c;
+}
+
+.confirmBotones {
+  display: flex;
+  gap: 14px;
+}
 
 .confirmBotones button {
   flex: 1;
@@ -706,36 +830,95 @@
   transition: box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
 }
 
-.confirmCancelar { color: var(--verde); background: rgba(2, 12, 8, 0.8); border: 1px solid rgba(26, 217, 109, 0.6); }
-.confirmCancelar:hover, .confirmCancelar:focus-visible { background: rgba(26, 217, 109, 0.14); box-shadow: 0 0 16px rgba(26, 217, 109, 0.45); outline: none; }
+.confirmCancelar {
+  color: var(--verde);
+  background: rgba(2, 12, 8, 0.8);
+  border: 1px solid rgba(26, 217, 109, 0.6);
+}
 
-.confirmBorrar { color: #ff7a8c; background: rgba(40, 6, 12, 0.7); border: 1px solid rgba(255, 90, 110, 0.6); }
-.confirmBorrar:hover, .confirmBorrar:focus-visible { background: rgba(255, 90, 110, 0.16); box-shadow: 0 0 16px rgba(255, 90, 110, 0.45); color: #ffb0ba; outline: none; }
+.confirmCancelar:hover,
+.confirmCancelar:focus-visible {
+  background: rgba(26, 217, 109, 0.14);
+  box-shadow: 0 0 16px rgba(26, 217, 109, 0.45);
+  outline: none;
+}
 
-/* ---------- RESPONSIVE ---------- */
+.confirmBorrar {
+  color: #ff7a8c;
+  background: rgba(40, 6, 12, 0.7);
+  border: 1px solid rgba(255, 90, 110, 0.6);
+}
+
+.confirmBorrar:hover,
+.confirmBorrar:focus-visible {
+  background: rgba(255, 90, 110, 0.16);
+  box-shadow: 0 0 16px rgba(255, 90, 110, 0.45);
+  color: #ffb0ba;
+  outline: none;
+}
+
+
 @media (max-width: 1100px) {
-  .muroInterno { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px 22px; }
-  .celda { --dy: 0px !important; }
-  .muro { padding-bottom: 50px; }
+  .muroInterno {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 30px 22px;
+  }
+
+  .celda {
+    --dy: 0px !important;
+  }
+
+  .muro {
+    padding-bottom: 50px;
+  }
 }
 
 @media (max-width: 800px) {
-  .arch { padding: 20px 16px 90px; }
+  .arch {
+    padding: 20px 16px 90px;
+  }
 
 }
 
 @media (max-width: 600px) {
-  .muroInterno { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px 14px; }
-  .panel { padding: 22px 18px 28px; }
-  .fichas { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 14px; }
+  .muroInterno {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 26px 14px;
+  }
+
+  .panel {
+    padding: 22px 18px 28px;
+  }
+
+  .fichas {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px 14px;
+  }
 }
 
 @media (max-width: 400px) {
-  .fichas { grid-template-columns: 1fr; }
-  .confirmBotones { flex-direction: column-reverse; }
+  .fichas {
+    grid-template-columns: 1fr;
+  }
+
+  .confirmBotones {
+    flex-direction: column-reverse;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .flota, .escenaZoom { animation: none; }
-  .brillo, .letra, .pieAbrir, .pieTitulo, .pieNumero, .ficha { transition-duration: 0.01ms !important; }
+
+  .flota,
+  .escenaZoom {
+    animation: none;
+  }
+
+  .brillo,
+  .letra,
+  .pieAbrir,
+  .pieTitulo,
+  .pieNumero,
+  .ficha {
+    transition-duration: 0.01ms !important;
+  }
 }

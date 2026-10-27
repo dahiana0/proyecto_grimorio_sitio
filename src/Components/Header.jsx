@@ -3,7 +3,6 @@ import { NavLink, Link } from "react-router-dom";
 import "../Styles/css.css";
 import "../Styles/Header.css";
 
-// Cada item: ruta, texto que se ve al desplegar e icono (ponle tus propios SVG)
 const ITEMS = [
   { to: "/", label: "Inicio", icon: "/InicioI.svg" },
   { to: "/sobrenosotros", label: "Sobre Nosotros", icon: "/SobreNosotros.svg" },
@@ -18,12 +17,12 @@ export const Header = () => {
 
   const reproducirSonido = () => {
     sonidoBoton.current.currentTime = 0;
-    sonidoBoton.current.play().catch(() => {});
+    sonidoBoton.current.play().catch(() => { });
   };
 
   return (
     <nav className="sidebar" aria-label="Menú principal">
-      {/* Logo: insignia cuando está cerrado, logo completo cuando se despliega */}
+
       <Link
         to="/"
         className="sidebar__logo"
@@ -31,7 +30,7 @@ export const Header = () => {
         aria-label="Inicio"
       >
         <img src="./Icono logoo.svg" alt="" className="sidebar__logo-mini" />
-        <img src="./Logo.svg" alt="Logo" className="sidebar__logo-full" />
+        <img src="./logo png .png" alt="Logo" className="sidebar__logo-full" />
       </Link>
 
       <ul className="sidebar__list">
@@ -43,7 +42,8 @@ export const Header = () => {
               className={({ isActive }) =>
                 "sidebar__link" + (isActive ? " sidebar__link--active" : "")
               }
-              style={{ "--d": `${i * 0.4}s` }} /* desfasa el latido de cada icono */
+              style={{ "--d": `${i * 0.4}s` }}
+              aria-label={label}
             >
               <img src={icon} alt="" className="sidebar__icon" />
               <span className="sidebar__label">{label}</span>
@@ -52,11 +52,11 @@ export const Header = () => {
         ))}
       </ul>
 
-      {/* Botón destacado al fondo: pon aquí tu icono del museo */}
       <Link
         to="/guia"
         onClick={reproducirSonido}
         className="sidebar__link sidebar__link--cta"
+        aria-label="Explorar Museo"
       >
         <span className="sidebar__aro" aria-hidden="true" />
         <img src="/comicccc.svg" alt="" className="sidebar__icon" />

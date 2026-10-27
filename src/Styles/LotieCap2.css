@@ -1,4 +1,3 @@
-/* Contenedor exterior: recorta lo que se sale del visor */
 .visorCap2 {
     position: relative;
     width: 100%;
@@ -6,14 +5,13 @@
     overflow: hidden;
 }
 
-/* Lienzo de tamaño fijo que se escala al visor (sin overflow hidden,
-   porque el clip-path de .escenacap2 necesita dejar ver fuera del cuadro) */
+
 .escenario2 {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 1500px;   /* = ANCHO */
-    height: 836px;   /* = ALTO */
+    width: 1500px;
+    height: 836px;
     transform-origin: center center;
 }
 
@@ -27,11 +25,25 @@
 }
 
 @keyframes escenaCapitulo2Recorte {
-    0%    { clip-path: inset(-200px); }
-    40%   { clip-path: inset(-200px); }
-    40.5% { clip-path: inset(0); }
-    99.5% { clip-path: inset(0); }
-    100%  { clip-path: inset(-200px); }
+    0% {
+        clip-path: inset(-200px);
+    }
+
+    40% {
+        clip-path: inset(-200px);
+    }
+
+    40.5% {
+        clip-path: inset(0);
+    }
+
+    99.5% {
+        clip-path: inset(0);
+    }
+
+    100% {
+        clip-path: inset(-200px);
+    }
 }
 
 .camaraCapitulo2 {
@@ -60,20 +72,14 @@
 
     50% {
         transform:
-            translate(
-                calc(50% - var(--cara-zoom) * var(--cara-x)),
-                calc(50% - var(--cara-zoom) * var(--cara-y))
-            )
-            scale(var(--cara-zoom));
+            translate(calc(50% - var(--cara-zoom) * var(--cara-x)),
+                calc(50% - var(--cara-zoom) * var(--cara-y))) scale(var(--cara-zoom));
     }
 
     90% {
         transform:
-            translate(
-                calc(50% - var(--cara-zoom) * var(--cara-x)),
-                calc(50% - var(--cara-zoom) * var(--cara-y))
-            )
-            scale(var(--cara-zoom));
+            translate(calc(50% - var(--cara-zoom) * var(--cara-x)),
+                calc(50% - var(--cara-zoom) * var(--cara-y))) scale(var(--cara-zoom));
         animation-timing-function: cubic-bezier(0.37, 0, 0.63, 1);
     }
 
@@ -95,24 +101,27 @@
 }
 
 .moverLampara {
-    /* balanceo (0,6 s) + iluminación de la bombilla (1,2 s) */
     animation:
         balanceoLampara .6s ease,
         iluminarLampara 1.2s ease-out;
 }
 
 @keyframes iluminarLampara {
-    0%   { filter: none; }
-    20%  {
-        filter:
-            brightness(1.3)
-            drop-shadow(0 0 10px rgba(255, 235, 160, .9))
-            drop-shadow(0 0 24px rgba(255, 215, 110, .6));
+    0% {
+        filter: none;
     }
-    100% { filter: none; }
+
+    20% {
+        filter:
+            brightness(1.3) drop-shadow(0 0 10px rgba(255, 235, 160, .9)) drop-shadow(0 0 24px rgba(255, 215, 110, .6));
+    }
+
+    100% {
+        filter: none;
+    }
 }
 
-/* Halo de luz alrededor de la bombilla */
+
 .luzLampara {
     position: absolute;
     left: 50%;
@@ -121,12 +130,10 @@
     aspect-ratio: 1;
     transform: translate(-50%, -50%);
     border-radius: 50%;
-    background: radial-gradient(
-        circle,
-        rgba(255, 235, 160, .55) 0%,
-        rgba(255, 220, 120, .25) 35%,
-        rgba(255, 220, 120, 0) 70%
-    );
+    background: radial-gradient(circle,
+            rgba(255, 235, 160, .55) 0%,
+            rgba(255, 220, 120, .25) 35%,
+            rgba(255, 220, 120, 0) 70%);
     mix-blend-mode: screen;
     opacity: 0;
     pointer-events: none;
@@ -137,42 +144,123 @@
 }
 
 @keyframes haloLampara {
-    0%   { opacity: 0; }
-    20%  { opacity: 1; }
-    100% { opacity: 0; }
+    0% {
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }
 
 @keyframes balanceoLampara {
-    0%   { transform: rotate(0deg); }
-    15%  { transform: rotate(7deg); }
-    30%  { transform: rotate(-6deg); }
-    45%  { transform: rotate(5deg); }
-    60%  { transform: rotate(-4deg); }
-    75%  { transform: rotate(2deg); }
-    100% { transform: rotate(0deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    15% {
+        transform: rotate(7deg);
+    }
+
+    30% {
+        transform: rotate(-6deg);
+    }
+
+    45% {
+        transform: rotate(5deg);
+    }
+
+    60% {
+        transform: rotate(-4deg);
+    }
+
+    75% {
+        transform: rotate(2deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
 }
 
-/* ===== Contenedor de cada objeto con clic (posición y ancho originales) =====
-   No tiene z-index propio: así la parte visual (.vista) y el cuadro de clic
-   (.hitbox) se ordenan directamente en la escena, y los puntos de
-   interacción siempre quedan por encima de todo. */
+
 .anim {
     position: absolute;
-    pointer-events: none;   /* lo visual nunca captura clics */
+    pointer-events: none;
 }
 
-.estatua1 { left: 745px;   bottom: 40px;  width: 710px; --z: 4; }
-.estatua3 { right: 750px;  bottom: 100px; width: 250px; --z: 4; }
-.estatua4 { right: 1150px; bottom: 50px;  width: 250px; --z: 4; }
-.estatua5 { left: 300px;   bottom: 150px; width: 250px; --z: 3; }
-.estatua6 { right: 50px;   bottom: 100px; width: 260px; --z: 3; }
-.rata     { left: 350px;   bottom: 48px;  width: 250px; --z: 3; --zh: 20; }
+.estatua1 {
+    left: 745px;
+    bottom: 40px;
+    width: 710px;
+    --z: 4;
+}
 
-.lampara1C { left: 85px;   top: -10px;    width: 100px; --z: 2; --zh: 30; }
-.lampara2C { right: 90px;  top: -10px;    width: 100px; --z: 2; --zh: 30; }
-.lampara3C { right: 600px; top: -10px;    width: 100px; --z: 2; --zh: 30; }
+.estatua3 {
+    right: 750px;
+    bottom: 100px;
+    width: 250px;
+    --z: 4;
+}
 
-/* Parte visual: aquí se aplica el hover (sin resplandor) */
+.estatua4 {
+    right: 1150px;
+    bottom: 50px;
+    width: 250px;
+    --z: 4;
+}
+
+.estatua5 {
+    left: 300px;
+    bottom: 150px;
+    width: 250px;
+    --z: 3;
+}
+
+.estatua6 {
+    right: 50px;
+    bottom: 100px;
+    width: 260px;
+    --z: 3;
+}
+
+.rata {
+    left: 350px;
+    bottom: 48px;
+    width: 250px;
+    --z: 3;
+    --zh: 20;
+}
+
+.lampara1C {
+    left: 85px;
+    top: -10px;
+    width: 100px;
+    --z: 2;
+    --zh: 30;
+}
+
+.lampara2C {
+    right: 90px;
+    top: -10px;
+    width: 100px;
+    --z: 2;
+    --zh: 30;
+}
+
+.lampara3C {
+    right: 600px;
+    top: -10px;
+    width: 100px;
+    --z: 2;
+    --zh: 30;
+}
+
+
 .vista {
     position: relative;
     z-index: var(--z);
@@ -184,8 +272,8 @@
     transform: scale(1.03);
 }
 
-/* Lámpara: la imagen ocupa su contenedor y se balancea desde arriba */
-.vista > img {
+
+.vista>img {
     display: block;
     width: 100%;
     height: auto;
@@ -193,60 +281,94 @@
     transform-origin: top center;
 }
 
-/* ===== Estatuas: el clic solo cuenta sobre su dibujo (no sobre un cuadro) =====
-   Las partes transparentes dejan pasar el clic, así una estatua no tapa a otra
-   y la de atrás se puede tocar en la parte que se ve. */
+
 .forma .vista svg {
     pointer-events: none;
 }
+
 .forma .vista svg path {
     pointer-events: visiblePainted;
     cursor: pointer;
 }
 
-/* ===== Cuadro de clic: invisible, en % de SU animación ===== */
+
 .hitbox {
     position: absolute;
-    left:   var(--hx, 0%);
-    top:    var(--hy, 0%);
-    width:  var(--hw, 100%);
+    left: var(--hx, 0%);
+    top: var(--hy, 0%);
+    width: var(--hw, 100%);
     height: var(--hh, 100%);
-    /* Prioridad de clic: por defecto sigue el orden visual, se puede fijar con --zh.
-       Siempre queda sobre Step y sobre las animaciones. */
+
     z-index: var(--zh, calc(var(--z) + 10));
-    pointer-events: auto;           /* solo el cuadro recibe clics */
+    pointer-events: auto;
     cursor: pointer;
     background: transparent;
 
-    /* Durante el acercamiento a la cara de Step se ocultan cuadros y puntos
-       (para que no tapen la cara); al terminar la cámara vuelven. */
+
     animation: hitboxCamara 25s forwards;
 }
 
 @keyframes hitboxCamara {
-    0%, 38%   { visibility: visible; }
-    40%, 99.9% { visibility: hidden; }
-    100%      { visibility: visible; }
+
+    0%,
+    38% {
+        visibility: visible;
+    }
+
+    40%,
+    99.9% {
+        visibility: hidden;
+    }
+
+    100% {
+        visibility: visible;
+    }
 }
 
-/* ===== Ajuste de cada cuadro (x, y, ancho, alto en % de su animación) =====
-   Solo la rata y las lámparas usan cuadro. --px / --py = posición del puntito
-   (por defecto, centro). */
-.rata     { --hx: 10%; --hy: 20%; --hw: 80%; --hh: 70%; }
+
+.rata {
+    --hx: 10%;
+    --hy: 20%;
+    --hw: 80%;
+    --hh: 70%;
+}
+
 .lampara1C,
 .lampara2C,
-.lampara3C { --hx: 20%; --hy: 0%; --hw: 60%; --hh: 100%; }
+.lampara3C {
+    --hx: 20%;
+    --hy: 0%;
+    --hw: 60%;
+    --hh: 100%;
+}
 
-/* ===== Puntito de cada estatua (% de su animación) =====
-   Colócalo sobre una parte VISIBLE de cada estatua, sobre todo en las que
-   se solapan. Mueve solo el de la que necesites. */
-.estatua1 { --px: 50%; --py: 55%; }
-.estatua3 { --px: 50%; --py: 55%; }
-.estatua4 { --px: 60%; --py: 70%; }   /* la de adelante */
-.estatua5 { --px: 35%; --py: 35%; }   /* la de atrás */
-.estatua6 { --px: 50%; --py: 55%; }
 
-/* ===== Señal sutil: puntito siempre visible, con un latido corto y destello verde ===== */
+.estatua1 {
+    --px: 50%;
+    --py: 55%;
+}
+
+.estatua3 {
+    --px: 50%;
+    --py: 55%;
+}
+
+.estatua4 {
+    --px: 60%;
+    --py: 70%;
+}
+
+.estatua5 {
+    --px: 35%;
+    --py: 35%;
+}
+
+.estatua6 {
+    --px: 50%;
+    --py: 55%;
+}
+
+
 .pista {
     position: absolute;
     top: var(--py, 50%);
@@ -263,27 +385,38 @@
 }
 
 @keyframes latido {
-    0%, 100% { transform: scale(1);   opacity: 0.9; box-shadow: 0 0 3px rgba(26, 217, 109, 0.4); }
-    50%      { transform: scale(1.3); opacity: 0.7; box-shadow: 0 0 7px rgba(26, 217, 109, 0.7); }
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.9;
+        box-shadow: 0 0 3px rgba(26, 217, 109, 0.4);
+    }
+
+    50% {
+        transform: scale(1.3);
+        opacity: 0.7;
+        box-shadow: 0 0 7px rgba(26, 217, 109, 0.7);
+    }
 }
 
-/* Puntito de estatua (no está dentro de un cuadro): va sobre todo y también
-   se oculta durante el acercamiento a la cara de Step */
-.forma > .pista {
+
+.forma>.pista {
     z-index: calc(var(--z) + 10);
     animation: latido 1.2s ease-in-out infinite, hitboxCamara 25s forwards;
 }
 
-/* ===== Modo prueba (solo si pones DEBUG = true en el .jsx) ===== */
+
 .camaraCapitulo2.debug .hitbox {
     background: rgba(255, 0, 0, 0.3);
     outline: 1px solid red;
 }
+
 .camaraCapitulo2.debug .anim {
-    outline: 1px dashed rgba(0, 150, 255, 0.9);  /* borde real de cada Lottie */
+    outline: 1px dashed rgba(0, 150, 255, 0.9);
 }
 
-/* ===== Step: solo se ve, no recibe clics ===== */
+
 .stepCap2Espalda,
 .stepCap2Frente,
 .stepCap2Frente2 {
@@ -302,10 +435,25 @@
 }
 
 @keyframes stepCap2EspaldaVisibilidad {
-    0%      { opacity: 1; visibility: visible; }
-    39.99%  { opacity: 1; visibility: visible; }
-    40%     { opacity: 0; visibility: hidden; }
-    100%    { opacity: 0; visibility: hidden; }
+    0% {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    39.99% {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    40% {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
 }
 
 .stepCap2Frente {
@@ -320,11 +468,27 @@
 }
 
 @keyframes stepCap2FrenteVisibilidad {
-    0%   { opacity: 0; }
-    40%  { opacity: 0; animation-timing-function: ease-in-out; }
-    50%  { opacity: 1; }
-    90%  { opacity: 1; animation-timing-function: ease-in-out; }
-    100% { opacity: 0; }
+    0% {
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 0;
+        animation-timing-function: ease-in-out;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+        animation-timing-function: ease-in-out;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }
 
 .stepCap2Frente2 {
@@ -339,8 +503,13 @@
 }
 
 @keyframes stepCap2Frente2Aparece {
-    0%   { opacity: 0; }
-    100% { opacity: 1; }
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
 .stepCap2Frente2Fin {
@@ -348,6 +517,11 @@
 }
 
 @keyframes stepCap2Frente2Fin {
-    0%   { opacity: 1; }
-    100% { opacity: 0; }
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }

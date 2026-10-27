@@ -7,11 +7,10 @@ import "../Styles/LotieCap5A.css";
 
 const Lottie = LottieModule.default;
 
-// Número de capítulo con el que se guardan las interacciones
+
 const CAPITULO = 5;
 
-// true = muestra los cuadros de clic en rojo para calibrarlos
-// false = invisibles (versión final)
+
 const DEBUG = false;
 
 const AMBIENTE = {
@@ -28,7 +27,7 @@ const SONIDOS = {
     volumen: 0.35,
   },
 
-  // 2) Rejas abriéndose
+
   rejas: {
     archivo: "/audios/rejas.mp3",
     inicio: 9,
@@ -36,7 +35,7 @@ const SONIDOS = {
     volumen: 0.35,
   },
 
-  // 3) Pasos: cuando empieza a caminar
+
   pasos: {
     archivo: "/audios/pasos.mp3",
     inicio: 10,
@@ -51,10 +50,10 @@ const LotieCap5A = () => {
   const videoRef = useRef(null);
   const rafRef = useRef(null);
 
-  // Audio ambiente
+
   const sonidoAmbiente = useRef(new Audio(AMBIENTE.archivo));
 
-  // Un Audio por cada sonido definido en SONIDOS
+
   const audios = useRef(
     Object.fromEntries(
       Object.entries(SONIDOS).map(([nombre, cfg]) => {
@@ -65,7 +64,7 @@ const LotieCap5A = () => {
     )
   );
 
-  // Registra qué sonidos ya empezaron / terminaron
+
   const estado = useRef({});
 
   useEffect(() => {
@@ -75,9 +74,9 @@ const LotieCap5A = () => {
     ambiente.volume = AMBIENTE.volumen;
     ambiente.loop = true;
 
-    // Los navegadores exigen un clic antes de reproducir audio
+
     const iniciarAmbiente = () => {
-      ambiente.play().catch(() => {});
+      ambiente.play().catch(() => { });
       window.removeEventListener("click", iniciarAmbiente);
     };
 
@@ -100,7 +99,7 @@ const LotieCap5A = () => {
     GuardarInteraccion("edificio", "Edificio", "edificio", CAPITULO, "lottie");
   };
 
-  // Detiene los sonidos sincronizados (el ambiente NO se corta)
+
   const detenerSonidos = () => {
     Object.values(audios.current).forEach((a) => {
       a.pause();
@@ -108,7 +107,7 @@ const LotieCap5A = () => {
     });
   };
 
-  // Bucle de sincronización (el video de las rejas es el reloj maestro)
+
   const sincronizar = () => {
     const rejas = rejasRef.current;
     const step = videoRef.current;
@@ -116,12 +115,12 @@ const LotieCap5A = () => {
 
     const t = rejas.currentTime;
 
-    // Corrige desfases entre los dos videos
+
     if (Math.abs(step.currentTime - t) > 0.08) {
       step.currentTime = t;
     }
 
-    // Dispara / detiene cada sonido según su tiempo
+
     Object.entries(SONIDOS).forEach(([nombre, cfg]) => {
       const est = estado.current[nombre];
       const audio = audios.current[nombre];
@@ -129,7 +128,7 @@ const LotieCap5A = () => {
       if (!est.inicio && t >= cfg.inicio) {
         est.inicio = true;
         audio.currentTime = 0;
-        audio.play().catch(() => {});
+        audio.play().catch(() => { });
       }
 
       if (cfg.fin !== null && !est.fin && t >= cfg.fin) {
@@ -143,7 +142,7 @@ const LotieCap5A = () => {
     }
   };
 
-  // UN solo disparador para toda la escena
+
   const iniciarEscena = async () => {
     const rejas = rejasRef.current;
     const step = videoRef.current;
@@ -152,12 +151,12 @@ const LotieCap5A = () => {
     cancelAnimationFrame(rafRef.current);
     detenerSonidos();
 
-    // Asegura que el ambiente esté sonando
+
     if (sonidoAmbiente.current.paused) {
-      sonidoAmbiente.current.play().catch(() => {});
+      sonidoAmbiente.current.play().catch(() => { });
     }
 
-    // Reinicia el registro de sonidos
+
     estado.current = Object.fromEntries(
       Object.keys(SONIDOS).map((n) => [n, { inicio: false, fin: false }])
     );
@@ -169,18 +168,18 @@ const LotieCap5A = () => {
 
     try {
       await Promise.all([rejas.play(), step.play()]);
-    } catch (_) {}
+    } catch (_) { }
 
     rafRef.current = requestAnimationFrame(sincronizar);
   };
 
-  // Clic en las rejas: arranca la escena y guarda el video de las rejas
+
   const clicRejas = () => {
     iniciarEscena();
     GuardarInteraccion("rejas", "Rejas", "rejas", CAPITULO, "video", "/reja5c.webm");
   };
 
-  // Clic en Step: arranca la escena y guarda el video de Step caminando
+
   const clicStep = () => {
     iniciarEscena();
     GuardarInteraccion("stepCamina", "Step caminando", "stepCamina", CAPITULO, "video", "/caminado5.webm");
@@ -196,9 +195,8 @@ const LotieCap5A = () => {
         <img className="nube3_5a" src="/nube3.png" alt="" />
         <img className="nube4_5a" src="/nube4.png" alt="" />
 
-        {/* ===== Edificio ===== */}
+
         <div className="anim5a edificio5a">
-          {/* Solo visual: no recibe clics */}
           <div className="vista5a">
             <Lottie
               lottieRef={edificioRef}
@@ -209,13 +207,13 @@ const LotieCap5A = () => {
             />
           </div>
 
-          {/* Cuadro de clic propio, dentro de su animación */}
+
           <div className="hitbox5a" onClick={animarEdificio}>
             <span className="pista5a" />
           </div>
         </div>
 
-        {/* ===== Rejas ===== */}
+
         <div className="anim5a rejas5a">
           <div className="vista5a">
             <video
@@ -233,7 +231,7 @@ const LotieCap5A = () => {
           </div>
         </div>
 
-        {/* ===== Step ===== */}
+
         <div className="anim5a stepc5a">
           <div className="vista5a">
             <video

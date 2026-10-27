@@ -11,15 +11,14 @@ import "../Styles/LotieCap3.css";
 
 const Lottie = LottieModule.default;
 
-// Número de capítulo con el que se guardan las interacciones
+
 const CAPITULO = 3;
 
-// Tamaño de diseño de la escena (igual que las demás escenas)
+
 const ANCHO = 1500;
 const ALTO = 836;
 
-// true = muestra los cuadros de clic en rojo para calibrarlos
-// false = invisibles (versión final)
+
 const DEBUG = false;
 
 const T_LLEGA = 14.21;
@@ -44,7 +43,7 @@ const clamp01 = (v) => Math.min(1, Math.max(0, v));
 const ease = (x) =>
   x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
 
-// La página del archivo vive en otra ruta: las rutas guardadas deben ser absolutas
+
 const rutaAbsoluta = (src) => (src.startsWith("./") ? src.slice(1) : src);
 
 const LotieCap3 = () => {
@@ -72,7 +71,7 @@ const LotieCap3 = () => {
   const camaraCap3Ref = useRef(null);
   const moustro1WrapRef = useRef(null);
 
-  // Ajusta la escala al tamaño del visor
+
   useEffect(() => {
     const el = contenedorRef.current;
     if (!el) return;
@@ -139,7 +138,7 @@ const LotieCap3 = () => {
     GuardarInteraccion("puerta", "Puerta", "puerta", CAPITULO, "video", "/Puerta.webm");
   };
 
-  // El clic llega por el cuadro de clic; la que se mueve es la imagen de la antorcha
+
   const moverAntorcha = (e, id, nombre, src) => {
     const img = e.currentTarget.closest(".anim")?.querySelector("img");
     if (!img) return;
@@ -150,7 +149,7 @@ const LotieCap3 = () => {
     void img.offsetWidth;
     img.classList.add("antorcha-mover");
 
-    // Animación CSS: se guarda con su imagen y se mueve en el archivo
+
     GuardarInteraccion(id, nombre, "antorcha", CAPITULO, "css", src);
   };
 
@@ -167,7 +166,7 @@ const LotieCap3 = () => {
   useEffect(() => {
     reproducirVideo(stepCap3Ref);
 
-    // Audio de pasos (en bucle, solo suena mientras camina)
+
     const pasos = new Audio(AUDIO_PASOS);
     pasos.loop = true;
     pasos.volume = VOLUMEN_PASOS;
@@ -183,7 +182,7 @@ const LotieCap3 = () => {
 
       if (step && cam && escena && m) {
         const t = step.currentTime;
-        // Medidas del lienzo (no cambian con la escala del visor)
+
         const W = escena.clientWidth;
         const H = escena.clientHeight;
 
@@ -234,7 +233,7 @@ const LotieCap3 = () => {
 
         cam.style.transform = `translate(${tx}px, ${ty}px) scale(${s})`;
 
-        // Mientras la cámara se acerca se ocultan los punticos (los clics siguen activos)
+
         cam.dataset.zoom = p > 0.02 ? "1" : "0";
       }
 
@@ -249,7 +248,7 @@ const LotieCap3 = () => {
     };
   }, []);
 
-  // Objetos con clic: cada uno tiene su animación + su propio cuadro de clic
+
   const antorchas = [
     { id: "antorcha1", nombre: "Antorcha 1", clase: "antorcha-fondo antorcha1", src: "/antorcha1.png", alt: "Antorcha 1" },
     { id: "antorcha2", nombre: "Antorcha 2", clase: "antorcha-fondo antorcha2", src: "/antorcha2.png", alt: "Antorcha 2" },
@@ -288,7 +287,7 @@ const LotieCap3 = () => {
               alt="Escenario capítulo 3"
             />
 
-            {/* ===== Antorchas (animación CSS) ===== */}
+
             {antorchas.map(({ id, nombre, clase, src, alt }) => (
               <div key={src} className={`anim antorcha ${clase}`}>
                 <div className="vista">
@@ -309,7 +308,7 @@ const LotieCap3 = () => {
               </div>
             ))}
 
-            {/* ===== Puerta (video) ===== */}
+
             <div className="anim puerta">
               <div className="vista">
                 <video
@@ -327,7 +326,7 @@ const LotieCap3 = () => {
               </div>
             </div>
 
-            {/* ===== Telarañas (video) ===== */}
+
             {telaranas.map(({ id, nombre, clase, ref, src }) => (
               <div key={src} className={`anim telarana ${clase}`}>
                 <div className="vista">
@@ -350,7 +349,7 @@ const LotieCap3 = () => {
               </div>
             ))}
 
-            {/* ===== Monstruos (Lottie) ===== */}
+
             {monstruos.map(({ id, nombre, clase, lottieRef, data, wrapRef }) => (
               <div
                 key={clase}
@@ -374,7 +373,7 @@ const LotieCap3 = () => {
               </div>
             ))}
 
-            {/* ===== Step (no se le hace clic) ===== */}
+
             <video
               ref={stepCap3Ref}
               className="step-cap-3"

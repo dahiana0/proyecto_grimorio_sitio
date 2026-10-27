@@ -5,9 +5,7 @@ import Header from "../Components/Header"; // menú lateral
 import "../Styles/testimonios.css";
 import { getStoredComments, persistComments, subscribeToComments } from "../utils/commentsStorage";
 
-/* ==================================================================
-   AJUSTA AQUÍ
-================================================================== */
+
 const RUTAS = {
   volver: "/intro-juego",
   nuevos: "/comentariosCompletos/nuevos",
@@ -16,9 +14,8 @@ const RUTAS = {
 const NOMBRE_MAX = 40;
 const MENSAJE_MAX = 500;
 
-// ★ ICONO DEL BOTÓN "Publicar comentario" ★
-// Igual que en IntroJuego: ruta de un icono en /public. Con null se ve la estrellita.
-const ICONO_CTA = null; // ej. "./iconos/comentar.svg"
+
+const ICONO_CTA = null;
 
 const formatoFecha = (iso) => {
   const f = new Date(iso);
@@ -126,7 +123,7 @@ export const Juego = () => {
           transition={{ duration: 0.9, delay: 0.3, ease: [0.2, 0.8, 0.2, 1] }}
           aria-label="Formulario de comentario"
         >
-          {/* ---------- Formulario ---------- */}
+
           <form className="tm-form" onSubmit={handleSubmit}>
             <div className="tm-campo-form">
               <label htmlFor="name">Nombre</label>
@@ -175,7 +172,7 @@ export const Juego = () => {
             )}
           </form>
 
-          {/* ---------- Vista previa de la ficha ---------- */}
+
           <aside className="tm-previa" aria-label="Vista previa de tu ficha">
             <p className="tm-previa-titulo">Así se verá tu ficha</p>
 

@@ -1,17 +1,12 @@
 import React from "react";
 import "../Styles/TituloPersonajes.css";
 
-/**
- * Título de la página de personajes, animado:
- *  - el título aparece letra por letra y luego late suavemente (siempre en verde)
- *  - subtítulo que aparece suave
- */
 const TITULO = "Conoce A Los Personajes";
 const SUBTITULO =
   "Descubre el trasfondo y los secretos ocultos de los personajes que habitan nuestras historias.";
 
 export const TituloPersonajes = () => {
-  let n = 0; // contador para escalonar las letras
+  let n = 0; 
 
   return (
     <header className="tp">

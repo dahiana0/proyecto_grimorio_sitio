@@ -2,33 +2,16 @@ import { useRef, useEffect, useState } from "react";
 import GuardarInteraccion from "./GuardarInteraccion";
 import "../Styles/LotieCap5E.css";
 
-// Número de capítulo con el que se guardan las interacciones
+
 const CAPITULO = 5;
 
-// true = muestra los cuadros de clic en rojo para calibrarlos
-// false = invisibles (versión final)
+
 const DEBUG = false;
 
-/* ---------------------------------------------------------------------
-   CÁMARA
-   TIEMPO_ZOOM = segundo del video de Step en que voltea:
-                 se cortan los pasos y arranca el zoom a la cara
---------------------------------------------------------------------- */
+
 const TIEMPO_ZOOM = 15.13;
 
-/* ---------------------------------------------------------------------
-   VIDEOS DE LA ESCENA (de atrás hacia adelante)
-   nombre   = identificador
-   id       = identificador único con el que se guarda en el archivo
-   titulo   = nombre que se ve en el archivo
-   clase    = clase CSS
-   src      = archivo de video en public/
-   sonido   = audio que suena junto con el video (ruta en public/)
-   volumen  = volumen del sonido (0 a 1)
-   loop     = true si el sonido se repite mientras dura el video
-   auto     = true si se reproduce solo al aparecer la escena
-   cortar   = true si el sonido se detiene cuando termina el video
---------------------------------------------------------------------- */
+
 const VIDEOS = [
   { nombre: "pintura1", id: "pintura1", titulo: "Pintura 1", clase: "pintura1-5e", src: "/pintura 1 .webm" },
   { nombre: "pintura2", id: "pintura2", titulo: "Pintura 2", clase: "pintura2-5e", src: "/pintura 2 .webm" },
@@ -62,21 +45,20 @@ const LotieCap5E = () => {
 
   const escenaRef = useRef(null);
 
-  // Referencias a todos los videos
   const videoRefs = useRef({});
 
-  // Audios (uno por video que tenga sonido)
+
   const audioRefs = useRef({});
 
-  // Cámara: true mientras corre la animación de zoom
+
   const [zoom, setZoom] = useState(false);
   const zoomHecho = useRef(false);
   const rafRef = useRef(null);
 
-  // Lámpara: se activa al hacer clic (balanceo + resplandor)
+
   const [lamparaActiva, setLamparaActiva] = useState(false);
 
-  // Crear los audios una sola vez
+
   useEffect(() => {
     VIDEOS.forEach((v) => {
       if (v.sonido) {
@@ -96,7 +78,7 @@ const LotieCap5E = () => {
     };
   }, []);
 
-  // Reproducir un video desde el inicio junto con su sonido
+
   const reproducirVideo = (nombre) => {
     const video = videoRefs.current[nombre];
     if (!video) return;
@@ -108,19 +90,19 @@ const LotieCap5E = () => {
         const audio = audioRefs.current[nombre];
         if (audio) {
           audio.currentTime = 0;
-          audio.play().catch(() => {});
+          audio.play().catch(() => { });
         }
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 
-  // Clic del lector: reproduce y guarda (los "auto" no se guardan solos)
+
   const clicVideo = (v) => {
     reproducirVideo(v.nombre);
     GuardarInteraccion(v.id, v.titulo, v.id, CAPITULO, "video", v.src);
   };
 
-  // Detener el sonido cuando termina el video (solo si "cortar" es true)
+
   const alTerminar = (v) => {
     if (!v.cortar) return;
     const audio = audioRefs.current[v.nombre];
@@ -130,8 +112,7 @@ const LotieCap5E = () => {
     }
   };
 
-  // Vigila el video de Step. En TIEMPO_ZOOM corta los pasos y dispara
-  // el zoom. El video NO se pausa: sigue reproduciéndose normal.
+
   const vigilarStep = () => {
     const video = videoRefs.current.step;
     if (!video || video.paused || video.ended) return;
@@ -139,22 +120,22 @@ const LotieCap5E = () => {
     if (video.currentTime >= TIEMPO_ZOOM) {
       zoomHecho.current = true;
 
-      // Los pasos dejan de sonar
+
       const audio = audioRefs.current.step;
       if (audio) {
         audio.pause();
         audio.currentTime = 0;
       }
 
-      // Zoom a la cara
+
       setZoom(true);
-      return; // ya no hace falta seguir vigilando
+      return;
     }
 
     rafRef.current = requestAnimationFrame(vigilarStep);
   };
 
-  // Cada vez que Step empieza (o se repite), se reinicia la cámara
+
   const alIniciar = (v) => {
     if (v.nombre !== "step") return;
     zoomHecho.current = false;
@@ -163,7 +144,7 @@ const LotieCap5E = () => {
     rafRef.current = requestAnimationFrame(vigilarStep);
   };
 
-  // Reproducir solos los videos "auto" cuando la escena se ve en pantalla
+
   useEffect(() => {
     const escena = escenaRef.current;
     if (!escena) return;
@@ -181,7 +162,7 @@ const LotieCap5E = () => {
     return () => observador.disconnect();
   }, []);
 
-  // Lámpara (animación CSS): se guarda con su imagen
+
   const clicLampara = () => {
     setLamparaActiva(true);
     GuardarInteraccion("lampara5e", "Lámpara 2", "lampara", CAPITULO, "css", "/lampara1.png");
@@ -190,22 +171,22 @@ const LotieCap5E = () => {
   return (
     <div className="escena5e" ref={escenaRef}>
 
-      {/* Cámara: todo lo que está dentro se mueve junto */}
+
       <div
         className={`camara5e${zoom ? " camara5e--zoom" : ""}${DEBUG ? " debug" : ""}`}
         onAnimationEnd={(e) => {
-          // Solo reacciona a la animación de la propia cámara
+
           if (e.target === e.currentTarget) setZoom(false);
         }}
       >
 
-        {/* Fondo: imagen */}
+
         <img className="fondo5e" src="./Fondo5e.png" alt="" />
 
-        {/* ===== Pinturas, paso, huesos, monstruo, Roges y Step (todos con clic) ===== */}
+
         {VIDEOS.map((v) => (
           <div key={v.nombre} className={`anim5e ${v.clase}`}>
-            {/* Solo visual: no recibe clics */}
+
             <div className="vista5e">
               <video
                 ref={(el) => (videoRefs.current[v.nombre] = el)}
@@ -218,14 +199,14 @@ const LotieCap5E = () => {
                 <source src={v.src} type="video/webm" />
               </video>
             </div>
-            {/* Cuadro de clic propio, dentro de su objeto */}
+
             <div className="hitbox5e" onClick={() => clicVideo(v)}>
               <span className="pista5e" />
             </div>
           </div>
         ))}
 
-        {/* ===== Lámpara: al frente. Clic = se balancea y resplandece ===== */}
+
         <div className="anim5e lampara5e">
           <div className="vista5e">
             <img

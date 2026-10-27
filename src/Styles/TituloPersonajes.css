@@ -1,18 +1,17 @@
-/* ===== Título animado de Personajes ===== */
 .tp {
-  --header-h: 80px; /* alto de tu header fijo */
+  --header-h: 80px;
   position: relative;
   text-align: center;
-  padding: calc(var(--header-h) + 56px) 16px 4px; /* deja libre el espacio del header */
+  padding: calc(var(--header-h) + 56px) 16px 4px;
   --verde: 26, 217, 109;
 }
 
-/* Título: letra por letra, luego late y flota */
+
 .tp-titulo {
   margin: 0;
   font-family: "pieces";
   font-weight: 400;
-  font-size: clamp(46px, 8vw, 96px); /* mismo tamaño que "Libro de visitas" */
+  font-size: clamp(46px, 8vw, 96px);
   line-height: 1;
   color: #1ad96d;
   animation:
@@ -31,34 +30,43 @@
   opacity: 0;
   transform: translateY(0.7em) scale(0.7);
   filter: blur(10px);
-  /* mismo doble resplandor verde de "Libro de visitas" */
   text-shadow: 0 0 10px #1ad96d, 0 0 34px rgba(var(--verde), 0.5);
   animation: tpLetra 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
   animation-delay: calc(0.5s + var(--i) * 0.07s);
 }
 
 @keyframes tpLetra {
-  to { opacity: 1; transform: none; filter: blur(0); }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
 }
 
-/* El brillo verde late suavemente */
+
 @keyframes tpPulso {
   from {
-    filter: drop-shadow(0 0 4px rgba(var(--verde), 0.4))
-      drop-shadow(0 0 14px rgba(var(--verde), 0.25));
+    filter: drop-shadow(0 0 4px rgba(var(--verde), 0.4)) drop-shadow(0 0 14px rgba(var(--verde), 0.25));
   }
+
   to {
-    filter: drop-shadow(0 0 8px rgba(var(--verde), 0.7))
-      drop-shadow(0 0 22px rgba(var(--verde), 0.4));
+    filter: drop-shadow(0 0 8px rgba(var(--verde), 0.7)) drop-shadow(0 0 22px rgba(var(--verde), 0.4));
   }
 }
 
 @keyframes tpFlota {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-4px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
 }
 
-/* Subtítulo: fuente normal de la página, gris claro */
+
 .tp-sub {
   margin: 18px auto 0;
   max-width: 560px;
@@ -72,15 +80,20 @@
 }
 
 @keyframes tpSub {
-  to { opacity: 1; transform: none; }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
-/* Respeta a quien desactiva las animaciones */
+
 @media (prefers-reduced-motion: reduce) {
+
   .tp *,
   .tp {
     animation: none !important;
   }
+
   .tp-letra,
   .tp-sub {
     opacity: 1;

@@ -10,10 +10,8 @@ import {
   subscribeToComments,
 } from "../utils/commentsStorage";
 
-/* ==================================================================
-   AJUSTA AQUÍ
-================================================================== */
-const DIAS_NUEVOS = 10; // un comentario es "nuevo" durante estos días
+
+const DIAS_NUEVOS = 10;
 
 const RUTAS = {
   volver: "/intro-juego",
@@ -22,7 +20,7 @@ const RUTAS = {
   antiguos: "/comentariosCompletos/antiguos",
 };
 
-// Comentario de bienvenida: va anclado arriba en cada lista
+
 const BIENVENIDA = {
   titulo: "¡Bienvenido(a) a este espacio llamado Grimorio",
   texto:
@@ -61,8 +59,7 @@ const PAGINA = {
   },
 };
 
-/* ---------- utilidades ---------- */
-// Número estable a partir del id: cada ficha conserva SIEMPRE su inclinación y desfase
+
 const semilla = (id) => {
   const txt = String(id);
   let h = 2166136261;
@@ -81,8 +78,7 @@ const formatoFecha = (iso) => {
     .replace(/\./g, "");
 };
 
-/* Zona de la ficha donde NO se arrastra (botones y cuadro de edición):
-   así se puede hacer clic y escribir sin mover la ficha. */
+
 const SinArrastre = ({ className, children }) => {
   const ref = useRef(null);
   useEffect(() => {
@@ -99,7 +95,7 @@ const SinArrastre = ({ className, children }) => {
   );
 };
 
-/* ---------- Ficha: un comentario que se puede arrastrar, editar y borrar ---------- */
+
 const Ficha = ({
   c,
   num,
@@ -189,11 +185,11 @@ const Ficha = ({
   );
 };
 
-/* ---------- Sección: una vitrina con su lista de fichas ---------- */
+
 const Seccion = ({ tipo, items, numeros, unica, reducir, retraso, acciones, navigate }) => {
   const t = TEXTOS[tipo];
   const campo = useRef(null);
-  const capa = useRef(1); // la última ficha tocada queda encima
+  const capa = useRef(1);
   const otraRuta = tipo === "nuevos" ? RUTAS.antiguos : RUTAS.nuevos;
 
   return (
@@ -214,7 +210,7 @@ const Seccion = ({ tipo, items, numeros, unica, reducir, retraso, acciones, navi
       </header>
 
       <div className="tm-campo" ref={campo}>
-        {/* Comentario de bienvenida, anclado arriba */}
+
         <motion.article
           className="tm-ficha tm-ficha--anclada"
           initial={reducir ? false : { opacity: 0, y: 24, filter: "blur(6px)" }}
@@ -292,7 +288,7 @@ export const ComentariosCompletos = () => {
     const hora = (c) => new Date(c.createdAt).getTime();
     const lista = Array.isArray(comments) ? comments : [];
 
-    // El número de ficha y el orden de la lista siguen el orden en que se escribieron
+
     const ordenados = [...lista].sort((a, b) => hora(a) - hora(b));
     const nums = new Map(ordenados.map((c, i) => [c.id, i + 1]));
 
@@ -303,7 +299,7 @@ export const ComentariosCompletos = () => {
     };
   }, [comments, referenceTime]);
 
-  /* ---------- editar / borrar (igual que antes) ---------- */
+
   const updateComments = (nextCommentsOrUpdater) => {
     setComments((currentComments) => {
       const resolvedComments =

@@ -10,48 +10,35 @@ import {
 import PersonajeAnimado from "../Components/Personajeanimado";
 import "../Styles/dashboard.css";
 
-// Escenas reales de cada capítulo (las mismas que usan los visores).
-// Si alguno de estos nombres de archivo es distinto en tu proyecto, cámbialo aquí.
-import LootieKarol from "../Components/LootieKarol"; // capítulo 1 (parte 1)
-import LotieCap2 from "../Components/LotieCap2"; // capítulo 2
-import LotieCap3 from "../Components/LotieCap3"; // capítulo 3
-import LotieCap4 from "../Components/LotieCap4"; // capítulo 4
-import LotieCap5A from "../Components/LotieCap5A"; // capítulo 5 (parte A)
+import LootieKarol from "../Components/LootieKarol";
+import LotieCap2 from "../Components/LotieCap2";
+import LotieCap3 from "../Components/LotieCap3";
+import LotieCap4 from "../Components/LotieCap4";
+import LotieCap5A from "../Components/LotieCap5A";
 
-/* ==================================================================
-   AJUSTA AQUÍ (imágenes, rutas y textos)
-================================================================== */
+
 const IMG_AUTOR = "./autor-animado.svg";
 const IMG_LIBRO_CERRADO = "./Cerrado.png";
 const IMG_LIBRO_ABIERTO = "./Abierto .png";
 
-// AQUÍ VA TU PDF: archivo en la carpeta public o un link completo (https://...)
+
 const PDF_LIBRO = "./Horror en el museo - Lovecraft, H. P.pdf";
 
-// ★★★ AQUÍ VAN TUS ICONOS SVG (uno por sección) ★★★
-// Es el espacio que va junto al título de cada tarjeta (donde ahora está la
-// estrellita ✧). Pon la ruta del archivo (svg, png, webp...) que está en la
-// carpeta public. Cada sección tiene el suyo, así que cada una es diferente.
-// Mientras esté en null se ve la estrellita como marcador de posición.
-// Tamaño: se ajusta solo según el dispositivo (ver --icono-size en el CSS).
+
 const ICONOS = {
-  libro: null, // ej. "./iconos/libro.svg"
-  personajes: null, // ej. "./iconos/personajes.svg"
-  autor: null, // ej. "./iconos/autor.svg"
-  animaciones: null, // ej. "./iconos/animaciones.svg"
+  libro: null,
+  personajes: null,
+  autor: null,
+  animaciones: null,
 };
 
 const RUTAS = {
-  // AQUÍ VA TU LINK DE LA BIOGRAFÍA: ruta interna ("/biografia") o link completo (https://...)
   autor: "https://es.wikipedia.org/wiki/H._P._Lovecraft",
   personajes: "/personajes",
   animaciones: "/capitulos",
 };
 
-// Vista previa: si img es null se usa el dibujo animado de PersonajeArte.
-// Cuando tengas la ilustración real, pon aquí su ruta (ej. "./step.png")
-// y ajusta "ojos" (x, y y separación en %) para que queden sobre los ojos.
-// Si pones ojos: null no se dibujan los ojos brillantes encima de la imagen.
+
 const PERSONAJES = [
   { nombre: "Stephen", imagen: "./stephen.jpeg", svg: "./stephen.svg", rig: "stephen" },
   { nombre: "Rogers", imagen: "./rogers.jpeg", svg: "./rogers (1).svg", rig: "rogers" },
@@ -59,13 +46,8 @@ const PERSONAJES = [
   { nombre: "Cthulhu", imagen: "./monstruo.png", svg: "./cthulhu.svg", rig: "cthulhu" },
 ];
 
-// ★ MINIATURAS DE LOS CAPÍTULOS ★ (solo para mirar, no llevan a ningún lado)
-// Cada miniatura es la ESCENA REAL de la parte 1 del capítulo, completa y en
-// pequeño (con sus mismos objetos y animaciones), sin sonido y sin clics.
-//   Escena → el componente de la escena (importado arriba)
+
 const ANIMACIONES = [
-  // foco: hacia dónde se acerca la miniatura, de 0 a 1 (x: 0 izquierda, 1 derecha;
-  // y: 0 arriba, 1 abajo). zoom: 1 = lo mínimo para llenar el panel; sube para acercar más.
   { titulo: "Capítulo 1", subtitulo: "Umbral", Escena: LootieKarol, foco: { x: 0.5, y: 0.6 }, zoom: 1 },
   { titulo: "Capítulo 2", subtitulo: "Reliquias", Escena: LotieCap2, foco: { x: 0.5, y: 0.6 }, zoom: 1 },
   { titulo: "Capítulo 3", subtitulo: "Presagio", Escena: LotieCap3, foco: { x: 0.5, y: 0.6 }, zoom: 1 },
@@ -73,7 +55,7 @@ const ANIMACIONES = [
   { titulo: "Capítulo 5", subtitulo: "", Escena: LotieCap5A, foco: { x: 0.5, y: 0.6 }, zoom: 1 },
 ];
 
-// Tamaño de diseño de las escenas (el mismo de los visores)
+
 const ESCENA_ANCHO = 1500;
 const ESCENA_ALTO = 836;
 
@@ -86,9 +68,7 @@ const TEXTOS_AUTOR = [
   "Murió el 15 de marzo de 1937, casi sin reconocimiento en vida. Hoy es un referente del género.",
 ];
 
-/* ---------- Icono animado del título de cada tarjeta ----------
-   tipo: "libro" | "personajes" | "autor" | "animaciones"
-   Cada uno tiene su propia animación (ver dashboard.css). */
+
 const IconoTitulo = ({ src, tipo }) => (
   <span className={`dash-icono dash-icono--${tipo}`} aria-hidden="true">
     <span className="dash-icono-halo" />
@@ -96,7 +76,7 @@ const IconoTitulo = ({ src, tipo }) => (
   </span>
 );
 
-/* ---------- Tarjeta: al pasar el cursor se mueve y se inclina ---------- */
+
 const Tarjeta = ({
   titulo,
   icono,
@@ -131,7 +111,7 @@ const Tarjeta = ({
   );
 };
 
-/* ---------- Libro animado (flota, se inclina, se abre) ---------- */
+
 const LibroAnimado = () => {
   const [abierto, setAbierto] = useState(false);
   const mx = useMotionValue(0);
@@ -179,7 +159,7 @@ const LibroAnimado = () => {
   );
 };
 
-/* ---------- Autor ---------- */
+
 const AutorInteractivo = () => {
   const navigate = useNavigate();
   const [i, setI] = useState(0);
@@ -250,7 +230,7 @@ const AutorInteractivo = () => {
   );
 };
 
-/* ---------- Ojos que siguen al cursor y parpadean ---------- */
+
 const Ojos = ({ cfg }) => {
   const caja = useRef(null);
 
@@ -285,7 +265,7 @@ const Ojos = ({ cfg }) => {
   );
 };
 
-/* ---------- Dibujos de vista previa de los personajes ---------- */
+
 const PersonajeArte = ({ nombre }) => {
   const p = {
     fill: "rgba(26,217,109,.07)",
@@ -350,11 +330,6 @@ const PersonajeArte = ({ nombre }) => {
   );
 };
 
-/* ---------- Miniatura: la escena real, ajustada al DIBUJO para llenar todo el panel ----------
-   La escena se dibuja a su tamaño de diseño (1500x836). Como el dibujo puede ser
-   más pequeño que esa caja (y dejar franjas negras arriba y abajo), se mide el
-   dibujo real (svg / canvas / img) y se escala SOLO ese dibujo hasta cubrir el panel.
-   foco = hacia dónde se acerca dentro del dibujo (0 a 1); zoom = acercamiento extra. */
 const EscenaMiniatura = ({ Escena, foco = { x: 0.5, y: 0.5 }, zoom = 1 }) => {
   const caja = useRef(null);
   const escena = useRef(null);
@@ -379,7 +354,7 @@ const EscenaMiniatura = ({ Escena, foco = { x: 0.5, y: 0.5 }, zoom = 1 }) => {
       setM({ k, left, top });
     };
 
-    // Busca el dibujo real dentro de la escena (el elemento gráfico más grande)
+
     const medir = () => {
       const st = escena.current;
       if (st) {
@@ -436,14 +411,14 @@ const EscenaMiniatura = ({ Escena, foco = { x: 0.5, y: 0.5 }, zoom = 1 }) => {
   );
 };
 
-/* ---------- Carrusel tipo cinta de película: 3 paneles verticales a la vez ---------- */
+
 const CintaAnimaciones = () => {
   const cinta = useRef(null);
   const [inicio, setInicio] = useState(0);
   const [visibles, setVisibles] = useState(3);
   const n = ANIMACIONES.length;
 
-  // En pantallas muy angostas se muestran 2 paneles para que no queden minúsculos
+
   useEffect(() => {
     const el = cinta.current;
     if (!el) return;
@@ -504,9 +479,7 @@ export const InicioDashboard = () => {
   const navigate = useNavigate();
   const sonido = useRef(new Audio("./audios/sonidoboton.ogg"));
 
-  // Las miniaturas son las escenas reales, que traen efectos de sonido (pasos,
-  // respiración, etc.). En el inicio no deben sonar: se silencian los Audio
-  // mientras esta página está abierta. Solo suena el botón "Explorar museo".
+
   useEffect(() => {
     const original = HTMLAudioElement.prototype.play;
     const boton = sonido.current;
@@ -523,7 +496,7 @@ export const InicioDashboard = () => {
 
   const entrarAlMuseo = () => {
     sonido.current.currentTime = 0;
-    sonido.current.play().catch(() => {});
+    sonido.current.play().catch(() => { });
     setTimeout(() => navigate("/guia"), 150);
   };
 
@@ -531,7 +504,7 @@ export const InicioDashboard = () => {
 
   return (
     <main className="dash">
-      {/* ---------- IZQUIERDA ---------- */}
+
       <Tarjeta
         titulo="El libro"
         icono={ICONOS.libro}
@@ -610,7 +583,7 @@ export const InicioDashboard = () => {
         </button>
       </Tarjeta>
 
-      {/* ---------- CENTRO ---------- */}
+
       <motion.div
         className="dash-centro"
         initial={{ opacity: 0, scale: 0.9 }}
@@ -636,7 +609,7 @@ export const InicioDashboard = () => {
         </motion.button>
       </motion.div>
 
-      {/* ---------- DERECHA ---------- */}
+
       <Tarjeta
         titulo="El autor"
         icono={ICONOS.autor}

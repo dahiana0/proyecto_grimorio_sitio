@@ -3,8 +3,8 @@ const GuardarInteraccion = (
   nombre,
   imagen,
   capitulo = 1,
-  tipo = "lottie", // "lottie" | "video" | "css"
-  src = null       // ruta del video o de la imagen (solo video / css)
+  tipo = "lottie", 
+  src = null      
 ) => {
   const guardadas = JSON.parse(localStorage.getItem("grimorio")) || [];
 

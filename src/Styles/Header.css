@@ -1,12 +1,5 @@
-/* ==========================================================================
-   SIDEBAR GRIMORIO — píldora de cristal + botones como los de la barra de
-   controles (icono que late y flota, brillo verde).
-   Para cambiar el verde edita solo --bc (RGB) y --bc-soft.
-   Va en src/Styles/header.css
-   ========================================================================== */
-
 .sidebar {
-  --bc: 26, 217, 109;           /* #1ad96d, el verde de tus iconos */
+  --bc: 26, 217, 109;
   --bc-soft: #7dffb9;
   --sb-collapsed: 100px;
   --sb-expanded: 280px;
@@ -23,9 +16,9 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  overflow: visible;            /* para que no se corte el brillo de los botones */
+  overflow: visible;
 
-  /* cristal */
+
   background:
     linear-gradient(rgba(14, 70, 48, 0.28), rgba(4, 18, 12, 0.5)),
     rgba(4, 11, 8, 0.55);
@@ -47,16 +40,42 @@
 }
 
 @keyframes sb-entra {
-  from { opacity: 0; transform: translateX(-30px); }
-  to   { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes sb-entra-movil {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes sb-respira {
-  0%, 100% { box-shadow: 0 0 12px rgba(var(--bc), 0.25), inset 0 0 20px rgba(var(--bc), 0.06); }
-  50%      { box-shadow: 0 0 26px rgba(var(--bc), 0.55), inset 0 0 26px rgba(var(--bc), 0.13); }
+
+  0%,
+  100% {
+    box-shadow: 0 0 12px rgba(var(--bc), 0.25), inset 0 0 20px rgba(var(--bc), 0.06);
+  }
+
+  50% {
+    box-shadow: 0 0 26px rgba(var(--bc), 0.55), inset 0 0 26px rgba(var(--bc), 0.13);
+  }
 }
 
-/* ---------- Logo ---------- */
+
 .sidebar__logo {
   position: relative;
   display: block;
@@ -84,12 +103,16 @@
 }
 
 .sidebar:hover .sidebar__logo-mini,
-.sidebar:focus-within .sidebar__logo-mini { opacity: 0; }
+.sidebar:focus-within .sidebar__logo-mini {
+  opacity: 0;
+}
 
 .sidebar:hover .sidebar__logo-full,
-.sidebar:focus-within .sidebar__logo-full { opacity: 1; }
+.sidebar:focus-within .sidebar__logo-full {
+  opacity: 1;
+}
 
-/* ---------- Lista ---------- */
+
 .sidebar__list {
   list-style: none;
   margin: 0;
@@ -100,14 +123,14 @@
   flex: 1;
 }
 
-/* ---------- Botón base (mismo lenguaje que .bc-btn) ---------- */
+
 .sidebar__link {
   position: relative;
   display: flex;
   align-items: center;
   height: 68px;
   margin: 0 14px;
-  padding-left: 8px;            /* centra el icono de 54px al estar cerrado */
+  padding-left: 8px;
   border: 1px solid transparent;
   border-radius: 999px;
   color: #fff;
@@ -118,7 +141,7 @@
     box-shadow 0.3s ease, color 0.3s ease, transform 0.3s ease;
 }
 
-/* halo que aparece detrás del icono al pasar el mouse */
+
 .sidebar__link::before {
   content: "";
   position: absolute;
@@ -141,7 +164,7 @@
   transform: scale(1.12);
 }
 
-/* hover: cuadro verde + letra verde */
+
 .sidebar__link:hover,
 .sidebar__link:focus-visible {
   background: rgba(var(--bc), 0.1);
@@ -151,9 +174,11 @@
   outline: none;
 }
 
-.sidebar__link:active { transform: scale(0.97); }
+.sidebar__link:active {
+  transform: scale(0.97);
+}
 
-/* ---------- Icono: resplandor que late y flota ---------- */
+
 .sidebar__icon {
   position: relative;
   width: 54px;
@@ -164,8 +189,7 @@
   user-select: none;
 
   filter:
-    drop-shadow(0 0 3px rgba(var(--bc), 0.9))
-    drop-shadow(0 0 9px rgba(var(--bc), 0.45));
+    drop-shadow(0 0 3px rgba(var(--bc), 0.9)) drop-shadow(0 0 9px rgba(var(--bc), 0.45));
   animation:
     sb-latido 3.2s ease-in-out var(--d, 0s) infinite,
     sb-flota 4s ease-in-out var(--d, 0s) infinite;
@@ -173,21 +197,29 @@
 }
 
 @keyframes sb-latido {
-  0%, 100% {
+
+  0%,
+  100% {
     filter:
-      drop-shadow(0 0 3px rgba(var(--bc), 0.85))
-      drop-shadow(0 0 8px rgba(var(--bc), 0.35));
+      drop-shadow(0 0 3px rgba(var(--bc), 0.85)) drop-shadow(0 0 8px rgba(var(--bc), 0.35));
   }
+
   50% {
     filter:
-      drop-shadow(0 0 5px rgba(var(--bc), 1))
-      drop-shadow(0 0 16px rgba(var(--bc), 0.75));
+      drop-shadow(0 0 5px rgba(var(--bc), 1)) drop-shadow(0 0 16px rgba(var(--bc), 0.75));
   }
 }
 
 @keyframes sb-flota {
-  0%, 100% { translate: 0 0; }
-  50%      { translate: 0 -2.5px; }
+
+  0%,
+  100% {
+    translate: 0 0;
+  }
+
+  50% {
+    translate: 0 -2.5px;
+  }
 }
 
 /* hover: crece y se enciende más */
@@ -195,14 +227,15 @@
 .sidebar__link:focus-visible .sidebar__icon {
   transform: scale(1.14);
   filter:
-    drop-shadow(0 0 5px rgba(var(--bc), 1))
-    drop-shadow(0 0 18px rgba(var(--bc), 0.9));
+    drop-shadow(0 0 5px rgba(var(--bc), 1)) drop-shadow(0 0 18px rgba(var(--bc), 0.9));
   animation: none;
 }
 
-.sidebar__link:active .sidebar__icon { transform: scale(0.88); }
+.sidebar__link:active .sidebar__icon {
+  transform: scale(0.88);
+}
 
-/* ---------- Página actual: sin círculo, el icono se agranda y respira ---------- */
+
 .sidebar__link--active,
 .sidebar__link--active:hover,
 .sidebar__link--active:focus-visible {
@@ -217,7 +250,7 @@
   display: none;
 }
 
-/* crece al entrar a la sección (transición) y luego late suavemente (scale) */
+
 .sidebar__link--active .sidebar__icon {
   transform: scale(1.25);
   animation:
@@ -227,8 +260,15 @@
 }
 
 @keyframes sb-activo {
-  0%, 100% { scale: 1; }
-  50%      { scale: 1.1; }
+
+  0%,
+  100% {
+    scale: 1;
+  }
+
+  50% {
+    scale: 1.1;
+  }
 }
 
 .sidebar__link--active:hover .sidebar__icon,
@@ -237,12 +277,16 @@
   animation: none;
 }
 
-.sidebar__link--active:active .sidebar__icon { transform: scale(1.1); }
+.sidebar__link--active:active .sidebar__icon {
+  transform: scale(1.1);
+}
 
 /* al desplegar, el nombre de la sección actual se ve en verde claro */
-.sidebar__link--active .sidebar__label { color: var(--bc-soft); }
+.sidebar__link--active .sidebar__label {
+  color: var(--bc-soft);
+}
 
-/* ---------- Texto: aparece al desplegar ---------- */
+
 .sidebar__label {
   margin-left: 16px;
   font-size: 22px;
@@ -259,7 +303,7 @@
   transition-delay: 0.08s, 0.08s, 0s;
 }
 
-/* ---------- Explorar Museo: sin círculo, solo el aro que gira ---------- */
+
 .sidebar__link--cta,
 .sidebar__link--cta:hover,
 .sidebar__link--cta:focus-visible {
@@ -276,7 +320,7 @@
   display: none;
 }
 
-/* aro de luz que gira alrededor del icono: lento en reposo, rápido al desplegar */
+
 .sidebar__aro {
   position: absolute;
   left: 4px;
@@ -287,7 +331,7 @@
   border-radius: 50%;
   background: conic-gradient(from 0deg, transparent 0 55%, rgba(var(--bc), 0.95) 100%);
   -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px));
-          mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px));
   filter: drop-shadow(0 0 6px rgba(var(--bc), 0.9));
   pointer-events: none;
   opacity: 0.55;
@@ -301,18 +345,16 @@
 }
 
 @keyframes sb-giro {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .sidebar__link--cta:hover {
   transform: scale(1.03);
 }
 
-/* ---------- La página se corre cuando el menú se despliega ----------
-   Todo se maneja desde aquí (no hay que tocar las demás páginas): cuando el
-   menú se abre (mouse encima o con foco), el body gana margen a la izquierda
-   con la misma animación, y el contenido se acomoda en el espacio que queda.
-   180px = lo que crece el menú al abrirse (280px - 100px). */
+
 body {
   padding-left: 0;
   transition: padding-left 0.35s cubic-bezier(0.2, 0.9, 0.3, 1);
@@ -323,38 +365,133 @@ body:has(.sidebar:focus-within) {
   padding-left: 180px;
 }
 
-@media (max-width: 576px) {
-  body:has(.sidebar:hover),
-  body:has(.sidebar:focus-within) {
-    padding-left: 172px; /* 240px - 68px */
-  }
-}
 
-/* ---------- Que el contenido no quede tapado ---------- */
-/* Añade la clase "con-sidebar" al contenedor principal de tus páginas */
 .con-sidebar {
   padding-left: 136px;
 }
 
-/* ---------- Móvil ---------- */
-@media (max-width: 576px) {
-  .sidebar {
-    --sb-collapsed: 68px;
-    --sb-expanded: 240px;
-    border-radius: 30px;
+
+@media (max-width: 768px) {
+
+  .sidebar,
+  .sidebar:hover,
+  .sidebar:focus-within {
+    top: auto;
+    left: 10px;
+    right: 10px;
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    width: auto;
+    height: 68px;
+    padding: 0 8px;
+    flex-direction: row;
+    align-items: center;
+    gap: 0;
+    border-radius: 34px;
+    animation:
+      sb-entra-movil 0.7s cubic-bezier(0.2, 0.9, 0.3, 1) both,
+      sb-respira 4.5s ease-in-out 0.7s infinite;
   }
-  .sidebar__link { margin: 0 8px; padding-left: 5px; }
-  .sidebar__link::before { left: 0; width: 50px; height: 50px; margin-top: -25px; }
-  .sidebar__icon { width: 40px; height: 40px; }
-  .sidebar__aro { left: 2px; width: 46px; height: 46px; margin-top: -23px; }
-  .sidebar__logo-mini { width: 34px; left: calc((var(--sb-collapsed) - 34px) / 2); }
-  .con-sidebar { padding-left: 88px; }
+
+
+  .sidebar__logo,
+  .sidebar__label {
+    display: none;
+  }
+
+
+  .sidebar__list {
+    flex: 1;
+    min-width: 0;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    gap: 0;
+  }
+
+  .sidebar__list li {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .sidebar__link,
+  .sidebar__link--cta,
+  .sidebar__link--cta:hover,
+  .sidebar__link--cta:focus-visible {
+    width: 52px;
+    height: 52px;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .sidebar__icon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .sidebar__link--active .sidebar__icon {
+    transform: scale(1.15);
+  }
+
+
+  .sidebar__link::before {
+    left: 50%;
+    width: 52px;
+    height: 52px;
+    margin: -26px 0 0 -26px;
+  }
+
+  .sidebar__aro {
+    left: 50%;
+    width: 48px;
+    height: 48px;
+    margin: -24px 0 0 -24px;
+    opacity: 1;
+    animation-duration: 4s;
+  }
+
+
+  body,
+  body:has(.sidebar:hover),
+  body:has(.sidebar:focus-within) {
+    padding-left: 0;
+    padding-bottom: calc(92px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .con-sidebar {
+    padding-left: 0;
+  }
 }
 
-/* ---------- Sin movimiento ---------- */
+
+@media (max-width: 380px) {
+  .sidebar {
+    left: 6px;
+    right: 6px;
+    padding: 0 4px;
+  }
+
+  .sidebar__link,
+  .sidebar__link--cta {
+    width: 44px;
+    height: 44px;
+  }
+
+  .sidebar__icon {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+
 @media (prefers-reduced-motion: reduce) {
+
   .sidebar,
   .sidebar__icon,
   .sidebar__link--active .sidebar__icon,
-  .sidebar__aro { animation: none !important; }
+  .sidebar__aro {
+    animation: none !important;
+  }
 }

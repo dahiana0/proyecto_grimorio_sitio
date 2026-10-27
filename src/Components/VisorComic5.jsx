@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import LotieCap5A from "./LotieCap5A";
 import LotieCap5B from "./LotieCap5B";
-import LotieCap5F from "./LotieCap5F.jsx"; // Orabona (escena 3)
+import LotieCap5F from "./LotieCap5F.jsx";
 import LotieCap5C from "./LotieCap5C";
 import LotieCap5D from "./LotieCap5D";
 import LotieCap5E from "./LotieCap5E";
@@ -12,20 +12,18 @@ import "../Styles/visorCap1.css";
 
 const DURACION_TRANSICION = 350;
 
-// Orabona (escena 3): el audio 1 suena al entrar a la escena y el audio 2
-// entra INICIO_ORABONA_2 segundos después de que arranca el audio 1.
+
 const AUDIO_ORABONA_1 = "/audios/ora1.wav";
 const AUDIO_ORABONA_2 = "/audios/ora2.wav";
 const INICIO_ORABONA_2 = 19.18;
 
-// Audio de la puerta (LotieCap5C, escena 4).
-// Copia tu archivo a public/audios/ y cambia solo el nombre aquí.
+
 const AUDIO_5C = "/audios/AUDIO_5C.wav";
 
-// Video final del capítulo (escena 7, WebM). Va en public/videos/
+
 const VIDEO_CAP5 = "/videos/capitulo5.webm";
 
-// Posición de este capítulo en RUTAS_CAPITULOS (0 = capítulo I)
+
 const CAPITULO = 4;
 
 export default function VisorComic5({
@@ -34,15 +32,14 @@ export default function VisorComic5({
 }) {
   const navigate = useNavigate();
 
-  // Audio del narrador y video final
+
   const audioRef = useRef(null);
   const videoRef = useRef(null);
 
-  // Tramo del narrador: "A" (primer audio de la escena) o "B" (segundo audio).
-  // Es un ref para que siempre tenga el valor actual al sincronizar subtítulos.
+
   const tramoRef = useRef("A");
 
-  // Temporizador que lanza el audio 2 de Orabona
+
   const timerTramoBRef = useRef(null);
   const limpiarTimerTramoB = () => {
     if (timerTramoBRef.current) {
@@ -53,21 +50,21 @@ export default function VisorComic5({
 
   const [index, setIndex] = useState(0);
 
-  // Eventos del <audio> (ya no se usa para el botón de pausa)
+
   const [, setAudioSonando] = useState(false);
 
-  // Estado de reproducción y controles propios del video
+
   const [play, setPlay] = useState(false);
   const [showControls, setShowControls] = useState(true);
 
   const [nivelVolumen, setNivelVolumen] = useState(1);
   const volumenPrevioRef = useRef(1);
 
-  // Pausa general de la escena (audio + videos + animaciones)
+
   const [pausaUsuario, setPausaUsuario] = useState(false);
   useControlGlobal(pausaUsuario, nivelVolumen === 0);
 
-  // Cambio de capítulo con transición a negro (sin pasar por el mapa)
+
   const { cortina, irA, cambiando } = useCambioCapitulo();
   const rutaSiguiente = RUTAS_CAPITULOS[CAPITULO + 1];
   const rutaAnterior = RUTAS_CAPITULOS[CAPITULO - 1];
@@ -77,12 +74,10 @@ export default function VisorComic5({
 
   const [transicionando, setTransicionando] = useState(false);
 
-  // true si el navegador bloqueó la reproducción automática
+
   const [audioBloqueado, setAudioBloqueado] = useState(false);
 
-  // La clave es el índice de la escena (empieza en 0).
-  // Son los subtítulos del PRIMER audio de cada escena.
-  // La escena 6 (video) no tiene subtítulos.
+
   const subtitulosPorEscena = {
     0: [
       {
@@ -157,7 +152,7 @@ export default function VisorComic5({
         texto: "cada sombra lo ha estado guiando hacia este momento.",
       },
     ],
-    // Escena 3: Orabona, audio 1 (tiempos relativos al inicio de ora1.wav)
+
     2: [
       {
         inicio: 0.32,
@@ -175,7 +170,7 @@ export default function VisorComic5({
         texto: "pero sabía que vendría, sabía que esa estatua no le dejaría dormir.",
       },
     ],
-    // Escena 4: puerta (LotieCap5C)
+
     3: [
       {
         inicio: 0.48,
@@ -208,7 +203,7 @@ export default function VisorComic5({
         texto: "es el origen de todo aquello que intentó negar, la raíz de un misterio que nunca",
       },
     ],
-    // Escena 5: LotieCap5D
+
     4: [
       {
         inicio: 0.52,
@@ -246,7 +241,7 @@ export default function VisorComic5({
         texto: "empujaron hasta este punto sin retorno.",
       },
     ],
-    // Escena 6: LotieCap5E
+
     5: [
       {
         inicio: 0.28,
@@ -281,10 +276,9 @@ export default function VisorComic5({
     ],
   };
 
-  // Subtítulos del SEGUNDO audio (tramo B) de las escenas que lo tienen.
-  // Sus tiempos son relativos al inicio de ese audio.
+
   const subtitulosTramoB = {
-    // Escena 3: Orabona, audio 2 (ora2.wav)
+
     2: [
       {
         inicio: 0.48,
@@ -304,34 +298,32 @@ export default function VisorComic5({
     ],
   };
 
-  // Cada escena tiene su animación y su audio de narrador (o es un video)
-  // Los audios van en: public/audios/
-  // "tramoB": segundo audio que entra N segundos después de arrancar el primero
+
   const escenas = [
     { tipo: "lottie", componente: <LotieCap5A />, audio: "/audios/NarradorCP1.wav" },
     { tipo: "lottie", componente: <LotieCap5B />, audio: "/audios/Narrador 5-2.wav" },
     {
-      // Orabona
+
       tipo: "lottie",
       componente: <LotieCap5F />,
       audio: AUDIO_ORABONA_1,
       tramoB: { audio: AUDIO_ORABONA_2, inicio: INICIO_ORABONA_2 },
     },
-    // Puerta (5C): subtítulos en la clave 3 de subtitulosPorEscena
+
     { tipo: "lottie", componente: <LotieCap5C />, audio: "/audios/Narrador5c.wav" },
     { tipo: "lottie", componente: <LotieCap5D />, audio: "/audios/narrador5D.wav" },
     { tipo: "lottie", componente: <LotieCap5E />, audio: "/audios/Narrador5E.wav" },
-    // Video final del capítulo
+
     { tipo: "video", video: VIDEO_CAP5 },
   ];
 
-  // Sincroniza el subtítulo con el tiempo actual del audio
+
   const actualizarSubtitulo = () => {
     if (!audioRef.current) return;
 
     const tiempo = audioRef.current.currentTime;
 
-    // Si está sonando el tramo B se usa su lista; si no, la del primer audio
+
     let subtitulos = subtitulosPorEscena[index] || [];
     if (tramoRef.current === "B" && subtitulosTramoB[index]) {
       subtitulos = subtitulosTramoB[index];
@@ -344,12 +336,11 @@ export default function VisorComic5({
     setSubtituloActual(subtitulo ? subtitulo.texto : "");
   };
 
-  // Volumen siempre actualizado para usarlo dentro de temporizadores
+
   const volumenActualRef = useRef(1);
   volumenActualRef.current = nivelVolumen;
 
-  // Programa el segundo audio de la escena (si lo tiene).
-  // Se cuenta desde que el primer audio realmente arranca.
+
   const programarTramoB = (escena) => {
     if (!escena || !escena.tramoB || timerTramoBRef.current) return;
 
@@ -371,7 +362,7 @@ export default function VisorComic5({
     }, inicio * 1000);
   };
 
-  // Intenta reproducir el audio; si el navegador lo bloquea, muestra el botón
+
   const reproducirAudio = () => {
     if (!audioRef.current) return;
 
@@ -379,7 +370,7 @@ export default function VisorComic5({
       .play()
       .then(() => {
         setAudioBloqueado(false);
-        // Al arrancar el primer audio se empieza a contar el segundo
+
         if (tramoRef.current === "A") programarTramoB(escenas[index]);
       })
       .catch((error) => {
@@ -388,20 +379,20 @@ export default function VisorComic5({
       });
   };
 
-  // Al cambiar de escena: reinicia y reproduce el audio de la nueva
+
   useEffect(() => {
     const escenaActual = escenas[index];
 
     limpiarTimerTramoB();
     tramoRef.current = "A";
 
-    // Detener video
+
     if (videoRef.current) {
       videoRef.current.pause();
       videoRef.current.currentTime = 0;
     }
 
-    // Detener audio anterior
+
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
@@ -411,20 +402,20 @@ export default function VisorComic5({
     setAudioBloqueado(false);
     setSubtituloActual("");
 
-    // Reproducir audio de la escena Lottie
+
     if (escenaActual.tipo === "lottie" && escenaActual.audio && audioRef.current) {
       audioRef.current.src = escenaActual.audio;
       audioRef.current.currentTime = 0;
       audioRef.current.volume = nivelVolumen;
       reproducirAudio();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [index]);
 
-  // Al salir del visor se cancela el temporizador pendiente
+
   useEffect(() => {
     return () => limpiarTimerTramoB();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, []);
 
   useEffect(() => {
@@ -432,7 +423,7 @@ export default function VisorComic5({
     if (videoRef.current) videoRef.current.volume = nivelVolumen;
   }, [nivelVolumen]);
 
-  // Navegación entre escenas, con transición a oscuro
+
   const cambiarEscena = (nuevoIndex) => {
     if (nuevoIndex < 0 || nuevoIndex > escenas.length - 1) return;
     if (nuevoIndex === index) return;
@@ -453,7 +444,7 @@ export default function VisorComic5({
   const siguiente = () => cambiarEscena(index + 1);
   const anterior = () => cambiarEscena(index - 1);
 
-  // Video: play / pause
+
   const handlePlayPause = () => {
     const video = videoRef.current;
     if (!video) return;
@@ -465,7 +456,7 @@ export default function VisorComic5({
     }
   };
 
-  // Volumen: slider manual + mute con el ícono
+
   const cambiarNivelVolumen = (evento) => {
     setNivelVolumen(parseFloat(evento.target.value));
   };
@@ -479,9 +470,7 @@ export default function VisorComic5({
     }
   };
 
-  // ---------------------------------------------------------------------
-  // Pausa / reanudar (video, o escena completa: narración + animaciones)
-  // ---------------------------------------------------------------------
+
   const reproduciendo =
     escenas[index].tipo === "video" ? play : !pausaUsuario;
 
@@ -493,12 +482,12 @@ export default function VisorComic5({
     setPausaUsuario((p) => !p);
   };
 
-  // Render
+
   return (
     <div className="visor-container">
       {cortina}
 
-      {/* Barra superior */}
+
       <div className="visor-top d-flex justify-content-between align-items-center">
         <div className="d-flex align-items-center gap-2">
           <button
@@ -516,7 +505,7 @@ export default function VisorComic5({
           </div>
         </div>
 
-        {/* Saltar de capítulo sin volver al mapa */}
+
         <div className="d-flex align-items-center gap-2">
           {rutaAnterior && (
             <button
@@ -539,15 +528,14 @@ export default function VisorComic5({
         </div>
       </div>
 
-      {/* Escenario: lottie o video, con transición a oscuro */}
+
       <div
         className="visor-scene"
         style={pausaUsuario ? { pointerEvents: "none" } : undefined}
       >
         <div
-          className={`visor-scene-content ${
-            transicionando ? "fade-out" : "fade-in"
-          }`}
+          className={`visor-scene-content ${transicionando ? "fade-out" : "fade-in"
+            }`}
         >
           {escenas[index].tipo === "lottie" && (
             <div className="visor-lottie">{escenas[index].componente}</div>
@@ -612,7 +600,7 @@ export default function VisorComic5({
           )}
         </div>
 
-        {/* Respaldo si el navegador bloquea el autoplay (solo escenas con narración) */}
+
         {audioBloqueado && escenas[index].tipo === "lottie" && (
           <button
             onClick={reproducirAudio}
@@ -630,10 +618,10 @@ export default function VisorComic5({
         )}
       </div>
 
-      {/* Volver al inicio: solo en el último capítulo, en su última escena */}
+
       {ultimaEscena && <BotonInicio disabled={cambiando} />}
 
-      {/* Barra de controles: anterior / pausa / siguiente + progreso + volumen + subtítulos */}
+
       <BarraControles
         index={index}
         total={escenas.length}
@@ -654,7 +642,7 @@ export default function VisorComic5({
         subtitulo={escenas[index].tipo === "lottie" ? subtituloActual : ""}
       />
 
-      {/* Audio del narrador */}
+
       <audio
         ref={audioRef}
         onPlay={() => setAudioSonando(true)}

@@ -2,12 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import GuardarInteraccion from "./GuardarInteraccion";
 import "../Styles/LootieParte3.css";
 
-// Tamaño de diseño de la escena (igual que la escena 1)
+
 const ANCHO = 1500;
 const ALTO = 836;
 
-// true = muestra los cuadros de clic en rojo para calibrarlos
-// false = invisibles (versión final)
+
 const DEBUG = false;
 
 const DIALOGOS = [
@@ -89,7 +88,7 @@ const LootieParte3 = ({
   const volumenRef = useRef(volumen);
   volumenRef.current = volumen;
 
-  // Ajusta la escala al tamaño del visor
+
   useEffect(() => {
     const el = contenedorRef.current;
     if (!el) return;
@@ -126,7 +125,7 @@ const LootieParte3 = ({
     timersRef.current = [];
 
     DIALOGOS.forEach((d, i) => {
-      // Inicio del diálogo: audio + aviso al visor (solo el primero)
+
       timersRef.current.push(
         setTimeout(() => {
           if (i === 0) callbacksRef.current.onDialogoInicio?.();
@@ -141,7 +140,7 @@ const LootieParte3 = ({
         }, d.inicio * 1000)
       );
 
-      // Subtítulos: aparecen y desaparecen en su momento exacto
+
       d.subs.forEach((s) => {
         timersRef.current.push(
           setTimeout(() => {
@@ -209,7 +208,7 @@ const LootieParte3 = ({
       video.play().catch(() => { });
     }
 
-    // Al salir de la escena, todo se detiene
+
     return () => {
       if (pasosRef.current) pasosRef.current.pause();
       timersRef.current.forEach(clearTimeout);
@@ -261,7 +260,7 @@ const LootieParte3 = ({
 
   const camaraConZoom = fase === "zoom" || fase === "frente";
 
-  // Objetos con clic: cada uno tiene su animación + su propio cuadro de clic
+
   const lamparas = [
     { clase: "lampara1", nombre: "Lámpara 1", activa: lampara1Activa, onClick: moverLampara1 },
     { clase: "lampara2", nombre: "Lámpara 2", activa: lampara2Activa, onClick: moverLampara2 },
@@ -289,7 +288,7 @@ const LootieParte3 = ({
         >
           <img className="fondo3" src="/Fondo3.png" alt="" />
 
-          {/* ===== Lámparas (animación CSS) ===== */}
+
           {lamparas.map(({ clase, nombre, activa, onClick }) => (
             <div key={clase} className={`anim ${clase}`}>
               <div className="vista">
@@ -311,7 +310,7 @@ const LootieParte3 = ({
             </div>
           ))}
 
-          {/* ===== Telarañas y monstruos (video) ===== */}
+
           {videos.map(({ clase, nombre, ref, src }) => (
             <div key={clase} className={`anim ${clase}`}>
               <div className="vista">
@@ -331,7 +330,7 @@ const LootieParte3 = ({
             </div>
           ))}
 
-          {/* ===== Step (no se le hace clic) ===== */}
+
           <video
             ref={stepFrenteRef}
             className="stepFrente"

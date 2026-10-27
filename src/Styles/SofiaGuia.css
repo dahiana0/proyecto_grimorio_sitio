@@ -16,7 +16,7 @@
     --clr-fondo-tarjeta: rgba(0, 10, 7, 0.94);
 }
 
-/* ============ FONDO (igual que antes) ============ */
+
 
 .container-sofia {
     width: 100%;
@@ -74,7 +74,7 @@
         linear-gradient(0deg, rgba(0, 0, 0, 0.8), transparent 35%, rgba(0, 0, 0, 0.45));
 }
 
-/* ============ TÍTULO ============ */
+
 
 .titulo-museo {
     position: absolute;
@@ -112,7 +112,7 @@
     text-shadow: 0 0 8px rgba(49, 36, 87, 0.8);
 }
 
-/* ============ BOTONES NEÓN (estética de la captura; se afina con tu código) ============ */
+
 
 .boton-neon {
     border: 1.5px solid var(--clr-verde-fuerte);
@@ -157,10 +157,15 @@
     font-size: 25px;
 }
 
-.back-btn { left: 30px; }
-.skip-btn { right: 30px; }
+.back-btn {
+    left: 30px;
+}
 
-/* ============ ESCENARIO ============ */
+.skip-btn {
+    right: 30px;
+}
+
+
 
 .sg-escenario {
     position: absolute;
@@ -182,7 +187,7 @@
     margin: 60px 0 0;
 }
 
-/* ============ TARJETA DE ALERTA ============ */
+
 
 .tarjeta-alerta {
     position: absolute;
@@ -204,13 +209,9 @@
         0 0 14px rgba(0, 230, 118, 0.5),
         0 0 40px rgba(0, 230, 118, 0.18);
 
-    /* Pila hacia atrás: cada tarjeta sube, se mueve un poco a la derecha y se achica */
+
     transform:
-        perspective(900px)
-        rotateX(var(--rx, 0deg))
-        rotateY(var(--ry, 0deg))
-        translate(calc(var(--o) * 18px), calc(var(--o) * -36px))
-        scale(calc(1 - var(--o) * 0.05));
+        perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translate(calc(var(--o) * 18px), calc(var(--o) * -36px)) scale(calc(1 - var(--o) * 0.05));
     transform-origin: 50% 100%;
     filter: brightness(calc(1 - var(--o) * 0.2));
     opacity: calc(1 - var(--o) * 0.12);
@@ -224,7 +225,7 @@
     -webkit-user-select: none;
 }
 
-/* La del frente se puede agarrar */
+
 .tarjeta-alerta.sg-frente {
     cursor: grab;
     touch-action: none;
@@ -243,7 +244,7 @@
         0 0 60px rgba(0, 230, 118, 0.35);
 }
 
-/* Las que ya hablaron salen volando a la izquierda */
+
 .tarjeta-alerta.sg-pasada {
     transform: translate(-140%, -20px) rotate(-9deg) scale(0.92);
     opacity: 0;
@@ -255,13 +256,12 @@
     pointer-events: none;
 }
 
-/* Las de atrás solo muestran la cabecera */
+
 .tarjeta-alerta:not(.sg-frente):not(.sg-pasada) .tarjeta-cuerpo,
 .tarjeta-alerta:not(.sg-frente):not(.sg-pasada) .tarjeta-pie {
     opacity: 0;
 }
 
-/* ---------- Cabecera ---------- */
 
 .tarjeta-cabecera {
     display: flex;
@@ -281,7 +281,7 @@
         0 0 22px rgba(77, 255, 153, 0.25);
 }
 
-/* ---------- Icono con marco (como los iconos de la captura) ---------- */
+
 
 .icono-marco {
     position: relative;
@@ -309,16 +309,19 @@
 }
 
 
-/* Palpitar de la alerta */
+
 .icono-marco.sg-palpita {
     animation: palpitar 1.3s ease-in-out infinite;
 }
 
 @keyframes palpitar {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: scale(1);
         filter: drop-shadow(0 0 6px rgba(0, 230, 118, 0.5));
     }
+
     50% {
         transform: scale(1.12);
         filter: drop-shadow(0 0 18px rgba(0, 230, 118, 1));
@@ -326,11 +329,18 @@
 }
 
 @keyframes palpitarIcono {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.18); }
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.18);
+    }
 }
 
-/* ---------- Cuerpo: texto letra a letra ---------- */
+
 
 .tarjeta-cuerpo {
     flex: 1;
@@ -364,6 +374,7 @@
         color: var(--clr-verde);
         text-shadow: 0 0 18px rgba(77, 255, 153, 1);
     }
+
     to {
         opacity: 1;
         filter: blur(0);
@@ -382,10 +393,12 @@
 }
 
 @keyframes parpadeo {
-    50% { opacity: 0; }
+    50% {
+        opacity: 0;
+    }
 }
 
-/* ---------- Pie: puntos de progreso ---------- */
+
 
 .tarjeta-pie {
     display: flex;
@@ -406,9 +419,8 @@
     box-shadow: 0 0 8px var(--clr-verde);
 }
 
-/* ============ INTERACTIVO: inclinación y brillo de la tarjeta ============ */
 
-/* Brillo que sigue al cursor sobre la tarjeta del frente */
+
 .tarjeta-alerta.sg-frente::after {
     content: "";
     position: absolute;
@@ -416,10 +428,10 @@
     border-radius: inherit;
     pointer-events: none;
     background: radial-gradient(circle at var(--gx, 50%) var(--gy, 0%),
-        rgba(77, 255, 153, 0.18), transparent 55%);
+            rgba(77, 255, 153, 0.18), transparent 55%);
 }
 
-/* ============ BOTÓN EXPLORAR MUSEO ============ */
+
 
 .start-btn {
     width: 320px;
@@ -438,11 +450,18 @@
 }
 
 @keyframes entradaBoton {
-    from { opacity: 0; transform: translateY(35px) scale(0.9); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
+    from {
+        opacity: 0;
+        transform: translateY(35px) scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
-/* ============ RESPONSIVE ============ */
+
 
 @media (max-width: 900px) {
     .titulo-museo h1 {
@@ -463,15 +482,26 @@
         font-size: 15px;
     }
 
-    .back-btn { left: 14px; }
-    .skip-btn { right: 14px; }
+    .back-btn {
+        left: 14px;
+    }
 
-    
-    .sg-pila { height: 250px; }
+    .skip-btn {
+        right: 14px;
+    }
 
-    .texto-guia { font-size: 22px; }
 
-    .tarjeta-cabecera h2 { font-size: 20px; }
+    .sg-pila {
+        height: 250px;
+    }
+
+    .texto-guia {
+        font-size: 22px;
+    }
+
+    .tarjeta-cabecera h2 {
+        font-size: 20px;
+    }
 
     .start-btn {
         width: 260px;
@@ -481,6 +511,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
     .icono-marco.sg-palpita,
     .icono-marco.sg-palpita img,
     .sg-cursor {

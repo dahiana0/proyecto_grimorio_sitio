@@ -1,22 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 
-/**
- * PersonajeAnimado: personaje SVG animado dentro de una tarjeta.
- * TODO está en este archivo (ya no hace falta Animarpersonaje.jsx).
- *
- * Props:
- *  - src:    ruta del svg (en /public), ej. "./stephen.svg"
- *  - rig:    "orabona" | "stephen" | "rogers" | "cthulhu"
- *  - nombre: texto alternativo
- *  - imagen: imagen de respaldo si el SVG no carga
- *
- * El cursor NO afecta al personaje: se mueve solo (parpadea, respira,
- * mira a los lados y mueve un poco la cabeza y las cejas).
- */
-
-// ---------- Cada personaje: encuadre y partes que se mueven ----------
-// caja = [x, y, ancho, alto] -> lo que se ve del dibujo (de la cabeza a la cintura).
-// Para ver MÁS cuerpo: sube el último número (alto). Para ver menos: bájalo.
 const RIGS = {
   orabona: {
     unit: 1,
@@ -24,7 +7,7 @@ const RIGS = {
     fondo: "radial-gradient(circle at 50% 35%, #4b5b52, #1b2620 80%)",
     build(q) {
       const cara = q("Cara_1");
-      const k = [...cara.firstElementChild.children]; // 0 pelo,1 ojos,2-3 párpados,4 boca,5 nariz,6-7 cejas
+      const k = [...cara.firstElementChild.children];
       return {
         head: { els: [cara], pivot: [167, 138] },
         eyes: [{ els: [k[1], k[2], k[3]] }],
@@ -43,7 +26,7 @@ const RIGS = {
       const ids = ["Oreja_Derecha", "Oreja_Izquierda", "Cabeza", "Nariz", "Ceja_Derecha",
         "Ceja_Izquierda", "Boca", "Ojo_Izquierdo", "Ojo_Derecho", "Gafas", "Pelo"];
       return {
-        head: { els: ids.map(q), pivot: [122, 172] }, // el cuello se queda quieto
+        head: { els: ids.map(q), pivot: [122, 172] },
         eyes: [{ els: [q("Ojo_Derecho")] }, { els: [q("Ojo_Izquierdo")] }],
         gaze: 0.6,
         brows: [{ el: q("Ceja_Derecha"), s: -1 }, { el: q("Ceja_Izquierda"), s: 1 }],
@@ -71,8 +54,8 @@ const RIGS = {
   },
 
   cthulhu: {
-    unit: 10, // el SVG es ~10 veces más grande que los otros
-    caja: [861, -80, 1800, 3000], // borra esta línea para verlo completo con alas
+    unit: 10,
+    caja: [861, -80, 1800, 3000],
     fondo: "radial-gradient(circle at 50% 35%, #3f5560, #101a20 80%)",
     build(q) {
       const p = [...q("Capa_1-2").firstElementChild.children];
@@ -87,7 +70,7 @@ const RIGS = {
         eyes: [{ els: [k[13], k[23]] }, { els: [k[28], k[29]] }],
         gaze: 0.7,
         brows: [],
-        // alas y tentáculos
+
         sway: [
           { el: p[0], pivot: [2150, 1100], amp: 2.2, f: 1.1, ph: 0 },
           { el: p[1], pivot: [1380, 1100], amp: -2.2, f: 1.1, ph: 0 },
@@ -99,10 +82,7 @@ const RIGS = {
   },
 };
 
-// ---------- Prepara el texto del SVG ----------
-// - Prefija ids y clases para que los 4 SVG no se pisen entre sí.
-// - Aplica el encuadre (mitad del cuerpo) y el difuminado de abajo.
-//   Esto se hace aquí, así que funciona aunque la animación falle.
+
 const ESTILO_SVG =
   "display:block;width:100%;height:100%;" +
   "-webkit-mask-image:linear-gradient(to bottom,#000 60%,transparent 93%);" +
@@ -127,19 +107,19 @@ function prepararSvg(texto, rig) {
     });
 }
 
-// ---------- Animación (todo se mueve solo, sin cursor) ----------
+
 const NO_MOVER = ["defs", "style", "title"];
 
 function animarPersonaje(root, rigNombre) {
   const rig = RIGS[rigNombre];
   const svg = root.querySelector("svg");
-  if (!rig || !svg) return () => {};
+  if (!rig || !svg) return () => { };
 
   const q = (n) => svg.querySelector(`[id="${rigNombre}-${n}"]`);
   const cfg = rig.build(q);
   const u = rig.unit;
 
-  // Todo el dibujo dentro de un grupo para poder "respirar"
+
   const cuerpo = document.createElementNS("http://www.w3.org/2000/svg", "g");
   [...svg.children]
     .filter((n) => !NO_MOVER.includes(n.localName))
@@ -149,7 +129,7 @@ function animarPersonaje(root, rigNombre) {
   const base = [vb.x + vb.width / 2, vb.y + vb.height];
 
   const reducir = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-  if (reducir) return () => {};
+  if (reducir) return () => { };
 
   const originales = new Map();
   const guardar = (el) => originales.set(el, el.getAttribute("transform") || "");
@@ -195,7 +175,7 @@ function animarPersonaje(root, rigNombre) {
     if (document.hidden || !visible) return;
     const t = (now - t0) / 1000;
 
-    // mirada que cambia sola
+
     if (t > proximaMirada) {
       gtx = (Math.random() - 0.5) * 1.6;
       gty = (Math.random() - 0.5) * 0.7;
@@ -204,44 +184,44 @@ function animarPersonaje(root, rigNombre) {
     gx = lerp(gx, gtx, 0.05);
     gy = lerp(gy, gty, 0.05);
 
-    // parpadeo
+
     if (t > proximo) { parpadeo = 1; proximo = t + 2 + Math.random() * 3; }
     parpadeo = Math.max(0, parpadeo - 0.09);
     const cerrado = parpadeo > 0 ? Math.sin((1 - parpadeo) * Math.PI) : 0;
 
-    // de vez en cuando sube las cejas
+
     if (t > proximaCeja) { ceja = 1; proximaCeja = t + 4 + Math.random() * 5; }
     ceja = Math.max(0, ceja - 0.012);
     const sorpresa = Math.sin(Math.min(1, ceja) * Math.PI) * 0.5;
 
-    // respiración
+
     const resp = Math.sin(t * 1.6);
     cuerpo.setAttribute("transform",
       `translate(${base[0]} ${base[1]}) scale(1 ${1 + resp * 0.004}) translate(${-base[0]} ${-base[1]})`);
 
-    // cabeza: movimiento muy suave (no se deforma)
+
     const rot = Math.sin(t * 0.6) * 0.5 + gx * 0.3;
     const dy = (resp * 0.5 - sorpresa * 2) * u;
     const H = `translate(${gx * 0.3 * u} ${dy}) rotate(${rot} ${cfg.head.pivot[0]} ${cfg.head.pivot[1]})`;
     headEls.forEach((el) => el.setAttribute("transform", `${originales.get(el)} ${H}`));
 
-    // ojos: parpadeo + mirada
+
     const ey = Math.max(0.06, 1 - cerrado * 0.94) * (1 + sorpresa * 0.25);
     ojos.forEach((o) =>
       o.els.forEach((el) =>
         poner(el, `translate(${gx * 1.6 * gaze * u} ${gy * gaze * u}) translate(${o.c[0]} ${o.c[1]}) scale(1 ${ey}) translate(${-o.c[0]} ${-o.c[1]})`, H)));
 
-    // cejas
+
     const by = (-sorpresa * 7 + Math.sin(t * 0.6) * 0.4) * u;
     cejas.forEach((b) =>
       poner(b.el, `translate(0 ${by}) rotate(${b.s * sorpresa * 3} ${b.c[0]} ${b.c[1]})`, H));
 
-    // boca y nariz
+
     if (boca) poner(boca.el,
       `translate(${boca.c[0]} ${boca.c[1]}) scale(${1 + sorpresa * 0.1} ${1 + resp * 0.05 + sorpresa * 0.6}) translate(${-boca.c[0]} ${-boca.c[1]})`, H);
     if (cfg.nose) poner(cfg.nose, `translate(${gx * 0.4 * u} 0)`, H);
 
-    // alas / tentáculos
+
     sway.forEach((s) =>
       poner(s.el, `rotate(${s.amp * Math.sin(t * s.f + s.ph)} ${s.pivot[0]} ${s.pivot[1]})`, H));
   };
@@ -253,7 +233,7 @@ function animarPersonaje(root, rigNombre) {
   };
 }
 
-// ---------- Componente ----------
+
 export const PersonajeAnimado = ({ src, rig, nombre, imagen }) => {
   const caja = useRef(null);
   const [html, setHtml] = useState("");
@@ -282,12 +262,12 @@ export const PersonajeAnimado = ({ src, rig, nombre, imagen }) => {
     try {
       return animarPersonaje(caja.current, rig);
     } catch (e) {
-      // si la animación falla, el personaje se queda quieto (pero visible y recortado)
+
       console.error("No se pudo animar", rig, e);
     }
   }, [html, rig]);
 
-  // Si no se encuentra el .svg, se muestra la imagen normal
+
   if (fallo && imagen) {
     return <img src={imagen} alt={nombre} className="carrusel-card-img" draggable="false" />;
   }
@@ -302,7 +282,7 @@ export const PersonajeAnimado = ({ src, rig, nombre, imagen }) => {
         display: "block",
         overflow: "hidden",
         background: RIGS[rig]?.fondo,
-        transform: "none", // sin zoom al pasar el cursor
+        transform: "none",
         transition: "none",
       }}
       dangerouslySetInnerHTML={{ __html: html }}

@@ -31,8 +31,7 @@ const cargarSvg = (src) => {
 const prepararSvg = (texto, uid, duracion, retraso) => {
   let raw = texto.replace(/cls-/g, `${uid}-cls-`);
 
-  // Los números romanos son <text> con la fuente Ringbearer. Si esa fuente
-  // no está cargada en la página, se usa "pieces" y luego una serif.
+
   raw = raw.replace(
     /font-family:\s*RingbearerMedium,\s*Ringbearer;/g,
     "font-family: RingbearerMedium, Ringbearer, pieces, serif;"
@@ -68,7 +67,7 @@ const prepararSvg = (texto, uid, duracion, retraso) => {
     ...svg.querySelectorAll("path, line, polyline, polygon, circle, ellipse, rect"),
   ].filter((el) => !el.closest("defs, clipPath, mask, filter"));
 
-  // Que el último trazo termine cuando termina la duración total
+
   const paso = Math.min(0.12, (duracion * 0.6) / Math.max(formas.length, 1));
   const durTrazo = duracion * 0.4;
 
@@ -117,8 +116,7 @@ const SvgDibujado = ({
     };
   }, [src, uid, duracion, retraso]);
 
-  // Mide el largo REAL de cada trazo (no depende de pathLength, que no
-  // todos los navegadores respetan en circle/line/polygon/rect).
+
   const ref = useRef(null);
 
   useLayoutEffect(() => {
@@ -130,7 +128,7 @@ const SvgDibujado = ({
       try {
         largo = el.getTotalLength();
       } catch (e) {
-        /* forma sin largo medible: se deja el valor por defecto */
+
       }
       el.style.setProperty("--len", String(Math.ceil(largo) + 1));
     });
@@ -158,9 +156,7 @@ const SvgDibujado = ({
   );
 };
 
-// =========================================================================
-// MarcoTrazo: borde rectangular que se dibuja solo (tarjeta y barra)
-// =========================================================================
+
 const MarcoTrazo = ({ activo, radio = 12, duracion = 1.2, retraso = 0 }) => (
   <svg
     className={`marco-trazo ${activo ? "dibujando" : ""}`}
@@ -182,33 +178,21 @@ const MarcoTrazo = ({ activo, radio = 12, duracion = 1.2, retraso = 0 }) => (
   </svg>
 );
 
-// =========================================================================
-// Constantes de la secuencia de aparición (en ms)
-// =========================================================================
+
 const MAPA_SVG = "/mapa3.svg";
 const VIEWBOX = { w: 1530, h: 1015 };
-const DURACION_MAPA = 3; // segundos que tarda en dibujarse el mapa (original 4)
+const DURACION_MAPA = 3;
 
 const T_BOTONES = DURACION_MAPA * 1000;
 
-// =========================================================================
-// ¿Ya se vio la animación de entrada? Se recuerda al navegar dentro de la web,
-// así al volver de "Explorar museo" el mapa aparece completo al instante.
-// Si se recarga la página, el dibujo se ve de nuevo.
-// =========================================================================
-// Se reinicia al recargar la página (F5); se mantiene al navegar dentro de la web
+
 let animacionYaVista = false;
 
 const mapaYaVisto = () => animacionYaVista;
 
-// =========================================================================
-// OBJETOS INTERACTIVOS DE CADA CAPÍTULO
-// Son los mismos IDs que cada escena pasa a GuardarInteraccion.
-// Si cambias un ID en una escena, cámbialo también aquí.
-// =========================================================================
+
 const OBJETOS = {
-  // Parte 1 (tablero…) + Parte 2 (edificio, Step, rejas)
-  // + Parte 3 (lámparas, telarañas, monstruos)
+
   1: [
     "tablero", "calavera", "step", "libro", "libroC",
     "edificio", "stepCamina", "rejas",
@@ -238,47 +222,37 @@ const OBJETOS = {
   ],
 
   5: [
-    // 5A
+
     "edificio", "rejas", "stepCamina",
-    // 5B
+
     "cera1", "cera2", "cera3", "cera4", "cera5", "cera6",
     "telarana1", "telarana2", "telarana3", "candelabro",
-    // 5C
+
     "manchas",
     "cuadro1", "cuadro2", "cuadro3", "cuadro4", "cuadro5", "cuadro6", "cuadro7", "cuadro8",
     "hueso1", "hueso2", "hueso3", "hueso4", "hueso5", "hueso6",
     "antorcha1", "antorcha2", "antorcha3", "antorcha4",
-    // 5D
+
     "lampara5d", "estatua1", "estatua2", "estatua3", "estatua4",
     "rata", "monstruo5d", "step5d",
-    // 5E
+
     "pintura1", "pintura2", "paso", "huesos5e", "monstruo5e",
     "roges", "step5e", "lampara5e",
-    // 5F
+
     "mancha1", "mancha2", "puerta5f", "silla5f", "libros5f", "pergaminos5f", "lampara5f",
   ],
 };
 
-// =========================================================================
-// RUTA DE PUNTOS (pppp1111.svg)
-// =========================================================================
-// Pon el archivo en /public. Los círculos se agrupan solos en "tramos"
-// (cada vez que hay un salto grande entre un punto y el siguiente).
-// Con tu archivo salen 6 grupos, en este orden:
-//   0 y 1 -> de I a II (cortado por la pared)    2 -> II a III
-//   3 -> I y V (vertical)   4 -> V y IV (abajo)   5 -> III y IV (derecha)
+
 const RUTA_SVG = "/pppp1111.svg";
 
-// Dónde cae el SVG de puntos sobre el mapa, en unidades del viewBox del
-// mapa (1530 x 1015). Si se ve corrido, mueve x / y; si se ve más grande
-// o más pequeño, cambia escala.
+
+
 const PUNTOS_POS = { x: 318, y: 241, escala: 0.95 };
 
-const DIST_CORTE = 45; // salto mínimo para considerar que empieza otro grupo
+const DIST_CORTE = 45;
 
-// Orden del recorrido. "invertir" = los puntos se recorren al revés de como
-// vienen en el archivo. El último tramo (V -> I) cierra el circuito; si no
-// lo quieres, bórralo de la lista.
+
 const PRIMER_NODO = 1;
 const RUTA = [
   { hasta: 2, grupos: [0, 1] },
@@ -288,10 +262,10 @@ const RUTA = [
   { hasta: 1, grupos: [3], invertir: true },
 ];
 
-const SEG_PUNTO = 0.03; // segundos entre un punto y el siguiente (original 0.04)
-const SEG_NODO = 0.35; // segundos que se toma cada capítulo en aparecer (original 0.45)
+const SEG_PUNTO = 0.03;
+const SEG_NODO = 0.35;
 
-// Respaldo si el SVG de puntos no carga: los capítulos salen escalonados
+
 const HORARIO_BASE = {
   dots: null,
   nodos: { 1: 0, 2: 0.3, 3: 0.6, 4: 0.9, 5: 1.2 },
@@ -328,7 +302,7 @@ const cargarPuntos = async (src) => {
   return { grupos, w, h };
 };
 
-// Calcula en qué segundo aparece cada punto y cada capítulo.
+
 const construirHorario = (grupos) => {
   const dots = grupos.map((g) => new Array(g.length).fill(0));
   const nodos = {};
@@ -361,17 +335,7 @@ const construirHorario = (grupos) => {
 export const MapaCapitulos = () => {
   const navigate = useNavigate();
 
-  // ---------------------------------------------------------------------
-  // Datos de los capítulos
-  // ---------------------------------------------------------------------
-  // "objetos": ids que cada escena del capítulo guarda con GuardarInteraccion
-  //            (la lista está en OBJETOS, arriba).
-  // "icono": SVG propio del botón (ponlos en /public/iconos/). Mientras no
-  //          exista el archivo se usa "imagen" como respaldo.
-  // "pos": posición del botón dentro del mapa, en coordenadas del viewBox
-  //        del SVG (1530 x 1015). Ajústalas a tu gusto.
-  // "tamano": multiplicador del tamaño del icono en el mapa y la barra.
-  // "tamanoPanel": multiplicador del icono en la tarjeta (otro tamaño base).
+
   const capitulos = [
     {
       id: 1,
@@ -434,33 +398,29 @@ export const MapaCapitulos = () => {
       icono: "/cap5_2.svg",
       ruta: "/cap-cinco",
       pos: { x: 326, y: 750 },
-      tamano: 1.8, // el icono del cap. 5 se ve más pequeño: súbelo o bájalo a gusto
-      tamanoPanel: 1.4, // escala del icono en la tarjeta: ajústala hasta que se vea igual que los demás
+      tamano: 1.8, // 
+      tamanoPanel: 1.4,
       objetos: OBJETOS[5],
     },
   ];
 
   const [capituloActivo, setCapituloActivo] = useState(capitulos[0]);
 
-  // La tarjeta va un paso detrás del capítulo activo: primero sale el
-  // contenido viejo (saliendo) y luego entra el nuevo (capituloPanel).
+
   const [capituloPanel, setCapituloPanel] = useState(capitulos[0]);
   const [saliendo, setSaliendo] = useState(false);
   const [cambios, setCambios] = useState(0);
   const [barrido, setBarrido] = useState(0);
-  const [direccion, setDireccion] = useState(1); // 1 = adelante, -1 = atrás
+  const [direccion, setDireccion] = useState(1);
   const timerPanel = useRef(null);
 
   useEffect(() => () => clearTimeout(timerPanel.current), []);
 
-  // ---------------------------------------------------------------------
-  // Secuencia: 0 = dibujando mapa · 1 = botones · 2 = barra · 3 = tarjeta
-  // Si ya se vio la animación en esta pestaña, todo sale completo de una.
-  // ---------------------------------------------------------------------
+
   const [saltar] = useState(mapaYaVisto);
   const [fase, setFase] = useState(saltar ? 3 : 0);
 
-  // Ruta de puntos + horario de aparición (capítulos y puntos)
+
   const [ruta, setRuta] = useState(null);
 
   useEffect(() => {
@@ -468,7 +428,7 @@ export const MapaCapitulos = () => {
 
     cargarPuntos(RUTA_SVG)
       .then((r) => vivo && setRuta(r))
-      .catch(() => {});
+      .catch(() => { });
 
     return () => {
       vivo = false;
@@ -485,13 +445,13 @@ export const MapaCapitulos = () => {
 
   const retrasoNodo = (id, i) => horario.nodos[id] ?? i * 0.3;
 
-  // fase 1 = recorrido · 2 = barra (al terminar el recorrido) · 3 = tarjeta
+
   const inicio = useRef(performance.now());
 
   useEffect(() => {
     const t1 = T_BOTONES;
-    const t2 = T_BOTONES + (horario.duracion + 0.3) * 1000; // original + 0.4
-    const t3 = t2 + 700; // original + 900
+    const t2 = T_BOTONES + (horario.duracion + 0.3) * 1000;
+    const t3 = t2 + 700;
     const transcurrido = performance.now() - inicio.current;
 
     const timers = [
@@ -508,15 +468,12 @@ export const MapaCapitulos = () => {
     return () => timers.forEach(clearTimeout);
   }, [horario.duracion]);
 
-  // Cuando ya salieron los capítulos se recuerda, para no repetir la animación
-  // al volver de otra página
+
   useEffect(() => {
     if (fase >= 1) animacionYaVista = true;
   }, [fase]);
 
-  // ---------------------------------------------------------------------
-  // Interacciones guardadas (Grimorio)
-  // ---------------------------------------------------------------------
+
   const [interacciones, setInteracciones] = useState([]);
 
   useEffect(() => {
@@ -537,8 +494,7 @@ export const MapaCapitulos = () => {
   const calcularProgreso = (capitulo) => {
     const objetos = capitulo.objetos || [];
 
-    // Solo cuentan las interacciones guardadas EN ESTE capítulo
-    // (varios capítulos repiten IDs como "antorcha1" o "telarana1")
+
     const idsGuardados = new Set(
       interacciones
         .filter((item) => (item.capitulo ?? 1) === capitulo.id)
@@ -558,13 +514,11 @@ export const MapaCapitulos = () => {
       ? Math.round((progresoActivo.encontrados / progresoActivo.total) * 100)
       : 0;
 
-  // Escala del icono dentro de la tarjeta y compensación del margen
-  // (un transform: scale no ocupa espacio, así que se agrega margen).
+
   const escalaPanel = capituloPanel.tamanoPanel ?? 1;
   const extraMargen = Math.max(0, escalaPanel - 1) * 42;
 
-  // Índice del capítulo activo y del anterior: sirven para que la línea de
-  // puntos de la barra avance (o retroceda) tramo por tramo.
+
   const indiceActivo = capitulos.findIndex((c) => c.id === capituloActivo.id);
   const indicePrevio = useRef(indiceActivo);
 
@@ -572,12 +526,12 @@ export const MapaCapitulos = () => {
     indicePrevio.current = indiceActivo;
   }, [indiceActivo]);
 
-  // Sonido
+
   const sonidoBoton = useRef(new Audio("./audios/sonidoboton.ogg"));
 
   const reproducirSonido = () => {
     sonidoBoton.current.currentTime = 0;
-    sonidoBoton.current.play().catch(() => {});
+    sonidoBoton.current.play().catch(() => { });
   };
 
   const seleccionarCapitulo = (capitulo) => {
@@ -587,11 +541,11 @@ export const MapaCapitulos = () => {
     setDireccion(capitulo.id > capituloActivo.id ? 1 : -1);
     setCapituloActivo(capitulo);
 
-    // 1) sale el contenido viejo + barrido de luz
+
     setSaliendo(true);
     setBarrido((b) => b + 1);
 
-    // 2) a mitad del barrido entra el nuevo
+
     clearTimeout(timerPanel.current);
     timerPanel.current = setTimeout(() => {
       setCapituloPanel(capitulo);
@@ -612,8 +566,7 @@ export const MapaCapitulos = () => {
     <div className={`Container-mapa ${saltar ? "sin-animacion" : ""}`}>
       <div className="contenedor-mapa-pagina">
         <div className="header-mapa">
-          {/* Botón volver: cambia to="/" si tu inicio tiene otra ruta.
-              Borra el botón viejo (App / Layout) o saldrán dos. */}
+
           <Link to="/" className="btn-volver" onClick={reproducirSonido}>
             <span className="btn-volver-flecha" aria-hidden="true">
               ←
@@ -642,7 +595,7 @@ export const MapaCapitulos = () => {
         </div>
 
         <div className="contenido-principal">
-          {/* ------- BARRA VERTICAL DE CAPÍTULOS (al lado del mapa) ------- */}
+
           <div className={`barra-capitulos ${fase >= 2 ? "visible" : ""}`}>
             <MarcoTrazo activo={fase >= 2} radio={12} duracion={1.1} />
 
@@ -652,9 +605,8 @@ export const MapaCapitulos = () => {
               return (
                 <div
                   key={capitulo.id}
-                  className={`item-capitulo ${
-                    capituloActivo.id === capitulo.id ? "seleccionado" : ""
-                  }`}
+                  className={`item-capitulo ${capituloActivo.id === capitulo.id ? "seleccionado" : ""
+                    }`}
                   style={{
                     "--retraso": `${0.5 + i * 0.1}s`,
                     "--escala": capitulo.tamano ?? 1,
@@ -675,29 +627,26 @@ export const MapaCapitulos = () => {
 
                   {progreso.total > 0 && (
                     <span
-                      className={`mini-progreso ${
-                        progreso.encontrados === progreso.total
+                      className={`mini-progreso ${progreso.encontrados === progreso.total
                           ? "mini-progreso-completo"
                           : ""
-                      }`}
+                        }`}
                     >
                       {progreso.encontrados}/{progreso.total}
                     </span>
                   )}
 
-                  {/* Tramo de puntos encendido hacia el siguiente capítulo */}
+
                   {i < capitulos.length - 1 && (
                     <span
                       aria-hidden="true"
-                      className={`tramo-recorrido ${
-                        i < indiceActivo ? "lleno" : ""
-                      }`}
+                      className={`tramo-recorrido ${i < indiceActivo ? "lleno" : ""
+                        }`}
                       style={{
-                        "--delay": `${
-                          (i < indiceActivo
+                        "--delay": `${(i < indiceActivo
                             ? Math.max(0, i - indicePrevio.current)
                             : Math.max(0, indicePrevio.current - 1 - i)) * 0.35
-                        }s`,
+                          }s`,
                       }}
                     />
                   )}
@@ -707,7 +656,7 @@ export const MapaCapitulos = () => {
           </div>
 
           <div className="zona-mapa">
-            {/* ---------------- MAPA (solo trazo) ---------------- */}
+
             <div
               className="mapa"
               style={{ aspectRatio: `${VIEWBOX.w} / ${VIEWBOX.h}` }}
@@ -753,9 +702,8 @@ export const MapaCapitulos = () => {
                   key={capitulo.id}
                   type="button"
                   aria-label={`Capítulo ${capitulo.id}: ${capitulo.titulo}`}
-                  className={`btn-mapa ${fase >= 1 ? "visible" : ""} ${
-                    capituloActivo.id === capitulo.id ? "activo" : ""
-                  }`}
+                  className={`btn-mapa ${fase >= 1 ? "visible" : ""} ${capituloActivo.id === capitulo.id ? "activo" : ""
+                    }`}
                   style={{
                     left: `${(capitulo.pos.x / VIEWBOX.w) * 100}%`,
                     top: `${(capitulo.pos.y / VIEWBOX.h) * 100}%`,
@@ -778,21 +726,19 @@ export const MapaCapitulos = () => {
             </div>
           </div>
 
-          {/* ---------------- TARJETA DEL CAPÍTULO ---------------- */}
           <div className="panel-capitulo">
             <div className={`panel-contenido ${fase >= 3 ? "visible" : ""}`}>
               <MarcoTrazo activo={fase >= 3} radio={14} duracion={1.4} />
 
-              {/* Barrido de luz cada vez que se cambia de capítulo */}
+
               {barrido > 0 && (
                 <div className="panel-scan" key={barrido} aria-hidden="true" />
               )}
 
-              {/* key: al cambiar de capítulo se remonta y el contenido entra */}
+
               <div
-                className={`panel-interior ${cambios > 0 ? "cambio" : ""} ${
-                  saliendo ? "saliendo" : ""
-                }`}
+                className={`panel-interior ${cambios > 0 ? "cambio" : ""} ${saliendo ? "saliendo" : ""
+                  }`}
                 style={{ "--dir": direccion }}
                 key={capituloPanel.id}
               >
@@ -824,7 +770,7 @@ export const MapaCapitulos = () => {
                   <div className="mision-capitulo">
                     <p className="mision-titulo">
                       <img
-                        src="/Icono-Mision.png"
+                        src="./mision.svg"
                         alt=""
                         className="icono-mision"
                       />
@@ -840,11 +786,10 @@ export const MapaCapitulos = () => {
                       Encontrados
                     </span>
 
-                    {/* Medidor estilo barra de habilidad: emblema + barra con punta */}
+
                     <div
-                      className={`mision-medidor ${
-                        misionCompleta ? "completo" : ""
-                      }`}
+                      className={`mision-medidor ${misionCompleta ? "completo" : ""
+                        }`}
                       style={{ "--pct": `${porcentajeActivo}%` }}
                     >
                       <div className="mision-emblema" aria-hidden="true">
@@ -881,11 +826,10 @@ export const MapaCapitulos = () => {
                                 className="mision-marca"
                                 aria-hidden="true"
                                 style={{
-                                  left: `${
-                                    ((m + 1) /
+                                  left: `${((m + 1) /
                                       Math.min(progresoActivo.total, 12)) *
                                     100
-                                  }%`,
+                                    }%`,
                                 }}
                               />
                             ))}

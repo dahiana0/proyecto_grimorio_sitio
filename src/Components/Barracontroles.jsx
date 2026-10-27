@@ -3,25 +3,6 @@ import { useNavigate } from "react-router-dom";
 import lottie from "lottie-web";
 import "../Styles/barraControles.css";
 
-/*
-  Barra de controles compartida por los visores (VisorCapitulo, VisorComic2..5).
-
-  - Píldora lateral (izquierda, vertical): volumen · archivo · subtítulos
-  - Barra de subtítulos (pegada debajo de la pantalla, como la barra de arriba)
-  - Píldora inferior (centrada): ⏮ anterior | ▶/⏸ pausa-despausa | siguiente ⏭
-
-  Además exporta el CONTROL GLOBAL (useControlGlobal) que pausa / silencia
-  TODA la escena: videos, audios (new Audio), animaciones CSS, animaciones
-  element.animate() y Lotties.
-*/
-
-/* ==========================================================================
-   CAPÍTULOS: rutas y transición para pasar de un capítulo a otro
-   sin volver al mapa.
-
-   >>> CAMBIA ESTAS RUTAS por las que tengas en tu App.jsx / router <<<
-   El orden es: [capítulo I, II, III, IV, V]
-   ========================================================================== */
 export const RUTAS_CAPITULOS = [
   "/visor-1",
   "/visor-2",
@@ -29,9 +10,9 @@ export const RUTAS_CAPITULOS = [
   "/visor-4",
   "/visor-5",
 ];
-const DURACION_CORTINA = 700; // ms que tarda en oscurecerse / aclararse
+const DURACION_CORTINA = 700;
 
-// Se activa al salir de un capítulo: el siguiente arranca desde negro y aclara
+
 let vieneDeCapitulo = false;
 
 export function useCambioCapitulo() {
@@ -40,7 +21,7 @@ export function useCambioCapitulo() {
   const [cambiando, setCambiando] = useState(false);
   const timerRef = useRef(null);
 
-  // Si llegamos desde otro capítulo: aclarar desde negro
+
   useEffect(() => {
     if (!vieneDeCapitulo) return;
     let r2 = 0;
@@ -58,7 +39,7 @@ export function useCambioCapitulo() {
 
   useEffect(() => () => clearTimeout(timerRef.current), []);
 
-  // Oscurece la pantalla y, cuando está negra, cambia de capítulo
+  
   const irA = (ruta) => {
     if (!ruta || cambiando) return;
     setCambiando(true);
@@ -87,25 +68,21 @@ export function useCambioCapitulo() {
   return { cortina, irA, cambiando };
 }
 
-/* ==========================================================================
-   CONTROL GLOBAL DE PAUSA Y SILENCIO
-   ========================================================================== */
+
 
 export const estadoControl = { activo: false, pausado: false, silenciado: false };
 
-const medios = new Set();          // todos los audio/video que han sonado
-const pausadosAqui = new Set();    // los que pausó (o difirió) esta barra
-const animsPausadas = new Set();   // animaciones CSS / element.animate pausadas
-const lottiesPausados = new Set(); // Lotties pausados
-const temporizadores = new Set();  // temporizadores pausables (ver "esperar")
+const medios = new Set();
+const pausadosAqui = new Set();
+const animsPausadas = new Set();
+const lottiesPausados = new Set();
+const temporizadores = new Set();
 
-/* Temporizador que se DETIENE con la pausa y sigue donde iba al reanudar.
-   Se usa igual que setTimeout:  const t = esperar(() => {...}, 3000);
-   y se cancela con:             cancelarEspera(t);                      */
+
 export const esperar = (fn, ms) => {
   const t = { restante: ms, inicio: 0, id: null, corriendo: false };
   t.lanzar = () => {
-    if (t.corriendo) return; // ya está corriendo: no se duplica
+    if (t.corriendo) return; 
     t.corriendo = true;
     t.inicio = performance.now();
     t.id = setTimeout(() => {
@@ -126,7 +103,7 @@ export const cancelarEspera = (t) => {
   temporizadores.delete(t);
 };
 
-// Llamar al cambiar de escena (antes de setIndex)
+
 export const reiniciarControl = () => {
   temporizadores.forEach((t) => {
     clearTimeout(t.id);
@@ -139,8 +116,7 @@ export const reiniciarControl = () => {
   lottiesPausados.clear();
 };
 
-// Se intercepta play() UNA sola vez, al cargar el módulo. Así también se
-// registran los medios que arrancan en el primer render de la escena.
+
 const proto = typeof HTMLMediaElement !== "undefined" ? HTMLMediaElement.prototype : null;
 const playOriginal = proto ? proto.__playOriginal || proto.play : null;
 
@@ -157,7 +133,7 @@ if (proto) {
 
     if (this instanceof HTMLAudioElement) this.muted = estadoControl.silenciado;
 
-    // En pausa: no suena, queda en espera hasta reanudar
+    
     if (estadoControl.pausado) {
       pausadosAqui.add(this);
       return Promise.resolve();
@@ -167,16 +143,16 @@ if (proto) {
   };
 }
 
-// El fundido a oscuro entre escenas nunca se pausa; todo lo demás sí
+
 const esFundido = (el) =>
   !!(el && el.classList && el.classList.contains("visor-scene-content"));
 
 export function useControlGlobal(pausado, silenciado) {
-  // Se actualiza en el render para que play() siempre vea el valor actual
+
   estadoControl.pausado = pausado;
   estadoControl.silenciado = silenciado;
 
-  // Se activa antes que los efectos de las escenas hijas
+
   useLayoutEffect(() => {
     estadoControl.activo = true;
     return () => {
@@ -187,7 +163,7 @@ export function useControlGlobal(pausado, silenciado) {
     };
   }, []);
 
-  // Silencio (solo audios; los videos ya van muted)
+
   useEffect(() => {
     medios.forEach((m) => {
       if (m instanceof HTMLAudioElement) m.muted = silenciado;
@@ -197,7 +173,7 @@ export function useControlGlobal(pausado, silenciado) {
     });
   }, [silenciado]);
 
-  // Pausa / reanudar
+
   useEffect(() => {
     if (!playOriginal) return;
 
@@ -209,7 +185,7 @@ export function useControlGlobal(pausado, silenciado) {
         }
       });
 
-      // Respaldo: cualquier video/audio de la escena que siga sonando o moviéndose
+
       document.querySelectorAll(".visor-scene video, .visor-scene audio").forEach((m) => {
         if (!m.paused && !m.ended) {
           m.pause();
@@ -243,13 +219,13 @@ export function useControlGlobal(pausado, silenciado) {
     } else {
       temporizadores.forEach((t) => t.lanzar());
 
-      pausadosAqui.forEach((m) => playOriginal.call(m).catch(() => {}));
+      pausadosAqui.forEach((m) => playOriginal.call(m).catch(() => { }));
       pausadosAqui.clear();
 
       animsPausadas.forEach((a) => {
         try {
           if (a.playState === "paused") a.play();
-        } catch (_) {}
+        } catch (_) { }
       });
       animsPausadas.clear();
 
@@ -259,34 +235,21 @@ export function useControlGlobal(pausado, silenciado) {
   }, [pausado]);
 }
 
-/* ==========================================================================
-   ICONOS — aquí se cambian las rutas. Cada línea es "nombre": "ruta".
-   La ruta empieza con "/" y es relativa a la carpeta public.
-     public/volumen.svg          ->  "/volumen.svg"
-     public/iconos/volumen.svg   ->  "/iconos/volumen.svg"
-   Si un icono no se ve, cambia SOLO su línea.
-   (el "siguiente" usa el mismo "anterior", volteado con CSS)
-   ========================================================================== */
+
 const ICONOS = {
-  "volumen":     "/volumen.svg",
+  "volumen": "/volumen.svg",
   "sin-volumen": "/sin-volumen.svg",
-  "archivo":     "/archivo.svg",
-  "subtitulos":  "/subtitulos.svg",          // ojo: activar / ocultar subtítulos
-  "pausa":       "/pausa.svg",
-  "despausa":    "/despausa.svg",
-  "anterior":    "/anterior.svg",
-  "inicio":      "/InicioI.svg",   // volver al inicio (solo capítulo 5, última escena)
+  "archivo": "/archivo.svg",
+  "subtitulos": "/subtitulos.svg",
+  "pausa": "/pausa.svg",
+  "despausa": "/despausa.svg",
+  "anterior": "/anterior.svg",
+  "inicio": "/InicioI.svg",
 };
 
 const ICONO = (nombre) => ICONOS[nombre];
 
-/* ==========================================================================
-   BOTÓN "VOLVER AL INICIO"
-   Mismo estilo que los demás iconos de la barra (halo + brillo que late).
-   Se usa solo en el último capítulo, en su última escena:
-       {ultimaEscena && <BotonInicio disabled={cambiando} />}
-   El icono se cambia arriba, en ICONOS → "inicio".
-   ========================================================================== */
+
 export function BotonInicio({ disabled = false }) {
   const navigate = useNavigate();
 
@@ -316,16 +279,15 @@ export default function BarraControles({
   onAlternarMute,
   mostrarSubtitulo,
   onAlternarSubtitulos,
-  subtitulo,                 // texto del subtítulo actual (string). Se muestra dentro de la barra inferior
+  subtitulo,
 
-  /* --- Opcionales: solo los usa el VisorCapitulo nuevo --- */
-  tiempo,                    // { actual, total, valor, max, activa, titulo, onChange, onConfirm }
-  onSaltar,                  // (segundos) => void  (adelantar / retroceder)
-  saltoSegundos = 5,
+
+  tiempo,
+  onSaltar,
   puedeSaltar = true,
-  bloqueado = false,         // true durante transiciones: desactiva anterior/siguiente
-  siguienteDeshabilitado,    // si se omite: index === total - 1
-  siguienteDestacado = false,// brilla más (ej. "Siguiente capítulo")
+  bloqueado = false,
+  siguienteDeshabilitado,
+  siguienteDestacado = false,
   tituloSiguiente = "Escena siguiente",
 }) {
   const navigate = useNavigate();
@@ -334,16 +296,14 @@ export default function BarraControles({
 
   return (
     <>
-      {/* ---------- Barra de subtítulos: continúa la ventana por debajo, como la barra de arriba ----------
-          Va justo después de la pantalla del visor. Siempre existe (aunque no haya texto)
-          para que la ventana no cambie de alto. */}
+
       <div className="bc-subbar" aria-live="polite">
         {mostrarSubtitulo && subtitulo ? <p>{subtitulo}</p> : null}
       </div>
 
-      {/* ---------- Píldora lateral: volumen · archivo · subtítulos ---------- */}
+
       <div className="bc-side">
-        {/* Volumen: un clic silencia / activa el sonido */}
+
         <button
           type="button"
           className={`bc-btn bc-float ${sinVolumen ? "bc-off" : ""}`}
@@ -360,7 +320,7 @@ export default function BarraControles({
           />
         </button>
 
-        {/* Archivo / interacciones guardadas */}
+
         <button
           type="button"
           className="bc-btn bc-float"
@@ -371,7 +331,7 @@ export default function BarraControles({
           <img src={ICONO("archivo")} alt="" className="bc-ico" draggable="false" />
         </button>
 
-        {/* Subtítulos */}
+
         <button
           type="button"
           className={`bc-btn bc-float ${!mostrarSubtitulo ? "bc-off" : ""}`}
@@ -385,9 +345,9 @@ export default function BarraControles({
         </button>
       </div>
 
-      {/* ---------- Píldora inferior: anterior · pausa · siguiente ---------- */}
+
       <div className={`bc-bottom ${tiempo ? "bc-bottom--dos" : ""}`}>
-        {/* Barra de tiempo (solo en el visor nuevo) */}
+        
         {tiempo && (
           <div className="bc-timeline">
             <span className="bc-time">{tiempo.actual}</span>

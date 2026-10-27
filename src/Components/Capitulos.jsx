@@ -1,8 +1,6 @@
 import React from "react";
 
-/* El orden de estos imports importa: los capítulos 2-5 van primero y el
-   capítulo 1 al final, para que sus estilos ganen en caso de clases repetidas
-   (.fondo3, .camara...), igual que cuando el visor del capítulo 1 se cargaba solo. */
+
 import LotieCap2 from "./LotieCap2";
 import LotieCap3 from "./LotieCap3";
 import LotieCap4 from "./LotieCap4";
@@ -16,20 +14,7 @@ import LootieKarol from "./LootieKarol";
 import LootieParte2 from "./LootieParte2";
 import LootieParte3 from "./LootieParte3";
 
-/* ---------------------------------------------------------------------
-   Formato de cada escena
-   tipo      "lottie" | "video"
-   nombre    texto corto que se muestra en la barra superior
-   render    función que devuelve la escena (recibe los enlaces del visor)
-   audio     narrador
-   subs      subtítulos del narrador { inicio, fin, texto } (segundos)
-   duracion  segundos. Si se omite, se usa la duración real del audio del narrador.
-             null = duración desconocida (no se inventa un total)
-   saltar    false = la escena NO admite adelantar/retrasar/arrastrar la barra
-   tramoB    segundo audio del narrador:
-               { audio, subs, inicio }  -> entra solo en "inicio" segundos
-               { audio, subs }          -> lo lanza la propia escena (parte 3)
-   --------------------------------------------------------------------- */
+
 
 const subtitulosKarol = [
   { inicio: 0.44, fin: 4.55, texto: "Steven Jones, un hombre de razón," },
@@ -169,8 +154,7 @@ export const CAPITULOS = [
         subs: subtitulosParte2,
       },
       {
-        // Narrador A -> diálogos de Step y Rogers -> narrador B (lo coordinan
-        // pausarNarrador / reanudarNarrador, igual que antes)
+
         tipo: "lottie",
         nombre: "Rogers",
         render: (p) => (
@@ -223,8 +207,7 @@ export const CAPITULOS = [
     titulo: "Ritual",
     escenas: [
       {
-        // Cadena de clips que avanza por eventos "ended" y estado de React:
-        // no se puede reconstruir hacia atrás, por eso no admite saltos.
+
         tipo: "lottie",
         nombre: "El ritual",
         render: () => <LotieCap4 />,
@@ -248,7 +231,7 @@ export const CAPITULOS = [
         audio: "/audios/ora1.wav",
         subs: subs5F,
         tramoB: { audio: "/audios/ora2.wav", subs: subs5FB, inicio: 19.18 },
-        duracion: 37.7, // 19,18 s + fin del último subtítulo del audio 2 (18,51 s)
+        duracion: 37.7,
       },
       { tipo: "lottie", nombre: "La puerta", render: () => <LotieCap5C />, audio: "/audios/Narrador5c.wav", subs: subs5C },
       { tipo: "lottie", nombre: "El corazón", render: () => <LotieCap5D />, audio: "/audios/narrador5D.wav", subs: subs5D },

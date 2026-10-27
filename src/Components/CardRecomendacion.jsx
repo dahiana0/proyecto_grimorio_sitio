@@ -15,7 +15,7 @@ const CardRecomendacion = ({
 }) => {
   const [abierto, setAbierto] = useState(false);
 
-  // Cerrar con Escape y bloquear el scroll mientras el modal está abierto
+
   useEffect(() => {
     if (!abierto) return;
 
@@ -33,16 +33,16 @@ const CardRecomendacion = ({
 
   const angulo = (360 / total) * indice;
 
-  // Colores intercalados: libros pares (1.º, 3.º, 5.º) en verde, impares (2.º, 4.º, 6.º) en morado
+
   const morado = indice % 2 === 1;
 
   return (
     <>
-      {/* Posición fija en el anillo */}
+
       <div className="item-orbita" style={{ "--angulo": `${angulo}deg` }}>
-        {/* Contra-rotación: mantiene la portada de frente */}
+
         <div className="contra">
-          {/* Flotación suave */}
+
           <button
             type="button"
             className="portada-flotante"
@@ -55,7 +55,7 @@ const CardRecomendacion = ({
         </div>
       </div>
 
-      {/* Modal en portal para que no le afecten los transform 3D */}
+
       {abierto &&
         createPortal(
           <div

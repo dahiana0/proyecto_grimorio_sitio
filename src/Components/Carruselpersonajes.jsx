@@ -3,18 +3,7 @@ import { useNavigate } from "react-router-dom";
 import PersonajeAnimado from "./Personajeanimado";
 import "../Styles/Carruselpersonajes.css";
 
-/**
- * Galería de personajes:
- *  - Cuando la galería entra en pantalla, las tarjetas aparecen solas, una tras otra y despacio
- *    (ya no dependen del scroll).
- *  - Cuando terminan de aparecer: hover con brillo, nombre debajo y clic en la tarjeta para ver más.
- *
- * Props: personajes: [{ nombre, imagen, svg, rig, ruta }]
- *  - Si el personaje tiene "svg" y "rig", se muestra animado; si no, usa "imagen".
- */
 
-// Colores de las tarjetas: una verde, otra morada (se alternan solas).
-// "accent" y "rgb" controlan el borde, el resplandor y el nombre; "fondo" es el fondo de la tarjeta.
 const TONOS = [
   {
     accent: "#1ad96d",
@@ -22,26 +11,26 @@ const TONOS = [
     fondo: "radial-gradient(circle at 50% 30%, #1f8a55 0%, #0b3321 55%, #04140c 100%)",
   },
   {
-     accent: "#1ad96d",
+    accent: "#1ad96d",
     rgb: "26, 217, 109",
     fondo: "radial-gradient(circle at 50% 30%, #1f8a55 0%, #0b3321 55%, #04140c 100%)",
   },
 ];
 
-// Ajustes de la aparición (en segundos)
-const ENTRADA = 0.45; // espera entre una tarjeta y la siguiente
-const DURACION = 1.5; // lo que tarda en aparecer cada tarjeta
+
+const ENTRADA = 0.45;
+const DURACION = 1.5;
 
 export const CarruselPersonajes = ({ personajes = [] }) => {
   const navigate = useNavigate();
   const [activo, setActivo] = useState(0);
-  const [visible, setVisible] = useState(false); // la galería ya entró en pantalla
-  const [abierto, setAbierto] = useState(false); // ya terminaron de aparecer
+  const [visible, setVisible] = useState(false);
+  const [abierto, setAbierto] = useState(false);
   const contenedor = useRef(null);
   const audioRef = useRef(null);
   const n = personajes.length;
 
-  // Las tarjetas empiezan a aparecer cuando la galería entra en pantalla
+
   useEffect(() => {
     const el = contenedor.current;
     if (!el || !n) return;
@@ -62,7 +51,7 @@ export const CarruselPersonajes = ({ personajes = [] }) => {
     return () => io.disconnect();
   }, [n]);
 
-  // Se activan hover y clics cuando la última tarjeta terminó de aparecer
+
   useEffect(() => {
     if (!visible) return;
     const reducir = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
@@ -78,7 +67,7 @@ export const CarruselPersonajes = ({ personajes = [] }) => {
       audioRef.current = new Audio("./audios/sonidoboton.ogg");
     }
     audioRef.current.currentTime = 0;
-    audioRef.current.play().catch(() => {});
+    audioRef.current.play().catch(() => { });
   };
 
   const verMas = (ruta) => {
@@ -86,7 +75,7 @@ export const CarruselPersonajes = ({ personajes = [] }) => {
     setTimeout(() => navigate(ruta), 150);
   };
 
-  // Destello según el mouse (la inclinación 3D solo se usa en tarjetas con imagen normal)
+
   const mover = (e, animado) => {
     const el = e.currentTarget;
     const r = el.getBoundingClientRect();
@@ -162,7 +151,7 @@ export const CarruselPersonajes = ({ personajes = [] }) => {
               </div>
             </div>
 
-            {/* Nombre debajo de la tarjeta; al hacer clic en la tarjeta se ve más */}
+
             <div
               className={`carrusel-nombre ${esActiva ? "is-active" : ""}`}
               onClick={() => abierto && verMas(p.ruta)}

@@ -1,35 +1,19 @@
-/* =========================================================
-   INICIO — layout simétrico
-   Izquierda: El libro + Personajes (más angostas)
-   Centro: Grimorio (centrado de verdad, ocupa toda la columna)
-   Derecha: El autor + Animaciones
-
-   Las filas CRECEN según el contenido: si una tarjeta necesita más
-   espacio (pantalla baja, zoom, columna angosta), la página crece y
-   hace scroll en vez de dejar que el texto se salga de la tarjeta.
-   ========================================================= */
-
 .dash {
   --sidebar-w: 110px;
 
-  /* antes: height: 100svh (fijo). Ahora es el MÍNIMO: puede crecer. */
+
   min-height: 100svh;
-  --centro: 36%; /* ancho de la columna de Grimorio (más grande = más protagonista) */
-  /* La barra lateral ocupa la izquierda; esta mitad de la diferencia se
-     le quita a la columna izquierda y se le suma a la derecha para que
-     Grimorio quede en el centro real de la pantalla sin dejar espacio vacío */
+  --centro: 36%;
   --ajuste: calc((var(--sidebar-w) + 12px - 28px) / 2);
 
   padding: 22px 28px 22px calc(var(--sidebar-w) + 12px);
   box-sizing: border-box;
   overflow-x: hidden;
   display: grid;
-  /* Columnas laterales iguales => el centro queda exactamente en el medio */
+
   grid-template-columns:
-    minmax(0, calc((100% - var(--centro) - 44px) / 2 - var(--ajuste)))
-    var(--centro)
-    minmax(0, calc((100% - var(--centro) - 44px) / 2 + var(--ajuste)));
-  /* Una sola fila: la altura la manda el contenido más alto de las tres columnas */
+    minmax(0, calc((100% - var(--centro) - 44px) / 2 - var(--ajuste))) var(--centro) minmax(0, calc((100% - var(--centro) - 44px) / 2 + var(--ajuste)));
+
   grid-template-rows: auto;
   grid-template-areas: "izq centro der";
   gap: 16px 22px;
@@ -42,21 +26,39 @@
   gap: 16px;
 }
 
-.dash-col-izq { grid-area: izq; }
-.dash-col-der { grid-area: der; }
-.dash-centro { grid-area: centro; }
+.dash-col-izq {
+  grid-area: izq;
+}
 
-/* Reparto del espacio SOBRANTE entre las dos tarjetas de cada columna
-   (nunca por debajo de su contenido, porque flex-basis es "auto") */
-.dash-a { flex: 3 1 auto; }
-.dash-b { flex: 2 1 auto; }
-.dash-c { flex: 2 1 auto; }
-.dash-d { flex: 3 1 auto; }
+.dash-col-der {
+  grid-area: der;
+}
 
-/* ---------- TARJETAS ---------- */
+.dash-centro {
+  grid-area: centro;
+}
+
+
+.dash-a {
+  flex: 3 1 auto;
+}
+
+.dash-b {
+  flex: 2 1 auto;
+}
+
+.dash-c {
+  flex: 2 1 auto;
+}
+
+.dash-d {
+  flex: 3 1 auto;
+}
+
+
 .dash-card {
   position: relative;
-  /* sin "min-height: 0": la tarjeta nunca puede ser más baja que su contenido */
+
   min-width: 0;
   display: flex;
   flex-direction: column;
@@ -67,7 +69,7 @@
   box-shadow: 0 0 22px rgba(26, 217, 109, 0.1);
   transition: border-color 0.35s ease, box-shadow 0.35s ease;
 
-  /* permite adaptar el contenido al ANCHO de cada tarjeta (ver @container) */
+
   container-type: inline-size;
 }
 
@@ -104,7 +106,7 @@
   z-index: 3;
 }
 
-/* Tarjeta del autor: un poco más compacta */
+
 .dash-c {
   padding: clamp(8px, 1.6vh, 16px) clamp(12px, 1.3vw, 20px);
 }
@@ -122,13 +124,9 @@
   text-shadow: 0 0 8px rgba(26, 217, 109, 0.6);
 }
 
-/* ---------- ICONITOS DE LOS TÍTULOS ----------
-   Tamaño: cámbialo con --icono-size.
-   Cada tarjeta tiene su animación propia:
-   - siempre: flota suave + halo que respira
-   - al pasar el cursor por la tarjeta: animación especial */
+
 .dash-icono {
-  /* Espacio reservado para el SVG de cada sección; crece/encoge según la pantalla */
+
   --icono-size: clamp(22px, 3.6vh, 32px);
 
   position: relative;
@@ -158,7 +156,7 @@
   text-shadow: 0 0 8px #1ad96d;
 }
 
-/* Halo que respira detrás del icono */
+
 .dash-icono-halo {
   position: absolute;
   inset: -4px;
@@ -173,64 +171,123 @@
 }
 
 @keyframes dashIconoFlota {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-3px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-3px);
+  }
 }
 
 @keyframes dashIconoHalo {
-  0%, 100% { transform: scale(0.85); opacity: 0.45; }
-  50% { transform: scale(1.25); opacity: 1; }
+
+  0%,
+  100% {
+    transform: scale(0.85);
+    opacity: 0.45;
+  }
+
+  50% {
+    transform: scale(1.25);
+    opacity: 1;
+  }
 }
 
-/* Libro: se voltea como una página */
+
 .dash-card:hover .dash-icono--libro img,
 .dash-card:hover .dash-icono--libro .dash-icono-estrella {
   animation: dashIconoPagina 0.9s ease-in-out;
 }
 
 @keyframes dashIconoPagina {
-  0% { transform: perspective(200px) rotateY(0); }
-  50% { transform: perspective(200px) rotateY(180deg) scale(1.15); }
-  100% { transform: perspective(200px) rotateY(360deg); }
+  0% {
+    transform: perspective(200px) rotateY(0);
+  }
+
+  50% {
+    transform: perspective(200px) rotateY(180deg) scale(1.15);
+  }
+
+  100% {
+    transform: perspective(200px) rotateY(360deg);
+  }
 }
 
-/* Personajes: salta con rebote */
+
 .dash-card:hover .dash-icono--personajes img,
 .dash-card:hover .dash-icono--personajes .dash-icono-estrella {
   animation: dashIconoSalto 0.8s ease-out;
 }
 
 @keyframes dashIconoSalto {
-  0% { transform: translateY(0) scale(1, 1); }
-  25% { transform: translateY(0) scale(1.15, 0.8); }
-  50% { transform: translateY(-9px) scale(0.9, 1.15); }
-  75% { transform: translateY(0) scale(1.1, 0.88); }
-  100% { transform: translateY(0) scale(1, 1); }
+  0% {
+    transform: translateY(0) scale(1, 1);
+  }
+
+  25% {
+    transform: translateY(0) scale(1.15, 0.8);
+  }
+
+  50% {
+    transform: translateY(-9px) scale(0.9, 1.15);
+  }
+
+  75% {
+    transform: translateY(0) scale(1.1, 0.88);
+  }
+
+  100% {
+    transform: translateY(0) scale(1, 1);
+  }
 }
 
-/* Autor: late como un pulso */
+
 .dash-card:hover .dash-icono--autor img,
 .dash-card:hover .dash-icono--autor .dash-icono-estrella {
   animation: dashIconoLatido 1s ease-in-out infinite;
 }
 
 @keyframes dashIconoLatido {
-  0%, 100% { transform: scale(1); }
-  20% { transform: scale(1.25); }
-  40% { transform: scale(1); }
-  60% { transform: scale(1.15); }
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  20% {
+    transform: scale(1.25);
+  }
+
+  40% {
+    transform: scale(1);
+  }
+
+  60% {
+    transform: scale(1.15);
+  }
 }
 
-/* Animaciones: gira y se inclina */
+
 .dash-card:hover .dash-icono--animaciones img,
 .dash-card:hover .dash-icono--animaciones .dash-icono-estrella {
   animation: dashIconoGira 1.2s ease-in-out;
 }
 
 @keyframes dashIconoGira {
-  0% { transform: rotate(0) scale(1); }
-  50% { transform: rotate(180deg) scale(1.25); }
-  100% { transform: rotate(360deg) scale(1); }
+  0% {
+    transform: rotate(0) scale(1);
+  }
+
+  50% {
+    transform: rotate(180deg) scale(1.25);
+  }
+
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
 }
 
 .dash-card-p {
@@ -268,20 +325,20 @@
   outline-offset: 3px;
 }
 
-/* ---------- EL LIBRO ---------- */
+
 .dash-libro-fila {
   flex: 1 0 auto;
   display: grid;
   grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-  align-items: start; /* antes: center */
+  align-items: start;
   gap: 14px;
 }
 
 .dash-libro-caja {
-  width: min(100%, 220px); /* nunca más ancho de 220px */
-  height: auto; /* antes: 100% */
+  width: min(100%, 220px);
+  height: auto;
   min-height: 0;
-  aspect-ratio: 3 / 4; /* la proporción del libro ya no se rompe */
+  aspect-ratio: 3 / 4;
   margin-inline: auto;
   display: flex;
   align-items: center;
@@ -316,7 +373,7 @@
   flex-direction: column;
 }
 
-/* El texto no se sale: se parte y se limita a 6 líneas */
+
 .dash-libro-info .dash-card-p {
   overflow-wrap: anywhere;
   display: -webkit-box;
@@ -344,10 +401,10 @@
   color: #bfa76a;
 }
 
-/* ---------- PERSONAJES ---------- */
+
 .dash-pers {
   flex: 1 0 auto;
-  /* alto mínimo para que los retratos no queden planos */
+
   min-height: clamp(120px, 20vh, 200px);
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -394,19 +451,19 @@
   object-position: center top;
 }
 
-/* Personaje animado (mismo componente que la página de personajes) */
+
 .dash-pers-animado {
   position: absolute;
   inset: 0;
   display: block;
 }
 
-.dash-pers-animado > * {
+.dash-pers-animado>* {
   width: 100%;
   height: 100%;
 }
 
-/* Lienzo con proporción fija para que los ojos queden siempre sobre el dibujo */
+
 .dash-pers-lienzo {
   position: relative;
   flex: none;
@@ -428,8 +485,15 @@
 }
 
 @keyframes dashFlota {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
 }
 
 .dash-tentaculo {
@@ -439,8 +503,13 @@
 }
 
 @keyframes dashOnda {
-  from { transform: rotate(-5deg); }
-  to { transform: rotate(5deg); }
+  from {
+    transform: rotate(-5deg);
+  }
+
+  to {
+    transform: rotate(5deg);
+  }
 }
 
 .dash-pers-nombre {
@@ -487,11 +556,19 @@
 }
 
 @keyframes dashParpadeo {
-  0%, 92%, 100% { transform: scaleY(1); }
-  95% { transform: scaleY(0.1); }
+
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+
+  95% {
+    transform: scaleY(0.1);
+  }
 }
 
-/* ---------- EL AUTOR ---------- */
+
 .dash-autor {
   flex: 1 0 auto;
   display: grid;
@@ -549,10 +626,9 @@
   min-height: 5.4em;
 }
 
-/* ---------- ANIMACIONES (cinta con 3 paneles verticales, escena real) ---------- */
+
 .dash-cinta-fila {
   flex: 1 0 auto;
-  /* alto mínimo: los paneles solo tienen contenido absoluto (la escena) */
   min-height: clamp(150px, 24vh, 280px);
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
@@ -591,14 +667,14 @@
   overflow: hidden;
 }
 
-/* Los paneles llenan todo el alto de la cinta */
+
 .dash-cinta-items {
   height: 100%;
   display: grid;
   gap: 8px;
 }
 
-/* Panel vertical: solo se mira, no es un botón */
+
 .dash-frame {
   position: relative;
   min-width: 0;
@@ -610,7 +686,7 @@
   cursor: default;
 }
 
-/* La escena real: sin clics, sin selección */
+
 .dash-escena-caja {
   position: absolute;
   inset: 0;
@@ -619,7 +695,7 @@
   user-select: none;
 }
 
-/* Cámara lenta sobre toda la escena */
+
 .dash-escena-zoom {
   position: absolute;
   inset: 0;
@@ -627,7 +703,7 @@
   animation: dashPrevCamara 14s ease-in-out infinite alternate;
 }
 
-/* La escena se dibuja a 1500x836 y se escala con "cover" (lo calcula el JS) */
+
 .dash-escena {
   position: absolute;
   width: 1500px;
@@ -657,11 +733,16 @@
 }
 
 @keyframes dashPrevCamara {
-  from { transform: scale(1); }
-  to { transform: scale(1.06); }
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.06);
+  }
 }
 
-/* ---------- CENTRO ---------- */
+
 .dash-centro {
   position: relative;
   min-height: 0;
@@ -686,8 +767,15 @@
 }
 
 @keyframes dashNiebla {
-  from { transform: scale(1); opacity: 0.65; }
-  to { transform: scale(1.12) translateY(-2%); opacity: 1; }
+  from {
+    transform: scale(1);
+    opacity: 0.65;
+  }
+
+  to {
+    transform: scale(1.12) translateY(-2%);
+    opacity: 1;
+  }
 }
 
 .dash-titulo {
@@ -764,16 +852,12 @@
 }
 
 @keyframes dashGira {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-/* =========================================================
-   ADAPTACIÓN AL ANCHO DE CADA TARJETA (container queries)
-   Cuando una tarjeta queda angosta (zoom, ventana pequeña, barra lateral
-   abierta), el contenido se reacomoda en vez de apretarse hasta salirse.
-   ========================================================= */
 
-/* El libro: imagen arriba, texto debajo (umbral más alto: antes 380px) */
 @container (max-width: 460px) {
   .dash-libro-fila {
     grid-template-columns: minmax(0, 1fr);
@@ -781,7 +865,7 @@
   }
 }
 
-/* Personajes: 2 x 2 */
+
 @container (max-width: 300px) {
   .dash-pers {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -789,7 +873,7 @@
   }
 }
 
-/* Autor: foto arriba, texto debajo (apila desde 400px) */
+
 @container (max-width: 400px) {
   .dash-autor {
     grid-template-columns: minmax(0, 1fr);
@@ -797,24 +881,43 @@
     text-align: center;
     gap: 8px;
   }
-  .dash-autor-circulo { height: clamp(60px, 10vh, 85px); }
-  .dash-autor-texto .dash-card-p { min-height: 0; }
-  .dash-autor-texto .dash-link { align-self: center; }
+
+  .dash-autor-circulo {
+    height: clamp(60px, 10vh, 85px);
+  }
+
+  .dash-autor-texto .dash-card-p {
+    min-height: 0;
+  }
+
+  .dash-autor-texto .dash-link {
+    align-self: center;
+  }
 }
 
-/* ---------- Pantallas bajas ---------- */
+
 @media (min-width: 1001px) and (max-height: 720px) {
-  .dash-texto { display: none; }
-  .dash-card-p { line-height: 1.4; }
+  .dash-texto {
+    display: none;
+  }
+
+  .dash-card-p {
+    line-height: 1.4;
+  }
 }
 
-/* ---------- Pantallas muy grandes (TV, 2K, 4K) ---------- */
+
 @media (min-width: 1800px) {
-  .dash-texto { max-width: 640px; }
-  .dash-card { border-radius: 16px; }
+  .dash-texto {
+    max-width: 640px;
+  }
+
+  .dash-card {
+    border-radius: 16px;
+  }
 }
 
-/* ---------- Tablet y móvil: una sola columna, con scroll ---------- */
+
 @media (max-width: 1000px) {
   .dash {
     --icono-size: 30px;
@@ -833,79 +936,190 @@
     gap: 18px;
   }
 
-  .dash-col { display: contents; }
-  .dash-a { grid-area: a; }
-  .dash-b { grid-area: b; }
-  .dash-c { grid-area: c; }
-  .dash-d { grid-area: d; }
+  .dash-col {
+    display: contents;
+  }
 
-  .dash-centro { padding: 28px 0; }
-  .dash-titulo { font-size: clamp(56px, 18vw, 110px); }
-  .dash-texto { max-width: 520px; font-size: clamp(14px, 2.4vw, 17px); }
-  .dash-sub { font-size: clamp(10px, 2.2vw, 14px); }
-  .dash-portal { font-size: clamp(18px, 4vw, 24px); }
-  .dash-portal-anillo { width: 44px; }
+  .dash-a {
+    grid-area: a;
+  }
+
+  .dash-b {
+    grid-area: b;
+  }
+
+  .dash-c {
+    grid-area: c;
+  }
+
+  .dash-d {
+    grid-area: d;
+  }
+
+  .dash-centro {
+    padding: 28px 0;
+  }
+
+  .dash-titulo {
+    font-size: clamp(56px, 18vw, 110px);
+  }
+
+  .dash-texto {
+    max-width: 520px;
+    font-size: clamp(14px, 2.4vw, 17px);
+  }
+
+  .dash-sub {
+    font-size: clamp(10px, 2.2vw, 14px);
+  }
+
+  .dash-portal {
+    font-size: clamp(18px, 4vw, 24px);
+  }
+
+  .dash-portal-anillo {
+    width: 44px;
+  }
 
   .dash-card {
     min-height: 250px;
     padding: 16px clamp(14px, 3vw, 22px);
   }
-  .dash-card-titulo { font-size: clamp(22px, 4.6vw, 30px); }
-  .dash-card-p { font-size: clamp(13px, 2.2vw, 15px); }
-  .dash-link { font-size: clamp(12px, 2.1vw, 14px); }
-  .dash-meta { font-size: clamp(10px, 1.9vw, 12px); }
 
-  .dash-a { min-height: 320px; }
-  /* (se quitó "height: 240px" de .dash-libro-caja: ahora usa aspect-ratio) */
-  .dash-libro-titulo { font-size: clamp(24px, 5vw, 34px); }
+  .dash-card-titulo {
+    font-size: clamp(22px, 4.6vw, 30px);
+  }
 
-  .dash-pers { min-height: 210px; }
-  .dash-pers-nombre { font-size: clamp(10px, 1.9vw, 12px); }
+  .dash-card-p {
+    font-size: clamp(13px, 2.2vw, 15px);
+  }
 
-  .dash-autor-circulo { height: clamp(100px, 22vw, 150px); }
-  .dash-autor-nombre { font-size: clamp(18px, 3.6vw, 24px); }
-  .dash-autor-anios { font-size: clamp(10px, 1.9vw, 12px); }
-  .dash-autor-texto .dash-card-p { font-size: clamp(13px, 2.2vw, 15px); }
+  .dash-link {
+    font-size: clamp(12px, 2.1vw, 14px);
+  }
 
-  .dash-cinta-fila { min-height: 200px; }
+  .dash-meta {
+    font-size: clamp(10px, 1.9vw, 12px);
+  }
+
+  .dash-a {
+    min-height: 320px;
+  }
+
+  .dash-libro-titulo {
+    font-size: clamp(24px, 5vw, 34px);
+  }
+
+  .dash-pers {
+    min-height: 210px;
+  }
+
+  .dash-pers-nombre {
+    font-size: clamp(10px, 1.9vw, 12px);
+  }
+
+  .dash-autor-circulo {
+    height: clamp(100px, 22vw, 150px);
+  }
+
+  .dash-autor-nombre {
+    font-size: clamp(18px, 3.6vw, 24px);
+  }
+
+  .dash-autor-anios {
+    font-size: clamp(10px, 1.9vw, 12px);
+  }
+
+  .dash-autor-texto .dash-card-p {
+    font-size: clamp(13px, 2.2vw, 15px);
+  }
+
+  .dash-cinta-fila {
+    min-height: 200px;
+  }
 }
 
-/* ---------- Móvil (vertical) ---------- */
+
 @media (max-width: 600px) {
-  .dash { gap: 16px; }
+  .dash {
+    gap: 16px;
+  }
 
-  /* Libro: imagen arriba, texto abajo (se quitó "height: 220px" de la caja) */
-  .dash-libro-fila { grid-template-columns: minmax(0, 1fr); gap: 10px; }
 
-  /* Personajes: 2 x 2 */
-  .dash-pers { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; min-height: 0; }
-  .dash-pers-item { height: 230px; }
+  .dash-libro-fila {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
 
-  .dash-cinta-fila { min-height: 220px; }
+
+  .dash-pers {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    min-height: 0;
+  }
+
+  .dash-pers-item {
+    height: 230px;
+  }
+
+  .dash-cinta-fila {
+    min-height: 220px;
+  }
 }
 
-/* ---------- Móviles pequeños ---------- */
+
 @media (max-width: 420px) {
-  .dash { --icono-size: 26px; }
-  .dash-icono { margin-right: 8px; }
+  .dash {
+    --icono-size: 26px;
+  }
 
-  /* Autor: foto arriba, texto abajo */
-  .dash-autor { grid-template-columns: minmax(0, 1fr); justify-items: center; text-align: center; gap: 10px; }
-  .dash-autor-texto .dash-card-p { min-height: 0; }
-  .dash-autor-texto .dash-link { align-self: center; }
+  .dash-icono {
+    margin-right: 8px;
+  }
 
-  .dash-pers-item { height: 190px; }
-  .dash-cinta-fila { min-height: 190px; }
+
+  .dash-autor {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .dash-autor-texto .dash-card-p {
+    min-height: 0;
+  }
+
+  .dash-autor-texto .dash-link {
+    align-self: center;
+  }
+
+  .dash-pers-item {
+    height: 190px;
+  }
+
+  .dash-cinta-fila {
+    min-height: 190px;
+  }
 }
 
-/* ---------- Pantallas táctiles: botones más fáciles de tocar ---------- */
+
 @media (pointer: coarse) {
-  .dash-flecha { padding: 12px 10px; font-size: 34px; }
-  .dash-link { padding: 8px 0; }
-  .dash-portal { padding-block: 10px; }
+  .dash-flecha {
+    padding: 12px 10px;
+    font-size: 34px;
+  }
+
+  .dash-link {
+    padding: 8px 0;
+  }
+
+  .dash-portal {
+    padding-block: 10px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .dash-niebla,
   .dash-ojo,
   .dash-pers-lienzo,
@@ -913,10 +1127,18 @@
   .dash-icono,
   .dash-icono-halo,
   .dash-escena-zoom,
-  .dash-portal-anillo { animation: none; }
+  .dash-portal-anillo {
+    animation: none;
+  }
+
   .dash-card:hover .dash-icono img,
-  .dash-card:hover .dash-icono .dash-icono-estrella { animation: none; }
+  .dash-card:hover .dash-icono .dash-icono-estrella {
+    animation: none;
+  }
+
   .dash-card,
   .dash-pers-img,
-  .dash-frame { transition-duration: 0.01ms !important; }
+  .dash-frame {
+    transition-duration: 0.01ms !important;
+  }
 }

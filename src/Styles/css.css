@@ -24,7 +24,7 @@ body {
   background-attachment: fixed;
 }
 
-/* Brillos y viñeta (detrás de todo el contenido) */
+
 body::before,
 body::after {
   content: "";
@@ -423,7 +423,7 @@ body::after {
   right: 0;
 }
 
-/* RESPONSIVE */
+
 
 @media (max-width: 768px) {
   .video-title {
@@ -450,7 +450,7 @@ body::after {
   }
 }
 
-/* Secciones transparentes para que se vea el fondo del body. */
+
 .explorar-header,
 .explorar-cards,
 .inicio-container,

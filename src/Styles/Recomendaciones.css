@@ -1,4 +1,3 @@
-/* ===== TÍTULO ===== */
 .titulo-recomendaciones {
   display: flex;
   flex-direction: column;
@@ -27,7 +26,7 @@
   color: #cfcfcf;
 }
 
-/* ===== SECCIÓN ===== */
+
 .recomendaciones-section {
   padding: 120px 40px 60px;
   min-height: 100vh;
@@ -42,9 +41,7 @@
   letter-spacing: 1px;
 }
 
-/* ===== CARRUSEL 3D ===== */
-/* Un solo valor animado (--giro): el anillo gira con él y cada portada
-   se contra-gira con el mismo valor, así siempre miran al frente. */
+
 @property --giro {
   syntax: "<angle>";
   inherits: true;
@@ -80,7 +77,7 @@
   animation: recoGirar 30s linear infinite;
 }
 
-/* Pausar al pasar el mouse */
+
 .escena-3d:hover .anillo {
   animation-play-state: paused;
 }
@@ -90,9 +87,7 @@
   inset: 0;
   transform-style: preserve-3d;
   transform:
-    rotateY(var(--angulo))
-    translateZ(var(--radio))
-    rotateY(calc((var(--angulo) + var(--giro)) * -1));
+    rotateY(var(--angulo)) translateZ(var(--radio)) rotateY(calc((var(--angulo) + var(--giro)) * -1));
 }
 
 .contra {
@@ -100,18 +95,23 @@
   height: 100%;
 }
 
-/* Solo el botón recibe clics; las cajas 3D no estorban */
+
 .item-orbita,
 .contra {
   pointer-events: none;
 }
 
 @keyframes recoGirar {
-  from { --giro: 0deg; }
-  to   { --giro: 360deg; }
+  from {
+    --giro: 0deg;
+  }
+
+  to {
+    --giro: 360deg;
+  }
 }
 
-/* ===== PORTADAS ===== */
+
 .portada-flotante {
   background: none;
   border: none;
@@ -121,7 +121,7 @@
   animation: recoFlotar 5s ease-in-out infinite;
 }
 
-/* Al pasar el mouse, también se detiene la flotación */
+
 .escena-3d:hover .portada-flotante {
   animation-play-state: paused;
 }
@@ -144,7 +144,7 @@
   box-shadow: 0 0 25px rgba(26, 217, 109, 0.5);
 }
 
-/* Resplandor intercalado: las portadas pares brillan en morado */
+
 .item-orbita:nth-child(even) .portada-flotante:hover .portada-img,
 .item-orbita:nth-child(even) .portada-flotante:focus-visible .portada-img {
   border-color: #a35cff;
@@ -152,11 +152,18 @@
 }
 
 @keyframes recoFlotar {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-12px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
 }
 
-/* ===== TEXTOS (se usan dentro del modal) ===== */
+
 .card-recomendacion-title {
   color: var(--reco-c, #1ad96d);
   font-family: "pieces";
@@ -179,8 +186,7 @@
   line-height: 1.4;
 }
 
-/* ===== MODAL ===== */
-/* Color del modal: verde por defecto, morado en los libros pares (igual que el resplandor de la portada) */
+
 .reco-morado,
 .item-orbita:nth-child(even) .reco-overlay {
   --reco-c: #a35cff;
@@ -229,9 +235,18 @@
   flex-direction: column;
 }
 
-.reco-modal-info .card-recomendacion-title { font-size: 26px; }
-.reco-modal-info .card-recomendacion-meta  { font-size: 13px; }
-.reco-modal-info .card-recomendacion-desc  { font-size: 14px; line-height: 1.6; }
+.reco-modal-info .card-recomendacion-title {
+  font-size: 26px;
+}
+
+.reco-modal-info .card-recomendacion-meta {
+  font-size: 13px;
+}
+
+.reco-modal-info .card-recomendacion-desc {
+  font-size: 14px;
+  line-height: 1.6;
+}
 
 .reco-modal-close {
   position: absolute;
@@ -264,12 +279,31 @@
   box-shadow: 0 0 15px rgba(var(--reco-rgb, 26, 217, 109), 0.6);
 }
 
-@keyframes recoFadeIn   { from { opacity: 0; } to { opacity: 1; } }
-@keyframes recoAparecer { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+@keyframes recoFadeIn {
+  from {
+    opacity: 0;
+  }
 
-/* ===== TRANSICIÓN DE ENTRADA (solo animaciones, no cambia el diseño) ===== */
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes recoAparecer {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
 @media (prefers-reduced-motion: no-preference) {
-  /* El título se enfoca y se junta */
+
   .reco-main {
     animation: recoEntra 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s backwards;
   }
@@ -278,7 +312,7 @@
     animation: recoSube 1s ease 0.9s backwards;
   }
 
-  /* Los libros salen desde el centro hasta su órbita */
+
   .anillo {
     animation:
       recoGirar 30s linear infinite,
@@ -300,26 +334,36 @@
 }
 
 @keyframes recoSube {
-  from { opacity: 0; transform: translateY(14px); }
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
 }
 
 @keyframes recoAbrir {
-  from { --radio: 0px; }
+  from {
+    --radio: 0px;
+  }
 }
 
-/* ===== ACCESIBILIDAD ===== */
+
 @media (prefers-reduced-motion: reduce) {
+
   .anillo,
   .portada-flotante {
     animation: none;
   }
 }
 
-/* ===== RESPONSIVE ===== */
-@media (max-width: 480px) {
-  .reco-desc { padding: 0 10px; }
 
-  .recomendaciones-section { padding: 100px 16px 40px; }
+@media (max-width: 480px) {
+  .reco-desc {
+    padding: 0 10px;
+  }
+
+  .recomendaciones-section {
+    padding: 100px 16px 40px;
+  }
 
   .escena-3d {
     --ancho: 120px;
@@ -340,8 +384,13 @@
     height: 225px;
   }
 
-  .reco-modal-info .card-recomendacion-title { font-size: 20px; }
-  .reco-modal-info .card-recomendacion-desc  { font-size: 13px; }
+  .reco-modal-info .card-recomendacion-title {
+    font-size: 20px;
+  }
+
+  .reco-modal-info .card-recomendacion-desc {
+    font-size: 13px;
+  }
 
   .reco-btn-pdf {
     align-self: center;
@@ -351,7 +400,9 @@
 
 @media (min-width: 481px) and (max-width: 767px) {
 
-  .recomendaciones-section { padding: 100px 20px 40px; }
+  .recomendaciones-section {
+    padding: 100px 20px 40px;
+  }
 
   .escena-3d {
     --ancho: 140px;

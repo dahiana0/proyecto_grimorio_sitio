@@ -2,25 +2,13 @@ import { useRef, useEffect, useState } from "react";
 import GuardarInteraccion from "./GuardarInteraccion";
 import "../Styles/LotieCap5D.css";
 
-// Número de capítulo con el que se guardan las interacciones
+
 const CAPITULO = 5;
 
-// true = muestra los cuadros de clic en rojo para calibrarlos
-// false = invisibles (versión final)
+
 const DEBUG = false;
 
-/* ---------------------------------------------------------------------
-   VIDEOS DE LA ESCENA (de atrás hacia adelante)
-   nombre   = identificador
-   id       = identificador único con el que se guarda en el archivo
-   titulo   = nombre que se ve en el archivo
-   clase    = clase CSS
-   src      = archivo de video en public/
-   sonido   = audio que suena junto con el video (ruta en public/)
-   volumen  = volumen del sonido (0 a 1)
-   auto     = true si se reproduce solo al aparecer la escena
-   cortar   = true si el sonido se detiene cuando termina el video
---------------------------------------------------------------------- */
+
 const VIDEOS = [
   { nombre: "estatua1", id: "estatua1", titulo: "Estatua 1", clase: "estatua1-5d", src: "/cera1c.webm" },
   { nombre: "estatua2", id: "estatua2", titulo: "Estatua 2", clase: "estatua2-5d", src: "/cera2c.webm" },
@@ -62,16 +50,15 @@ const LotieCap5D = () => {
 
   const escenaRef = useRef(null);
 
-  // Referencias a todos los videos
+
   const videoRefs = useRef({});
 
-  // Audios (uno por video que tenga sonido)
+
   const audioRefs = useRef({});
 
-  // Lámpara: se activa al hacer clic (balanceo + resplandor)
   const [lamparaActiva, setLamparaActiva] = useState(false);
 
-  // Crear los audios una sola vez
+
   useEffect(() => {
     VIDEOS.forEach((v) => {
       if (v.sonido) {
@@ -89,7 +76,7 @@ const LotieCap5D = () => {
     };
   }, []);
 
-  // Reproducir un video desde el inicio junto con su sonido
+
   const reproducirVideo = (nombre) => {
     const video = videoRefs.current[nombre];
     if (!video) return;
@@ -101,19 +88,19 @@ const LotieCap5D = () => {
         const audio = audioRefs.current[nombre];
         if (audio) {
           audio.currentTime = 0;
-          audio.play().catch(() => {});
+          audio.play().catch(() => { });
         }
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 
-  // Clic del lector: reproduce y guarda (los "auto" no se guardan solos)
+
   const clicVideo = (v) => {
     reproducirVideo(v.nombre);
     GuardarInteraccion(v.id, v.titulo, v.id, CAPITULO, "video", v.src);
   };
 
-  // Detener el sonido cuando termina el video (solo si "cortar" es true)
+
   const alTerminar = (v) => {
     if (!v.cortar) return;
     const audio = audioRefs.current[v.nombre];
@@ -123,7 +110,7 @@ const LotieCap5D = () => {
     }
   };
 
-  // Reproducir solos los videos "auto" cuando la escena se ve en pantalla
+
   useEffect(() => {
     const escena = escenaRef.current;
     if (!escena) return;
@@ -141,7 +128,7 @@ const LotieCap5D = () => {
     return () => observador.disconnect();
   }, []);
 
-  // Lámpara (animación CSS): se guarda con su imagen
+
   const clicLampara = () => {
     setLamparaActiva(true);
     GuardarInteraccion("lampara5d", "Lámpara 1", "lampara", CAPITULO, "css", "/lampara1.png");
@@ -150,12 +137,12 @@ const LotieCap5D = () => {
   return (
     <div className={`escena5d${DEBUG ? " debug" : ""}`} ref={escenaRef}>
 
-      {/* Fondo: imagen */}
+
       <img className="fondo5d" src="./Fondo5d.png" alt="" />
 
-      {/* ===== Lámpara: clic = se mueve y resplandece ===== */}
+
       <div className="anim5d lampara5d">
-        {/* Solo visual: no recibe clics */}
+
         <div className="vista5d">
           <img
             src="./lampara1.png"
@@ -164,13 +151,13 @@ const LotieCap5D = () => {
             onAnimationEnd={() => setLamparaActiva(false)}
           />
         </div>
-        {/* Cuadro de clic propio, dentro de su objeto */}
+
         <div className="hitbox5d" onClick={clicLampara}>
           <span className="pista5d" />
         </div>
       </div>
 
-      {/* ===== Estatuas, rata, monstruo y Step (todos con clic) ===== */}
+
       {VIDEOS.map((v) => (
         <div key={v.nombre} className={`anim5d ${v.clase}`}>
           <div className="vista5d">

@@ -12,12 +12,11 @@ import "../Styles/LootieKarol.css";
 
 const Lottie = LottieModule.default;
 
-// Tamaño de diseño de la escena (proporción del fondo)
+
 const ANCHO = 1500;
 const ALTO = 836;
 
-// true = muestra los cuadros de clic en rojo para calibrarlos
-// false = invisibles (versión final)
+
 const DEBUG = false;
 
 const LootieKarol = () => {
@@ -101,7 +100,7 @@ const LootieKarol = () => {
     GuardarInteraccion("libroC", "Libro caído", "libroC");
   };
 
-  // Cada objeto: su animación + su propio cuadro de clic
+ 
   const objetos = [
     { clase: "tablero",  lottieRef: tableroRef,  data: tableroo, onClick: animarTablero },
     { clase: "calavera", lottieRef: calaveraRef, data: calabera, onClick: animarCalavera },
@@ -125,7 +124,7 @@ const LootieKarol = () => {
 
           {objetos.map(({ clase, lottieRef, data, onClick }) => (
             <div key={clase} className={`anim ${clase}`}>
-              {/* Solo visual: no recibe clics */}
+             
               <div className="vista">
                 <Lottie
                   lottieRef={lottieRef}
@@ -135,7 +134,7 @@ const LootieKarol = () => {
                 />
               </div>
 
-              {/* Cuadro de clic propio, dentro de su animación */}
+             
               <div className="hitbox" onClick={onClick}>
                 <span className="pista" />
               </div>

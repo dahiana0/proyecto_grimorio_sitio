@@ -21,7 +21,7 @@
     100% { transform: scale(1) translate(0, 0); }
 }
 
-/* ===== FONDO ===== */
+
 .fondo5a {
     position: absolute;
     inset: 0;
@@ -31,7 +31,7 @@
     z-index: 1;
 }
 
-/* ===== NUBES ===== */
+
 .nube1_5a,
 .nube2_5a,
 .nube3_5a,
@@ -71,13 +71,10 @@
     animation: moverNube1_5a 6s ease-in-out infinite;
 }
 
-/* ===== Contenedor de cada objeto con clic (posición y tamaño originales) =====
-   Los nombres llevan el sufijo 5a para no chocar con las otras escenas.
-   Sin z-index propio (salvo Step, que se centra con transform): así la parte
-   visual (.vista5a) y el cuadro de clic (.hitbox5a) se ordenan en la escena. */
+
 .anim5a {
     position: absolute;
-    pointer-events: none;   /* lo visual nunca captura clics */
+    pointer-events: none;   
 }
 
 .edificio5a {
@@ -86,7 +83,7 @@
     width: 70%;
     height: 72%;
     --z: 3;
-    --zh: 5;     /* prioridad de clic: la reja y Step ganan sobre el edificio */
+    --zh: 5;
 }
 
 .rejas5a {
@@ -98,19 +95,21 @@
     --zh: 6;
 }
 
+
 .stepc5a {
+    --step-ancho: 20cqw;   
+    --step-bajo: -2%;     
+
     left: 50%;
-    bottom: 5%;
+    bottom: var(--step-bajo);
     transform: translateX(-50%);
-    width: 250px;
-    /* Se centra con transform, así que crea su propia capa: z-index explícito
-       para que quede por delante, como antes. */
+    width: var(--step-ancho);
     z-index: 10;
     --z: 10;
-    --hover: 1.05;
+    --hover: 1.03;
 }
 
-/* ===== Parte visual: aquí se aplica el hover (sin resplandor) ===== */
+
 .vista5a {
     position: relative;
     z-index: var(--z);
@@ -118,8 +117,9 @@
     transform-origin: center bottom;
 }
 
+
 .stepc5a .vista5a {
-    transform-origin: center;
+    transform-origin: center bottom;
 }
 
 .edificio5a .vista5a,
@@ -140,7 +140,7 @@
     width: 100%;
 }
 
-/* La reja ocupa todo su recuadro (como antes) */
+
 .rejas5a .vista5a > video {
     height: 100%;
     object-fit: fill;
@@ -150,29 +150,25 @@
 .rejas5a:has(.hitbox5a:hover)    .vista5a { transform: scale(1.015); }
 .stepc5a:has(.hitbox5a:hover)    .vista5a { transform: scale(var(--hover)); }
 
-/* ===== Cuadro de clic: invisible, en % de SU animación ===== */
+
 .hitbox5a {
     position: absolute;
     left:   var(--hx, 0%);
     top:    var(--hy, 0%);
     width:  var(--hw, 100%);
     height: var(--hh, 100%);
-    /* Prioridad de clic: se fija con --zh en cada objeto */
     z-index: var(--zh, calc(var(--z) + 10));
-    pointer-events: auto;           /* solo el cuadro recibe clics */
+    pointer-events: auto;
     cursor: pointer;
     background: transparent;
 }
 
-/* ===== Ajuste de cada cuadro (x, y, ancho, alto en % de su animación) =====
-   --px / --py = posición del puntito dentro del cuadro (por defecto, centro).
-   Cambia solo el objeto que necesites; los demás no se afectan.
-   Step y la reja hacen lo mismo al hacer clic (inician la escena). */
+
 .edificio5a { --hx: 5%;  --hy: 0%;  --hw: 90%; --hh: 60%; --px: 50%; --py: 25%; }
 .rejas5a    { --hx: 5%;  --hy: 5%;  --hw: 90%; --hh: 90%; --px: 22%; --py: 55%; }
 .stepc5a    { --hx: 20%; --hy: 5%;  --hw: 60%; --hh: 90%; }
 
-/* ===== Señal sutil: puntito siempre visible, con un latido corto y destello verde ===== */
+
 .pista5a {
     position: absolute;
     top: var(--py, 50%);
@@ -193,16 +189,16 @@
     50%      { transform: scale(1.3); opacity: 0.7; box-shadow: 0 0 7px rgba(26, 217, 109, 0.7); }
 }
 
-/* ===== Modo prueba (solo si pones DEBUG = true en el .jsx) ===== */
+
 .camara5a.debug .hitbox5a {
     background: rgba(255, 0, 0, 0.3);
     outline: 1px solid red;
 }
 .camara5a.debug .anim5a {
-    outline: 1px dashed rgba(0, 150, 255, 0.9);  /* borde real de cada objeto */
+    outline: 1px dashed rgba(0, 150, 255, 0.9);
 }
 
-/* ===== LETRERO (opcional) ===== */
+
 .letrero5a {
     position: absolute;
     left: 50%;
@@ -217,7 +213,7 @@
     pointer-events: none;
 }
 
-/* ===== MOVIMIENTO DE NUBES ===== */
+
 @keyframes moverNube1_5a {
     0%, 100% { transform: translateX(0); }
     25%, 75% { transform: translateX(10px); }

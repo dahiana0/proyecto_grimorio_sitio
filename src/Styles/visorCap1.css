@@ -1,9 +1,3 @@
-/* ==========================================================================
-   CONTENEDOR GENERAL + FONDO MUSEO
-   (el fondo está aplicado directamente a .visor-container, así los 5 visores
-   lo heredan sin cambiar el JSX)
-   ========================================================================== */
-
 .visor-container {
     position: relative;
     isolation: isolate;
@@ -44,11 +38,6 @@
         linear-gradient(0deg, rgba(0, 0, 0, 0.8), transparent 35%, rgba(0, 0, 0, 0.45));
 }
 
-
-/* ==========================================================================
-   "VENTANA" DE CRISTAL: barra superior + escenario
-   ========================================================================== */
-
 .visor-top,
 .visor-scene,
 .visor-bottom-nav {
@@ -58,7 +47,6 @@
     box-sizing: border-box;
 }
 
-/* Barra superior: botón atrás | título centrado | (vacío) */
 .visor-top {
     display: grid !important;
     grid-template-columns: 1fr auto 1fr;
@@ -75,7 +63,6 @@
     border-radius: 30px 30px 0 0;
 }
 
-/* El grupo izquierdo "se disuelve" para poder centrar el título */
 .visor-top > div:first-child {
     display: contents !important;
 }
@@ -107,7 +94,6 @@
     display: none;
 }
 
-/* Título centrado: "CAPÍTULO I — Umbral" */
 .visor-top > div:first-child > div:last-child {
     grid-column: 2;
     justify-self: center;
@@ -127,11 +113,6 @@
     font-family: pieces;
     font-size: 18px;
 }
-
-
-/* ==========================================================================
-   PÍLDORA LATERAL (archivo) — flotando a la izquierda de la ventana
-   ========================================================================== */
 
 .visor-side {
     position: fixed;
@@ -155,7 +136,6 @@
     box-shadow: 0 18px 40px rgba(0, 0, 0, .45);
 }
 
-/* Iconos: botón circular de cristal (tú pones el .svg/.png) */
 .visor-icon,
 .visor-iconnn {
     box-sizing: content-box;
@@ -179,11 +159,6 @@
     opacity: .4;
 }
 
-
-/* ==========================================================================
-   ESCENARIO (lottie / video) — inset dentro del cristal
-   ========================================================================== */
-
 .visor-scene {
     position: relative;
     width: 100%;
@@ -206,8 +181,6 @@
     align-items: center;
 }
 
-/* Contenido de cada escena: la "pantalla" con esquinas redondeadas.
-   También anima el oscurecido entre escenas. */
 .visor-scene-content {
     position: relative;
 
@@ -268,7 +241,6 @@
     background: #000;
 }
 
-/* Subtítulos: texto limpio sobre la imagen, como en la referencia */
 .visor-sub {
     position: absolute;
 
@@ -301,11 +273,6 @@
 .visor-sub p {
     margin: 0;
 }
-
-
-/* ==========================================================================
-   CONTROLES DE VIDEO: píldora de cristal flotando sobre el video
-   ========================================================================== */
 
 .visor-controls {
     position: absolute;
@@ -379,11 +346,6 @@
     width: 26px;
 }
 
-
-/* ==========================================================================
-   PÍLDORA INFERIOR: ⏮ ▶/⏸ ⏭ | 01 —— 02 —— 03 | volumen, subtítulos
-   ========================================================================== */
-
 .visor-bottom-nav {
     display: flex;
     align-items: center;
@@ -448,7 +410,6 @@
     pointer-events: none;
 }
 
-/* Botón central play / pausa */
 .visor-play-btn {
     flex-shrink: 0;
 
@@ -479,7 +440,6 @@
     pointer-events: none;
 }
 
-/* Progreso numerado: 01 —— 02 —— 03 */
 .visor-progress-track {
     flex: 1;
     min-width: 200px;
@@ -548,7 +508,6 @@
     box-shadow: 0 0 6px rgba(86, 179, 102, .7);
 }
 
-/* Volumen: el panel se abre hacia ARRIBA de la píldora */
 .visor-volume-wrapper {
     position: relative;
     display: flex;
@@ -577,7 +536,6 @@
     z-index: 30;
 }
 
-/* Puente invisible para que el hover no se pierda al subir al panel */
 .visor-volume-panel::before {
     content: "";
     position: absolute;
@@ -597,11 +555,6 @@
     cursor: pointer;
     accent-color: #56b366;
 }
-
-
-/* ==========================================================================
-   RESPONSIVE
-   ========================================================================== */
 
 @media (max-width: 900px) {
     .visor-container {
@@ -628,7 +581,6 @@
         display: none;
     }
 
-    /* La píldora lateral baja y se pone en horizontal */
     .visor-side {
         position: static;
         transform: none;
@@ -639,20 +591,12 @@
     }
 }
 
-
-/* ==========================================================================
-   TEMA NEÓN VERDE — trazos brillantes y resplandor, como el plano del museo
-   (va al final para sobrescribir los bordes/colores de arriba;
-    para cambiar el verde, edita solo --neon y --neon-rgb)
-   ========================================================================== */
-
 .visor-container {
     --neon: #2be58a;
     --neon-soft: #7dffb9;
     --neon-rgb: 43, 229, 138;
 }
 
-/* Paneles de cristal: tinte verde oscuro + borde neón + resplandor */
 .visor-top,
 .visor-scene,
 .visor-bottom-nav,
@@ -664,7 +608,6 @@
         inset 0 0 22px rgba(var(--neon-rgb), .07);
 }
 
-/* La ventana (barra superior + escenario) se lee como una sola pieza */
 .visor-top {
     box-shadow: 0 -4px 14px rgba(var(--neon-rgb), .22), inset 0 0 22px rgba(var(--neon-rgb), .07);
 }
@@ -673,7 +616,6 @@
     box-shadow: 0 10px 26px rgba(var(--neon-rgb), .22), inset 0 0 22px rgba(var(--neon-rgb), .07);
 }
 
-/* La "pantalla" interior: borde fino brillante */
 .visor-scene-content {
     border: 1px solid rgba(var(--neon-rgb), .45);
     box-shadow:
@@ -681,7 +623,6 @@
         inset 0 0 30px rgba(var(--neon-rgb), .08);
 }
 
-/* Respiración suave del resplandor en las píldoras */
 @keyframes neon-respira {
     0%, 100% { box-shadow: 0 0 12px rgba(var(--neon-rgb), .25), inset 0 0 20px rgba(var(--neon-rgb), .06); }
     50%      { box-shadow: 0 0 22px rgba(var(--neon-rgb), .50), inset 0 0 26px rgba(var(--neon-rgb), .12); }
@@ -692,7 +633,6 @@
     animation: neon-respira 4.5s ease-in-out infinite;
 }
 
-/* Botón atrás */
 .visor-btn {
     color: var(--neon-soft);
     background: rgba(var(--neon-rgb), .08);
@@ -708,7 +648,6 @@
     box-shadow: 0 0 18px rgba(var(--neon-rgb), .7);
 }
 
-/* Título */
 .visor-cap {
     color: rgba(var(--neon-rgb), .75);
     text-shadow: 0 0 8px rgba(var(--neon-rgb), .5);
@@ -719,7 +658,6 @@
     text-shadow: 0 0 10px rgba(var(--neon-rgb), .75), 0 0 22px rgba(var(--neon-rgb), .4);
 }
 
-/* Iconos (los que tú pongas) con halo verde */
 .visor-icon,
 .visor-iconnn,
 .visor-arrow-btn img,
@@ -734,7 +672,6 @@
     box-shadow: 0 0 14px rgba(var(--neon-rgb), .55);
 }
 
-/* Play / pausa: botón estrella, como el punto brillante del plano */
 .visor-play-btn {
     background: radial-gradient(circle, rgba(var(--neon-rgb), .35), rgba(var(--neon-rgb), .10));
     border: 1px solid rgba(var(--neon-rgb), .75);
@@ -746,7 +683,6 @@
     box-shadow: 0 0 26px rgba(var(--neon-rgb), .85), inset 0 0 12px rgba(var(--neon-rgb), .35);
 }
 
-/* Separadores y progreso */
 .visor-bar-sep {
     background: rgba(var(--neon-rgb), .35);
     box-shadow: 0 0 6px rgba(var(--neon-rgb), .5);
@@ -776,7 +712,6 @@
     box-shadow: 0 0 8px rgba(var(--neon-rgb), .9), 0 0 16px rgba(var(--neon-rgb), .45);
 }
 
-/* Subtítulos */
 .visor-sub {
     background: rgba(2, 12, 8, .72);
     border: 1px solid rgba(var(--neon-rgb), .4);
@@ -784,7 +719,6 @@
     text-shadow: 0 0 8px rgba(var(--neon-rgb), .45);
 }
 
-/* Panel de volumen */
 .visor-volume-panel {
     background: rgba(3, 16, 10, .85);
     border-color: rgba(var(--neon-rgb), .55);
@@ -795,7 +729,6 @@
     accent-color: var(--neon);
 }
 
-/* Controles flotantes del video */
 .visor-controls {
     background: rgba(3, 16, 10, .55);
     border-color: rgba(var(--neon-rgb), .55);
@@ -817,13 +750,6 @@
         animation: none;
     }
 }
-
-
-/* ==========================================================================
-   AJUSTES DE LA VENTANA (barra superior + escenario)
-   - fondo base oscuro sólido bajo el cristal: así nunca se ve gris
-   - esquinas menos "píldora" para que no parezca un círculo detrás del botón
-   ========================================================================== */
 
 .visor-container {
     background-color: #000302;
@@ -852,18 +778,11 @@
         #040b08;
 }
 
-/* Botón atrás: compacto, sin crecer ni desbordar la barra */
 .visor-btn {
     padding: 6px 16px;
     line-height: 1.2;
     white-space: nowrap;
 }
-
-
-/* ==========================================================================
-   FIX: la barra superior debe ocupar TODO el ancho de la ventana,
-   igual que el escenario (antes se encogía al tamaño de su contenido)
-   ========================================================================== */
 
 .visor-top {
     width: 100%;
@@ -877,15 +796,6 @@
     margin-right: auto;
 }
 
-
-/* ==========================================================================
-   AJUSTES DE LETRA Y BOTONES (NUEVO — va al final para sobrescribir lo de arriba)
-
-   No toca el tamaño de la pantalla ni de la barra superior: solo la letra
-   y la estética de los botones "← Capítulos" y "Siguiente cap. →".
-   ========================================================================== */
-
-/* ---------- Título de la barra superior: letra más grande ---------- */
 .visor-cap {
     font-size: 13px;
     letter-spacing: 2.5px;
@@ -895,7 +805,6 @@
     font-size: 22px;
 }
 
-/* ---------- Botones de capítulo: más grandes y con más vida ---------- */
 .visor-btn {
     display: inline-flex;
     align-items: center;
@@ -937,9 +846,6 @@
     outline-offset: 3px;
 }
 
-/* ---------- Subtítulos: sutiles, que no tapen la animación ----------
-   Sin borde ni resplandor: solo una tira oscura y suave pegada abajo,
-   con la letra legible gracias a la sombra del texto. */
 .visor-sub {
     font-size: 19px;
     line-height: 1.45;
@@ -964,11 +870,6 @@
     .visor-btn { font-size: 12px; padding: 8px 14px; letter-spacing: 2px; }
 }
 
-/* ==========================================================================
-   VIDEO (WebM): ajustes para que se vea y los controles funcionen bien
-   ========================================================================== */
-
-/* El video se centra y no deja el espacio extra debajo que dejan los elementos en línea */
 .visor-video-wrapper {
     display: flex;
     justify-content: center;
@@ -983,8 +884,6 @@
     background: #000;
 }
 
-/* Los controles siempre quedan por encima del video.
-   Cuando están ocultos no bloquean clics; al pasar el mouse vuelven a aparecer. */
 .visor-controls {
     z-index: 15;
     pointer-events: none;

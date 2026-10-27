@@ -1,17 +1,11 @@
-/* ==========================================================================
-   BARRA DE CONTROLES — píldora lateral + píldora inferior (estilo visionOS)
-   Para cambiar el verde edita solo --bc (RGB) y --bc-soft.
-   Va en src/Styles/barraControles.css
-   ========================================================================== */
-
 .bc-side,
 .bc-bottom {
-    --bc: 26, 217, 109;          /* #1ad96d, el verde de tus iconos */
+    --bc: 26, 217, 109;
     --bc-soft: #7dffb9;
     box-sizing: border-box;
 }
 
-/* ---------- Cristal de las píldoras ---------- */
+
 .bc-side,
 .bc-bottom {
     background:
@@ -25,23 +19,25 @@
 }
 
 @keyframes bc-respira-pildora {
-    0%, 100% { box-shadow: 0 0 12px rgba(var(--bc), .25), inset 0 0 20px rgba(var(--bc), .06); }
-    50%      { box-shadow: 0 0 26px rgba(var(--bc), .55), inset 0 0 26px rgba(var(--bc), .13); }
+
+    0%,
+    100% {
+        box-shadow: 0 0 12px rgba(var(--bc), .25), inset 0 0 20px rgba(var(--bc), .06);
+    }
+
+    50% {
+        box-shadow: 0 0 26px rgba(var(--bc), .55), inset 0 0 26px rgba(var(--bc), .13);
+    }
 }
 
-/* ---------- Píldora lateral (vertical, pegada a la pantalla del visor) ----------
-   Si la quieres más cerca o más lejos de la pantalla, cambia --bc-hueco.
-   Si tu ventana no mide 1100px de ancho, cambia --bc-ventana. */
+
 .bc-side {
-    --bc-ventana: 1100px;   /* ancho de la pantalla del visor */
-    --bc-pill: 84px;        /* ancho de esta píldora */
-    --bc-hueco: 16px;       /* separación entre la píldora y la pantalla */
+    --bc-ventana: 1100px;
+    --bc-pill: 84px;
+    --bc-hueco: 16px;
 
     position: fixed;
     left: max(8px, calc(max(110px, 50% - var(--bc-ventana) / 2) - var(--bc-pill) - var(--bc-hueco)));
-    /* centrada en la mitad de la ventana del reproductor (barra superior + pantalla),
-       no en la mitad de la pantalla del navegador: 28px de margen + (62px de barra
-       + alto de la pantalla) / 2. Si la quieres más arriba/abajo, suma o resta px al final. */
     top: calc(28px + (62px + clamp(380px, 100vh - 338px, 600px) + 88px) / 2);
     transform: translateY(-50%);
     z-index: 20;
@@ -49,7 +45,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 40px;               /* separación entre botones (antes 24px) */
+    gap: 40px;
     padding: 44px 8px;
 
     animation:
@@ -57,18 +53,25 @@
         bc-respira-pildora 4.5s ease-in-out .7s infinite;
 }
 
-/* iconos de la píldora lateral: más grandes */
+
 .bc-side .bc-btn {
-    width: 66px;   /* más angosto... */
-    height: 82px;  /* ...pero igual de alto */
+    width: 66px;
+    height: 82px;
 }
 
 @keyframes bc-entra-izq {
-    from { opacity: 0; transform: translate(-30px, -50%); }
-    to   { opacity: 1; transform: translate(0, -50%); }
+    from {
+        opacity: 0;
+        transform: translate(-30px, -50%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(0, -50%);
+    }
 }
 
-/* ---------- Píldora inferior ---------- */
+
 .bc-bottom {
     display: flex;
     flex-direction: column;
@@ -86,8 +89,15 @@
 }
 
 @keyframes bc-entra-abajo {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .bc-row {
@@ -102,7 +112,7 @@
     min-width: min(620px, 100%);
 }
 
-/* barra de tiempo */
+
 .bc-timeline {
     display: flex;
     align-items: center;
@@ -122,7 +132,7 @@
 
 .bc-bar {
     -webkit-appearance: none;
-            appearance: none;
+    appearance: none;
     flex: 1;
     height: 4px;
     border-radius: 4px;
@@ -132,7 +142,10 @@
     box-shadow: 0 0 8px rgba(var(--bc), .45);
 }
 
-.bc-bar:disabled { opacity: .35; cursor: not-allowed; }
+.bc-bar:disabled {
+    opacity: .35;
+    cursor: not-allowed;
+}
 
 .bc-bar::-webkit-slider-thumb {
     -webkit-appearance: none;
@@ -144,7 +157,9 @@
     transition: transform .2s ease;
 }
 
-.bc-bar:not(:disabled)::-webkit-slider-thumb:hover { transform: scale(1.3); }
+.bc-bar:not(:disabled)::-webkit-slider-thumb:hover {
+    transform: scale(1.3);
+}
 
 .bc-bar::-moz-range-thumb {
     width: 14px;
@@ -155,7 +170,7 @@
     box-shadow: 0 0 10px rgba(var(--bc), 1), 0 0 20px rgba(var(--bc), .6);
 }
 
-/* botones de ±5 s */
+
 .bc-chip {
     position: relative;
     padding: 5px 10px;
@@ -180,8 +195,14 @@
     transform: translateY(-1px);
 }
 
-.bc-chip:active:not(:disabled) { transform: scale(.94); }
-.bc-chip:disabled { opacity: .28; cursor: not-allowed; }
+.bc-chip:active:not(:disabled) {
+    transform: scale(.94);
+}
+
+.bc-chip:disabled {
+    opacity: .28;
+    cursor: not-allowed;
+}
 
 /* "Siguiente capítulo": el botón se enciende para llamar la atención */
 .bc-destacado {
@@ -189,8 +210,15 @@
 }
 
 @keyframes bc-llamada {
-    0%, 100% { box-shadow: 0 0 0 rgba(var(--bc), 0); }
-    50%      { box-shadow: 0 0 22px rgba(var(--bc), .9), inset 0 0 12px rgba(var(--bc), .35); }
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 rgba(var(--bc), 0);
+    }
+
+    50% {
+        box-shadow: 0 0 22px rgba(var(--bc), .9), inset 0 0 12px rgba(var(--bc), .35);
+    }
 }
 
 .bc-group {
@@ -206,7 +234,7 @@
     box-shadow: 0 0 6px rgba(var(--bc), .5);
 }
 
-/* ---------- Botón base ---------- */
+
 .bc-btn {
     position: relative;
     flex-shrink: 0;
@@ -226,7 +254,7 @@
     -webkit-tap-highlight-color: transparent;
 }
 
-/* halo que aparece al pasar el mouse */
+
 .bc-btn::before {
     content: "";
     position: absolute;
@@ -250,7 +278,7 @@
     outline-offset: 2px;
 }
 
-/* ---------- Icono: resplandor que late ---------- */
+
 .bc-ico {
     position: relative;
     height: 100%;
@@ -261,40 +289,39 @@
     user-select: none;
 
     filter:
-        drop-shadow(0 0 3px rgba(var(--bc), .9))
-        drop-shadow(0 0 9px rgba(var(--bc), .45));
+        drop-shadow(0 0 3px rgba(var(--bc), .9)) drop-shadow(0 0 9px rgba(var(--bc), .45));
     animation: bc-latido 3.2s ease-in-out infinite;
     transition: transform .3s cubic-bezier(.2, .9, .3, 1), opacity .3s ease;
 }
 
 @keyframes bc-latido {
-    0%, 100% {
+
+    0%,
+    100% {
         filter:
-            drop-shadow(0 0 3px rgba(var(--bc), .85))
-            drop-shadow(0 0 8px rgba(var(--bc), .35));
+            drop-shadow(0 0 3px rgba(var(--bc), .85)) drop-shadow(0 0 8px rgba(var(--bc), .35));
     }
+
     50% {
         filter:
-            drop-shadow(0 0 5px rgba(var(--bc), 1))
-            drop-shadow(0 0 16px rgba(var(--bc), .75));
+            drop-shadow(0 0 5px rgba(var(--bc), 1)) drop-shadow(0 0 16px rgba(var(--bc), .75));
     }
 }
 
-/* hover: crece y se enciende más */
+
 .bc-btn:hover .bc-ico {
     transform: scale(1.14);
     filter:
-        drop-shadow(0 0 5px rgba(var(--bc), 1))
-        drop-shadow(0 0 18px rgba(var(--bc), .9));
+        drop-shadow(0 0 5px rgba(var(--bc), 1)) drop-shadow(0 0 18px rgba(var(--bc), .9));
     animation: none;
 }
 
-/* click: se hunde un poquito */
+
 .bc-btn:active .bc-ico {
     transform: scale(.88);
 }
 
-/* iconos de la píldora lateral flotan suavemente, desfasados */
+
 .bc-float .bc-ico {
     animation:
         bc-latido 3.2s ease-in-out var(--d, 0s) infinite,
@@ -313,28 +340,40 @@
 }
 
 @keyframes bc-flota {
-    0%, 100% { translate: 0 0; }
-    50%      { translate: 0 -2.5px; }
+
+    0%,
+    100% {
+        translate: 0 0;
+    }
+
+    50% {
+        translate: 0 -2.5px;
+    }
 }
 
-/* icono nuevo al cambiar (pausa⇄despausa, volumen⇄sin volumen) */
 .bc-pop {
     animation: bc-pop .38s cubic-bezier(.2, 1.4, .4, 1), bc-latido 3.2s ease-in-out .38s infinite;
 }
 
 @keyframes bc-pop {
-    0%   { transform: scale(.5) rotate(-12deg); opacity: 0; }
-    100% { transform: scale(1) rotate(0); opacity: 1; }
+    0% {
+        transform: scale(.5) rotate(-12deg);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1) rotate(0);
+        opacity: 1;
+    }
 }
 
-/* ---------- Anterior / siguiente ---------- */
+
 .bc-bottom .bc-btn--prev,
 .bc-bottom .bc-btn--next {
     width: 50px;
     height: 50px;
 }
 
-/* "siguiente" = el mismo icono volteado */
 .bc-flip {
     transform: scaleX(-1);
 }
@@ -361,7 +400,7 @@
     filter: drop-shadow(0 0 2px rgba(var(--bc), .4));
 }
 
-/* ---------- Botón central pausa / despausa ---------- */
+
 .bc-bottom .bc-play {
     width: 68px;
     height: 68px;
@@ -382,14 +421,14 @@
     transform: scale(.95);
 }
 
-/* aro de luz que gira alrededor del botón: rápido sonando, lento en pausa */
+
 .bc-aro {
     position: absolute;
     inset: -6px;
     border-radius: 50%;
     background: conic-gradient(from 0deg, transparent 0 55%, rgba(var(--bc), .95) 100%);
     -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px));
-            mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px));
+    mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px));
     filter: drop-shadow(0 0 6px rgba(var(--bc), .9));
     pointer-events: none;
     animation: bc-giro 2.4s linear infinite;
@@ -401,10 +440,12 @@
 }
 
 @keyframes bc-giro {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
-/* ---------- Estado apagado (sin volumen / sin subtítulos) ---------- */
+
 .bc-off .bc-ico {
     opacity: .45;
     animation: none;
@@ -419,7 +460,7 @@
     opacity: .85;
 }
 
-/* tachón que se dibuja al apagar los subtítulos */
+
 .bc-slash {
     position: absolute;
     left: 14%;
@@ -436,10 +477,12 @@
 }
 
 @keyframes bc-tachon {
-    to { transform: rotate(-42deg) scaleX(1); }
+    to {
+        transform: rotate(-42deg) scaleX(1);
+    }
 }
 
-/* ---------- Progreso numerado 01 —— 02 —— 03 ---------- */
+
 .bc-track {
     flex: 1;
     min-width: 170px;
@@ -453,7 +496,9 @@
     flex: 1 1 auto;
 }
 
-.bc-step:last-child { flex: 0 0 auto; }
+.bc-step:last-child {
+    flex: 0 0 auto;
+}
 
 .bc-num {
     flex-shrink: 0;
@@ -476,7 +521,9 @@
     text-shadow: 0 0 6px rgba(var(--bc), .6);
 }
 
-.bc-num:hover { transform: translateY(-1px); }
+.bc-num:hover {
+    transform: translateY(-1px);
+}
 
 .bc-num.active {
     color: rgb(var(--bc));
@@ -486,8 +533,15 @@
 }
 
 @keyframes bc-num-late {
-    0%, 100% { text-shadow: 0 0 8px rgba(var(--bc), .9), 0 0 18px rgba(var(--bc), .5); }
-    50%      { text-shadow: 0 0 12px rgba(var(--bc), 1), 0 0 28px rgba(var(--bc), .85); }
+
+    0%,
+    100% {
+        text-shadow: 0 0 8px rgba(var(--bc), .9), 0 0 18px rgba(var(--bc), .5);
+    }
+
+    50% {
+        text-shadow: 0 0 12px rgba(var(--bc), 1), 0 0 28px rgba(var(--bc), .85);
+    }
 }
 
 .bc-line {
@@ -504,7 +558,7 @@
     box-shadow: 0 0 8px rgba(var(--bc), .9), 0 0 16px rgba(var(--bc), .45);
 }
 
-/* ---------- Responsive: la píldora lateral pasa a horizontal bajo la ventana ---------- */
+
 @media (max-width: 900px) {
     .bc-side {
         position: static;
@@ -516,7 +570,10 @@
         animation: bc-respira-pildora 4.5s ease-in-out infinite;
     }
 
-    .bc-side .bc-btn { width: 50px; height: 50px; }
+    .bc-side .bc-btn {
+        width: 50px;
+        height: 50px;
+    }
 
     .bc-bottom {
         width: 100%;
@@ -528,12 +585,19 @@
         justify-content: center;
     }
 
-    .bc-track { order: 5; flex-basis: 100%; }
-    .bc-sep { display: none; }
+    .bc-track {
+        order: 5;
+        flex-basis: 100%;
+    }
+
+    .bc-sep {
+        display: none;
+    }
 }
 
-/* ---------- Accesibilidad: sin movimiento ---------- */
+
 @media (prefers-reduced-motion: reduce) {
+
     .bc-side,
     .bc-bottom,
     .bc-ico,
@@ -545,11 +609,9 @@
 }
 
 
-/* ==========================================================================
-   EXTRAS PARA EL VISOR NUEVO (barra de tiempo, ±5 s, fila, destacado)
-   ========================================================================== */
 
-/* fila: anterior · pausa · siguiente | números */
+
+
 .bc-row {
     display: flex;
     align-items: center;
@@ -557,7 +619,7 @@
     gap: 14px;
 }
 
-/* con barra de tiempo: la píldora pasa a dos pisos y ocupa el ancho de la ventana */
+
 .bc-bottom--dos {
     flex-direction: column;
     align-items: stretch;
@@ -584,10 +646,10 @@
     text-align: center;
 }
 
-/* barra de progreso */
+
 .bc-bar {
     -webkit-appearance: none;
-            appearance: none;
+    appearance: none;
     flex: 1;
     height: 4px;
     border-radius: 4px;
@@ -612,7 +674,9 @@
     transition: transform .2s ease;
 }
 
-.bc-bar::-webkit-slider-thumb:hover { transform: scale(1.3); }
+.bc-bar::-webkit-slider-thumb:hover {
+    transform: scale(1.3);
+}
 
 .bc-bar::-moz-range-thumb {
     width: 14px;
@@ -623,7 +687,6 @@
     box-shadow: 0 0 10px rgba(var(--bc), 1), 0 0 20px rgba(var(--bc), .6);
 }
 
-/* botones −5s / +5s */
 .bc-chip {
     position: relative;
     padding: 6px 11px;
@@ -648,14 +711,16 @@
     transform: translateY(-1px);
 }
 
-.bc-chip:active { transform: scale(.94); }
+.bc-chip:active {
+    transform: scale(.94);
+}
 
 .bc-chip:disabled {
     opacity: .28;
     pointer-events: none;
 }
 
-/* "siguiente" cuando toca pasar al siguiente capítulo: late más fuerte */
+
 .bc-destacado::before {
     opacity: 1;
     transform: scale(1.1);
@@ -667,16 +732,32 @@
 }
 
 @keyframes bc-destacado {
-    0%, 100% { opacity: .55; transform: scale(1); }
-    50%      { opacity: 1;   transform: scale(1.25); }
+
+    0%,
+    100% {
+        opacity: .55;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.25);
+    }
 }
 
 @media (max-width: 900px) {
-    .bc-row { flex-wrap: wrap; }
-    .bc-bottom--dos { border-radius: 28px; padding: 10px 16px 8px; }
+    .bc-row {
+        flex-wrap: wrap;
+    }
+
+    .bc-bottom--dos {
+        border-radius: 28px;
+        padding: 10px 16px 8px;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
+
     .bc-destacado::before,
     .bc-destacado .bc-ico.bc-flip {
         animation: none !important;
@@ -684,23 +765,14 @@
 }
 
 
-/* ==========================================================================
-   REPRODUCTOR MÁS BAJO — la pantalla se adapta a la altura del navegador
-   para no tener que hacer scroll. Para más alto/bajo cambia el 338px (250px de siempre + 88px de la barra de subtítulos):
-   número mayor = pantalla más baja.   (solo en pantallas de escritorio)
-   ========================================================================== */
+
 @media (min-width: 901px) {
     .visor-container .visor-scene {
         height: clamp(380px, calc(100vh - 338px), 600px);
     }
 }
 
-/* ==========================================================================
-   BOTÓN "VOLVER AL INICIO" (solo capítulo 5, última escena)
-   Usa .bc-btn (halo al pasar el mouse) y .bc-ico (icono que late), igual
-   que los demás botones. Aquí solo se coloca y se le da tamaño.
-   El icono se cambia en ICONOS → "inicio" (Barracontroles.jsx).
-   ========================================================================== */
+
 .bc-inicio {
     --bc: 26, 217, 109;
 
@@ -709,18 +781,13 @@
     bottom: 24px;
     z-index: 20;
 
-    width: 70px;    /* tamaño del botón */
+    width: 70px;
     height: 70px;
     padding: 0;
 }
 
 
-/* ==========================================================================
-   AJUSTES FINALES (NUEVO)
-   - La píldora de herramientas queda fija al lado de la pantalla, centrada
-     en la mitad de la altura, con los botones más separados.
-   - Anterior / siguiente un poco más grandes y letra más legible.
-   ========================================================================== */
+
 
 .bc-bottom .bc-btn--prev,
 .bc-bottom .bc-btn--next {
@@ -738,16 +805,7 @@
 }
 
 
-/* ==========================================================================
-   BARRA DE SUBTÍTULOS — continúa la ventana por debajo de la pantalla,
-   igual que la barra de arriba (mismo ancho, mismo cristal verde).
-   (va al final para sobrescribir lo de arriba)
-   - Más alta o más baja: cambia min-height.
-   - Letra más grande o chica: cambia font-size de ".bc-subbar p".
-   ========================================================================== */
 
-/* La pantalla ya no cierra con esquinas redondeadas: la barra de subtítulos
-   hace de "fondo" de la ventana, igual que la barra de arriba hace de "techo". */
 .visor-container .visor-scene {
     border-bottom: none;
     border-radius: 0;
@@ -756,9 +814,9 @@
 .bc-subbar {
     box-sizing: border-box;
     width: 100%;
-    max-width: 1100px;          /* mismo ancho que la ventana */
+    max-width: 1100px;
     margin: 0 auto;
-    min-height: 88px;           /* reserva 2 líneas para que la ventana no brinque */
+    min-height: 88px;
     padding: 10px 28px 16px;
 
     display: flex;
@@ -787,6 +845,13 @@
 }
 
 @media (max-width: 900px) {
-    .bc-subbar { min-height: 80px; padding: 8px 18px 14px; border-radius: 0 0 20px 20px; }
-    .bc-subbar p { font-size: 17px; }
+    .bc-subbar {
+        min-height: 80px;
+        padding: 8px 18px 14px;
+        border-radius: 0 0 20px 20px;
+    }
+
+    .bc-subbar p {
+        font-size: 17px;
+    }
 }

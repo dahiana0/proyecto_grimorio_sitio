@@ -11,23 +11,22 @@ import "../Styles/LotieCap4.css";
 
 const Lottie = LottieModule.default;
 
-// Número de capítulo con el que se guardan las interacciones
+
 const CAPITULO = 4;
 
-// Tamaño de diseño de la escena (igual que las demás escenas)
+
 const ANCHO = 1500;
 const ALTO = 836;
 
-// true = muestra los cuadros de clic en rojo para calibrarlos
-// false = invisibles (versión final)
+
 const DEBUG = false;
 
 const SECUENCIA = [
   { id: "espalda", persistir: false },
-  { id: "frente", persistir: false, junto: true }, // entra a la vez que espalda
+  { id: "frente", persistir: false, junto: true },
   { id: "pelea", persistir: false },
   { id: "amarrado", persistir: false },
-  { id: "camina", persistir: false, junto: true }, // entra a la vez que amarrado
+  { id: "camina", persistir: false, junto: true },
 ];
 
 const T_CORTE = 13;
@@ -39,11 +38,11 @@ const finDeGrupo = (inicio) => {
 };
 
 const AUDIOS_PERSONAJES = {
-  espalda: { src: "./Pasos Normales  Normal Steps Sound Effect (HD).mp3", volumen: 0.6, loop: true }, // pasos (espalda + frente)
-  pelea: { src: "./Sonidos de golpes y peleas.mp3", volumen: 0.8, loop: false }, // sonido de la pelea
-  amarrado: { src: "./respiracion.mp3", volumen: 0.7, loop: true }, // respiración agitada
-  camina: { src: "./Sonido de Susurro Tenebroso - Efecto de Sonido.mp3", volumen: 0.6, loop: true }, // susurros
-  corre: { src: "./freesound_community-pasos-rapidos-loseta-29459.mp3", volumen: 0.7, loop: true }, // pasos rápidos
+  espalda: { src: "./Pasos Normales  Normal Steps Sound Effect (HD).mp3", volumen: 0.6, loop: true },
+  pelea: { src: "./Sonidos de golpes y peleas.mp3", volumen: 0.8, loop: false },
+  amarrado: { src: "./respiracion.mp3", volumen: 0.7, loop: true },
+  camina: { src: "./Sonido de Susurro Tenebroso - Efecto de Sonido.mp3", volumen: 0.6, loop: true },
+  corre: { src: "./freesound_community-pasos-rapidos-loseta-29459.mp3", volumen: 0.7, loop: true },
 };
 
 const AUDIO_ANTORCHA = "./anto.mp3";
@@ -51,7 +50,7 @@ const AUDIO_PUERTA = "./Puerta.mp3";
 const VOLUMEN_ANTORCHA = 0.8;
 const VOLUMEN_PUERTA = 1;
 
-// La página del archivo vive en otra ruta: las rutas guardadas deben ser absolutas
+
 const rutaAbsoluta = (src) => (src.startsWith("./") ? src.slice(1) : src);
 
 const LotieCap4 = () => {
@@ -90,7 +89,7 @@ const LotieCap4 = () => {
 
   const [actual, setActual] = useState(0);
 
-  // Evento del segundo 13 de "camina"
+
   const [corte, setCorte] = useState(false);
   const corteRef = useRef(false);
   const [caminaFin, setCaminaFin] = useState(false);
@@ -98,7 +97,7 @@ const LotieCap4 = () => {
 
   const audiosRef = useRef({});
 
-  // Ajusta la escala al tamaño del visor
+
   useEffect(() => {
     const el = contenedorRef.current;
     if (!el) return;
@@ -171,8 +170,7 @@ const LotieCap4 = () => {
     const v = puertaRef.current;
     if (!v) return;
 
-    // Solo se ignora el clic mientras la animación está corriendo;
-    // si ya terminó (o nunca arrancó), se puede volver a reproducir.
+
     if (!v.paused && !v.ended) return;
 
     sonar(AUDIO_PUERTA, VOLUMEN_PUERTA);
@@ -183,7 +181,7 @@ const LotieCap4 = () => {
     GuardarInteraccion("puerta", "Puerta", "puerta", CAPITULO, "video", "/Puerta.webm");
   };
 
-  // El clic llega por el cuadro de clic; la que se mueve es la imagen de la antorcha
+
   const moverAntorcha = (e, id, nombre, src) => {
     const img = e.currentTarget.closest(".anim-cap4")?.querySelector("img");
     if (!img) return;
@@ -194,7 +192,7 @@ const LotieCap4 = () => {
     void img.offsetWidth;
     img.classList.add("antorcha-mover-cap4");
 
-    // Animación CSS: se guarda con su imagen y se mueve en el archivo
+
     GuardarInteraccion(id, nombre, "antorcha", CAPITULO, "css", src);
   };
 
@@ -276,10 +274,10 @@ const LotieCap4 = () => {
       reproducirVideo(clipRefs[j]);
       sonarClip(SECUENCIA[j].id);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [actual]);
 
-  // Objetos con clic: cada uno tiene su animación + su propio cuadro de clic
+
   const antorchas = [
     { id: "antorcha1", nombre: "Antorcha 1", clase: "antorcha-fondo-cap4 antorcha1-cap4", src: "/antorcha1.png", alt: "Antorcha 1" },
     { id: "antorcha2", nombre: "Antorcha 2", clase: "antorcha-fondo-cap4 antorcha2-cap4", src: "/antorcha2.png", alt: "Antorcha 2" },
@@ -315,7 +313,7 @@ const LotieCap4 = () => {
               alt="Escenario capítulo 4"
             />
 
-            {/* ===== Antorchas (animación CSS) ===== */}
+
             {antorchas.map(({ id, nombre, clase, src, alt }) => (
               <div key={src} className={`anim-cap4 antorcha-cap4 ${clase}`}>
                 <div className="vista-cap4">
@@ -336,7 +334,7 @@ const LotieCap4 = () => {
               </div>
             ))}
 
-            {/* ===== Puerta (video) ===== */}
+
             <div className="anim-cap4 puerta-cap4">
               <div className="vista-cap4">
                 <video
@@ -354,7 +352,7 @@ const LotieCap4 = () => {
               </div>
             </div>
 
-            {/* ===== Telarañas (video) ===== */}
+
             {telaranas.map(({ id, nombre, clase, ref, src }) => (
               <div key={src} className={`anim-cap4 telarana-cap4 ${clase}`}>
                 <div className="vista-cap4">
@@ -377,7 +375,7 @@ const LotieCap4 = () => {
               </div>
             ))}
 
-            {/* ===== Monstruos (Lottie) ===== */}
+
             {monstruos.map(({ id, nombre, clase, lottieRef, data }) => (
               <div key={clase} className={`anim-cap4 moustro-cap4 ${clase}`}>
                 <div className="vista-cap4">
@@ -397,7 +395,7 @@ const LotieCap4 = () => {
               </div>
             ))}
 
-            {/* ===== Personajes (no se les hace clic) ===== */}
+
             <video
               ref={stepEspaldaRef}
               className={`step-cap4 stepespalda-cap4 ${clipVisible(0) ? "visible-cap4" : ""}`}

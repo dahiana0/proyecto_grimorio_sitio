@@ -5,19 +5,21 @@
     overflow: hidden;
 }
 
-/* Lienzo de tamaño fijo que se escala al visor */
+
 .escenario3 {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 1500px;   /* = ANCHO */
-    height: 836px;   /* = ALTO */
+    width: 1500px;
+    /* = ANCHO */
+    height: 836px;
+    /* = ALTO */
     transform-origin: center center;
     overflow: hidden;
 }
 
 .camaraEscena3 {
-    /* Punto al que enfoca la cámara (donde está Step frente) */
+
     --foco-x: 58%;
     --foco-y: 68%;
     --zoom: 2;
@@ -31,11 +33,8 @@
 
 .camaraEscena3Zoom {
     transform:
-        translate(
-            calc(50% - var(--zoom) * var(--foco-x)),
-            calc(50% - var(--zoom) * var(--foco-y))
-        )
-        scale(var(--zoom));
+        translate(calc(50% - var(--zoom) * var(--foco-x)),
+            calc(50% - var(--zoom) * var(--foco-y))) scale(var(--zoom));
 }
 
 .fondo3 {
@@ -47,44 +46,96 @@
     z-index: 1;
 }
 
-/* ===== Contenedor de cada objeto con clic (posición y ancho originales) =====
-   No tiene z-index propio: así la parte visual (.vista) y el cuadro de clic
-   (.hitbox) se ordenan directamente en la escena, y los puntos de
-   interacción siempre quedan por encima de todo. */
+
 .anim {
     position: absolute;
-    pointer-events: none;   /* lo visual nunca captura clics */
+    pointer-events: none;
+    /* lo visual nunca captura clics */
 }
 
-.lampara1  { left: 150px;  top: -10px;    width: 100px; --z: 2; --zh: 30; }
-.lampara2  { right: 40px;  top: -10px;    width: 100px; --z: 2; --zh: 30; }
-.lampara3  { right: 600px; top: -10px;    width: 100px; --z: 2; --zh: 30; }
+.lampara1 {
+    left: 150px;
+    top: -10px;
+    width: 100px;
+    --z: 2;
+    --zh: 30;
+}
 
-.telarana1 { left: 300px;  top: -50px;    width: 400px; --z: 3; }
-.telarana2 { right: 15px;  top: -20px;    width: 400px; --z: 3; }
+.lampara2 {
+    right: 40px;
+    top: -10px;
+    width: 100px;
+    --z: 2;
+    --zh: 30;
+}
 
-.monstruo1 { left: 5px;    bottom: 80px;  width: 350px; --z: 4; }
-.monstruo2 { left: 270px;  bottom: 80px;  width: 350px; --z: 4; }
-.monstruo3 { right: 200px; bottom: 100px; width: 650px; --z: 4; }
-.monstruo4 { right: 70px;  bottom: 70px;  width: 550px; --z: 4; }
+.lampara3 {
+    right: 600px;
+    top: -10px;
+    width: 100px;
+    --z: 2;
+    --zh: 30;
+}
 
-/* Parte visual: aquí se aplica el hover (sin resplandor) */
+.telarana1 {
+    left: 300px;
+    top: -50px;
+    width: 400px;
+    --z: 3;
+}
+
+.telarana2 {
+    right: 15px;
+    top: -20px;
+    width: 400px;
+    --z: 3;
+}
+
+.monstruo1 {
+    left: 5px;
+    bottom: 80px;
+    width: 350px;
+    --z: 4;
+}
+
+.monstruo2 {
+    left: 270px;
+    bottom: 80px;
+    width: 350px;
+    --z: 4;
+}
+
+.monstruo3 {
+    right: 200px;
+    bottom: 100px;
+    width: 650px;
+    --z: 4;
+}
+
+.monstruo4 {
+    right: 70px;
+    bottom: 70px;
+    width: 550px;
+    --z: 4;
+}
+
+
 .vista {
     position: relative;
     z-index: var(--z);
     transition: transform .25s ease;
 }
 
-.vista > img,
-.vista > video {
+.vista>img,
+.vista>video {
     display: block;
     width: 100%;
     height: auto;
     object-fit: contain;
 }
 
-/* La lámpara se balancea desde arriba */
-.vista > img {
+
+.vista>img {
     transform-origin: top center;
 }
 
@@ -97,47 +148,106 @@
 }
 
 @keyframes balanceoLampara {
-    0%   { transform: rotate(0deg); }
-    15%  { transform: rotate(7deg); }
-    30%  { transform: rotate(-6deg); }
-    45%  { transform: rotate(5deg); }
-    60%  { transform: rotate(-4deg); }
-    75%  { transform: rotate(2deg); }
-    100% { transform: rotate(0deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    15% {
+        transform: rotate(7deg);
+    }
+
+    30% {
+        transform: rotate(-6deg);
+    }
+
+    45% {
+        transform: rotate(5deg);
+    }
+
+    60% {
+        transform: rotate(-4deg);
+    }
+
+    75% {
+        transform: rotate(2deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
 }
 
-/* ===== Cuadro de clic: invisible, en % de SU animación ===== */
+
 .hitbox {
     position: absolute;
-    left:   var(--hx, 0%);
-    top:    var(--hy, 0%);
-    width:  var(--hw, 100%);
+    left: var(--hx, 0%);
+    top: var(--hy, 0%);
+    width: var(--hw, 100%);
     height: var(--hh, 100%);
-    /* Prioridad de clic: por defecto sigue el orden visual, pero se puede
-       fijar con --zh. Las lámparas tienen la más alta, así ninguna
-       telaraña o monstruo les tapa el clic. */
+
     z-index: var(--zh, calc(var(--z) + 10));
-    pointer-events: auto;           /* solo el cuadro recibe clics */
+    pointer-events: auto;
     cursor: pointer;
     background: transparent;
 }
 
-/* ===== Ajuste de cada cuadro (x, y, ancho, alto en % de su animación) =====
-   --px / --py = posición del puntito dentro del cuadro (por defecto, centro).
-   Cambia solo el objeto que necesites; los demás no se afectan. */
-.lampara1  { --hx: 20%; --hy: 0%;  --hw: 60%; --hh: 100%; }
-.lampara2  { --hx: 20%; --hy: 0%;  --hw: 60%; --hh: 100%; }
-.lampara3  { --hx: 20%; --hy: 0%;  --hw: 60%; --hh: 100%; }
 
-.telarana1 { --hx: 10%; --hy: 5%;  --hw: 60%; --hh: 70%; }
-.telarana2 { --hx: 8%;  --hy: 10%; --hw: 52%; --hh: 70%; }
+.lampara2 {
+    --hx: 20%;
+    --hy: 0%;
+    --hw: 60%;
+    --hh: 100%;
+}
 
-.monstruo1 { --hx: 20%; --hy: 15%; --hw: 60%; --hh: 75%; }
-.monstruo2 { --hx: 20%; --hy: 15%; --hw: 60%; --hh: 75%; }
-.monstruo3 { --hx: 20%; --hy: 15%; --hw: 60%; --hh: 75%; }
-.monstruo4 { --hx: 20%; --hy: 15%; --hw: 60%; --hh: 75%; }
+.lampara3 {
+    --hx: 20%;
+    --hy: 0%;
+    --hw: 60%;
+    --hh: 100%;
+}
 
-/* ===== Señal sutil: puntito siempre visible, con un latido corto y destello verde ===== */
+.telarana1 {
+    --hx: 10%;
+    --hy: 5%;
+    --hw: 60%;
+    --hh: 70%;
+}
+
+.telarana2 {
+    --hx: 8%;
+    --hy: 10%;
+    --hw: 52%;
+    --hh: 70%;
+}
+
+.monstruo1 {
+    --hx: 20%;
+    --hy: 15%;
+    --hw: 60%;
+    --hh: 75%;
+}
+
+.monstruo2 {
+    --hx: 20%;
+    --hy: 15%;
+    --hw: 60%;
+    --hh: 75%;
+}
+
+.monstruo3 {
+    --hx: 20%;
+    --hy: 15%;
+    --hw: 60%;
+    --hh: 75%;
+}
+
+.monstruo4 {
+    --hx: 20%;
+    --hy: 15%;
+    --hw: 60%;
+    --hh: 75%;
+}
+
 .pista {
     position: absolute;
     top: var(--py, 50%);
@@ -154,20 +264,32 @@
 }
 
 @keyframes latido {
-    0%, 100% { transform: scale(1);   opacity: 0.9; box-shadow: 0 0 3px rgba(26, 217, 109, 0.4); }
-    50%      { transform: scale(1.3); opacity: 0.7; box-shadow: 0 0 7px rgba(26, 217, 109, 0.7); }
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.9;
+        box-shadow: 0 0 3px rgba(26, 217, 109, 0.4);
+    }
+
+    50% {
+        transform: scale(1.3);
+        opacity: 0.7;
+        box-shadow: 0 0 7px rgba(26, 217, 109, 0.7);
+    }
 }
 
-/* ===== Modo prueba (solo si pones DEBUG = true en el .jsx) ===== */
+
 .camaraEscena3.debug .hitbox {
     background: rgba(255, 0, 0, 0.3);
     outline: 1px solid red;
 }
+
 .camaraEscena3.debug .anim {
-    outline: 1px dashed rgba(0, 150, 255, 0.9);  /* borde real de cada objeto */
+    outline: 1px dashed rgba(0, 150, 255, 0.9);
 }
 
-/* ===== Step: solo se ve, no recibe clics ===== */
+
 .stepFrente,
 .stepEspaldas,
 .stepLado {

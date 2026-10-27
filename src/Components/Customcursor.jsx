@@ -7,7 +7,7 @@ export default function CustomCursor() {
   const iconRef = useRef(null);
 
   useEffect(() => {
-    // Solo en dispositivos con mouse
+
     if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
 
     const root = rootRef.current;
@@ -26,8 +26,7 @@ export default function CustomCursor() {
       icon.classList.add("bounce");
     };
 
-    // Lee el cursor original que tenga el elemento en tu CSS (pointer, text...).
-    // Se quita y se pone la clase en el mismo instante, así que no hay parpadeo.
+
     const checkHover = (el) => {
       if (!el || el.nodeType !== 1) return false;
       if (el.closest("[data-cursor='hover']")) return true;

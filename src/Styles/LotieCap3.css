@@ -1,4 +1,3 @@
-/* Contenedor exterior: recorta lo que se sale del visor */
 .visorCap3 {
     position: relative;
     width: 100%;
@@ -6,13 +5,13 @@
     overflow: hidden;
 }
 
-/* Lienzo de tamaño fijo que se escala al visor */
+
 .escenarioCap3 {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 1500px;   /* = ANCHO */
-    height: 836px;   /* = ALTO */
+    width: 1500px;
+    height: 836px;
     transform-origin: center center;
 }
 
@@ -52,17 +51,14 @@
     pointer-events: none;
 }
 
-/* ===== Contenedor de cada objeto con clic (posición y ancho originales) =====
-   No tiene z-index propio: así la parte visual (.vista) y el cuadro de clic
-   (.hitbox) se ordenan directamente en la escena, y los puntos de
-   interacción siempre quedan por encima de todo. */
+
 .anim {
     position: absolute;
     user-select: none;
-    pointer-events: none;   /* lo visual nunca captura clics */
+    pointer-events: none;
 }
 
-/* --- Puerta --- */
+
 .puerta {
     left: 734px;
     top: 510px;
@@ -72,65 +68,124 @@
     --hover: 1.02;
 }
 
-/* --- Antorchas --- */
+
 .antorcha {
     transform: translate(-50%, -50%);
     --z: 3;
 }
 
-.antorcha-fondo  { width: 16%; }
-.antorcha-frente { width: 30%; }
+.antorcha-fondo {
+    width: 16%;
+}
 
-.antorcha1 { left: 29.8%; top: 35%; }
-.antorcha2 { left: 68.6%; top: 35%; }
-.antorcha3 { left: 14%;   top: 31%; }
-.antorcha4 { left: 88%;   top: 33%; }
+.antorcha-frente {
+    width: 30%;
+}
 
-/* --- Monstruos --- */
-.moustro { --z: 4; }
+.antorcha1 {
+    left: 29.8%;
+    top: 35%;
+}
 
-.moustro1c { left: 815px;   bottom: 22%; width: 200px; }
-.moustro2c { left: 475px;   bottom: 22%; width: 200px; }
-.moustro3c { right: 250px;  bottom: 4%;  width: 290px; }
-.moustro4c { right: 1030px; bottom: 3%;  width: 350px; }
+.antorcha2 {
+    left: 68.6%;
+    top: 35%;
+}
 
-/* --- Telarañas --- */
+.antorcha3 {
+    left: 14%;
+    top: 31%;
+}
+
+.antorcha4 {
+    left: 88%;
+    top: 33%;
+}
+
+
+.moustro {
+    --z: 4;
+}
+
+.moustro1c {
+    left: 815px;
+    bottom: 22%;
+    width: 200px;
+}
+
+.moustro2c {
+    left: 475px;
+    bottom: 22%;
+    width: 200px;
+}
+
+.moustro3c {
+    right: 250px;
+    bottom: 4%;
+    width: 290px;
+}
+
+.moustro4c {
+    right: 1030px;
+    bottom: 3%;
+    width: 350px;
+}
+
+
 .telarana {
     transform: translate(-50%, -50%);
     --z: 2;
 }
 
-.telarana-fondo  { width: 200px; }
-.telarana-frente { width: 1050px; }
+.telarana-fondo {
+    width: 200px;
+}
 
-.telarana1c { left: 500px; top: 37.6%; }
-.telarana2c { left: 900px; top: 45.5%; }
-.telarana3c { left: 500px; top: 240px; }
-.telarana4c { left: 900px; top: 240px; }
+.telarana-frente {
+    width: 1050px;
+}
 
-/* Los contenedores centrados con transform (puerta, antorchas y telarañas)
-   crean su propia capa. Si no tienen z-index quedan DETRÁS del fondo y no se
-   ven, así que se les da su capa explícita. */
+.telarana1c {
+    left: 500px;
+    top: 37.6%;
+}
+
+.telarana2c {
+    left: 900px;
+    top: 45.5%;
+}
+
+.telarana3c {
+    left: 500px;
+    top: 240px;
+}
+
+.telarana4c {
+    left: 900px;
+    top: 240px;
+}
+
+
 .puerta,
 .antorcha,
 .telarana {
     z-index: var(--z);
 }
 
-/* ===== Parte visual: aquí se aplica el hover (sin resplandor) ===== */
+
 .vista {
     position: relative;
     z-index: var(--z);
     transition: transform .25s ease;
 }
 
-.vista > div {
+.vista>div {
     width: 100%;
     height: 100%;
 }
 
-.vista > img,
-.vista > video {
+.vista>img,
+.vista>video {
     display: block;
     width: 100%;
     height: auto;
@@ -142,8 +197,8 @@
     transform: scale(var(--hover, 1.03));
 }
 
-/* ===== Antorcha: balanceo con destello al hacer clic ===== */
-.antorcha .vista > img {
+
+.antorcha .vista>img {
     transform-origin: 50% 65%;
 }
 
@@ -160,15 +215,13 @@
     20% {
         rotate: 14deg;
         filter:
-            brightness(1.5)
-            drop-shadow(0 0 14px rgba(255, 170, 40, 0.9));
+            brightness(1.5) drop-shadow(0 0 14px rgba(255, 170, 40, 0.9));
     }
 
     40% {
         rotate: -11deg;
         filter:
-            brightness(1.3)
-            drop-shadow(0 0 10px rgba(255, 170, 40, 0.7));
+            brightness(1.3) drop-shadow(0 0 10px rgba(255, 170, 40, 0.7));
     }
 
     60% {
@@ -187,40 +240,90 @@
     }
 }
 
-/* ===== Cuadro de clic: invisible, en % de SU animación ===== */
+
 .hitbox {
     position: absolute;
-    left:   var(--hx, 0%);
-    top:    var(--hy, 0%);
-    width:  var(--hw, 100%);
+    left: var(--hx, 0%);
+    top: var(--hy, 0%);
+    width: var(--hw, 100%);
     height: var(--hh, 100%);
-    /* Prioridad de clic: por defecto sigue el orden visual (lo de adelante gana),
-       se puede fijar con --zh. Siempre queda sobre Step y sobre las animaciones. */
     z-index: var(--zh, calc(var(--z) + 10));
-    pointer-events: auto;           /* solo el cuadro recibe clics */
-    cursor: pointer;
+    pointer-events: auto;
     background: transparent;
 }
 
-/* ===== Ajuste de cada cuadro (x, y, ancho, alto en % de su animación) =====
-   --px / --py = posición del puntito dentro del cuadro (por defecto, centro).
-   Cambia solo el objeto que necesites; los demás no se afectan.
-   Las telarañas grandes ("frente") tienen cuadro pequeño para no tapar nada. */
-.puerta     { --hx: 10%; --hy: 5%;  --hw: 80%; --hh: 90%; }
 
-.antorcha-fondo  { --hx: 25%; --hy: 5%;  --hw: 50%; --hh: 90%; }
-.antorcha-frente { --hx: 35%; --hy: 5%;  --hw: 30%; --hh: 90%; }
+.puerta {
+    --hx: 10%;
+    --hy: 5%;
+    --hw: 80%;
+    --hh: 90%;
+}
 
-.moustro1c  { --hx: 15%; --hy: 10%; --hw: 70%; --hh: 85%; }
-.moustro2c  { --hx: 15%; --hy: 10%; --hw: 70%; --hh: 85%; }
-.moustro3c  { --hx: 15%; --hy: 10%; --hw: 70%; --hh: 85%; }
-.moustro4c  { --hx: 15%; --hy: 10%; --hw: 70%; --hh: 85%; }
+.antorcha-fondo {
+    --hx: 25%;
+    --hy: 5%;
+    --hw: 50%;
+    --hh: 90%;
+}
 
-.telarana-fondo  { --hx: 15%; --hy: 10%; --hw: 70%; --hh: 80%; }
-.telarana3c { --hx: 40%; --hy: 15%; --hw: 20%; --hh: 25%; }
-.telarana4c { --hx: 40%; --hy: 15%; --hw: 20%; --hh: 25%; }
+.antorcha-frente {
+    --hx: 35%;
+    --hy: 5%;
+    --hw: 30%;
+    --hh: 90%;
+}
 
-/* ===== Señal sutil: puntito siempre visible, con un latido corto y destello verde ===== */
+.moustro1c {
+    --hx: 15%;
+    --hy: 10%;
+    --hw: 70%;
+    --hh: 85%;
+}
+
+.moustro2c {
+    --hx: 15%;
+    --hy: 10%;
+    --hw: 70%;
+    --hh: 85%;
+}
+
+.moustro3c {
+    --hx: 15%;
+    --hy: 10%;
+    --hw: 70%;
+    --hh: 85%;
+}
+
+.moustro4c {
+    --hx: 15%;
+    --hy: 10%;
+    --hw: 70%;
+    --hh: 85%;
+}
+
+.telarana-fondo {
+    --hx: 15%;
+    --hy: 10%;
+    --hw: 70%;
+    --hh: 80%;
+}
+
+.telarana3c {
+    --hx: 40%;
+    --hy: 15%;
+    --hw: 20%;
+    --hh: 25%;
+}
+
+.telarana4c {
+    --hx: 40%;
+    --hy: 15%;
+    --hw: 20%;
+    --hh: 25%;
+}
+
+
 .pista {
     position: absolute;
     top: var(--py, 50%);
@@ -237,25 +340,37 @@
 }
 
 @keyframes latido {
-    0%, 100% { transform: scale(1);   opacity: 0.9; box-shadow: 0 0 3px rgba(26, 217, 109, 0.4); }
-    50%      { transform: scale(1.3); opacity: 0.7; box-shadow: 0 0 7px rgba(26, 217, 109, 0.7); }
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.9;
+        box-shadow: 0 0 3px rgba(26, 217, 109, 0.4);
+    }
+
+    50% {
+        transform: scale(1.3);
+        opacity: 0.7;
+        box-shadow: 0 0 7px rgba(26, 217, 109, 0.7);
+    }
 }
 
-/* Mientras la cámara se acerca, los punticos se ocultan (los clics siguen activos) */
+
 .camara-cap-3[data-zoom="1"] .pista {
     visibility: hidden;
 }
 
-/* ===== Modo prueba (solo si pones DEBUG = true en el .jsx) ===== */
+
 .camara-cap-3.debug .hitbox {
     background: rgba(255, 0, 0, 0.3);
     outline: 1px solid red;
 }
+
 .camara-cap-3.debug .anim {
-    outline: 1px dashed rgba(0, 150, 255, 0.9);  /* borde real de cada objeto */
+    outline: 1px dashed rgba(0, 150, 255, 0.9);
 }
 
-/* ===== Step: solo se ve, no recibe clics ===== */
+
 .step-cap-3 {
     position: absolute;
 
@@ -274,7 +389,7 @@
     user-select: none;
 }
 
-/* Reglas compartidas con otras escenas (se mantienen igual) */
+
 .visor-scene {
     position: relative;
 

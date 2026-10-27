@@ -11,12 +11,9 @@ import Header from "../Components/Header";
 import Footer from "../Components/footer";
 import "../Styles/SobreNosotros.css";
 
-/* ==================================================================
-   AJUSTA AQUÍ
-================================================================== */
 
-// ★ ICONOS de Misión / Visión / Propósito / Inspiración ★
-// Los SVG van en public/iconos/ (mision, vision, proposito, inspiracion).
+
+
 const PILARES = [
   {
     titulo: "Misión",
@@ -44,16 +41,13 @@ const PILARES = [
   },
 ];
 
-// ★ DOCUMENTACIÓN ★
-// pdf     = ruta del PDF (carpeta public).
-// portada = imagen de la primera página, como vista previa (carpeta public).
-//           Mientras esté en null (o no exista) se ve una portada de muestra.
+
 const DOCUMENTOS = [
   {
     titulo: "Guía de estilos",
     desc: "Colores, tipografías y reglas visuales.",
     pdf: "/01_Guia_de_Estilos_Grimorio (1)_compressed.pdf",
-    portada: "/guia.png", 
+    portada: "/guia.png",
   },
   {
     titulo: "Manual de marca",
@@ -65,7 +59,7 @@ const DOCUMENTOS = [
     titulo: "Pitchbook",
     desc: "La propuesta del proyecto en pocas páginas.",
     pdf: "/Pitchbook_Grimorio_compressed.pdf",
-    portada:"/pich.png",
+    portada: "/pich.png",
   },
   {
     titulo: "Sistema de iconos",
@@ -75,7 +69,7 @@ const DOCUMENTOS = [
   },
 ];
 
-// ★ EQUIPO ★  (imagen = personaje animado; los SVG van en public/personajes/)
+
 const EQUIPO = [
   {
     nombre: "Sofía Amaya Reyes",
@@ -100,9 +94,7 @@ const EQUIPO = [
 
 const SUAVE = [0.2, 0.8, 0.2, 1];
 
-/* ==================================================================
-   1. PILARES: un hilo que se dibuja al bajar, con los iconos animados
-================================================================== */
+
 const Pilar = ({ p, i, reducir }) => (
   <motion.article
     className={`sn-pilar sn-pilar--${i % 2 === 0 ? "izq" : "der"}`}
@@ -111,7 +103,7 @@ const Pilar = ({ p, i, reducir }) => (
     viewport={{ once: true, amount: 0.35 }}
     transition={{ duration: 0.9, ease: SUAVE }}
   >
-    {/* El icono y el texto se pueden arrastrar; al soltarlos vuelven a su sitio */}
+
     <motion.div
       className="sn-nodo-caja"
       drag
@@ -157,19 +149,17 @@ const Hilo = ({ reducir }) => {
   );
 };
 
-/* ==================================================================
-   2. DOCUMENTACIÓN: hojas que caen en su sitio mientras se baja
-================================================================== */
+
 const Polaroid = ({ d, i, total, reducir }) => {
   const [falla, setFalla] = useState(false);
-  const arrastro = useRef(false); // para no abrir el PDF al soltar una tarjeta arrastrada
-  const inclina = (i - (total - 1) / 2) * 4; // grados: las de afuera se abren
-  const f = (i + 0.5) / total; // posición en la cuerda (0 a 1)
-  const curva = 4 * f * (1 - f); // 0 en las puntas, 1 en el centro
+  const arrastro = useRef(false);
+  const inclina = (i - (total - 1) / 2) * 4;
+  const f = (i + 0.5) / total;
+  const curva = 4 * f * (1 - f);
   const conPortada = d.portada && !falla;
 
   return (
-    /* La caja y la pinza NO se mueven: solo la tarjeta cae, se balancea y se arrastra */
+
     <div className="sn-polo-caja" style={{ marginTop: `calc(${curva} * var(--sag))` }}>
       <span className="sn-clip" aria-hidden="true" />
 
@@ -181,7 +171,7 @@ const Polaroid = ({ d, i, total, reducir }) => {
         viewport={{ once: true, amount: 0.3 }}
         transition={{ type: "spring", stiffness: 55, damping: 7, mass: 1.2, delay: i * 0.16 }}
       >
-        {/* Se puede mover un poco; al soltarla vuelve a su sitio */}
+
         <motion.div
           className="sn-polo-arrastre"
           drag
@@ -277,11 +267,7 @@ const Documentacion = ({ reducir }) => {
   );
 };
 
-/* ==================================================================
-   3. EQUIPO: credenciales colgadas de una correa que se balancean
-   - arrastra la credencial y suéltala: se balancea como un péndulo
-   - toca (sin arrastrar) para girarla y leer su información
-================================================================== */
+
 const limitar = (v, a, b) => Math.min(b, Math.max(a, v));
 
 const Credencial = ({ p, i, empujon, reducir }) => {
@@ -294,13 +280,13 @@ const Credencial = ({ p, i, empujon, reducir }) => {
   const [agarrada, setAgarrada] = useState(false);
   const visible = useInView(caja, { once: true, amount: 0.3 });
 
-  // Motor de física: un péndulo con rozamiento. Pinta directo en el DOM.
+
   useEffect(() => {
     const e = { th: 0, om: 0, drag: false, target: 0, raf: 0, last: 0 };
 
     const pinta = () => {
       if (pendulo.current) pendulo.current.style.transform = `rotate(${e.th}rad)`;
-      // la tarjeta se "retrasa" un poco respecto a la correa
+
       if (lag.current) lag.current.style.transform = `rotate(${limitar(-e.om * 0.04, -0.45, 0.45)}rad)`;
     };
 
@@ -340,7 +326,7 @@ const Credencial = ({ p, i, empujon, reducir }) => {
     return () => cancelAnimationFrame(e.raf);
   }, []);
 
-  // Al aparecer en pantalla, cae balanceándose
+
   useEffect(() => {
     if (!visible || reducir || !motor.current) return;
     const { e, arranca } = motor.current;
@@ -349,7 +335,7 @@ const Credencial = ({ p, i, empujon, reducir }) => {
     arranca();
   }, [visible, reducir, i]);
 
-  // Botón "Dale un empujón"
+
   useEffect(() => {
     if (!empujon || !motor.current) return;
     const { e, arranca } = motor.current;
@@ -372,7 +358,7 @@ const Credencial = ({ p, i, empujon, reducir }) => {
 
     const r = caja.current.getBoundingClientRect();
     const s = toque.current;
-    s.px = r.left + r.width / 2; // punto donde cuelga la correa
+    s.px = r.left + r.width / 2;
     s.py = r.top;
     s.x = ev.clientX;
     s.y = ev.clientY;
@@ -380,7 +366,7 @@ const Credencial = ({ p, i, empujon, reducir }) => {
     s.mov = false;
     s.desfase = 0;
 
-    // para que no "salte" al agarrarla: se conserva el ángulo actual
+
     const dx = ev.clientX - s.px;
     const dy = Math.max(ev.clientY - s.py, 40);
     s.desfase = e.th - Math.atan2(-dx, dy);
@@ -501,9 +487,7 @@ const Equipo = ({ reducir }) => {
   );
 };
 
-/* ==================================================================
-   PÁGINA
-================================================================== */
+
 export const SobreNosotros = () => {
   const reducir = useReducedMotion();
 

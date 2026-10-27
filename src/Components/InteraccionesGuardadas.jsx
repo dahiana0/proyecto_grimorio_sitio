@@ -27,21 +27,19 @@ import moustro2 from "../assets/moustro2.json";
 import moustro3 from "../assets/moustro3.json";
 import moustro4 from "../assets/moustro4.json";
 
-// Escenas reales de cada capítulo (las mismas del inicio)
 import LootieKarol from "../Components/LootieKarol";
 import LotieCap2 from "../Components/LotieCap2";
 import LotieCap3 from "../Components/LotieCap3";
 import LotieCap4 from "../Components/LotieCap4";
 import LotieCap5A from "../Components/LotieCap5A";
 
-import Header from "../Components/Header"; // <- ajusta la ruta si es distinta
-
+import Header from "../Components/Header";
 import "../Styles/archivoMuro.css";
 import "../Styles/css.css";
 
 const Lottie = LottieModule.default;
 
-// Registro de animaciones Lottie (tipo "lottie")
+
 const animaciones = {
   tablero,
   calavera,
@@ -62,9 +60,7 @@ const animaciones = {
   moustro4,
 };
 
-/* ==================================================================
-   AJUSTA AQUÍ
-================================================================== */
+
 const capitulos = [
   { numero: 1, titulo: "Capítulo 1", subtitulo: "Umbral", ruta: "/cap-uno", Escena: LootieKarol, foco: { x: 0.5, y: 0.6 }, zoom: 1 },
   { numero: 2, titulo: "Capítulo 2", subtitulo: "Reliquias", ruta: "/cap-dos", Escena: LotieCap2, foco: { x: 0.5, y: 0.6 }, zoom: 1 },
@@ -73,7 +69,7 @@ const capitulos = [
   { numero: 5, titulo: "Capítulo 5", subtitulo: "", ruta: "/cap-cinco", Escena: LotieCap5A, foco: { x: 0.5, y: 0.6 }, zoom: 1 },
 ];
 
-// Posición "esparcida" de cada carta: altura (dy), inclinación (rot), flote
+
 const DISPOSICION = [
   { dy: 10, rot: -3, delay: -1, dur: 6 },
   { dy: 70, rot: 2.5, delay: -3, dur: 7 },
@@ -88,7 +84,7 @@ const ESCENA_ANCHO = 1500;
 const ESCENA_ALTO = 836;
 const EASE = [0.2, 0.9, 0.25, 1];
 
-/* ---------- Texto que entra letra por letra ---------- */
+
 const Letras = ({ texto, retraso = 0, paso = 0.035, className = "" }) => {
   const reducir = useReducedMotion();
   let n = 0;
@@ -116,7 +112,7 @@ const Letras = ({ texto, retraso = 0, paso = 0.035, className = "" }) => {
   );
 };
 
-/* ---------- Número que cuenta hasta su valor ---------- */
+
 const Numero = ({ valor }) => {
   const mv = useMotionValue(0);
   const [txt, setTxt] = useState(0);
@@ -133,10 +129,9 @@ const Numero = ({ valor }) => {
   return <>{txt}</>;
 };
 
-/* ---------- Arte de una ficha según su tipo ---------- */
-const FichaArte = ({ item }) => {
-  const tipo = item.tipo ?? "lottie"; // las guardadas antes no tienen tipo
 
+const FichaArte = ({ item }) => {
+  const tipo = item.tipo ?? "lottie";
   if (tipo === "video" && item.src) {
     return (
       <video
@@ -170,7 +165,7 @@ const FichaArte = ({ item }) => {
   ) : null;
 };
 
-/* ---------- Miniatura: la escena real ajustada para llenar toda la carta ---------- */
+
 const EscenaMiniatura = ({ Escena, foco = { x: 0.5, y: 0.5 }, zoom = 1 }) => {
   const caja = useRef(null);
   const escena = useRef(null);
@@ -194,7 +189,7 @@ const EscenaMiniatura = ({ Escena, foco = { x: 0.5, y: 0.5 }, zoom = 1 }) => {
       setM({ k, left, top });
     };
 
-    // Zona REAL del dibujo: un svg de Lottie es más grande que su dibujo
+    
     const zonaDibujo = (n) => {
       const r = n.getBoundingClientRect();
       if (n instanceof SVGSVGElement && n.viewBox && n.viewBox.baseVal.width) {
@@ -272,9 +267,7 @@ const EscenaMiniatura = ({ Escena, foco = { x: 0.5, y: 0.5 }, zoom = 1 }) => {
   );
 };
 
-/* ==================================================================
-   PÁGINA
-================================================================== */
+
 const InteraccionesGuardadas = () => {
   const navigate = useNavigate();
   const muroRef = useRef(null);
@@ -302,11 +295,11 @@ const InteraccionesGuardadas = () => {
     return () => window.removeEventListener("grimorioActualizado", cargar);
   }, []);
 
-  // Las escenas traen efectos de sonido: aquí no deben sonar
+
   useEffect(() => {
     const original = HTMLAudioElement.prototype.play;
     HTMLAudioElement.prototype.play = function () {
-      // El clic del menú (Header) sí suena; los efectos de las escenas no
+
       if (this.src && this.src.includes("sonidoboton")) {
         return original.apply(this, arguments);
       }
@@ -317,7 +310,7 @@ const InteraccionesGuardadas = () => {
     };
   }, []);
 
-  // Escape cierra primero la confirmación y luego el panel
+
   useEffect(() => {
     if (!capituloActivo && !confirmando) return;
     const alTeclear = (e) => {
@@ -356,10 +349,10 @@ const InteraccionesGuardadas = () => {
   const obtenerFecha = (fecha) =>
     fecha
       ? new Date(fecha).toLocaleDateString("es-CO", {
-          day: "numeric",
-          month: "long",
-          year: "numeric",
-        })
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      })
       : "";
 
   const contarPorCapitulo = (n) => interacciones.filter((i) => i.capitulo === n).length;
@@ -369,7 +362,7 @@ const InteraccionesGuardadas = () => {
     setZ((prev) => ({ ...prev, [idx]: contadorZ.current }));
   };
 
-  // El panel nace desde la carta que tocaste
+
   const abrirCapitulo = (el, numero) => {
     const r = el.getBoundingClientRect();
     setOrigen({
@@ -393,7 +386,7 @@ const InteraccionesGuardadas = () => {
       <Header />
 
       <div className="arq-archContenido">
-        {/* ---------- Encabezado centrado ---------- */}
+
         <header className="arq-archHead">
           <h1 className="arq-archTitulo">
             <Letras texto="Interacciones guardadas" retraso={0.2} />
@@ -432,7 +425,7 @@ const InteraccionesGuardadas = () => {
           </motion.p>
         </header>
 
-        {/* ---------- Resumen ---------- */}
+
         <div className="arq-stats">
           {[
             { etiqueta: "Guardadas", valor: <Numero valor={interacciones.length} /> },
@@ -452,7 +445,7 @@ const InteraccionesGuardadas = () => {
           ))}
         </div>
 
-        {/* ---------- Escenario con las cartas ---------- */}
+
         <motion.section
           className="arq-escenario"
           initial={{ opacity: 0, y: 40 }}
@@ -518,7 +511,7 @@ const InteraccionesGuardadas = () => {
                           }
                         }}
                       >
-                        {/* La carta: solo la escena */}
+
                         <div className="arq-cartaMarco">
                           <div className="arq-cartaArte">
                             <EscenaMiniatura Escena={cap.Escena} foco={cap.foco} zoom={cap.zoom} />
@@ -526,7 +519,7 @@ const InteraccionesGuardadas = () => {
                           </div>
                         </div>
 
-                        {/* La información: debajo de la carta */}
+
                         <figcaption className="arq-pie">
                           <span className="arq-pieNumero">{cap.numero}</span>
                           <span className="arq-pieTexto">
@@ -559,7 +552,7 @@ const InteraccionesGuardadas = () => {
         </motion.section>
       </div>
 
-      {/* ---------- Archivo del capítulo ---------- */}
+
       <AnimatePresence>
         {capituloActivo && (
           <motion.div
@@ -665,7 +658,7 @@ const InteraccionesGuardadas = () => {
         )}
       </AnimatePresence>
 
-      {/* ---------- Confirmación ---------- */}
+
       <AnimatePresence>
         {confirmando && (
           <motion.div

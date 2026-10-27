@@ -20,7 +20,7 @@ const personajes = {
   orabona: {
     expediente: "002",
     nombre: "Orabona",
-    modelo:"/models/orabonaaa.glb",
+    modelo: "/models/orabonaaa.glb",
     color: "#1ad96d",
     tags: ["Misterioso", "Aliado"],
     cita: "El socio silencioso de Rogers. Misterioso y enigmático, siempre parece saber más de lo que muestra.",
@@ -54,7 +54,7 @@ export const PersonajeDescripcion = ({ id }) => {
 
   const cerrar = () => navigate("/Personajes");
 
-  // Cerrar con ESC
+
   useEffect(() => {
     const onKey = (e) => e.key === "Escape" && navigate("/Personajes");
     window.addEventListener("keydown", onKey);
@@ -75,13 +75,13 @@ export const PersonajeDescripcion = ({ id }) => {
         role="dialog"
         aria-label={`Ficha técnica de ${p.nombre}`}
       >
-        {/* Cabecera de ficha */}
+
         <button onClick={cerrar} className="pj-close-btn" aria-label="Cerrar">
           <img src="/x.svg" alt="" />
         </button>
 
         <div className="pj-content">
-          {/* ===== 3D ===== */}
+
           <div className="pj-stage">
             <div className="pj-glow" />
             <div className="pj-float">
@@ -101,7 +101,7 @@ export const PersonajeDescripcion = ({ id }) => {
             <p className="pj-hint">↻ ARRASTRA PARA GIRAR</p>
           </div>
 
-          {/* ===== Datos ===== */}
+
           <div className="pj-text">
             <h1 className="pj-title">{p.nombre}</h1>
 

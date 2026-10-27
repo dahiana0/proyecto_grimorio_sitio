@@ -1,6 +1,3 @@
-/* ---------------------------------------------------------------------
-   Escena
---------------------------------------------------------------------- */
 .escena5c {
     position: relative;
     width: 100%;
@@ -9,10 +6,7 @@
     background: #000;
 }
 
-/* ---------------------------------------------------------------------
-   Cámara: contiene toda la escena. El JS le aplica el zoom.
-   transform-origin = punto al que se acerca (puerta y Step)
---------------------------------------------------------------------- */
+
 .camara5c {
     position: absolute;
     inset: 0;
@@ -20,9 +14,7 @@
     will-change: transform;
 }
 
-/* ---------------------------------------------------------------------
-   Fondo (imagen)
---------------------------------------------------------------------- */
+
 .fondo5c {
     position: absolute;
     inset: 0;
@@ -32,24 +24,15 @@
     z-index: 1;
 }
 
-/* ---------------------------------------------------------------------
-   Contenedor de cada objeto con clic (posición y tamaño originales)
-   Los nombres llevan el sufijo 5c para no chocar con otras escenas.
-   Casi todos se centran con transform, así que cada uno lleva su z-index
-   explícito (si no, quedarían DETRÁS del fondo y no se verían).
-   Orden de capas: fondo 1 → manchas 2 → cuadros 3 → huesos 4 → antorchas 5
-   → puerta 6 → cinta 7 → personajes 10
---------------------------------------------------------------------- */
+
 .anim5c {
     position: absolute;
-    pointer-events: none;   /* lo visual nunca captura clics */
+    pointer-events: none;
     user-select: none;
     z-index: var(--z);
 }
 
-/* ---------------------------------------------------------------------
-   Manchas: cubren toda la escena
---------------------------------------------------------------------- */
+
 .manchas5c {
     inset: 0;
     width: 100%;
@@ -58,57 +41,122 @@
 }
 
 .manchas5c .vista5c,
-.manchas5c .vista5c > video {
+.manchas5c .vista5c>video {
     width: 100%;
     height: 100%;
 }
 
-.manchas5c .vista5c > video {
+.manchas5c .vista5c>video {
     object-fit: cover;
 }
 
-/* ---------------------------------------------------------------------
-   Cuadros: left/top = CENTRO del cuadro (en % de la escena)
-   width = tamaño (en % de la escena). Los lejanos son más pequeños.
---------------------------------------------------------------------- */
+
 .cuadro5c {
     transform: translate(-50%, -50%);
     --z: 3;
     --hover: 1.05;
 }
 
-/* Pared izquierda (5 = más cerca, 8 = más lejos) */
-.cuadro5-5c { left: 7.8%;  top: 38%;   width: 12%;  }
-.cuadro6-5c { left: 20.3%; top: 40%;   width: 9.1%; }
-.cuadro7-5c { left: 28.4%; top: 39.5%; width: 7.8%; }
-.cuadro8-5c { left: 34.4%; top: 41.5%; width: 6.2%; }
 
-/* Pared derecha (4 = más lejos, 1 = más cerca) */
-.cuadro4-5c { left: 63.5%; top: 40%;   width: 65px; }
-.cuadro3-5c { left: 69.7%; top: 39.5%; width: 6%;   }
-.cuadro2-5c { left: 78.9%; top: 37.5%; width: 10%;  }
-.cuadro1-5c { left: 91.7%; top: 38%;   width: 15%;  }
+.cuadro5-5c {
+    left: 7.8%;
+    top: 38%;
+    width: 12%;
+}
 
-/* ---------------------------------------------------------------------
-   Huesos (6 imágenes)
-   left/top = CENTRO del hueso (en % de la escena) | width = tamaño
-   --giro = hacia dónde gira al saltar (en grados, puede ser negativo)
---------------------------------------------------------------------- */
+.cuadro6-5c {
+    left: 20.3%;
+    top: 40%;
+    width: 9.1%;
+}
+
+.cuadro7-5c {
+    left: 28.4%;
+    top: 39.5%;
+    width: 7.8%;
+}
+
+.cuadro8-5c {
+    left: 34.4%;
+    top: 41.5%;
+    width: 6.2%;
+}
+
+
+.cuadro4-5c {
+    left: 63.5%;
+    top: 40%;
+    width: 65px;
+}
+
+.cuadro3-5c {
+    left: 69.7%;
+    top: 39.5%;
+    width: 6%;
+}
+
+.cuadro2-5c {
+    left: 78.9%;
+    top: 37.5%;
+    width: 10%;
+}
+
+.cuadro1-5c {
+    left: 91.7%;
+    top: 38%;
+    width: 15%;
+}
+
+
 .hueso5c {
     transform: translate(-50%, -50%);
     --z: 4;
     --hover: 1.1;
 }
 
-.hueso1-5c { left: 38%;   top: 58%;   width: 4%; --giro: 360deg;  } /* junto a la puerta, izquierda */
-.hueso2-5c { left: 57%;   top: 57%;   width: 4%; --giro: -360deg; } /* junto a la puerta, derecha */
-.hueso3-5c { left: 31.5%; top: 71.5%; width: 4%; --giro: 360deg;  } /* centro-izquierda */
-.hueso4-5c { left: 69.5%; top: 70%;   width: 4%; --giro: -360deg; } /* centro-derecha */
-.hueso5-5c { left: 8.5%;  top: 87%;   width: 4%; --giro: 360deg;  } /* esquina inferior izquierda */
-.hueso6-5c { left: 85.5%; top: 81.5%; width: 4%; --giro: -360deg; } /* esquina inferior derecha */
+.hueso1-5c {
+    left: 38%;
+    top: 58%;
+    width: 4%;
+    --giro: 360deg;
+}
 
-/* Animación al tocar un hueso: salta, gira y rebota
-   (la clase la agrega el JSX en cada clic a la imagen) */
+.hueso2-5c {
+    left: 57%;
+    top: 57%;
+    width: 4%;
+    --giro: -360deg;
+}
+
+.hueso3-5c {
+    left: 31.5%;
+    top: 71.5%;
+    width: 4%;
+    --giro: 360deg;
+}
+
+.hueso4-5c {
+    left: 69.5%;
+    top: 70%;
+    width: 4%;
+    --giro: -360deg;
+}
+
+.hueso5-5c {
+    left: 8.5%;
+    top: 87%;
+    width: 4%;
+    --giro: 360deg;
+}
+
+.hueso6-5c {
+    left: 85.5%;
+    top: 81.5%;
+    width: 4%;
+    --giro: -360deg;
+}
+
+
 .hueso-animando {
     animation: saltoHueso .8s ease-out;
 }
@@ -117,42 +165,62 @@
     0% {
         transform: rotate(0deg) scale(1);
     }
+
     35% {
         transform: translateY(-45px) rotate(var(--giro)) scale(1.25);
     }
+
     60% {
         transform: rotate(var(--giro)) scale(1);
     }
+
     75% {
         transform: translateY(-14px) rotate(var(--giro)) scale(1.08);
     }
+
     100% {
         transform: rotate(var(--giro)) scale(1);
     }
 }
 
-/* ---------------------------------------------------------------------
-   Antorchas (4 imágenes, mismas del capítulo 3)
-   left/top = CENTRO de la antorcha (en % de la escena)
-   width = tamaño (en % de la escena).
---------------------------------------------------------------------- */
+
 .antorcha5c {
     transform: translate(-50%, -50%);
     --z: 5;
 }
 
-/* Tamaños: lejanas (1 y 2) más pequeñas, cercanas (3 y 4) más grandes */
-.antorcha5c-fondo  { width: 16%; }
-.antorcha5c-frente { width: 25%; }
 
-/* Posiciones iniciales (ajústalas a tu escena) */
-.antorcha1-5c { left: 32.5%; top: 30%; }   /* pared izquierda, lejana */
-.antorcha2-5c { left: 66%; top: 30%; }   /* pared derecha, lejana */
-.antorcha3-5c { left: 16%; top: 15%; }   /* pared izquierda, cercana */
-.antorcha4-5c { left: 84%; top: 15%; }   /* pared derecha, cercana */
+.antorcha5c-fondo {
+    width: 16%;
+}
 
-/* Animación al tocar una antorcha: se balancea y brilla */
-.antorcha5c .vista5c > img {
+.antorcha5c-frente {
+    width: 25%;
+}
+
+
+.antorcha1-5c {
+    left: 32.5%;
+    top: 30%;
+}
+
+.antorcha2-5c {
+    left: 66%;
+    top: 30%;
+}
+
+.antorcha3-5c {
+    left: 16%;
+    top: 15%;
+}
+
+.antorcha4-5c {
+    left: 84%;
+    top: 15%;
+}
+
+
+.antorcha5c .vista5c>img {
     transform-origin: 50% 65%;
 }
 
@@ -165,42 +233,43 @@
         rotate: 0deg;
         filter: brightness(1);
     }
+
     20% {
         rotate: 14deg;
         filter:
-            brightness(1.5)
-            drop-shadow(0 0 14px rgba(255, 170, 40, 0.9));
+            brightness(1.5) drop-shadow(0 0 14px rgba(255, 170, 40, 0.9));
     }
+
     40% {
         rotate: -11deg;
         filter:
-            brightness(1.3)
-            drop-shadow(0 0 10px rgba(255, 170, 40, 0.7));
+            brightness(1.3) drop-shadow(0 0 10px rgba(255, 170, 40, 0.7));
     }
+
     60% {
         rotate: 7deg;
         filter: brightness(1.2);
     }
+
     80% {
         rotate: -3deg;
         filter: brightness(1.1);
     }
+
     100% {
         rotate: 0deg;
         filter: brightness(1);
     }
 }
 
-/* ---------------------------------------------------------------------
-   Parte visual: aquí se aplica el hover (sin resplandor)
---------------------------------------------------------------------- */
+
 .vista5c {
     position: relative;
     transition: transform .25s ease;
 }
 
-.vista5c > video,
-.vista5c > img {
+.vista5c>video,
+.vista5c>img {
     display: block;
     width: 100%;
     height: auto;
@@ -213,37 +282,56 @@
     transform: scale(var(--hover));
 }
 
-/* ---------------------------------------------------------------------
-   Cuadro de clic: invisible, en % de SU objeto
---------------------------------------------------------------------- */
+
 .hitbox5c {
     position: absolute;
-    left:   var(--hx, 0%);
-    top:    var(--hy, 0%);
-    width:  var(--hw, 100%);
+    left: var(--hx, 0%);
+    top: var(--hy, 0%);
+    width: var(--hw, 100%);
     height: var(--hh, 100%);
     z-index: calc(var(--z) + 10);
-    pointer-events: auto;           /* solo el cuadro recibe clics */
+    pointer-events: auto;
     cursor: pointer;
     background: transparent;
 }
 
-/* ---------------------------------------------------------------------
-   Ajuste de cada cuadro (x, y, ancho, alto en % de su objeto)
-   --px / --py = posición del puntito dentro del cuadro (por defecto, centro).
-   Cambia solo el objeto que necesites; los demás no se afectan.
-   Las manchas ocupan toda la escena, así que su cuadro es solo la parte del
-   piso, y queda por detrás de los demás objetos.
---------------------------------------------------------------------- */
-.manchas5c { --hx: 20%; --hy: 55%; --hw: 60%; --hh: 40%; }
-.cuadro5c  { --hx: 10%; --hy: 10%; --hw: 80%; --hh: 80%; }
-.hueso5c   { --hx: 0%;  --hy: 0%;  --hw: 100%; --hh: 100%; }
-.antorcha5c-fondo  { --hx: 25%; --hy: 5%; --hw: 50%; --hh: 90%; }
-.antorcha5c-frente { --hx: 35%; --hy: 5%; --hw: 30%; --hh: 90%; }
 
-/* ---------------------------------------------------------------------
-   Señal sutil: puntito siempre visible, con un latido corto y destello verde
---------------------------------------------------------------------- */
+.manchas5c {
+    --hx: 20%;
+    --hy: 55%;
+    --hw: 60%;
+    --hh: 40%;
+}
+
+.cuadro5c {
+    --hx: 10%;
+    --hy: 10%;
+    --hw: 80%;
+    --hh: 80%;
+}
+
+.hueso5c {
+    --hx: 0%;
+    --hy: 0%;
+    --hw: 100%;
+    --hh: 100%;
+}
+
+.antorcha5c-fondo {
+    --hx: 25%;
+    --hy: 5%;
+    --hw: 50%;
+    --hh: 90%;
+}
+
+.antorcha5c-frente {
+    --hx: 35%;
+    --hy: 5%;
+    --hw: 30%;
+    --hh: 90%;
+}
+
+
 .pista5c {
     position: absolute;
     top: var(--py, 50%);
@@ -260,27 +348,37 @@
 }
 
 @keyframes latido5c {
-    0%, 100% { transform: scale(1);   opacity: 0.9; box-shadow: 0 0 3px rgba(26, 217, 109, 0.4); }
-    50%      { transform: scale(1.3); opacity: 0.7; box-shadow: 0 0 7px rgba(26, 217, 109, 0.7); }
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.9;
+        box-shadow: 0 0 3px rgba(26, 217, 109, 0.4);
+    }
+
+    50% {
+        transform: scale(1.3);
+        opacity: 0.7;
+        box-shadow: 0 0 7px rgba(26, 217, 109, 0.7);
+    }
 }
 
-/* Con el zoom de la secuencia cerrado, los punticos se ocultan (los clics siguen activos) */
+
 .camara5c[data-zoom="1"] .pista5c {
     visibility: hidden;
 }
 
-/* Modo prueba (solo si pones DEBUG = true en el .jsx) */
+
 .camara5c.debug .hitbox5c {
     background: rgba(255, 0, 0, 0.3);
     outline: 1px solid red;
 }
+
 .camara5c.debug .anim5c {
-    outline: 1px dashed rgba(0, 150, 255, 0.9);  /* borde real de cada objeto */
+    outline: 1px dashed rgba(0, 150, 255, 0.9);
 }
 
-/* ---------------------------------------------------------------------
-   Puerta (la controla la secuencia)
---------------------------------------------------------------------- */
+
 .puerta5c {
     position: absolute;
     left: 49%;
@@ -291,11 +389,7 @@
     z-index: 6;
 }
 
-/* ---------------------------------------------------------------------
-   Cinta de policía: misma posición y tamaño que la puerta, encima de ella
-   (si mueves o cambias el tamaño de la puerta, hazlo igual aquí)
-   La secuencia la hace caer: no pongas transition aquí.
---------------------------------------------------------------------- */
+
 .cinta5c {
     position: absolute;
     left: 49%;
@@ -307,11 +401,7 @@
     z-index: 7;
 }
 
-/* ---------------------------------------------------------------------
-   Personajes de espalda (los mueve la secuencia con transform).
-   Tamaño en % de la escena (270px en una escena de ~1480px) para que
-   escalen con la pantalla. NO pongas transition ni hover aquí.
---------------------------------------------------------------------- */
+
 .step-espalda1-5c,
 .orabona5c {
     position: absolute;
@@ -327,7 +417,7 @@
     z-index: 10;
 }
 
-/* Orabona (izquierda) */
+
 .orabona5c {
     left: 45%;
     bottom: -7%;

@@ -8,17 +8,10 @@ import "../Styles/LootieParte2.css";
 
 const Lottie = LottieModule.default;
 
-// 👇 Frame de la reja en el que Step empieza a caminar.
-// Pon null para que arranque cuando la reja termine de abrirse.
-// (24 fps: 4 s ≈ frame 96. Revisa "fr" en rejas.json si exportaste con otro fps)
-const FRAME_INICIO = 60;
-
-// 👇 Frame de la reja en el que Step deja de caminar (cuando se cierra).
-// Pon null para que se detenga cuando la reja termine su animación.
-const FRAME_DETENER = null;
-
-// true = muestra los cuadros de clic en rojo para calibrarlos
-// false = invisibles (versión final)
+const FRAME_REJA_ABIERTA = 100;
+const ESPERA_CERRAR = 400;
+const TIEMPO_MAXIMO_PAUSA = 8000;
+const DEBUG_FRAMES = false;
 const DEBUG = false;
 
 const LootieParte2 = () => {
@@ -26,19 +19,33 @@ const LootieParte2 = () => {
   const rejasRef = useRef(null);
   const videoRef = useRef(null);
 
-  const abriendo = useRef(false); // evita reiniciar mientras la reja se abre
-  const yaCamino = useRef(false); // evita lanzar la caminata varias veces
+  const abriendo = useRef(false);
+  const yaCamino = useRef(false);
+  const rejaPausada = useRef(false);
+  const stepTermino = useRef(false);
 
-  const sonidoAmbiente = useRef(new Audio("/audios/ambiente.mp3"));
-  const sonidoRejas = useRef(new Audio("/audios/rejas.mp3"));
-  const sonidoPasos = useRef(new Audio("/audios/pasos.mp3"));
+  const timers = useRef({ cerrar: null, seguro: null });
+
+  const audios = useRef(null);
+  if (audios.current === null) {
+    audios.current = {
+      ambiente: new Audio("/audios/ambiente.mp3"),
+      rejas: new Audio("/audios/rejas.mp3"),
+      pasos: new Audio("/audios/pasos.mp3"),
+    };
+  }
+
+  const limpiarTimers = () => {
+    clearTimeout(timers.current.cerrar);
+    clearTimeout(timers.current.seguro);
+  };
 
   useEffect(() => {
-    const ambiente = sonidoAmbiente.current;
+    const { ambiente, rejas: sRejas, pasos } = audios.current;
 
     ambiente.volume = 0.15;
-    sonidoRejas.current.volume = 0.35;
-    sonidoPasos.current.volume = 0.4;
+    sRejas.volume = 0.35;
+    pasos.volume = 0.4;
     ambiente.loop = true;
 
     const iniciarAmbiente = () => {
@@ -51,6 +58,7 @@ const LootieParte2 = () => {
     return () => {
       ambiente.pause();
       ambiente.currentTime = 0;
+      limpiarTimers();
       window.removeEventListener("click", iniciarAmbiente);
     };
   }, []);
@@ -66,12 +74,17 @@ const LootieParte2 = () => {
     if (yaCamino.current) return;
     yaCamino.current = true;
 
-    sonidoPasos.current.currentTime = 0;
-    sonidoPasos.current.play().catch(() => {});
+    audios.current.pasos.currentTime = 0;
+    audios.current.pasos.play().catch(() => {});
 
-    if (videoRef.current) {
-      videoRef.current.currentTime = 0;
-      videoRef.current.play().catch(() => {});
+    const el = videoRef.current;
+    if (el) {
+      el.currentTime = 0;
+      el.play().catch(() => {});
+
+      el.classList.remove("oculto", "camina");
+      void el.offsetWidth;
+      el.classList.add("camina");
     }
 
     GuardarInteraccion(
@@ -85,20 +98,23 @@ const LootieParte2 = () => {
   };
 
   const animarRejas = () => {
-    if (abriendo.current) return; // ya se está abriendo, ignora el clic
+    if (abriendo.current) return;
     abriendo.current = true;
     yaCamino.current = false;
+    rejaPausada.current = false;
+    stepTermino.current = false;
+    limpiarTimers();
 
-    // Deja a Step quieto en el primer frame
     if (videoRef.current) {
       videoRef.current.pause();
       videoRef.current.currentTime = 0;
+      videoRef.current.classList.remove("camina", "oculto");
     }
-    sonidoPasos.current.pause();
-    sonidoPasos.current.currentTime = 0;
+    audios.current.pasos.pause();
+    audios.current.pasos.currentTime = 0;
 
-    sonidoRejas.current.currentTime = 0;
-    sonidoRejas.current.play().catch(() => {});
+    audios.current.rejas.currentTime = 0;
+    audios.current.rejas.play().catch(() => {});
 
     rejasRef.current?.stop();
     rejasRef.current?.play();
@@ -106,33 +122,59 @@ const LootieParte2 = () => {
     GuardarInteraccion("rejas", "Rejas", "rejas", 1, "lottie");
   };
 
-  // Detiene a Step y los pasos (se queda quieto donde está)
   const detenerVideo = () => {
     videoRef.current?.pause();
-    sonidoPasos.current.pause();
+    videoRef.current?.classList.add("oculto");
+    audios.current.pasos.pause();
   };
 
-  // Se ejecuta en cada frame de la reja
+  const reanudarReja = () => {
+    if (!rejaPausada.current) return;
+    rejaPausada.current = false;
+    clearTimeout(timers.current.seguro);
+    rejasRef.current?.play();
+    audios.current.rejas.play().catch(() => {});
+  };
+
+  const alTerminarVideo = () => {
+    audios.current.pasos.pause();
+    videoRef.current?.classList.add("oculto");
+    stepTermino.current = true;
+    clearTimeout(timers.current.cerrar);
+    timers.current.cerrar = setTimeout(reanudarReja, ESPERA_CERRAR);
+  };
+
   const revisarFrame = ({ currentTime }) => {
-    if (FRAME_DETENER !== null && currentTime >= FRAME_DETENER) {
-      detenerVideo();
-      return;
-    }
-    if (FRAME_INICIO !== null && currentTime >= FRAME_INICIO) {
+    if (DEBUG_FRAMES) console.log("frame reja:", Math.round(currentTime));
+
+    if (
+      currentTime >= FRAME_REJA_ABIERTA &&
+      !rejaPausada.current &&
+      !yaCamino.current &&
+      !stepTermino.current
+    ) {
+      rejaPausada.current = true;
+      rejasRef.current?.pause();
+      audios.current.rejas.pause();
+
       animarVideo();
+
+      clearTimeout(timers.current.seguro);
+      timers.current.seguro = setTimeout(reanudarReja, TIEMPO_MAXIMO_PAUSA);
     }
   };
 
-  // Se ejecuta cuando la reja termina su animación (reja cerrada)
   const alTerminarRejas = () => {
-    detenerVideo(); // Step no sigue caminando con la reja cerrada
+    detenerVideo();
+    rejaPausada.current = false;
     abriendo.current = false;
+    limpiarTimers();
   };
 
   return (
     <div className="escena2">
       <div className={`camara${DEBUG ? " debug" : ""}`}>
-        <img className="fondo2" src="./Fondo5a.png" alt="" />
+        <img className="fondo2" src="/Fondo5a.png" alt="" />
 
         <img className="nube1" src="/nube1.png" alt="" />
         <img className="nube2" src="/nube2.png" alt="" />
@@ -144,14 +186,15 @@ const LootieParte2 = () => {
           className="step2"
           muted
           playsInline
-          onEnded={() => sonidoPasos.current.pause()}
+          onLoadedMetadata={(e) => {
+            e.target.style.setProperty("--dur", `${e.target.duration}s`);
+          }}
+          onEnded={alTerminarVideo}
         >
-          <source src="./caminado2.webm" type="video/webm" />
+          <source src="/caminado2.webm" type="video/webm" />
         </video>
 
-        {/* ===== Edificio ===== */}
         <div className="anim edificio">
-          {/* Solo visual: no recibe clics */}
           <div className="vista">
             <Lottie
               lottieRef={edificioRef}
@@ -162,13 +205,11 @@ const LootieParte2 = () => {
             />
           </div>
 
-          {/* Cuadro de clic propio, dentro de su animación */}
           <div className="hitbox" onClick={animarEdificio}>
             <span className="pista" />
           </div>
         </div>
 
-        {/* ===== Rejas ===== */}
         <div className="anim rejas">
           <div className="vista">
             <Lottie

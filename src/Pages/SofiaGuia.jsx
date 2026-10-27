@@ -24,10 +24,10 @@ const dialogos = [
   },
 ];
 
-/* Cuánto hay que arrastrar una tarjeta para descartarla (px) */
+
 const UMBRAL_DESCARTE = 130;
 
-/* Marco del icono: cuadro neón con nodos en las esquinas */
+
 function IconoMarco({ children, pulsa = false }) {
   return (
     <div className={`icono-marco ${pulsa ? "sg-palpita" : ""}`}>
@@ -52,11 +52,11 @@ export function SofiaGuia() {
   const audioRef = useRef(null);
   const sonidoBoton = useRef(null);
 
-  /* Interacción: tilt 3D y brillo al mover el cursor */
+
   const contenedorRef = useRef(null);
   const pilaRef = useRef(null);
 
-  /* Sonido de botones (se crea una sola vez) */
+
   useEffect(() => {
     sonidoBoton.current = new Audio("./audios/sonidoboton.ogg");
     sonidoBoton.current.volume = 0.35;
@@ -65,7 +65,7 @@ export function SofiaGuia() {
   const reproducirSonido = () => {
     if (!sonidoBoton.current) return;
     sonidoBoton.current.currentTime = 0;
-    sonidoBoton.current.play().catch(() => {});
+    sonidoBoton.current.play().catch(() => { });
   };
 
   const detenerVoz = () => {
@@ -81,7 +81,7 @@ export function SofiaGuia() {
     setTimeout(() => navigate(ruta), 150);
   };
 
-  /* La tarjeta se inclina y brilla hacia donde está el cursor */
+
   const alMoverEscena = (e) => {
     const cont = contenedorRef.current;
     if (!cont) return;
@@ -111,12 +111,12 @@ export function SofiaGuia() {
     }
   };
 
-  /* Si cambia la tarjeta (la voz terminó), se cancela cualquier arrastre pendiente */
+
   useEffect(() => {
     setArrastre({ x: 0, y: 0, activo: false });
   }, [actual]);
 
-  /* Reproduce la voz de la tarjeta actual */
+
   useEffect(() => {
     if (!iniciado) return;
 
@@ -134,7 +134,7 @@ export function SofiaGuia() {
     };
   }, [actual, iniciado]);
 
-  /* Escribe las letras al ritmo de la voz */
+
   useEffect(() => {
     if (!iniciado) return;
 
@@ -150,10 +150,10 @@ export function SofiaGuia() {
       let progreso;
 
       if (Number.isFinite(dur) && dur > 0) {
-        /* termina de escribir un poco antes de que acabe la voz */
+
         progreso = audio.currentTime / (dur * 0.9);
       } else {
-        /* respaldo mientras carga el audio */
+
         progreso = (performance.now() - t0) / (texto.length * 55);
       }
 
@@ -179,7 +179,7 @@ export function SofiaGuia() {
     }
   };
 
-  /* ---------- Arrastre (mouse y touch) ---------- */
+
   const alPresionar = (e) => {
     if (!iniciado) return;
     e.currentTarget.setPointerCapture(e.pointerId);
@@ -202,7 +202,7 @@ export function SofiaGuia() {
     const distancia = Math.hypot(arrastre.x, arrastre.y);
     setArrastre({ x: 0, y: 0, activo: false });
 
-    /* Si la lanzó lejos, pasa a la siguiente tarjeta */
+
     if (distancia > UMBRAL_DESCARTE && actual < dialogos.length - 1) {
       reproducirSonido();
       setActual((prev) => prev + 1);
@@ -254,9 +254,8 @@ export function SofiaGuia() {
             };
 
             if (esFrente && arrastre.activo) {
-              estilo.transform = `translate(${arrastre.x}px, ${arrastre.y}px) rotate(${
-                arrastre.x / 28
-              }deg)`;
+              estilo.transform = `translate(${arrastre.x}px, ${arrastre.y}px) rotate(${arrastre.x / 28
+                }deg)`;
             }
 
             return (
@@ -294,7 +293,7 @@ export function SofiaGuia() {
                       {pasada
                         ? d.texto
                         : esFrente
-                        ? d.texto
+                          ? d.texto
                             .slice(0, letras)
                             .split("")
                             .map((c, k) => (
@@ -302,7 +301,7 @@ export function SofiaGuia() {
                                 {c}
                               </span>
                             ))
-                        : ""}
+                          : ""}
                       {esFrente && iniciado && letras < d.texto.length && (
                         <span className="sg-cursor" />
                       )}

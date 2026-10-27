@@ -1,7 +1,3 @@
-/* =========================================================
-   VARIABLES
-========================================================= */
-
 .Container-mapa {
     --verde: #1ad96d;
     --verde-suave: rgba(26, 217, 109, .75);
@@ -15,7 +11,7 @@
     justify-content: center;
     align-items: flex-start;
 
-    padding: 8px 20px 20px; /* menos aire arriba */
+    padding: 8px 20px 20px;
     box-sizing: border-box;
     color: var(--texto);
 }
@@ -26,18 +22,16 @@
 }
 
 
-/* =========================================================
-   HEADER
-========================================================= */
+
 
 .header-mapa {
-    position: relative; /* para ubicar el botón volver */
+    position: relative;
 
     display: flex;
     justify-content: center;
 }
 
-/* ============ BOTÓN VOLVER ============ */
+
 
 .btn-volver {
     position: absolute;
@@ -100,7 +94,7 @@
     outline-offset: 3px;
 }
 
-/* Flecha */
+
 .btn-volver-flecha {
     display: inline-block;
     transition: transform 0.25s ease;
@@ -110,7 +104,7 @@
     transform: translateX(-4px);
 }
 
-/* Móvil */
+
 @media (max-width: 900px) {
     .btn-volver {
         width: 150px;
@@ -142,7 +136,7 @@
     animation: titulo-brillo 4s ease-in-out 1.6s infinite;
 }
 
-/* Cada letra entra desde abajo, borrosa, con un pequeño rebote */
+
 .letra {
     display: inline-block;
 
@@ -167,6 +161,7 @@
 }
 
 @keyframes titulo-brillo {
+
     0%,
     100% {
         text-shadow: 0 0 14px var(--verde-suave);
@@ -179,7 +174,7 @@
     }
 }
 
-/* Subtítulo: líneas que se abren desde el centro y texto que se asienta */
+
 .subtitulo-mapa {
     margin-top: 6px;
 
@@ -214,13 +209,11 @@
 }
 
 
-/* =========================================================
-   LAYOUT
-========================================================= */
+
 
 .contenido-principal {
     display: flex;
-    /* stretch: la barra y la tarjeta miden lo mismo que el mapa de alto */
+
     align-items: stretch;
     gap: 26px;
 
@@ -233,9 +226,7 @@
 }
 
 
-/* =========================================================
-   MAPA
-========================================================= */
+
 
 .mapa {
     position: relative;
@@ -257,8 +248,7 @@
     width: 100%;
     height: 100%;
 
-    /* Por defecto un <svg> incrustado recorta lo que se sale de su caja
-       (halos, brillos, trazos en el borde). Así no se corta. */
+
     overflow: visible;
 }
 
@@ -266,8 +256,7 @@
     overflow: visible;
 }
 
-/* El glow pesado del SVG se quita mientras se dibuja (va muy lento
-   animando un filtro enorme) y se aplica ligero al terminar. */
+
 .mapa-svg svg g {
     filter: none !important;
 }
@@ -281,12 +270,10 @@
 }
 
 
-/* =========================================================
-   ANIMACIÓN DE TRAZO (se dibuja)
-========================================================= */
+
 
 .svg-dibujo .trazo {
-    /* --len lo pone el JS con el largo real del trazo */
+
     stroke-dasharray: var(--len, 1);
     stroke-dashoffset: var(--len, 1);
     opacity: 0;
@@ -310,7 +297,7 @@
     }
 }
 
-/* Mientras no se activa, que no se vea nada */
+
 .svg-fallback {
     opacity: 0;
     transition: opacity .6s ease;
@@ -321,9 +308,6 @@
 }
 
 
-/* =========================================================
-   MARCO DE BORDE QUE SE DIBUJA (tarjeta y barra)
-========================================================= */
 
 .marco-trazo {
     position: absolute;
@@ -356,10 +340,6 @@
 }
 
 
-/* =========================================================
-   BOTONES DEL MAPA
-   --escala la pone el JSX por capítulo (prop "tamano")
-========================================================= */
 
 .btn-mapa {
     position: absolute;
@@ -410,9 +390,7 @@
 }
 
 
-/* =========================================================
-   TARJETA / PANEL DEL CAPÍTULO (solo borde)
-========================================================= */
+
 
 .panel-capitulo {
     width: 340px;
@@ -434,7 +412,7 @@
     border-radius: 14px;
 }
 
-/* El fondo vive aparte y solo aparece cuando sale la tarjeta */
+
 .panel-contenido::before {
     content: "";
 
@@ -445,11 +423,9 @@
     border-radius: 14px;
     pointer-events: none;
 
-    background: linear-gradient(
-        180deg,
-        rgba(26, 217, 109, .07),
-        rgba(26, 217, 109, 0) 45%
-    );
+    background: linear-gradient(180deg,
+            rgba(26, 217, 109, .07),
+            rgba(26, 217, 109, 0) 45%);
 
     opacity: 0;
     transition: opacity .8s ease;
@@ -460,7 +436,7 @@
 }
 
 .panel-interior {
-    /* espera antes de entrar: larga la primera vez, corta al cambiar */
+
     --base: .6s;
 
     flex: 1;
@@ -480,22 +456,39 @@
     visibility: visible;
 }
 
-/* Cada bloque de la tarjeta entra escalonado, deslizándose y desenfocado.
-   --dir invierte el sentido si vas hacia atrás. */
-.panel-interior > :nth-child(1) { --i: 0; }
-.panel-interior > :nth-child(2) { --i: 1; }
-.panel-interior > :nth-child(3) { --i: 2; }
-.panel-interior > :nth-child(4) { --i: 3; }
-.panel-interior > :nth-child(5) { --i: 4; }
-.panel-interior > :nth-child(6) { --i: 5; }
-.panel-interior > :nth-child(7) { --i: 6; }
-
-.panel-interior > * {
-    animation: hijo-entra .6s cubic-bezier(.2, .9, .3, 1)
-        calc(var(--base) + var(--i, 0) * .09s) backwards;
+.panel-interior> :nth-child(1) {
+    --i: 0;
 }
 
-.panel-interior.saliendo > * {
+.panel-interior> :nth-child(2) {
+    --i: 1;
+}
+
+.panel-interior> :nth-child(3) {
+    --i: 2;
+}
+
+.panel-interior> :nth-child(4) {
+    --i: 3;
+}
+
+.panel-interior> :nth-child(5) {
+    --i: 4;
+}
+
+.panel-interior> :nth-child(6) {
+    --i: 5;
+}
+
+.panel-interior> :nth-child(7) {
+    --i: 6;
+}
+
+.panel-interior>* {
+    animation: hijo-entra .6s cubic-bezier(.2, .9, .3, 1) calc(var(--base) + var(--i, 0) * .09s) backwards;
+}
+
+.panel-interior.saliendo>* {
     animation: hijo-sale .3s ease calc(var(--i, 0) * .03s) forwards;
 }
 
@@ -521,7 +514,7 @@
     }
 }
 
-/* Barrido de luz que cruza la tarjeta al cambiar de capítulo */
+
 .panel-scan {
     position: absolute;
     inset: 2px;
@@ -544,13 +537,11 @@
 
     height: 90px;
 
-    background: linear-gradient(
-        180deg,
-        transparent,
-        rgba(26, 217, 109, .16) 65%,
-        rgba(26, 217, 109, .5) 96%,
-        rgba(200, 255, 225, .95) 100%
-    );
+    background: linear-gradient(180deg,
+            transparent,
+            rgba(26, 217, 109, .16) 65%,
+            rgba(26, 217, 109, .5) 96%,
+            rgba(200, 255, 225, .95) 100%);
 
     filter: drop-shadow(0 4px 6px rgba(26, 217, 109, .7));
 
@@ -577,7 +568,7 @@
     }
 }
 
-/* (la barra de capítulos también usa esta animación) */
+
 @keyframes aparecer-texto {
     from {
         opacity: 0;
@@ -601,7 +592,6 @@
     width: 84px;
     height: 84px;
 
-    /* --escala viene del capítulo (prop "tamanoPanel") */
     transform: scale(var(--escala, 1));
     transform-origin: center;
 }
@@ -619,7 +609,7 @@
     text-shadow: 0 0 10px var(--verde-suave);
 }
 
-/* línea con rombo al centro */
+
 .linea {
     position: relative;
 
@@ -628,12 +618,10 @@
 
     margin: 12px auto 16px;
 
-    background: linear-gradient(
-        90deg,
-        transparent,
-        var(--verde),
-        transparent
-    );
+    background: linear-gradient(90deg,
+            transparent,
+            var(--verde),
+            transparent);
 }
 
 .linea::after {
@@ -665,9 +653,7 @@
 }
 
 
-/* =========================================================
-   MISIÓN DEL CAPÍTULO
-========================================================= */
+
 
 .mision-capitulo {
     margin-bottom: 18px;
@@ -678,11 +664,9 @@
 
     border: 1px solid rgba(26, 217, 109, .4);
 
-    background: linear-gradient(
-        180deg,
-        rgba(26, 217, 109, .08),
-        rgba(26, 217, 109, .02)
-    );
+    background: linear-gradient(180deg,
+            rgba(26, 217, 109, .08),
+            rgba(26, 217, 109, .02));
 }
 
 .mision-titulo {
@@ -740,7 +724,7 @@
     text-shadow: 0 0 8px var(--verde-suave);
 }
 
-/* ---- medidor: emblema + barra con punta (estilo barra de habilidad) ---- */
+
 
 .mision-medidor {
     position: relative;
@@ -768,12 +752,10 @@
     border-radius: 50%;
     border: 2px solid #b6ffd4;
 
-    background: radial-gradient(
-        circle at 35% 30%,
-        #5dffa6,
-        var(--verde) 45%,
-        #0a7a3d 100%
-    );
+    background: radial-gradient(circle at 35% 30%,
+            #5dffa6,
+            var(--verde) 45%,
+            #0a7a3d 100%);
 
     box-shadow:
         0 0 10px var(--verde),
@@ -808,7 +790,7 @@
     }
 }
 
-/* marco brillante con la punta recortada */
+
 .mision-barra {
     flex: 1;
 
@@ -818,20 +800,16 @@
 
     box-sizing: border-box;
 
-    background: linear-gradient(
-        180deg,
-        rgba(200, 255, 225, .95),
-        var(--verde) 45%,
-        rgba(10, 122, 61, .95)
-    );
+    background: linear-gradient(180deg,
+            rgba(200, 255, 225, .95),
+            var(--verde) 45%,
+            rgba(10, 122, 61, .95));
 
-    clip-path: polygon(
-        0 0,
-        calc(100% - 14px) 0,
-        100% 50%,
-        calc(100% - 14px) 100%,
-        0 100%
-    );
+    clip-path: polygon(0 0,
+            calc(100% - 14px) 0,
+            100% 50%,
+            calc(100% - 14px) 100%,
+            0 100%);
 }
 
 .mision-barra-interior {
@@ -841,16 +819,14 @@
 
     background: #04110a;
 
-    clip-path: polygon(
-        0 0,
-        calc(100% - 12px) 0,
-        100% 50%,
-        calc(100% - 12px) 100%,
-        0 100%
-    );
+    clip-path: polygon(0 0,
+            calc(100% - 12px) 0,
+            100% 50%,
+            calc(100% - 12px) 100%,
+            0 100%);
 }
 
-/* zona útil de la barra (deja libre el borde que tapa el emblema) */
+
 .mision-pista {
     position: absolute;
     top: 0;
@@ -865,24 +841,21 @@
     width: var(--pct, 0%);
     height: 100%;
 
-    background: linear-gradient(
-        180deg,
-        #c8ffe0 0%,
-        #4dff9a 22%,
-        var(--verde) 50%,
-        #0c9a4b 100%
-    );
+    background: linear-gradient(180deg,
+            #c8ffe0 0%,
+            #4dff9a 22%,
+            var(--verde) 50%,
+            #0c9a4b 100%);
 
-    /* borde de avance en diagonal, como las barras de referencia */
+
     clip-path: polygon(0 0, 100% 0, calc(100% - 7px) 100%, 0 100%);
 
     transition: width .4s ease;
 
-    animation: llenar 1.1s cubic-bezier(.3, .7, .2, 1)
-        calc(var(--base, .6s) + .55s) backwards;
+    animation: llenar 1.1s cubic-bezier(.3, .7, .2, 1) calc(var(--base, .6s) + .55s) backwards;
 }
 
-/* línea de luz arriba */
+
 .mision-barra-fill::before {
     content: "";
 
@@ -896,7 +869,7 @@
     background: rgba(255, 255, 255, .7);
 }
 
-/* destello que recorre la barra */
+
 .mision-barra-fill::after {
     content: "";
 
@@ -907,12 +880,10 @@
     width: 40px;
     height: 100%;
 
-    background: linear-gradient(
-        105deg,
-        transparent,
-        rgba(255, 255, 255, .55),
-        transparent
-    );
+    background: linear-gradient(105deg,
+            transparent,
+            rgba(255, 255, 255, .55),
+            transparent);
 
     animation: brillo-barra 2.6s linear 1.8s infinite;
 }
@@ -929,7 +900,7 @@
     }
 }
 
-/* chispa en el borde de avance */
+
 .mision-chispa {
     position: absolute;
     top: -30%;
@@ -940,18 +911,15 @@
     width: 18px;
     height: 160%;
 
-    background: radial-gradient(
-        circle,
-        #fff 0%,
-        rgba(120, 255, 180, .8) 35%,
-        transparent 70%
-    );
+    background: radial-gradient(circle,
+            #fff 0%,
+            rgba(120, 255, 180, .8) 35%,
+            transparent 70%);
 
     pointer-events: none;
 
     animation:
-        chispa-llena 1.1s cubic-bezier(.3, .7, .2, 1)
-            calc(var(--base, .6s) + .55s) backwards,
+        chispa-llena 1.1s cubic-bezier(.3, .7, .2, 1) calc(var(--base, .6s) + .55s) backwards,
         chispa-pulso 1.3s ease-in-out infinite;
 }
 
@@ -962,6 +930,7 @@
 }
 
 @keyframes chispa-pulso {
+
     0%,
     100% {
         opacity: .65;
@@ -974,7 +943,7 @@
     }
 }
 
-/* divisiones: una por objeto a encontrar */
+
 .mision-marca {
     position: absolute;
     top: 0;
@@ -999,6 +968,7 @@
 }
 
 @keyframes emblema-pulso {
+
     0%,
     100% {
         box-shadow:
@@ -1071,9 +1041,7 @@
 }
 
 
-/* =========================================================
-   BOTÓN VER MÁS (solo borde)
-========================================================= */
+
 
 .btn-vermas {
     width: 170px;
@@ -1105,9 +1073,7 @@
 }
 
 
-/* =========================================================
-   BARRA DE CAPÍTULOS (solo borde)
-========================================================= */
+
 
 .barra-capitulos {
     position: relative;
@@ -1119,7 +1085,7 @@
 
     box-sizing: border-box;
 
-    /* vertical: los iconos van bajando */
+
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1147,8 +1113,7 @@
     transition: transform .3s;
 }
 
-/* Línea de puntos que baja de un capítulo al siguiente
-   (misma gracia que la ruta del mapa). El alto = el gap de la barra. */
+
 .item-capitulo:not(:last-child)::after {
     content: "";
 
@@ -1160,13 +1125,12 @@
 
     height: 30px;
 
-    /* tramo "apagado" */
+
     border-left: 2px dotted rgba(26, 217, 109, .22);
     transform: translateX(-1px);
 }
 
-/* Tramo "encendido": crece hacia abajo y va prendiendo los puntos uno a uno.
-   El alto (30px) debe ser igual al gap de la barra. */
+
 .tramo-recorrido {
     position: absolute;
     z-index: -1;
@@ -1203,7 +1167,7 @@
     width: 36px;
     height: 36px;
 
-    /* --escala viene del capítulo (prop "tamano") */
+
     transform: scale(var(--escala, 1));
     transform-origin: center;
 
@@ -1257,9 +1221,7 @@
 }
 
 
-/* =========================================================
-   RESPONSIVE
-========================================================= */
+
 
 @media (max-width: 1000px) {
 
@@ -1274,7 +1236,7 @@
         width: 100%;
     }
 
-    /* En pantallas angostas la barra vuelve a ser horizontal, bajo el mapa */
+
     .barra-capitulos {
         order: 2;
 
@@ -1314,7 +1276,7 @@
         padding: 8px 10px 10px;
     }
 
-    /* el botón deja de flotar y se apila sobre el título */
+
     .header-mapa {
         flex-direction: column;
         align-items: center;
@@ -1358,9 +1320,7 @@
 }
 
 
-/* =========================================================
-   MOVIMIENTO REDUCIDO
-========================================================= */
+
 
 @media (prefers-reduced-motion: reduce) {
 
@@ -1368,7 +1328,7 @@
     .marco-trazo rect,
     .letra,
     .texto-sub,
-    .panel-interior > *,
+    .panel-interior>*,
     .panel-scan,
     .panel-scan::before,
     .mision-barra-fill {
@@ -1394,12 +1354,7 @@
 }
 
 
-/* =========================================================
-   SIN ANIMACIÓN DE ENTRADA
-   Se activa al volver a la página en la misma pestaña: todo aparece
-   completo al instante (solo se aceleran las animaciones de una vez;
-   las que se repiten, como el brillo, siguen igual).
-========================================================= */
+
 
 .sin-animacion .svg-dibujo .trazo,
 .sin-animacion .svg-dibujo .trazo-texto,
@@ -1408,7 +1363,7 @@
 .sin-animacion .texto-sub,
 .sin-animacion .ruta-puntos.activa .punto-ruta,
 .sin-animacion .barra-capitulos.visible .item-capitulo,
-.sin-animacion .panel-interior > *,
+.sin-animacion .panel-interior>*,
 .sin-animacion .mision-barra-fill {
     animation-duration: .01s !important;
     animation-delay: 0s !important;
@@ -1419,9 +1374,7 @@
 }
 
 
-/* =========================================================
-   RUTA DE PUNTOS (aparecen uno por uno)
-========================================================= */
+
 
 .ruta-puntos {
     position: absolute;
@@ -1470,11 +1423,7 @@
 }
 
 
-/* =========================================================
-   ICONOS RELLENOS (cap1.svg ... cap5.svg)
-   Se dibujan primero como contorno y luego se rellenan;
-   el número romano aparece al final.
-========================================================= */
+
 
 .icono-mapa .trazo,
 .icono-barra .trazo,
@@ -1492,6 +1441,7 @@
 }
 
 @keyframes rellenar {
+
     0%,
     55% {
         fill-opacity: 0;
