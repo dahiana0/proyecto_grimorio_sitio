@@ -10,14 +10,103 @@ import libroc from "../assets/libro cae.json";
 
 import "../Styles/LootieKarol.css";
 
-const Lottie = LottieModule.default;
 
+let _ctx = null;
+const _buffers = new Map();
+const _cargando = new Map();
+const _getCtx = () => {
+  if (!_ctx) _ctx = new (window.AudioContext || window.webkitAudioContext)();
+  return _ctx;
+};
+const _desbloquear = () => {
+  const c = _getCtx();
+  if (c.state === "suspended") c.resume().catch(() => {});
+};
+["pointerdown", "touchstart", "keydown", "click"].forEach((ev) =>
+  document.addEventListener(ev, _desbloquear, { capture: true })
+);
+
+const precargar = (src) => {
+  const url = encodeURI(src);
+  if (_buffers.has(url)) return Promise.resolve(_buffers.get(url));
+  if (_cargando.has(url)) return _cargando.get(url);
+  const p = fetch(url)
+    .then((r) => {
+      if (!r.ok) throw new Error(`${r.status} al cargar ${url}`);
+      return r.arrayBuffer();
+    })
+    .then((ab) => _getCtx().decodeAudioData(ab))
+    .then((buf) => {
+      _buffers.set(url, buf);
+      return buf;
+    })
+    .catch((e) => {
+      console.error("No se pudo cargar el sonido:", url, e);
+      _cargando.delete(url);
+      return null;
+    });
+  _cargando.set(url, p);
+  return p;
+};
+
+const reproducir = (src, { volumen = 1, loop = false, desde = 0 } = {}) => {
+  const h = { fuente: null, buffer: null, gain: null, t0: 0, desde, parado: false, fin: false };
+  h.tiempo = () => {
+    if (h.fin) return h.buffer?.duration ?? 0;
+    if (!h.fuente) return h.desde;
+    return Math.min(h.desde + _ctx.currentTime - h.t0, h.buffer.duration);
+  };
+  h.stop = () => {
+    h.parado = true;
+    const t = h.tiempo();
+    try { h.fuente?.stop(); } catch {}
+    h.fuente = null;
+    return t;
+  };
+  h.volumen = (v) => {
+    volumen = v;
+    if (h.gain) h.gain.gain.value = v;
+  };
+  precargar(src).then((buf) => {
+    if (!buf || h.parado) return;
+    if (!loop && desde >= buf.duration) return;
+    const c = _getCtx();
+    c.resume().catch(() => {});
+    const fuente = c.createBufferSource();
+    fuente.buffer = buf;
+    fuente.loop = loop;
+    const gain = c.createGain();
+    gain.gain.value = volumen;
+    fuente.connect(gain).connect(c.destination);
+    fuente.onended = () => {
+      if (h.fuente === fuente) {
+        h.fuente = null;
+        h.fin = !loop;
+      }
+    };
+    fuente.start(0, loop ? desde % buf.duration : desde);
+    h.fuente = fuente;
+    h.buffer = buf;
+    h.gain = gain;
+    h.t0 = c.currentTime;
+  });
+  return h;
+};
+
+
+
+const Lottie = LottieModule.default;
 
 const ANCHO = 1500;
 const ALTO = 836;
 
-
 const DEBUG = false;
+
+const SONIDOS = {
+  tablero: { src: "/audios/tablero.mp3", volumen: 0.2 },
+  calavera: { src: "/audios/calavera.mp3", volumen: 0.2 },
+  libro: { src: "/audios/libro.mp3", volumen: 0.35 },
+};
 
 const LootieKarol = () => {
   const contenedorRef = useRef(null);
@@ -29,14 +118,9 @@ const LootieKarol = () => {
   const libroRef = useRef(null);
   const libroCRef = useRef(null);
 
-  const sonidoTablero = useRef(new Audio("/audios/tablero.mp3"));
-  const sonidoCalavera = useRef(new Audio("/audios/calavera.mp3"));
-  const sonidoLibro = useRef(new Audio("/audios/libro.mp3"));
-
+  // Precarga los sonidos para que suenen al instante al hacer clic
   useEffect(() => {
-    sonidoTablero.current.volume = 0.2;
-    sonidoCalavera.current.volume = 0.2;
-    sonidoLibro.current.volume = 0.35;
+    Object.values(SONIDOS).forEach((s) => precargar(s.src));
   }, []);
 
   // Ajusta la escala al tamaño del visor
@@ -57,8 +141,7 @@ const LootieKarol = () => {
   }, []);
 
   const animarTablero = () => {
-    sonidoTablero.current.currentTime = 0;
-    sonidoTablero.current.play();
+    reproducir(SONIDOS.tablero.src, { volumen: SONIDOS.tablero.volumen });
 
     tableroRef.current?.stop();
     tableroRef.current?.play();
@@ -67,8 +150,7 @@ const LootieKarol = () => {
   };
 
   const animarCalavera = () => {
-    sonidoCalavera.current.currentTime = 0;
-    sonidoCalavera.current.play();
+    reproducir(SONIDOS.calavera.src, { volumen: SONIDOS.calavera.volumen });
 
     calaveraRef.current?.stop();
     calaveraRef.current?.play();
@@ -84,8 +166,7 @@ const LootieKarol = () => {
   };
 
   const animarLibro = () => {
-    sonidoLibro.current.currentTime = 0;
-    sonidoLibro.current.play();
+    reproducir(SONIDOS.libro.src, { volumen: SONIDOS.libro.volumen });
 
     libroRef.current?.stop();
     libroRef.current?.play();
@@ -100,13 +181,12 @@ const LootieKarol = () => {
     GuardarInteraccion("libroC", "Libro caído", "libroC");
   };
 
- 
   const objetos = [
-    { clase: "tablero",  lottieRef: tableroRef,  data: tableroo, onClick: animarTablero },
+    { clase: "tablero", lottieRef: tableroRef, data: tableroo, onClick: animarTablero },
     { clase: "calavera", lottieRef: calaveraRef, data: calabera, onClick: animarCalavera },
-    { clase: "step",     lottieRef: stepRef,     data: step,     onClick: animarStep },
-    { clase: "libro",    lottieRef: libroRef,    data: libroM,   onClick: animarLibro },
-    { clase: "libroC",   lottieRef: libroCRef,   data: libroc,   onClick: animarLibroC },
+    { clase: "step", lottieRef: stepRef, data: step, onClick: animarStep },
+    { clase: "libro", lottieRef: libroRef, data: libroM, onClick: animarLibro },
+    { clase: "libroC", lottieRef: libroCRef, data: libroc, onClick: animarLibroC },
   ];
 
   return (
@@ -124,7 +204,6 @@ const LootieKarol = () => {
 
           {objetos.map(({ clase, lottieRef, data, onClick }) => (
             <div key={clase} className={`anim ${clase}`}>
-             
               <div className="vista">
                 <Lottie
                   lottieRef={lottieRef}
@@ -134,7 +213,6 @@ const LootieKarol = () => {
                 />
               </div>
 
-             
               <div className="hitbox" onClick={onClick}>
                 <span className="pista" />
               </div>

@@ -6,6 +6,91 @@ import edificio from "../assets/edificio.json";
 import rejas from "../assets/rejas.json";
 import "../Styles/LootieParte2.css";
 
+
+let _ctx = null;
+const _buffers = new Map();
+const _cargando = new Map();
+const _getCtx = () => {
+  if (!_ctx) _ctx = new (window.AudioContext || window.webkitAudioContext)();
+  return _ctx;
+};
+const _desbloquear = () => {
+  const c = _getCtx();
+  if (c.state === "suspended") c.resume().catch(() => {});
+};
+["pointerdown", "touchstart", "keydown", "click"].forEach((ev) =>
+  document.addEventListener(ev, _desbloquear, { capture: true })
+);
+
+const precargar = (src) => {
+  const url = encodeURI(src);
+  if (_buffers.has(url)) return Promise.resolve(_buffers.get(url));
+  if (_cargando.has(url)) return _cargando.get(url);
+  const p = fetch(url)
+    .then((r) => {
+      if (!r.ok) throw new Error(`${r.status} al cargar ${url}`);
+      return r.arrayBuffer();
+    })
+    .then((ab) => _getCtx().decodeAudioData(ab))
+    .then((buf) => {
+      _buffers.set(url, buf);
+      return buf;
+    })
+    .catch((e) => {
+      console.error("No se pudo cargar el sonido:", url, e);
+      _cargando.delete(url);
+      return null;
+    });
+  _cargando.set(url, p);
+  return p;
+};
+
+const reproducir = (src, { volumen = 1, loop = false, desde = 0 } = {}) => {
+  const h = { fuente: null, buffer: null, gain: null, t0: 0, desde, parado: false, fin: false };
+  h.tiempo = () => {
+    if (h.fin) return h.buffer?.duration ?? 0;
+    if (!h.fuente) return h.desde;
+    return Math.min(h.desde + _ctx.currentTime - h.t0, h.buffer.duration);
+  };
+  h.stop = () => {
+    h.parado = true;
+    const t = h.tiempo();
+    try { h.fuente?.stop(); } catch {}
+    h.fuente = null;
+    return t;
+  };
+  h.volumen = (v) => {
+    volumen = v;
+    if (h.gain) h.gain.gain.value = v;
+  };
+  precargar(src).then((buf) => {
+    if (!buf || h.parado) return;
+    if (!loop && desde >= buf.duration) return;
+    const c = _getCtx();
+    c.resume().catch(() => {});
+    const fuente = c.createBufferSource();
+    fuente.buffer = buf;
+    fuente.loop = loop;
+    const gain = c.createGain();
+    gain.gain.value = volumen;
+    fuente.connect(gain).connect(c.destination);
+    fuente.onended = () => {
+      if (h.fuente === fuente) {
+        h.fuente = null;
+        h.fin = !loop;
+      }
+    };
+    fuente.start(0, loop ? desde % buf.duration : desde);
+    h.fuente = fuente;
+    h.buffer = buf;
+    h.gain = gain;
+    h.t0 = c.currentTime;
+  });
+  return h;
+};
+
+
+
 const Lottie = LottieModule.default;
 
 const FRAME_REJA_ABIERTA = 100;
@@ -13,6 +98,10 @@ const ESPERA_CERRAR = 400;
 const TIEMPO_MAXIMO_PAUSA = 8000;
 const DEBUG_FRAMES = false;
 const DEBUG = false;
+
+const S_AMBIENTE = "/audios/ambiente.mp3";
+const S_REJAS = "/audios/rejas.mp3";
+const S_PASOS = "/audios/pasos.mp3";
 
 const LootieParte2 = () => {
   const edificioRef = useRef(null);
@@ -26,14 +115,10 @@ const LootieParte2 = () => {
 
   const timers = useRef({ cerrar: null, seguro: null });
 
-  const audios = useRef(null);
-  if (audios.current === null) {
-    audios.current = {
-      ambiente: new Audio("/audios/ambiente.mp3"),
-      rejas: new Audio("/audios/rejas.mp3"),
-      pasos: new Audio("/audios/pasos.mp3"),
-    };
-  }
+  const sAmbiente = useRef(null);
+  const sRejas = useRef(null);
+  const sPasos = useRef(null);
+  const tiempoRejas = useRef(0);
 
   const limpiarTimers = () => {
     clearTimeout(timers.current.cerrar);
@@ -41,25 +126,17 @@ const LootieParte2 = () => {
   };
 
   useEffect(() => {
-    const { ambiente, rejas: sRejas, pasos } = audios.current;
+    precargar(S_REJAS);
+    precargar(S_PASOS);
 
-    ambiente.volume = 0.15;
-    sRejas.volume = 0.35;
-    pasos.volume = 0.4;
-    ambiente.loop = true;
-
-    const iniciarAmbiente = () => {
-      ambiente.play().catch(() => {});
-      window.removeEventListener("click", iniciarAmbiente);
-    };
-
-    window.addEventListener("click", iniciarAmbiente);
+    // Suena en cuanto el navegador permite audio (primer clic/toque)
+    sAmbiente.current = reproducir(S_AMBIENTE, { volumen: 0.15, loop: true });
 
     return () => {
-      ambiente.pause();
-      ambiente.currentTime = 0;
+      sAmbiente.current?.stop();
+      sRejas.current?.stop();
+      sPasos.current?.stop();
       limpiarTimers();
-      window.removeEventListener("click", iniciarAmbiente);
     };
   }, []);
 
@@ -74,8 +151,8 @@ const LootieParte2 = () => {
     if (yaCamino.current) return;
     yaCamino.current = true;
 
-    audios.current.pasos.currentTime = 0;
-    audios.current.pasos.play().catch(() => {});
+    sPasos.current?.stop();
+    sPasos.current = reproducir(S_PASOS, { volumen: 0.4 });
 
     const el = videoRef.current;
     if (el) {
@@ -110,11 +187,12 @@ const LootieParte2 = () => {
       videoRef.current.currentTime = 0;
       videoRef.current.classList.remove("camina", "oculto");
     }
-    audios.current.pasos.pause();
-    audios.current.pasos.currentTime = 0;
 
-    audios.current.rejas.currentTime = 0;
-    audios.current.rejas.play().catch(() => {});
+    sPasos.current?.stop();
+
+    tiempoRejas.current = 0;
+    sRejas.current?.stop();
+    sRejas.current = reproducir(S_REJAS, { volumen: 0.35 });
 
     rejasRef.current?.stop();
     rejasRef.current?.play();
@@ -125,7 +203,7 @@ const LootieParte2 = () => {
   const detenerVideo = () => {
     videoRef.current?.pause();
     videoRef.current?.classList.add("oculto");
-    audios.current.pasos.pause();
+    sPasos.current?.stop();
   };
 
   const reanudarReja = () => {
@@ -133,11 +211,16 @@ const LootieParte2 = () => {
     rejaPausada.current = false;
     clearTimeout(timers.current.seguro);
     rejasRef.current?.play();
-    audios.current.rejas.play().catch(() => {});
+
+    sRejas.current?.stop();
+    sRejas.current = reproducir(S_REJAS, {
+      volumen: 0.35,
+      desde: tiempoRejas.current,
+    });
   };
 
   const alTerminarVideo = () => {
-    audios.current.pasos.pause();
+    sPasos.current?.stop();
     videoRef.current?.classList.add("oculto");
     stepTermino.current = true;
     clearTimeout(timers.current.cerrar);
@@ -155,7 +238,7 @@ const LootieParte2 = () => {
     ) {
       rejaPausada.current = true;
       rejasRef.current?.pause();
-      audios.current.rejas.pause();
+      tiempoRejas.current = sRejas.current?.stop() ?? 0;
 
       animarVideo();
 
